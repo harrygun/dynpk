@@ -41,7 +41,18 @@ if __name__=='__main__':
     init_dict=myDict(prog_control)+myDict(param_dict)
     p=pc.prog_init(**init_dict)
 
-    root='../../workspace/result/'
+    root='../../workspace/'
+
+
+    # ->> data importing <<- #
+    fn=root+'data/DynSpec/Rickett_53560dspec.npy'
+    d=np.load(fn)
+    print 'data shape:', d.shape
+
+
+
+    # ->> construction KL modes <<- #
+
 
 
 
