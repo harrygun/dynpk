@@ -1,12 +1,13 @@
 import os
-import numpy as np
 import pylab as pl
+import numpy as np
 
 import genscript.progcontrol as pc
 from genscript.extendclass import *
 import genscript.mpiutil as mpi
 import genscript.myarray as mar
 
+import misc.helper as hp
 
 
 
@@ -49,6 +50,10 @@ if __name__=='__main__':
     d=np.load(fn)
     print 'data shape:', d.shape
 
+
+    m=gen_mask(size)
+    pl.imshow(m)
+    pl.show()
 
 
     # ->> construction KL modes <<- #
