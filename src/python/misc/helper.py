@@ -10,11 +10,13 @@ rbinary_list=lambda n: [rnd.randint(0,1) for b in range(1,n+1)]
 
 
 
-
-def gen_mask(size):
+def gen_mask(size, mask_type='default'):
     '''->> random mask generator <<- '''
 
-    m=rbinary_list(np.prod(size)).reshape(size)
+    if mask_type=='default':
+        m=np.array(rbinary_list(np.prod(size))).reshape(size)
+    else:
+        raise Exception
 
     return m
 

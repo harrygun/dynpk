@@ -15,6 +15,16 @@ import misc.helper as hp
 
 
 
+def test(p):
+
+    size=(20,40)
+    m=hp.gen_mask(size)
+    pl.imshow(m)
+    pl.show()
+
+    return
+
+
 
 
 
@@ -51,9 +61,8 @@ if __name__=='__main__':
     print 'data shape:', d.shape
 
 
-    m=gen_mask(size)
-    pl.imshow(m)
-    pl.show()
+    #->> do some testing <<- #
+    test(p)
 
 
     # ->> construction KL modes <<- #
