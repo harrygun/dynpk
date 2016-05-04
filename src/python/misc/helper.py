@@ -10,13 +10,22 @@ rbinary_list=lambda n: [rnd.randint(0,1) for b in range(1,n+1)]
 
 
 
-def gen_mask(size, mask_type='default'):
+def gen_mask(mapsize, pix_frac=10, mask_type='default'):
     '''->> random mask generator <<- '''
 
+    crit_pix=5
+    mapsize=np.array(mapsize)
+    pixsize=np.ceil(mapsize/pix_frac).astype(int)
+
+
     if mask_type=='default':
-        m=np.array(rbinary_list(np.prod(size))).reshape(size)
+        mask=np.array(rbinary_list(np.prod(pixsize))).reshape(pixsize)
     else:
         raise Exception
+
+    #->> 
+    m=np.zeros(mapsize) 
+    m[np.where(mask )] = 1
 
     return m
 
