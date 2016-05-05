@@ -22,19 +22,29 @@ def bin_mask(size, mask_type='default'):
 
 
 
-def gen_mask(mapsize, mask_type='default'):
+def gen_mask(mapsize, npt=10, mask_type='default'):
     ''' ->> random mask generator <<- '''
+
+    s=np.min(mapsize)
+    m=np.ones(mapsize)
      
-    nn=20
+    #->> 
+    x, y=np.mgrid[:mapsize[0],:mapsize[1]]
+    rmin, rmax = s*0.05, s*0.3
 
-    rl=rnd.random()
-    cl= 
+    rl=rmin+np.random.rand(npt)*(rmax-rmin)
+    cl_x=mapsize[0]*np.random.rand(npt)
+    cl_y=mapsize[1]*np.random.rand(npt)
 
+    #print rl, cl_x, cl_y
 
-    for i in range(nn):
-        #->> 
-         
+    for i in range(npt):
+        m*=1.-np.exp(-((x-cl_x[i])**2.+(y-cl_y[i])**2.)/rl[i]**2.)
 
+    if mask_type=='binary':
+         _frac_=0.3
+         m[np.where(m<_frac_)]=0
+         m[np.where(m>=_frac_)]=1
 
     return m
 

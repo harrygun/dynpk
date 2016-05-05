@@ -17,9 +17,16 @@ import misc.helper as hp
 
 def test(p):
 
-    size=(200,400)
-    m=hp.gen_mask(size, pix_frac=10)
-    pl.imshow(m)
+    #size=(200,400)
+    size=(400,900)
+
+    #mask_type='default'  #'binary'
+    mask_type='binary'
+
+    m=hp.gen_mask(size, mask_type=mask_type)
+
+    cb=pl.imshow(m)
+    pl.colorbar(cb)
     pl.show()
 
     return
