@@ -27,6 +27,10 @@ def gen_mask(mapsize, mask_type='default'):
      
     nn=20
 
+    rl=rnd.random()
+    cl= 
+
+
     for i in range(nn):
         #->> 
          
