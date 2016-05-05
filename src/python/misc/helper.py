@@ -65,8 +65,12 @@ def random_noise_generator(d, snr):
     ''' ->> given the original data map <<- 
         ->> snr:   S/N ratio
     '''
-    #->> 
-    _mean, _std=map_stat_est(d)
+    #->> statistics
+    mean, std=map_stat_est(d)
+
+    # ->> 
+    nvar=std/snr
+
 
 
 
