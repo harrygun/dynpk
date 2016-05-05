@@ -50,9 +50,35 @@ def gen_mask(mapsize, npt=10, mask_type='default'):
 
 
 
+'''-----------------------------------------------------------
+       ->>     simple estimation of the map     <<- 
+   -----------------------------------------------------------
+'''
 
-def covm_sig_guess(d, method='default'):
-    ''' ->> Guess the signal covariance matrix <<- '''
+def map_stat_est(d):
+    # ->> some simple estimation of the map <<- #
+    return np.array([np.mean(d), np.std(d)])
+
+
+
+def random_noise_generator(d, snr):
+    ''' ->> given the original data map <<- 
+        ->> snr:   S/N ratio
+    '''
+    #->> 
+    _mean, _std=map_stat_est(d)
+
+
+
+    return
+
+
+
+
+def scovm_guess(d, method='default'):
+    ''' ->> Guess the signal covariance matrix <<- 
+            Just measure the covariance matrix
+    '''
 
     if method=='default':
         # ->>
@@ -60,3 +86,15 @@ def covm_sig_guess(d, method='default'):
 
 
     return
+
+
+
+
+
+def ncovm_guess(m):
+    ''' ->> Guess the noise covariance matrix <<- '''
+
+
+    return
+
+

@@ -7,7 +7,7 @@ from genscript.extendclass import *
 import genscript.mpiutil as mpi
 import genscript.myarray as mar
 
-import misc.helper as hp
+import misc.helper as helper
 
 
 
@@ -15,21 +15,26 @@ import misc.helper as hp
 
 
 
-def test(p):
+def do_test(p, d):
+
+    if p.do_testing=='False':
+        return
 
     #size=(200,400)
-    size=(400,900)
+    size=d.shape  #(400,900)
 
-    #mask_type='default'  #'binary'
-    mask_type='binary'
+    mask_type='default'  #'binary'
+    #mask_type='binary'
 
-    m=hp.gen_mask(size, mask_type=mask_type)
+    m=helper.gen_mask(size, npt=8, mask_type=mask_type)
 
-    cb=pl.imshow(m)
+    cb=pl.imshow(m*d)
     pl.colorbar(cb)
     pl.show()
 
-    return
+    p.finalize()
+    quit()
+
 
 
 
@@ -44,7 +49,7 @@ param_dict={
     }
 
 prog_control={
-    'do_testing': False, 
+    'do_testing': True, 
     #-------------------------------#
     #-------------------------------#
     }
@@ -69,11 +74,15 @@ if __name__=='__main__':
 
 
     #->> do some testing <<- #
-    test(p)
-
+    do_test(p, d)
 
 
     # ->> construction KL modes <<- #
+    # ->> (1). guess the covariance matrix <<- # 
+    mask=helper.gen_mask(d.shape, npt=10, mask_type='default')
+
+
+    # ->> (2). construct <<- # 
 
 
 
