@@ -9,25 +9,31 @@ import random as rnd
 rbinary_list=lambda n: [rnd.randint(0,1) for b in range(1,n+1)]
 
 
-
-def gen_mask(mapsize, pix_frac=10, mask_type='default'):
-    '''->> random mask generator <<- '''
-
-    crit_pix=5
-    mapsize=np.array(mapsize)
-    pixsize=np.ceil(mapsize/pix_frac).astype(int)
-
+def bin_mask(size, mask_type='default'):
+    ''' ->> random generator of binary mask <<- '''
 
     if mask_type=='default':
-        mask=np.array(rbinary_list(np.prod(pixsize))).reshape(pixsize)
+        m=np.array(rbinary_list(np.prod(size))).reshape(size)
     else:
         raise Exception
 
-    #->> 
-    m=np.zeros(mapsize) 
-    m[np.where(mask )] = 1
+    return m
+
+
+
+
+def gen_mask(mapsize, mask_type='default'):
+    ''' ->> random mask generator <<- '''
+     
+    nn=20
+
+    for i in range(nn):
+        #->> 
+         
+
 
     return m
+
 
 
 

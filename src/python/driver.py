@@ -17,8 +17,8 @@ import misc.helper as hp
 
 def test(p):
 
-    size=(20,40)
-    m=hp.gen_mask(size)
+    size=(200,400)
+    m=hp.gen_mask(size, pix_frac=10)
     pl.imshow(m)
     pl.show()
 
@@ -65,8 +65,8 @@ if __name__=='__main__':
     test(p)
 
 
-    # ->> construction KL modes <<- #
 
+    # ->> construction KL modes <<- #
 
 
 
