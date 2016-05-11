@@ -20,17 +20,26 @@ def do_test(p, d):
     if p.do_testing=='False':
         return
 
-    #size=(200,400)
-    size=d.shape  #(400,900)
+    test_type='fft'  #'mask'
 
-    mask_type='default'  #'binary'
-    #mask_type='binary'
+    if test_type=='mask':
+        #size=(200,400)
+        size=d.shape  #(400,900)
 
-    m=helper.gen_mask(size, npt=8, mask_type=mask_type)
+        mask_type='default'  #'binary'
+        #mask_type='binary'
 
-    cb=pl.imshow(m*d)
-    pl.colorbar(cb)
-    pl.show()
+        m=helper.gen_mask(size, npt=8, mask_type=mask_type)
+
+        cb=pl.imshow(m*d)
+        pl.colorbar(cb)
+        pl.show()
+
+    if test_type=='fft':
+        #->> 
+        dk= 
+
+
 
     p.finalize()
     quit()
