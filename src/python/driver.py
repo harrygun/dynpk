@@ -1,6 +1,7 @@
 import os
 import pylab as pl
 import numpy as np
+import matplotlib.colors as colors
 
 import genscript.progcontrol as pc
 from genscript.extendclass import *
@@ -8,6 +9,7 @@ import genscript.mpiutil as mpi
 import genscript.myarray as mar
 
 import misc.helper as helper
+import quadestimator as qde
 
 
 
@@ -20,7 +22,8 @@ def do_test(p, d):
     if p.do_testing=='False':
         return
 
-    test_type='fft'  #'mask'
+    #test_type='fft'  #'mask'
+    test_type='auto_corr'  
 
     if test_type=='mask':
         #size=(200,400)
@@ -37,7 +40,17 @@ def do_test(p, d):
 
     if test_type=='fft':
         #->> 
-        dk= 
+        #dk= 
+	pass
+
+    if test_type=='auto_corr':
+        cor=qde.autocorr(d)
+
+	#cb=pl.imshow(cor, norm=colors.LogNorm() )
+	cb=pl.imshow(cor, vmin=-50, vmax=50)
+	#pl.hist(cor.flatten(), (-50, 50)) 
+
+	pl.show()
 
 
 
@@ -83,7 +96,11 @@ if __name__=='__main__':
 
 
     #->> do some testing <<- #
-    do_test(p, d)
+    dmean=d.mean()
+    dd=d-dmean
+    print 'mean: ', dmean
+
+    do_test(p, dd)
 
 
     # ->> construction KL modes <<- #
@@ -92,7 +109,7 @@ if __name__=='__main__':
 
 
     # ->> (2). construct <<- # 
-
+     
 
 
 
