@@ -16,7 +16,7 @@ import misc.helper as helper
     ------------------------------------------------------------
 '''
 defaultQuadEestValueDict={
-    'map_dimension':   ,
+    'map_dimension':   2100,
     }
 
 
