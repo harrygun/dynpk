@@ -90,9 +90,6 @@ if __name__=='__main__':
 
     root='../../workspace/'
 
-    print 'Cospar:', p.cp.H0, p.cp.h, p.cp.omem, p.cp.omeb, p.cp.omec
-    quit()
-
 
     # ->> data importing <<- #
     #fn=root+'data/DynSpec/Rickett_53560dspec.npy'
@@ -100,6 +97,10 @@ if __name__=='__main__':
 
     d=np.load(fn)
     print 'data shape:', d.shape
+
+
+    #->> define class <<- #
+    qe=quad.QuadEstimator(prog_control=p)
 
 
     #->> do some testing <<- #
