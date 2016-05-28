@@ -64,6 +64,8 @@ def do_test(p, d):
 
 param_dict={
     'power_spectrum_fname': '/home/xwang/workspace/general-data/power/fiducial_matterpower.dat',
+    'cosmology_parameter_fname': 'parameters/cosparameter.cfg',
+    'cosmology_parameter_sec': 'Cosmology_Parameters',
     'a_init': 1e-2,
     'smooth_R': 0,
     'smooth_type': 'Gauss', 
@@ -87,6 +89,9 @@ if __name__=='__main__':
     p=pc.prog_init(**init_dict)
 
     root='../../workspace/'
+
+    print 'Cospar:', p.cp.H0, p.cp.h, p.cp.omem, p.cp.omeb, p.cp.omec
+    quit()
 
 
     # ->> data importing <<- #

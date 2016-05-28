@@ -30,7 +30,7 @@ class QuadEstimator(par.Parameters):
 
 
     def __init__(self, paramfname=None, section=None, def_var=True, 
-                 prog_control=None, survey=None,**pardict):
+                 prog_control=None, **pardict):
 
         return
 
