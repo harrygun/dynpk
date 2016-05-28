@@ -90,7 +90,9 @@ if __name__=='__main__':
 
 
     # ->> data importing <<- #
-    fn=root+'data/DynSpec/Rickett_53560dspec.npy'
+    #fn=root+'data/DynSpec/Rickett_53560dspec.npy'
+    fn=root+'data/DynSpec/Rickett_53311dspec.npy'
+
     d=np.load(fn)
     print 'data shape:', d.shape
 
@@ -108,10 +110,15 @@ if __name__=='__main__':
     mask=helper.gen_mask(d.shape, npt=10, mask_type='default')
 
 
-    # ->> (2). construct <<- # 
-     
+    # ->> (2). construct the quadratic estimator <<- # 
+    
+    # a). 2D axis list 
 
+    # b).  
 
+    # ->> initialization <<- #
+
+    # 
 
 
     #->> write files <<- #
