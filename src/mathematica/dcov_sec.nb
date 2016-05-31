@@ -1,0 +1,273 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.3' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[      9515,        263]
+NotebookOptionsPosition[      9188,        246]
+NotebookOutlinePosition[      9544,        262]
+CellTagsIndexPosition[      9501,        259]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"mysinc", "[", "x_", "]"}], ":=", " ", 
+  RowBox[{
+   RowBox[{"Sin", "[", "x", "]"}], "/", "x"}]}], "\[IndentingNewLine]", 
+ RowBox[{"Simplify", "[", " ", 
+  RowBox[{"Integrate", "[", 
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{"\[Delta]t", " ", 
+         RowBox[{"mysinc", "[", 
+          RowBox[{"\[Delta]t", " ", 
+           RowBox[{"kt", "/", 
+            RowBox[{"(", 
+             RowBox[{"2", " ", "\[Pi]"}], ")"}]}]}], "]"}]}], ")"}], "^", 
+       "2"}], "/", 
+      RowBox[{"(", 
+       RowBox[{"2", "\[Pi]"}], ")"}]}], " ", 
+     RowBox[{"Exp", "[", 
+      RowBox[{
+       RowBox[{"-", "I"}], " ", "kt", " ", "\[Delta]tab"}], "]"}]}], ",", 
+    RowBox[{"{", 
+     RowBox[{"kt", ",", "kta", ",", " ", "ktb"}], "}"}]}], "]"}], " ", 
+  "]"}], "\[IndentingNewLine]"}], "Input",
+ CellChangeTimes->{{3.673642582373563*^9, 3.6736425979250526`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"ConditionalExpression", "[", 
+  RowBox[{
+   RowBox[{
+    FractionBox["1", 
+     RowBox[{"2", " ", "kta", " ", "ktb"}]], 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{"2", " ", "ktb", " ", "\[Pi]", " ", 
+       RowBox[{"Cos", "[", 
+        RowBox[{"kta", " ", "\[Delta]tab"}], "]"}]}], "-", 
+      RowBox[{"2", " ", "ktb", " ", "\[Pi]", " ", 
+       RowBox[{"Cos", "[", 
+        FractionBox[
+         RowBox[{"kta", " ", "\[Delta]t"}], "\[Pi]"], "]"}], " ", 
+       RowBox[{"Cos", "[", 
+        RowBox[{"kta", " ", "\[Delta]tab"}], "]"}]}], "-", 
+      RowBox[{"2", " ", "kta", " ", "\[Pi]", " ", 
+       RowBox[{"Cos", "[", 
+        RowBox[{"ktb", " ", "\[Delta]tab"}], "]"}]}], "+", 
+      RowBox[{"2", " ", "kta", " ", "\[Pi]", " ", 
+       RowBox[{"Cos", "[", 
+        FractionBox[
+         RowBox[{"ktb", " ", "\[Delta]t"}], "\[Pi]"], "]"}], " ", 
+       RowBox[{"Cos", "[", 
+        RowBox[{"ktb", " ", "\[Delta]tab"}], "]"}]}], "+", 
+      RowBox[{"\[ImaginaryI]", " ", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{
+         "2", " ", "kta", " ", "ktb", " ", "\[Pi]", " ", "\[Delta]tab", " ", 
+          RowBox[{"CosIntegral", "[", 
+           RowBox[{"kta", " ", "\[Delta]tab"}], "]"}]}], "-", 
+         RowBox[{
+         "2", " ", "kta", " ", "ktb", " ", "\[Pi]", " ", "\[Delta]tab", " ", 
+          RowBox[{"CosIntegral", "[", 
+           RowBox[{"ktb", " ", "\[Delta]tab"}], "]"}]}], "+", 
+         RowBox[{"kta", " ", "ktb", " ", "\[Delta]t", " ", 
+          RowBox[{"CosIntegral", "[", 
+           RowBox[{"kta", " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"-", 
+               FractionBox["\[Delta]t", "\[Pi]"]}], "+", "\[Delta]tab"}], 
+             ")"}]}], "]"}]}], "-", 
+         RowBox[{"kta", " ", "ktb", " ", "\[Pi]", " ", "\[Delta]tab", " ", 
+          RowBox[{"CosIntegral", "[", 
+           RowBox[{"kta", " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"-", 
+               FractionBox["\[Delta]t", "\[Pi]"]}], "+", "\[Delta]tab"}], 
+             ")"}]}], "]"}]}], "-", 
+         RowBox[{"kta", " ", "ktb", " ", "\[Delta]t", " ", 
+          RowBox[{"CosIntegral", "[", 
+           RowBox[{"ktb", " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"-", 
+               FractionBox["\[Delta]t", "\[Pi]"]}], "+", "\[Delta]tab"}], 
+             ")"}]}], "]"}]}], "+", 
+         RowBox[{"kta", " ", "ktb", " ", "\[Pi]", " ", "\[Delta]tab", " ", 
+          RowBox[{"CosIntegral", "[", 
+           RowBox[{"ktb", " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"-", 
+               FractionBox["\[Delta]t", "\[Pi]"]}], "+", "\[Delta]tab"}], 
+             ")"}]}], "]"}]}], "-", 
+         RowBox[{"kta", " ", "ktb", " ", "\[Delta]t", " ", 
+          RowBox[{"CosIntegral", "[", 
+           RowBox[{"kta", " ", 
+            RowBox[{"(", 
+             RowBox[{
+              FractionBox["\[Delta]t", "\[Pi]"], "+", "\[Delta]tab"}], 
+             ")"}]}], "]"}]}], "-", 
+         RowBox[{"kta", " ", "ktb", " ", "\[Pi]", " ", "\[Delta]tab", " ", 
+          RowBox[{"CosIntegral", "[", 
+           RowBox[{"kta", " ", 
+            RowBox[{"(", 
+             RowBox[{
+              FractionBox["\[Delta]t", "\[Pi]"], "+", "\[Delta]tab"}], 
+             ")"}]}], "]"}]}], "+", 
+         RowBox[{"kta", " ", "ktb", " ", "\[Delta]t", " ", 
+          RowBox[{"CosIntegral", "[", 
+           RowBox[{"ktb", " ", 
+            RowBox[{"(", 
+             RowBox[{
+              FractionBox["\[Delta]t", "\[Pi]"], "+", "\[Delta]tab"}], 
+             ")"}]}], "]"}]}], "+", 
+         RowBox[{"kta", " ", "ktb", " ", "\[Pi]", " ", "\[Delta]tab", " ", 
+          RowBox[{"CosIntegral", "[", 
+           RowBox[{"ktb", " ", 
+            RowBox[{"(", 
+             RowBox[{
+              FractionBox["\[Delta]t", "\[Pi]"], "+", "\[Delta]tab"}], 
+             ")"}]}], "]"}]}], "-", 
+         RowBox[{"2", " ", "ktb", " ", "\[Pi]", " ", 
+          RowBox[{"Sin", "[", 
+           RowBox[{"kta", " ", "\[Delta]tab"}], "]"}]}], "+", 
+         RowBox[{"2", " ", "ktb", " ", "\[Pi]", " ", 
+          RowBox[{"Cos", "[", 
+           FractionBox[
+            RowBox[{"kta", " ", "\[Delta]t"}], "\[Pi]"], "]"}], " ", 
+          RowBox[{"Sin", "[", 
+           RowBox[{"kta", " ", "\[Delta]tab"}], "]"}]}], "+", 
+         RowBox[{"2", " ", "kta", " ", "\[Pi]", " ", 
+          RowBox[{"Sin", "[", 
+           RowBox[{"ktb", " ", "\[Delta]tab"}], "]"}]}], "-", 
+         RowBox[{"2", " ", "kta", " ", "\[Pi]", " ", 
+          RowBox[{"Cos", "[", 
+           FractionBox[
+            RowBox[{"ktb", " ", "\[Delta]t"}], "\[Pi]"], "]"}], " ", 
+          RowBox[{"Sin", "[", 
+           RowBox[{"ktb", " ", "\[Delta]tab"}], "]"}]}]}], ")"}]}], "+", 
+      RowBox[{"kta", " ", "ktb", " ", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"-", "\[Delta]t"}], "+", 
+         RowBox[{"\[Pi]", " ", "\[Delta]tab"}]}], ")"}], " ", 
+       RowBox[{"SinIntegral", "[", 
+        RowBox[{"kta", " ", 
+         RowBox[{"(", 
+          RowBox[{
+           FractionBox["\[Delta]t", "\[Pi]"], "-", "\[Delta]tab"}], ")"}]}], 
+        "]"}]}], "+", 
+      RowBox[{"kta", " ", "ktb", " ", 
+       RowBox[{"(", 
+        RowBox[{"\[Delta]t", "-", 
+         RowBox[{"\[Pi]", " ", "\[Delta]tab"}]}], ")"}], " ", 
+       RowBox[{"SinIntegral", "[", 
+        RowBox[{"ktb", " ", 
+         RowBox[{"(", 
+          RowBox[{
+           FractionBox["\[Delta]t", "\[Pi]"], "-", "\[Delta]tab"}], ")"}]}], 
+        "]"}]}], "+", 
+      RowBox[{
+      "2", " ", "kta", " ", "ktb", " ", "\[Pi]", " ", "\[Delta]tab", " ", 
+       RowBox[{"SinIntegral", "[", 
+        RowBox[{"kta", " ", "\[Delta]tab"}], "]"}]}], "-", 
+      RowBox[{
+      "2", " ", "kta", " ", "ktb", " ", "\[Pi]", " ", "\[Delta]tab", " ", 
+       RowBox[{"SinIntegral", "[", 
+        RowBox[{"ktb", " ", "\[Delta]tab"}], "]"}]}], "-", 
+      RowBox[{"kta", " ", "ktb", " ", "\[Delta]t", " ", 
+       RowBox[{"SinIntegral", "[", 
+        RowBox[{"kta", " ", 
+         RowBox[{"(", 
+          RowBox[{
+           FractionBox["\[Delta]t", "\[Pi]"], "+", "\[Delta]tab"}], ")"}]}], 
+        "]"}]}], "-", 
+      RowBox[{"kta", " ", "ktb", " ", "\[Pi]", " ", "\[Delta]tab", " ", 
+       RowBox[{"SinIntegral", "[", 
+        RowBox[{"kta", " ", 
+         RowBox[{"(", 
+          RowBox[{
+           FractionBox["\[Delta]t", "\[Pi]"], "+", "\[Delta]tab"}], ")"}]}], 
+        "]"}]}], "+", 
+      RowBox[{"kta", " ", "ktb", " ", "\[Delta]t", " ", 
+       RowBox[{"SinIntegral", "[", 
+        RowBox[{"ktb", " ", 
+         RowBox[{"(", 
+          RowBox[{
+           FractionBox["\[Delta]t", "\[Pi]"], "+", "\[Delta]tab"}], ")"}]}], 
+        "]"}]}], "+", 
+      RowBox[{"kta", " ", "ktb", " ", "\[Pi]", " ", "\[Delta]tab", " ", 
+       RowBox[{"SinIntegral", "[", 
+        RowBox[{"ktb", " ", 
+         RowBox[{"(", 
+          RowBox[{
+           FractionBox["\[Delta]t", "\[Pi]"], "+", "\[Delta]tab"}], ")"}]}], 
+        "]"}]}]}], ")"}]}], ",", 
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{
+       FractionBox["kta", 
+        RowBox[{"kta", "-", "ktb"}]], "\[NotEqual]", "0"}], "&&", 
+      RowBox[{
+       RowBox[{"Re", "[", 
+        FractionBox["kta", 
+         RowBox[{
+          RowBox[{"-", "kta"}], "+", "ktb"}]], "]"}], "\[GreaterEqual]", 
+       "0"}]}], ")"}], "||", 
+    RowBox[{
+     RowBox[{"Re", "[", 
+      FractionBox["kta", 
+       RowBox[{"kta", "-", "ktb"}]], "]"}], ">", "1"}], "||", 
+    RowBox[{
+     FractionBox["kta", 
+      RowBox[{"kta", "-", "ktb"}]], "\[NotElement]", "Reals"}]}]}], 
+  "]"}]], "Output",
+ CellChangeTimes->{3.6736428343383102`*^9}]
+}, Open  ]]
+},
+WindowSize->{808, 655},
+WindowMargins->{{Automatic, 95}, {Automatic, 16}},
+FrontEndVersion->"10.3 for Mac OS X x86 (32-bit, 64-bit Kernel) (October 9, \
+2015)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 934, 27, 63, "Input"],
+Cell[1517, 51, 7655, 192, 724, "Output"]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
+

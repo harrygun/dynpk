@@ -119,6 +119,8 @@ if __name__=='__main__':
     # ->> (2). construct the quadratic estimator <<- # 
     
     # a). 2D axis list 
+      
+
 
     # b).  
 
