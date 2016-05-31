@@ -2,11 +2,12 @@ import numpy as np
 import pylab as pl
 import scipy.signal as sig
 import scipy.fftpack as sfft
+import scipy.linalg as slag
 
 import genscript.parameter as par
 
 import misc.helper as helper
-
+import covmat as covm
 
 
 
@@ -37,12 +38,6 @@ class QuadEstimator(par.Parameters):
 
 
 
-def wpixel_fourier(kl, x_a, dx, pixel_type='rect'):
-    # ->> 
-    w=np.sinc(kl)
-
-    return
-
 
 def quad_init(d):
     # ->> initialization of quadratic estimator <<- #
@@ -57,9 +52,16 @@ def quad_pk(epar, d, fcm):
             epar:  parameters for quadratic estimator 
             fcm: fidicual covariance matrix  
     '''
-    # ->>  
+    # ->> obtain the derivative of covariance matrix <<- #
+    dcov=covm.dcov(plist, pdiff)
+    
+    # ->> obtain the full covariance matrix <<- #
+    fcov=covm.covfull(epar, d)
+    fcov_inv=slag.inv(fcov)
 
-
+    #->> obtain the estimator <<- #
+    for i in range(npt):
+        qi=np.einsum('ij,jk,ki', (fcov_inv, dcov[i], fcov_inv) )
 
 
     return

@@ -42,7 +42,7 @@ def dcov_1D(kti, Dkti, dt, dtab):
 
 
 
-def dcov(plist, pdiff, ):
+def dcov(plist, pdiff):
     ''' ->> get the derivative of covariance matrix <<- '''
 
     npt=len(plist)
@@ -61,4 +61,17 @@ def dcov(plist, pdiff, ):
     return dcov
 
 
+
+def cov_s():
+    return
+
+
+def cov_n():
+    return
+
+
+def covfull(d):
+
+
+    return
 
