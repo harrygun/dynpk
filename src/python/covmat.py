@@ -16,8 +16,10 @@ def Cos(x):
 
 
 def dcov_1D(kti, Dkti, dt, dtab):
-    ''' ->> kt_b:  boundary in k_t direction <<- 
-            kf_b:  boundary in k_f direction <<- 
+    ''' ->> kti:   center value of kt_i <<- 
+            Dkti:  Delta kt_i <<- 
+	    dt:    Delta t, pixel size
+	    dtab:  Delta t_ab
     '''
 
     dcov1d=((-4*Cos(dtab*(-Dkti/2. + kti)))/(Dkti - 2*kti) + \
@@ -34,7 +36,7 @@ def dcov_1D(kti, Dkti, dt, dtab):
           dtab*SinIntegral((dt + dtab)*(Dkti/2. + kti)))/np.pi
 
 
-    return
+    return dcov1d
 
 
 
