@@ -91,8 +91,6 @@ def autocorr(d, auto_type='FFT'):
        cor=np.fft.fftshift(cor)
 
 
-
-
     return cor
 
 
