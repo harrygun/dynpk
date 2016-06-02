@@ -17,7 +17,7 @@ import covmat as covm
     ------------------------------------------------------------
 '''
 defaultQuadEestValueDict={
-    'map_dimension':   2100,
+    'map_dimension':   (1000, 1000),
     }
 
 

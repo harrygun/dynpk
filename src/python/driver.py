@@ -94,7 +94,6 @@ if __name__=='__main__':
 
     # ->> data importing <<- #
     #fn=root+'data/DynSpec/Rickett_53560dspec.npy'
-    #fn=root+'data/DynSpec/Rickett_53311dspec.npy'
     fn=root+'data/sims/ds1.npy'
 
     d=np.load(fn)
@@ -102,7 +101,7 @@ if __name__=='__main__':
 
 
     #->> define class <<- #
-    #qe=quad.QuadEstimator(prog_control=p)
+    #qe=quad.QuadEstimator(prog_control=p, map=d)
 
 
     #->> do some testing <<- #
