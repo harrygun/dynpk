@@ -80,12 +80,17 @@ def autocorr(d, auto_type='FFT'):
         cor=sig.correlate2d(d, d) 
 
     if auto_type=='FFT':
-       dk=np.fft.rfft2(d)
-       #cor=(dk*np.conjugate(dk).astype(np.float64)
-       cor=np.fft.irfft2(dk*np.conjugate(dk))
+       # ->> zero padding <<- #
+       dx, dy=d.shape
+       dd=np.zeros((dx*2, dy*2))
+       dd[:dx,:dy]=d
 
-    #print 'auto correlation:', cor.shape, type(cor[0,0])
-    print cor.max(), cor.min()
+
+       dk=np.fft.rfft2(dd)
+       cor=np.fft.irfft2(dk*np.conjugate(dk))
+       cor=np.fft.fftshift(cor)
+
+
 
 
     return cor

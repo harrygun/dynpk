@@ -44,12 +44,13 @@ def do_test(p, d):
 	pass
 
     if test_type=='auto_corr':
-        cor=qde.autocorr(d)
+        cor=qde.autocorr(d, auto_type='FFT')
+        #cor=qde.autocorr(d, auto_type='scipy')
 
 	#cb=pl.imshow(cor, norm=colors.LogNorm() )
-	cb=pl.imshow(cor, vmin=-50, vmax=50)
-	#pl.hist(cor.flatten(), (-50, 50)) 
+	#cb=pl.imshow(cor, vmin=-50, vmax=50)
 
+	cb=pl.imshow(cor)
 	pl.show()
 
 
@@ -93,22 +94,22 @@ if __name__=='__main__':
 
     # ->> data importing <<- #
     #fn=root+'data/DynSpec/Rickett_53560dspec.npy'
-    fn=root+'data/DynSpec/Rickett_53311dspec.npy'
+    #fn=root+'data/DynSpec/Rickett_53311dspec.npy'
+    fn=root+'data/sims/ds1.npy'
 
     d=np.load(fn)
     print 'data shape:', d.shape
 
 
     #->> define class <<- #
-    qe=quad.QuadEstimator(prog_control=p)
+    #qe=quad.QuadEstimator(prog_control=p)
 
 
     #->> do some testing <<- #
     dmean=d.mean()
     dd=d-dmean
     print 'mean: ', dmean
-
-    do_test(p, dd)
+    do_test(p, dd[:200,:200])
 
 
     # ->> construction KL modes <<- #

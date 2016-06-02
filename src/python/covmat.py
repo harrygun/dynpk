@@ -50,12 +50,12 @@ def dcov(plist, pdiff):
 
     for i in range(npt):
         # ->> 
-	kti, kfi  =
-        Dkti, Dkfi=
+	#kti, kfi  =
+        #Dkti, Dkfi=
 
         for a in range(npix):
 	    for b in range(npix):
-                dcov[i,a,b]=dcov_1D(kti, Dkti, dt, dtab)*
+                dcov[i,a,b]=dcov_1D(kti, Dkti, dt, dtab)*\
                             dcov_1D(kfi, Dkfi, df, dfab)
 
     return dcov
