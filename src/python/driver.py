@@ -103,7 +103,6 @@ if __name__=='__main__':
     #->> define class <<- #
     #qe=quad.QuadEstimator(prog_control=p, map=d)
 
-
     #->> do some testing <<- #
     dmean=d.mean()
     dd=d-dmean
@@ -113,11 +112,10 @@ if __name__=='__main__':
 
     # ->> construction KL modes <<- #
     # ->> (1). guess the covariance matrix <<- # 
-    mask=helper.gen_mask(d.shape, npt=10, mask_type='default')
+    # ->> mask=helper.gen_mask(d.shape, npt=10, mask_type='default')
 
 
     # ->> (2). construct the quadratic estimator <<- # 
-    
     # a). 2D axis list 
       
 
