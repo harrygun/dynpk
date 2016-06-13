@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[     13231,        379]
-NotebookOptionsPosition[     12384,        343]
-NotebookOutlinePosition[     12739,        359]
-CellTagsIndexPosition[     12696,        356]
+NotebookDataLength[     54597,       1406]
+NotebookOptionsPosition[     53662,       1367]
+NotebookOutlinePosition[     54018,       1383]
+CellTagsIndexPosition[     53975,       1380]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -162,6 +162,8 @@ Cell[BoxData[
  CellChangeTimes->{3.6736445749546137`*^9, 3.67364824149118*^9}]
 }, Closed]],
 
+Cell[CellGroupData[{
+
 Cell[BoxData[{
  RowBox[{
   RowBox[{"mysinc", "[", "x_", "]"}], ":=", 
@@ -193,7 +195,965 @@ Cell[BoxData[{
   "]"}]}], "Input",
  CellChangeTimes->{
   3.673648224696868*^9, {3.674825386231395*^9, 3.674825415604265*^9}, 
-   3.674825470984408*^9}]
+   3.674825470984408*^9}],
+
+Cell[BoxData[
+ RowBox[{"ConditionalExpression", "[", 
+  RowBox[{
+   RowBox[{
+    FractionBox["1", 
+     RowBox[{"kta", " ", "ktb", " ", "\[Pi]"}]], 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{"kta", " ", "ktb", " ", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"-", "\[Delta]t"}], "+", "\[Delta]tab"}], ")"}], " ", 
+       RowBox[{"CosIntegral", "[", 
+        RowBox[{"kta", " ", 
+         RowBox[{"(", 
+          RowBox[{"\[Delta]t", "-", "\[Delta]tab"}], ")"}]}], "]"}]}], "+", 
+      RowBox[{"kta", " ", "ktb", " ", 
+       RowBox[{"(", 
+        RowBox[{"\[Delta]t", "-", "\[Delta]tab"}], ")"}], " ", 
+       RowBox[{"CosIntegral", "[", 
+        RowBox[{"ktb", " ", 
+         RowBox[{"(", 
+          RowBox[{"\[Delta]t", "-", "\[Delta]tab"}], ")"}]}], "]"}]}], "-", 
+      RowBox[{"2", " ", "kta", " ", "ktb", " ", "\[Delta]tab", " ", 
+       RowBox[{"CosIntegral", "[", 
+        RowBox[{"kta", " ", "\[Delta]tab"}], "]"}]}], "+", 
+      RowBox[{"2", " ", "kta", " ", "ktb", " ", "\[Delta]tab", " ", 
+       RowBox[{"CosIntegral", "[", 
+        RowBox[{"ktb", " ", "\[Delta]tab"}], "]"}]}], "+", 
+      RowBox[{"kta", " ", "ktb", " ", "\[Delta]t", " ", 
+       RowBox[{"CosIntegral", "[", 
+        RowBox[{"kta", " ", 
+         RowBox[{"(", 
+          RowBox[{"\[Delta]t", "+", "\[Delta]tab"}], ")"}]}], "]"}]}], "+", 
+      RowBox[{"kta", " ", "ktb", " ", "\[Delta]tab", " ", 
+       RowBox[{"CosIntegral", "[", 
+        RowBox[{"kta", " ", 
+         RowBox[{"(", 
+          RowBox[{"\[Delta]t", "+", "\[Delta]tab"}], ")"}]}], "]"}]}], "-", 
+      RowBox[{"kta", " ", "ktb", " ", "\[Delta]t", " ", 
+       RowBox[{"CosIntegral", "[", 
+        RowBox[{"ktb", " ", 
+         RowBox[{"(", 
+          RowBox[{"\[Delta]t", "+", "\[Delta]tab"}], ")"}]}], "]"}]}], "-", 
+      RowBox[{"kta", " ", "ktb", " ", "\[Delta]tab", " ", 
+       RowBox[{"CosIntegral", "[", 
+        RowBox[{"ktb", " ", 
+         RowBox[{"(", 
+          RowBox[{"\[Delta]t", "+", "\[Delta]tab"}], ")"}]}], "]"}]}], "+", 
+      RowBox[{"2", " ", "ktb", " ", 
+       RowBox[{"Sin", "[", 
+        RowBox[{"kta", " ", "\[Delta]tab"}], "]"}]}], "-", 
+      RowBox[{"2", " ", "ktb", " ", 
+       RowBox[{"Cos", "[", 
+        RowBox[{"kta", " ", "\[Delta]t"}], "]"}], " ", 
+       RowBox[{"Sin", "[", 
+        RowBox[{"kta", " ", "\[Delta]tab"}], "]"}]}], "-", 
+      RowBox[{"2", " ", "kta", " ", 
+       RowBox[{"Sin", "[", 
+        RowBox[{"ktb", " ", "\[Delta]tab"}], "]"}]}], "+", 
+      RowBox[{"2", " ", "kta", " ", 
+       RowBox[{"Cos", "[", 
+        RowBox[{"ktb", " ", "\[Delta]t"}], "]"}], " ", 
+       RowBox[{"Sin", "[", 
+        RowBox[{"ktb", " ", "\[Delta]tab"}], "]"}]}]}], ")"}]}], ",", 
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"Re", "[", 
+        FractionBox["kta", 
+         RowBox[{"kta", "-", "ktb"}]], "]"}], ">", "1"}], "&&", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"Re", "[", 
+            FractionBox["kta", 
+             RowBox[{"kta", "-", "ktb"}]], "]"}], "\[GreaterEqual]", "1"}], "&&", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{
+               RowBox[{
+                RowBox[{"(", 
+                 RowBox[{
+                  RowBox[{"-", 
+                   RowBox[{"Im", "[", "\[Delta]t", "]"}]}], "+", 
+                  RowBox[{"Im", "[", "\[Delta]tab", "]"}]}], ")"}], " ", 
+                RowBox[{"(", 
+                 RowBox[{
+                  RowBox[{"Re", "[", "kta", "]"}], "-", 
+                  RowBox[{"Re", "[", "ktb", "]"}]}], ")"}]}], 
+               "\[GreaterEqual]", 
+               RowBox[{
+                RowBox[{"(", 
+                 RowBox[{
+                  RowBox[{"Im", "[", "kta", "]"}], "-", 
+                  RowBox[{"Im", "[", "ktb", "]"}]}], ")"}], " ", 
+                RowBox[{"(", 
+                 RowBox[{
+                  RowBox[{"Re", "[", "\[Delta]t", "]"}], "-", 
+                  RowBox[{"Re", "[", "\[Delta]tab", "]"}]}], ")"}]}]}], "&&", 
+              
+              RowBox[{
+               RowBox[{
+                RowBox[{"(", 
+                 RowBox[{
+                  RowBox[{
+                   RowBox[{"Im", "[", "ktb", "]"}], " ", 
+                   RowBox[{"Re", "[", "kta", "]"}]}], "-", 
+                  RowBox[{
+                   RowBox[{"Im", "[", "kta", "]"}], " ", 
+                   RowBox[{"Re", "[", "ktb", "]"}]}]}], ")"}], " ", 
+                RowBox[{"(", 
+                 RowBox[{
+                  SuperscriptBox[
+                   RowBox[{"Im", "[", "\[Delta]t", "]"}], "2"], "-", 
+                  RowBox[{"2", " ", 
+                   RowBox[{"Im", "[", "\[Delta]t", "]"}], " ", 
+                   RowBox[{"Im", "[", "\[Delta]tab", "]"}]}], "+", 
+                  SuperscriptBox[
+                   RowBox[{"Im", "[", "\[Delta]tab", "]"}], "2"], "+", 
+                  SuperscriptBox[
+                   RowBox[{"(", 
+                    RowBox[{
+                    RowBox[{"Re", "[", "\[Delta]t", "]"}], "-", 
+                    RowBox[{"Re", "[", "\[Delta]tab", "]"}]}], ")"}], "2"]}], 
+                 ")"}]}], "\[GreaterEqual]", "0"}]}], ")"}], "||", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{
+               RowBox[{
+                RowBox[{"(", 
+                 RowBox[{
+                  RowBox[{"-", 
+                   RowBox[{"Im", "[", "\[Delta]t", "]"}]}], "+", 
+                  RowBox[{"Im", "[", "\[Delta]tab", "]"}]}], ")"}], " ", 
+                RowBox[{"(", 
+                 RowBox[{
+                  RowBox[{"Re", "[", "kta", "]"}], "-", 
+                  RowBox[{"Re", "[", "ktb", "]"}]}], ")"}]}], "\[LessEqual]", 
+               
+               RowBox[{
+                RowBox[{"(", 
+                 RowBox[{
+                  RowBox[{"Im", "[", "kta", "]"}], "-", 
+                  RowBox[{"Im", "[", "ktb", "]"}]}], ")"}], " ", 
+                RowBox[{"(", 
+                 RowBox[{
+                  RowBox[{"Re", "[", "\[Delta]t", "]"}], "-", 
+                  RowBox[{"Re", "[", "\[Delta]tab", "]"}]}], ")"}]}]}], "&&", 
+              
+              RowBox[{
+               RowBox[{
+                RowBox[{"(", 
+                 RowBox[{
+                  RowBox[{
+                   RowBox[{"Im", "[", "ktb", "]"}], " ", 
+                   RowBox[{"Re", "[", "kta", "]"}]}], "-", 
+                  RowBox[{
+                   RowBox[{"Im", "[", "kta", "]"}], " ", 
+                   RowBox[{"Re", "[", "ktb", "]"}]}]}], ")"}], " ", 
+                RowBox[{"(", 
+                 RowBox[{
+                  SuperscriptBox[
+                   RowBox[{"Im", "[", "\[Delta]t", "]"}], "2"], "-", 
+                  RowBox[{"2", " ", 
+                   RowBox[{"Im", "[", "\[Delta]t", "]"}], " ", 
+                   RowBox[{"Im", "[", "\[Delta]tab", "]"}]}], "+", 
+                  SuperscriptBox[
+                   RowBox[{"Im", "[", "\[Delta]tab", "]"}], "2"], "+", 
+                  SuperscriptBox[
+                   RowBox[{"(", 
+                    RowBox[{
+                    RowBox[{"Re", "[", "\[Delta]t", "]"}], "-", 
+                    RowBox[{"Re", "[", "\[Delta]tab", "]"}]}], ")"}], "2"]}], 
+                 ")"}]}], "\[LessEqual]", "0"}]}], ")"}]}], ")"}]}], ")"}], "||", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{
+           RowBox[{
+            RowBox[{
+             RowBox[{"Im", "[", "\[Delta]t", "]"}], " ", 
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"Re", "[", "kta", "]"}], "-", 
+               RowBox[{"Re", "[", "ktb", "]"}]}], ")"}]}], "+", 
+            RowBox[{
+             RowBox[{"Im", "[", "\[Delta]tab", "]"}], " ", 
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"-", 
+                RowBox[{"Re", "[", "kta", "]"}]}], "+", 
+               RowBox[{"Re", "[", "ktb", "]"}]}], ")"}]}], "+", 
+            RowBox[{
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"Im", "[", "kta", "]"}], "-", 
+               RowBox[{"Im", "[", "ktb", "]"}]}], ")"}], " ", 
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"Re", "[", "\[Delta]t", "]"}], "-", 
+               RowBox[{"Re", "[", "\[Delta]tab", "]"}]}], ")"}]}]}], 
+           "\[LessEqual]", "0"}], "&&", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{
+             RowBox[{
+              RowBox[{
+               RowBox[{"Im", "[", "\[Delta]t", "]"}], " ", 
+               RowBox[{"Re", "[", "kta", "]"}]}], "+", 
+              RowBox[{
+               RowBox[{"Im", "[", "kta", "]"}], " ", 
+               RowBox[{"Re", "[", "\[Delta]t", "]"}]}]}], "\[GreaterEqual]", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"Im", "[", "\[Delta]tab", "]"}], " ", 
+               RowBox[{"Re", "[", "kta", "]"}]}], "+", 
+              RowBox[{
+               RowBox[{"Im", "[", "kta", "]"}], " ", 
+               RowBox[{"Re", "[", "\[Delta]tab", "]"}]}]}]}], "||", 
+            RowBox[{
+             RowBox[{
+              RowBox[{
+               RowBox[{"Im", "[", "\[Delta]t", "]"}], " ", 
+               RowBox[{"Re", "[", "ktb", "]"}]}], "+", 
+              RowBox[{
+               RowBox[{"Im", "[", "ktb", "]"}], " ", 
+               RowBox[{"Re", "[", "\[Delta]t", "]"}]}]}], "\[LessEqual]", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"Im", "[", "\[Delta]tab", "]"}], " ", 
+               RowBox[{"Re", "[", "ktb", "]"}]}], "+", 
+              RowBox[{
+               RowBox[{"Im", "[", "ktb", "]"}], " ", 
+               RowBox[{"Re", "[", "\[Delta]tab", "]"}]}]}]}]}], ")"}]}], 
+         ")"}], "||", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{
+           RowBox[{
+            RowBox[{
+             RowBox[{"Im", "[", "\[Delta]t", "]"}], " ", 
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"Re", "[", "kta", "]"}], "-", 
+               RowBox[{"Re", "[", "ktb", "]"}]}], ")"}]}], "+", 
+            RowBox[{
+             RowBox[{"Im", "[", "\[Delta]tab", "]"}], " ", 
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"-", 
+                RowBox[{"Re", "[", "kta", "]"}]}], "+", 
+               RowBox[{"Re", "[", "ktb", "]"}]}], ")"}]}], "+", 
+            RowBox[{
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"Im", "[", "kta", "]"}], "-", 
+               RowBox[{"Im", "[", "ktb", "]"}]}], ")"}], " ", 
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"Re", "[", "\[Delta]t", "]"}], "-", 
+               RowBox[{"Re", "[", "\[Delta]tab", "]"}]}], ")"}]}]}], 
+           "\[GreaterEqual]", "0"}], "&&", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{
+             RowBox[{
+              RowBox[{
+               RowBox[{"Im", "[", "\[Delta]t", "]"}], " ", 
+               RowBox[{"Re", "[", "ktb", "]"}]}], "+", 
+              RowBox[{
+               RowBox[{"Im", "[", "ktb", "]"}], " ", 
+               RowBox[{"Re", "[", "\[Delta]t", "]"}]}]}], "\[GreaterEqual]", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"Im", "[", "\[Delta]tab", "]"}], " ", 
+               RowBox[{"Re", "[", "ktb", "]"}]}], "+", 
+              RowBox[{
+               RowBox[{"Im", "[", "ktb", "]"}], " ", 
+               RowBox[{"Re", "[", "\[Delta]tab", "]"}]}]}]}], "||", 
+            RowBox[{
+             RowBox[{
+              RowBox[{
+               RowBox[{"Im", "[", "\[Delta]t", "]"}], " ", 
+               RowBox[{"Re", "[", "kta", "]"}]}], "+", 
+              RowBox[{
+               RowBox[{"Im", "[", "kta", "]"}], " ", 
+               RowBox[{"Re", "[", "\[Delta]t", "]"}]}]}], "\[LessEqual]", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"Im", "[", "\[Delta]tab", "]"}], " ", 
+               RowBox[{"Re", "[", "kta", "]"}]}], "+", 
+              RowBox[{
+               RowBox[{"Im", "[", "kta", "]"}], " ", 
+               RowBox[{"Re", "[", "\[Delta]tab", "]"}]}]}]}]}], ")"}]}], 
+         ")"}]}], ")"}]}], ")"}], "||", 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"Re", "[", 
+        FractionBox["kta", 
+         RowBox[{
+          RowBox[{"-", "kta"}], "+", "ktb"}]], "]"}], "\[GreaterEqual]", 
+       "0"}], "&&", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{
+               RowBox[{
+                RowBox[{"(", 
+                 RowBox[{
+                  RowBox[{"-", 
+                   RowBox[{"Im", "[", "\[Delta]t", "]"}]}], "+", 
+                  RowBox[{"Im", "[", "\[Delta]tab", "]"}]}], ")"}], " ", 
+                RowBox[{"(", 
+                 RowBox[{
+                  RowBox[{"Re", "[", "kta", "]"}], "-", 
+                  RowBox[{"Re", "[", "ktb", "]"}]}], ")"}]}], 
+               "\[GreaterEqual]", 
+               RowBox[{
+                RowBox[{"(", 
+                 RowBox[{
+                  RowBox[{"Im", "[", "kta", "]"}], "-", 
+                  RowBox[{"Im", "[", "ktb", "]"}]}], ")"}], " ", 
+                RowBox[{"(", 
+                 RowBox[{
+                  RowBox[{"Re", "[", "\[Delta]t", "]"}], "-", 
+                  RowBox[{"Re", "[", "\[Delta]tab", "]"}]}], ")"}]}]}], "&&", 
+              
+              RowBox[{
+               RowBox[{
+                RowBox[{"(", 
+                 RowBox[{
+                  RowBox[{
+                   RowBox[{"Im", "[", "ktb", "]"}], " ", 
+                   RowBox[{"Re", "[", "kta", "]"}]}], "-", 
+                  RowBox[{
+                   RowBox[{"Im", "[", "kta", "]"}], " ", 
+                   RowBox[{"Re", "[", "ktb", "]"}]}]}], ")"}], " ", 
+                RowBox[{"(", 
+                 RowBox[{
+                  SuperscriptBox[
+                   RowBox[{"Im", "[", "\[Delta]t", "]"}], "2"], "-", 
+                  RowBox[{"2", " ", 
+                   RowBox[{"Im", "[", "\[Delta]t", "]"}], " ", 
+                   RowBox[{"Im", "[", "\[Delta]tab", "]"}]}], "+", 
+                  SuperscriptBox[
+                   RowBox[{"Im", "[", "\[Delta]tab", "]"}], "2"], "+", 
+                  SuperscriptBox[
+                   RowBox[{"(", 
+                    RowBox[{
+                    RowBox[{"Re", "[", "\[Delta]t", "]"}], "-", 
+                    RowBox[{"Re", "[", "\[Delta]tab", "]"}]}], ")"}], "2"]}], 
+                 ")"}]}], "\[GreaterEqual]", "0"}]}], ")"}], "||", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{
+               RowBox[{
+                RowBox[{
+                 RowBox[{"Im", "[", "\[Delta]t", "]"}], " ", 
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{"Re", "[", "kta", "]"}], "-", 
+                   RowBox[{"Re", "[", "ktb", "]"}]}], ")"}]}], "+", 
+                RowBox[{
+                 RowBox[{"Im", "[", "\[Delta]tab", "]"}], " ", 
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{"-", 
+                    RowBox[{"Re", "[", "kta", "]"}]}], "+", 
+                   RowBox[{"Re", "[", "ktb", "]"}]}], ")"}]}], "+", 
+                RowBox[{
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{"Im", "[", "kta", "]"}], "-", 
+                   RowBox[{"Im", "[", "ktb", "]"}]}], ")"}], " ", 
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{"Re", "[", "\[Delta]t", "]"}], "-", 
+                   RowBox[{"Re", "[", "\[Delta]tab", "]"}]}], ")"}]}]}], 
+               "\[GreaterEqual]", "0"}], "&&", 
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{
+                 RowBox[{
+                  RowBox[{
+                   RowBox[{"Im", "[", "\[Delta]t", "]"}], " ", 
+                   RowBox[{"Re", "[", "ktb", "]"}]}], "+", 
+                  RowBox[{
+                   RowBox[{"Im", "[", "ktb", "]"}], " ", 
+                   RowBox[{"Re", "[", "\[Delta]t", "]"}]}]}], 
+                 "\[GreaterEqual]", 
+                 RowBox[{
+                  RowBox[{
+                   RowBox[{"Im", "[", "\[Delta]tab", "]"}], " ", 
+                   RowBox[{"Re", "[", "ktb", "]"}]}], "+", 
+                  RowBox[{
+                   RowBox[{"Im", "[", "ktb", "]"}], " ", 
+                   RowBox[{"Re", "[", "\[Delta]tab", "]"}]}]}]}], "||", 
+                RowBox[{
+                 RowBox[{
+                  RowBox[{
+                   RowBox[{"Im", "[", "\[Delta]tab", "]"}], " ", 
+                   RowBox[{"Re", "[", "kta", "]"}]}], "+", 
+                  RowBox[{
+                   RowBox[{"Im", "[", "kta", "]"}], " ", 
+                   RowBox[{"Re", "[", "\[Delta]tab", "]"}]}]}], 
+                 "\[GreaterEqual]", 
+                 RowBox[{
+                  RowBox[{
+                   RowBox[{"Im", "[", "\[Delta]t", "]"}], " ", 
+                   RowBox[{"Re", "[", "kta", "]"}]}], "+", 
+                  RowBox[{
+                   RowBox[{"Im", "[", "kta", "]"}], " ", 
+                   RowBox[{"Re", "[", "\[Delta]t", "]"}]}]}]}]}], ")"}]}], 
+             ")"}], "||", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{
+               RowBox[{
+                RowBox[{"(", 
+                 RowBox[{
+                  RowBox[{"-", 
+                   RowBox[{"Im", "[", "\[Delta]t", "]"}]}], "+", 
+                  RowBox[{"Im", "[", "\[Delta]tab", "]"}]}], ")"}], " ", 
+                RowBox[{"(", 
+                 RowBox[{
+                  RowBox[{"Re", "[", "kta", "]"}], "-", 
+                  RowBox[{"Re", "[", "ktb", "]"}]}], ")"}]}], "\[LessEqual]", 
+               
+               RowBox[{
+                RowBox[{"(", 
+                 RowBox[{
+                  RowBox[{"Im", "[", "kta", "]"}], "-", 
+                  RowBox[{"Im", "[", "ktb", "]"}]}], ")"}], " ", 
+                RowBox[{"(", 
+                 RowBox[{
+                  RowBox[{"Re", "[", "\[Delta]t", "]"}], "-", 
+                  RowBox[{"Re", "[", "\[Delta]tab", "]"}]}], ")"}]}]}], "&&", 
+              
+              RowBox[{
+               RowBox[{
+                RowBox[{"(", 
+                 RowBox[{
+                  RowBox[{
+                   RowBox[{"Im", "[", "ktb", "]"}], " ", 
+                   RowBox[{"Re", "[", "kta", "]"}]}], "-", 
+                  RowBox[{
+                   RowBox[{"Im", "[", "kta", "]"}], " ", 
+                   RowBox[{"Re", "[", "ktb", "]"}]}]}], ")"}], " ", 
+                RowBox[{"(", 
+                 RowBox[{
+                  SuperscriptBox[
+                   RowBox[{"Im", "[", "\[Delta]t", "]"}], "2"], "-", 
+                  RowBox[{"2", " ", 
+                   RowBox[{"Im", "[", "\[Delta]t", "]"}], " ", 
+                   RowBox[{"Im", "[", "\[Delta]tab", "]"}]}], "+", 
+                  SuperscriptBox[
+                   RowBox[{"Im", "[", "\[Delta]tab", "]"}], "2"], "+", 
+                  SuperscriptBox[
+                   RowBox[{"(", 
+                    RowBox[{
+                    RowBox[{"Re", "[", "\[Delta]t", "]"}], "-", 
+                    RowBox[{"Re", "[", "\[Delta]tab", "]"}]}], ")"}], "2"]}], 
+                 ")"}]}], "\[LessEqual]", "0"}]}], ")"}], "||", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{
+               RowBox[{
+                RowBox[{
+                 RowBox[{"Im", "[", "\[Delta]t", "]"}], " ", 
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{"Re", "[", "kta", "]"}], "-", 
+                   RowBox[{"Re", "[", "ktb", "]"}]}], ")"}]}], "+", 
+                RowBox[{
+                 RowBox[{"Im", "[", "\[Delta]tab", "]"}], " ", 
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{"-", 
+                    RowBox[{"Re", "[", "kta", "]"}]}], "+", 
+                   RowBox[{"Re", "[", "ktb", "]"}]}], ")"}]}], "+", 
+                RowBox[{
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{"Im", "[", "kta", "]"}], "-", 
+                   RowBox[{"Im", "[", "ktb", "]"}]}], ")"}], " ", 
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{"Re", "[", "\[Delta]t", "]"}], "-", 
+                   RowBox[{"Re", "[", "\[Delta]tab", "]"}]}], ")"}]}]}], 
+               "\[LessEqual]", "0"}], "&&", 
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{
+                 RowBox[{
+                  RowBox[{
+                   RowBox[{"Im", "[", "\[Delta]t", "]"}], " ", 
+                   RowBox[{"Re", "[", "ktb", "]"}]}], "+", 
+                  RowBox[{
+                   RowBox[{"Im", "[", "ktb", "]"}], " ", 
+                   RowBox[{"Re", "[", "\[Delta]t", "]"}]}]}], "\[LessEqual]", 
+                 
+                 RowBox[{
+                  RowBox[{
+                   RowBox[{"Im", "[", "\[Delta]tab", "]"}], " ", 
+                   RowBox[{"Re", "[", "ktb", "]"}]}], "+", 
+                  RowBox[{
+                   RowBox[{"Im", "[", "ktb", "]"}], " ", 
+                   RowBox[{"Re", "[", "\[Delta]tab", "]"}]}]}]}], "||", 
+                RowBox[{
+                 RowBox[{
+                  RowBox[{
+                   RowBox[{"Im", "[", "\[Delta]tab", "]"}], " ", 
+                   RowBox[{"Re", "[", "kta", "]"}]}], "+", 
+                  RowBox[{
+                   RowBox[{"Im", "[", "kta", "]"}], " ", 
+                   RowBox[{"Re", "[", "\[Delta]tab", "]"}]}]}], 
+                 "\[LessEqual]", 
+                 RowBox[{
+                  RowBox[{
+                   RowBox[{"Im", "[", "\[Delta]t", "]"}], " ", 
+                   RowBox[{"Re", "[", "kta", "]"}]}], "+", 
+                  RowBox[{
+                   RowBox[{"Im", "[", "kta", "]"}], " ", 
+                   RowBox[{"Re", "[", "\[Delta]t", "]"}]}]}]}]}], ")"}]}], 
+             ")"}]}], ")"}], "&&", 
+          RowBox[{
+           FractionBox["kta", 
+            RowBox[{"kta", "-", "ktb"}]], "\[NotEqual]", "0"}]}], ")"}], "||", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"Re", "[", 
+            FractionBox["kta", 
+             RowBox[{"kta", "-", "ktb"}]], "]"}], ">", "1"}], "&&", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"-", 
+               RowBox[{"Im", "[", "\[Delta]t", "]"}]}], "+", 
+              RowBox[{"Im", "[", "\[Delta]tab", "]"}]}], ")"}], " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"Re", "[", "kta", "]"}], "-", 
+              RowBox[{"Re", "[", "ktb", "]"}]}], ")"}]}], "\[GreaterEqual]", 
+           RowBox[{
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"Im", "[", "kta", "]"}], "-", 
+              RowBox[{"Im", "[", "ktb", "]"}]}], ")"}], " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"Re", "[", "\[Delta]t", "]"}], "-", 
+              RowBox[{"Re", "[", "\[Delta]tab", "]"}]}], ")"}]}]}], "&&", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"Im", "[", "ktb", "]"}], " ", 
+               RowBox[{"Re", "[", "kta", "]"}]}], "-", 
+              RowBox[{
+               RowBox[{"Im", "[", "kta", "]"}], " ", 
+               RowBox[{"Re", "[", "ktb", "]"}]}]}], ")"}], " ", 
+            RowBox[{"(", 
+             RowBox[{
+              SuperscriptBox[
+               RowBox[{"Im", "[", "\[Delta]t", "]"}], "2"], "-", 
+              RowBox[{"2", " ", 
+               RowBox[{"Im", "[", "\[Delta]t", "]"}], " ", 
+               RowBox[{"Im", "[", "\[Delta]tab", "]"}]}], "+", 
+              SuperscriptBox[
+               RowBox[{"Im", "[", "\[Delta]tab", "]"}], "2"], "+", 
+              SuperscriptBox[
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{"Re", "[", "\[Delta]t", "]"}], "-", 
+                 RowBox[{"Re", "[", "\[Delta]tab", "]"}]}], ")"}], "2"]}], 
+             ")"}]}], "\[GreaterEqual]", "0"}]}], ")"}], "||", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"Re", "[", 
+            FractionBox["kta", 
+             RowBox[{"kta", "-", "ktb"}]], "]"}], ">", "1"}], "&&", 
+          RowBox[{
+           RowBox[{
+            RowBox[{
+             RowBox[{"Im", "[", "\[Delta]t", "]"}], " ", 
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"Re", "[", "kta", "]"}], "-", 
+               RowBox[{"Re", "[", "ktb", "]"}]}], ")"}]}], "+", 
+            RowBox[{
+             RowBox[{"Im", "[", "\[Delta]tab", "]"}], " ", 
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"-", 
+                RowBox[{"Re", "[", "kta", "]"}]}], "+", 
+               RowBox[{"Re", "[", "ktb", "]"}]}], ")"}]}], "+", 
+            RowBox[{
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"Im", "[", "kta", "]"}], "-", 
+               RowBox[{"Im", "[", "ktb", "]"}]}], ")"}], " ", 
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"Re", "[", "\[Delta]t", "]"}], "-", 
+               RowBox[{"Re", "[", "\[Delta]tab", "]"}]}], ")"}]}]}], 
+           "\[GreaterEqual]", "0"}], "&&", 
+          RowBox[{
+           RowBox[{
+            RowBox[{
+             RowBox[{"Im", "[", "\[Delta]tab", "]"}], " ", 
+             RowBox[{"Re", "[", "kta", "]"}]}], "+", 
+            RowBox[{
+             RowBox[{"Im", "[", "kta", "]"}], " ", 
+             RowBox[{"Re", "[", "\[Delta]tab", "]"}]}]}], "\[GreaterEqual]", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"Im", "[", "\[Delta]t", "]"}], " ", 
+             RowBox[{"Re", "[", "kta", "]"}]}], "+", 
+            RowBox[{
+             RowBox[{"Im", "[", "kta", "]"}], " ", 
+             RowBox[{"Re", "[", "\[Delta]t", "]"}]}]}]}]}], ")"}], "||", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"Re", "[", 
+            FractionBox["kta", 
+             RowBox[{"kta", "-", "ktb"}]], "]"}], ">", "1"}], "&&", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"-", 
+               RowBox[{"Im", "[", "\[Delta]t", "]"}]}], "+", 
+              RowBox[{"Im", "[", "\[Delta]tab", "]"}]}], ")"}], " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"Re", "[", "kta", "]"}], "-", 
+              RowBox[{"Re", "[", "ktb", "]"}]}], ")"}]}], "\[LessEqual]", 
+           RowBox[{
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"Im", "[", "kta", "]"}], "-", 
+              RowBox[{"Im", "[", "ktb", "]"}]}], ")"}], " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"Re", "[", "\[Delta]t", "]"}], "-", 
+              RowBox[{"Re", "[", "\[Delta]tab", "]"}]}], ")"}]}]}], "&&", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"Im", "[", "ktb", "]"}], " ", 
+               RowBox[{"Re", "[", "kta", "]"}]}], "-", 
+              RowBox[{
+               RowBox[{"Im", "[", "kta", "]"}], " ", 
+               RowBox[{"Re", "[", "ktb", "]"}]}]}], ")"}], " ", 
+            RowBox[{"(", 
+             RowBox[{
+              SuperscriptBox[
+               RowBox[{"Im", "[", "\[Delta]t", "]"}], "2"], "-", 
+              RowBox[{"2", " ", 
+               RowBox[{"Im", "[", "\[Delta]t", "]"}], " ", 
+               RowBox[{"Im", "[", "\[Delta]tab", "]"}]}], "+", 
+              SuperscriptBox[
+               RowBox[{"Im", "[", "\[Delta]tab", "]"}], "2"], "+", 
+              SuperscriptBox[
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{"Re", "[", "\[Delta]t", "]"}], "-", 
+                 RowBox[{"Re", "[", "\[Delta]tab", "]"}]}], ")"}], "2"]}], 
+             ")"}]}], "\[LessEqual]", "0"}]}], ")"}], "||", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"Re", "[", 
+            FractionBox["kta", 
+             RowBox[{"kta", "-", "ktb"}]], "]"}], ">", "1"}], "&&", 
+          RowBox[{
+           RowBox[{
+            RowBox[{
+             RowBox[{"Im", "[", "\[Delta]t", "]"}], " ", 
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"Re", "[", "kta", "]"}], "-", 
+               RowBox[{"Re", "[", "ktb", "]"}]}], ")"}]}], "+", 
+            RowBox[{
+             RowBox[{"Im", "[", "\[Delta]tab", "]"}], " ", 
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"-", 
+                RowBox[{"Re", "[", "kta", "]"}]}], "+", 
+               RowBox[{"Re", "[", "ktb", "]"}]}], ")"}]}], "+", 
+            RowBox[{
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"Im", "[", "kta", "]"}], "-", 
+               RowBox[{"Im", "[", "ktb", "]"}]}], ")"}], " ", 
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"Re", "[", "\[Delta]t", "]"}], "-", 
+               RowBox[{"Re", "[", "\[Delta]tab", "]"}]}], ")"}]}]}], 
+           "\[LessEqual]", "0"}], "&&", 
+          RowBox[{
+           RowBox[{
+            RowBox[{
+             RowBox[{"Im", "[", "\[Delta]tab", "]"}], " ", 
+             RowBox[{"Re", "[", "kta", "]"}]}], "+", 
+            RowBox[{
+             RowBox[{"Im", "[", "kta", "]"}], " ", 
+             RowBox[{"Re", "[", "\[Delta]tab", "]"}]}]}], "\[LessEqual]", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"Im", "[", "\[Delta]t", "]"}], " ", 
+             RowBox[{"Re", "[", "kta", "]"}]}], "+", 
+            RowBox[{
+             RowBox[{"Im", "[", "kta", "]"}], " ", 
+             RowBox[{"Re", "[", "\[Delta]t", "]"}]}]}]}]}], ")"}]}], ")"}]}], 
+     ")"}], "||", 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{
+       FractionBox["kta", 
+        RowBox[{"kta", "-", "ktb"}]], "\[NotElement]", "Reals"}], "&&", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{
+           RowBox[{
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"-", 
+               RowBox[{"Im", "[", "\[Delta]t", "]"}]}], "+", 
+              RowBox[{"Im", "[", "\[Delta]tab", "]"}]}], ")"}], " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"Re", "[", "kta", "]"}], "-", 
+              RowBox[{"Re", "[", "ktb", "]"}]}], ")"}]}], "\[GreaterEqual]", 
+           RowBox[{
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"Im", "[", "kta", "]"}], "-", 
+              RowBox[{"Im", "[", "ktb", "]"}]}], ")"}], " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"Re", "[", "\[Delta]t", "]"}], "-", 
+              RowBox[{"Re", "[", "\[Delta]tab", "]"}]}], ")"}]}]}], "&&", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"Im", "[", "ktb", "]"}], " ", 
+               RowBox[{"Re", "[", "kta", "]"}]}], "-", 
+              RowBox[{
+               RowBox[{"Im", "[", "kta", "]"}], " ", 
+               RowBox[{"Re", "[", "ktb", "]"}]}]}], ")"}], " ", 
+            RowBox[{"(", 
+             RowBox[{
+              SuperscriptBox[
+               RowBox[{"Im", "[", "\[Delta]t", "]"}], "2"], "-", 
+              RowBox[{"2", " ", 
+               RowBox[{"Im", "[", "\[Delta]t", "]"}], " ", 
+               RowBox[{"Im", "[", "\[Delta]tab", "]"}]}], "+", 
+              SuperscriptBox[
+               RowBox[{"Im", "[", "\[Delta]tab", "]"}], "2"], "+", 
+              SuperscriptBox[
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{"Re", "[", "\[Delta]t", "]"}], "-", 
+                 RowBox[{"Re", "[", "\[Delta]tab", "]"}]}], ")"}], "2"]}], 
+             ")"}]}], "\[GreaterEqual]", "0"}]}], ")"}], "||", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{
+           RowBox[{
+            RowBox[{
+             RowBox[{"Im", "[", "\[Delta]t", "]"}], " ", 
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"Re", "[", "kta", "]"}], "-", 
+               RowBox[{"Re", "[", "ktb", "]"}]}], ")"}]}], "+", 
+            RowBox[{
+             RowBox[{"Im", "[", "\[Delta]tab", "]"}], " ", 
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"-", 
+                RowBox[{"Re", "[", "kta", "]"}]}], "+", 
+               RowBox[{"Re", "[", "ktb", "]"}]}], ")"}]}], "+", 
+            RowBox[{
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"Im", "[", "kta", "]"}], "-", 
+               RowBox[{"Im", "[", "ktb", "]"}]}], ")"}], " ", 
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"Re", "[", "\[Delta]t", "]"}], "-", 
+               RowBox[{"Re", "[", "\[Delta]tab", "]"}]}], ")"}]}]}], 
+           "\[GreaterEqual]", "0"}], "&&", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{
+             RowBox[{
+              RowBox[{
+               RowBox[{"Im", "[", "\[Delta]t", "]"}], " ", 
+               RowBox[{"Re", "[", "ktb", "]"}]}], "+", 
+              RowBox[{
+               RowBox[{"Im", "[", "ktb", "]"}], " ", 
+               RowBox[{"Re", "[", "\[Delta]t", "]"}]}]}], "\[GreaterEqual]", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"Im", "[", "\[Delta]tab", "]"}], " ", 
+               RowBox[{"Re", "[", "ktb", "]"}]}], "+", 
+              RowBox[{
+               RowBox[{"Im", "[", "ktb", "]"}], " ", 
+               RowBox[{"Re", "[", "\[Delta]tab", "]"}]}]}]}], "||", 
+            RowBox[{
+             RowBox[{
+              RowBox[{
+               RowBox[{"Im", "[", "\[Delta]tab", "]"}], " ", 
+               RowBox[{"Re", "[", "kta", "]"}]}], "+", 
+              RowBox[{
+               RowBox[{"Im", "[", "kta", "]"}], " ", 
+               RowBox[{"Re", "[", "\[Delta]tab", "]"}]}]}], "\[GreaterEqual]", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"Im", "[", "\[Delta]t", "]"}], " ", 
+               RowBox[{"Re", "[", "kta", "]"}]}], "+", 
+              RowBox[{
+               RowBox[{"Im", "[", "kta", "]"}], " ", 
+               RowBox[{"Re", "[", "\[Delta]t", "]"}]}]}]}]}], ")"}]}], ")"}], 
+        "||", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{
+           RowBox[{
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"-", 
+               RowBox[{"Im", "[", "\[Delta]t", "]"}]}], "+", 
+              RowBox[{"Im", "[", "\[Delta]tab", "]"}]}], ")"}], " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"Re", "[", "kta", "]"}], "-", 
+              RowBox[{"Re", "[", "ktb", "]"}]}], ")"}]}], "\[LessEqual]", 
+           RowBox[{
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"Im", "[", "kta", "]"}], "-", 
+              RowBox[{"Im", "[", "ktb", "]"}]}], ")"}], " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"Re", "[", "\[Delta]t", "]"}], "-", 
+              RowBox[{"Re", "[", "\[Delta]tab", "]"}]}], ")"}]}]}], "&&", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"Im", "[", "ktb", "]"}], " ", 
+               RowBox[{"Re", "[", "kta", "]"}]}], "-", 
+              RowBox[{
+               RowBox[{"Im", "[", "kta", "]"}], " ", 
+               RowBox[{"Re", "[", "ktb", "]"}]}]}], ")"}], " ", 
+            RowBox[{"(", 
+             RowBox[{
+              SuperscriptBox[
+               RowBox[{"Im", "[", "\[Delta]t", "]"}], "2"], "-", 
+              RowBox[{"2", " ", 
+               RowBox[{"Im", "[", "\[Delta]t", "]"}], " ", 
+               RowBox[{"Im", "[", "\[Delta]tab", "]"}]}], "+", 
+              SuperscriptBox[
+               RowBox[{"Im", "[", "\[Delta]tab", "]"}], "2"], "+", 
+              SuperscriptBox[
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{"Re", "[", "\[Delta]t", "]"}], "-", 
+                 RowBox[{"Re", "[", "\[Delta]tab", "]"}]}], ")"}], "2"]}], 
+             ")"}]}], "\[LessEqual]", "0"}]}], ")"}], "||", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{
+           RowBox[{
+            RowBox[{
+             RowBox[{"Im", "[", "\[Delta]t", "]"}], " ", 
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"Re", "[", "kta", "]"}], "-", 
+               RowBox[{"Re", "[", "ktb", "]"}]}], ")"}]}], "+", 
+            RowBox[{
+             RowBox[{"Im", "[", "\[Delta]tab", "]"}], " ", 
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"-", 
+                RowBox[{"Re", "[", "kta", "]"}]}], "+", 
+               RowBox[{"Re", "[", "ktb", "]"}]}], ")"}]}], "+", 
+            RowBox[{
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"Im", "[", "kta", "]"}], "-", 
+               RowBox[{"Im", "[", "ktb", "]"}]}], ")"}], " ", 
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"Re", "[", "\[Delta]t", "]"}], "-", 
+               RowBox[{"Re", "[", "\[Delta]tab", "]"}]}], ")"}]}]}], 
+           "\[LessEqual]", "0"}], "&&", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{
+             RowBox[{
+              RowBox[{
+               RowBox[{"Im", "[", "\[Delta]t", "]"}], " ", 
+               RowBox[{"Re", "[", "ktb", "]"}]}], "+", 
+              RowBox[{
+               RowBox[{"Im", "[", "ktb", "]"}], " ", 
+               RowBox[{"Re", "[", "\[Delta]t", "]"}]}]}], "\[LessEqual]", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"Im", "[", "\[Delta]tab", "]"}], " ", 
+               RowBox[{"Re", "[", "ktb", "]"}]}], "+", 
+              RowBox[{
+               RowBox[{"Im", "[", "ktb", "]"}], " ", 
+               RowBox[{"Re", "[", "\[Delta]tab", "]"}]}]}]}], "||", 
+            RowBox[{
+             RowBox[{
+              RowBox[{
+               RowBox[{"Im", "[", "\[Delta]tab", "]"}], " ", 
+               RowBox[{"Re", "[", "kta", "]"}]}], "+", 
+              RowBox[{
+               RowBox[{"Im", "[", "kta", "]"}], " ", 
+               RowBox[{"Re", "[", "\[Delta]tab", "]"}]}]}], "\[LessEqual]", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"Im", "[", "\[Delta]t", "]"}], " ", 
+               RowBox[{"Re", "[", "kta", "]"}]}], "+", 
+              RowBox[{
+               RowBox[{"Im", "[", "kta", "]"}], " ", 
+               RowBox[{"Re", "[", "\[Delta]t", "]"}]}]}]}]}], ")"}]}], 
+         ")"}]}], ")"}]}], ")"}]}]}], "]"}]], "Output",
+ CellChangeTimes->{3.674825524501916*^9}]
+}, Closed]]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -277,10 +1237,74 @@ Cell[BoxData[
    RowBox[{
     RowBox[{"dcov_imag", "[", 
      RowBox[{"kta_", ",", "ktb_", ",", "\[Delta]t_", ",", "\[Delta]tab_"}], 
-     "]"}], ":=", "\[IndentingNewLine]"}]}]}]], "Input",
+     "]"}], ":=", 
+    RowBox[{
+     FractionBox["1", 
+      RowBox[{"kta", " ", "ktb", " ", "\[Pi]"}]], 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"kta", " ", "ktb", " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"-", "\[Delta]t"}], "+", "\[Delta]tab"}], ")"}], " ", 
+        RowBox[{"CosIntegral", "[", 
+         RowBox[{"kta", " ", 
+          RowBox[{"(", 
+           RowBox[{"\[Delta]t", "-", "\[Delta]tab"}], ")"}]}], "]"}]}], "+", 
+       RowBox[{"kta", " ", "ktb", " ", 
+        RowBox[{"(", 
+         RowBox[{"\[Delta]t", "-", "\[Delta]tab"}], ")"}], " ", 
+        RowBox[{"CosIntegral", "[", 
+         RowBox[{"ktb", " ", 
+          RowBox[{"(", 
+           RowBox[{"\[Delta]t", "-", "\[Delta]tab"}], ")"}]}], "]"}]}], "-", 
+       RowBox[{"2", " ", "kta", " ", "ktb", " ", "\[Delta]tab", " ", 
+        RowBox[{"CosIntegral", "[", 
+         RowBox[{"kta", " ", "\[Delta]tab"}], "]"}]}], "+", 
+       RowBox[{"2", " ", "kta", " ", "ktb", " ", "\[Delta]tab", " ", 
+        RowBox[{"CosIntegral", "[", 
+         RowBox[{"ktb", " ", "\[Delta]tab"}], "]"}]}], "+", 
+       RowBox[{"kta", " ", "ktb", " ", "\[Delta]t", " ", 
+        RowBox[{"CosIntegral", "[", 
+         RowBox[{"kta", " ", 
+          RowBox[{"(", 
+           RowBox[{"\[Delta]t", "+", "\[Delta]tab"}], ")"}]}], "]"}]}], "+", 
+       RowBox[{"kta", " ", "ktb", " ", "\[Delta]tab", " ", 
+        RowBox[{"CosIntegral", "[", 
+         RowBox[{"kta", " ", 
+          RowBox[{"(", 
+           RowBox[{"\[Delta]t", "+", "\[Delta]tab"}], ")"}]}], "]"}]}], "-", 
+       RowBox[{"kta", " ", "ktb", " ", "\[Delta]t", " ", 
+        RowBox[{"CosIntegral", "[", 
+         RowBox[{"ktb", " ", 
+          RowBox[{"(", 
+           RowBox[{"\[Delta]t", "+", "\[Delta]tab"}], ")"}]}], "]"}]}], "-", 
+       RowBox[{"kta", " ", "ktb", " ", "\[Delta]tab", " ", 
+        RowBox[{"CosIntegral", "[", 
+         RowBox[{"ktb", " ", 
+          RowBox[{"(", 
+           RowBox[{"\[Delta]t", "+", "\[Delta]tab"}], ")"}]}], "]"}]}], "+", 
+       RowBox[{"2", " ", "ktb", " ", 
+        RowBox[{"Sin", "[", 
+         RowBox[{"kta", " ", "\[Delta]tab"}], "]"}]}], "-", 
+       RowBox[{"2", " ", "ktb", " ", 
+        RowBox[{"Cos", "[", 
+         RowBox[{"kta", " ", "\[Delta]t"}], "]"}], " ", 
+        RowBox[{"Sin", "[", 
+         RowBox[{"kta", " ", "\[Delta]tab"}], "]"}]}], "-", 
+       RowBox[{"2", " ", "kta", " ", 
+        RowBox[{"Sin", "[", 
+         RowBox[{"ktb", " ", "\[Delta]tab"}], "]"}]}], "+", 
+       RowBox[{"2", " ", "kta", " ", 
+        RowBox[{"Cos", "[", 
+         RowBox[{"ktb", " ", "\[Delta]t"}], "]"}], " ", 
+        RowBox[{"Sin", "[", 
+         RowBox[{"ktb", " ", "\[Delta]tab"}], "]"}]}]}], ")"}]}]}], 
+   "\[IndentingNewLine]"}]}]], "Input",
  CellChangeTimes->{{3.673641405055328*^9, 3.6736414057239847`*^9}, 
    3.673644636019806*^9, 3.673648429218688*^9, {3.67482537347904*^9, 
-   3.674825374380438*^9}, {3.674825439327425*^9, 3.674825448618321*^9}}],
+   3.674825374380438*^9}, {3.674825439327425*^9, 3.674825448618321*^9}, 
+   3.6748256664545507`*^9}],
 
 Cell[CellGroupData[{
 
@@ -342,7 +1366,7 @@ Cell[BoxData["0.04463831878721674`"], "Output",
 }, Open  ]]
 },
 WindowSize->{808, 755},
-WindowMargins->{{Automatic, 75}, {Automatic, 0}},
+WindowMargins->{{Automatic, -16}, {Automatic, 0}},
 FrontEndVersion->"10.3 for Mac OS X x86 (32-bit, 64-bit Kernel) (October 9, \
 2015)",
 StyleDefinitions->"Default.nb"
@@ -366,18 +1390,21 @@ Cell[CellGroupData[{
 Cell[901, 33, 1562, 37, 63, "Input"],
 Cell[2466, 72, 3198, 89, 210, "Output"]
 }, Closed]],
-Cell[5679, 164, 1020, 31, 40, "Input"]
+Cell[CellGroupData[{
+Cell[5701, 166, 1020, 31, 40, "Input"],
+Cell[6724, 199, 38532, 955, 1358, "Output"]
+}, Closed]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[6736, 200, 110, 1, 65, "Chapter"],
-Cell[6849, 203, 3140, 79, 245, "Input"],
+Cell[45305, 1160, 110, 1, 65, "Chapter"],
+Cell[45418, 1163, 5849, 143, 386, "Input"],
 Cell[CellGroupData[{
-Cell[10014, 286, 411, 11, 46, "Input"],
-Cell[10428, 299, 953, 18, 194, "Output"]
+Cell[51292, 1310, 411, 11, 46, "Input"],
+Cell[51706, 1323, 953, 18, 194, "Output"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[11418, 322, 540, 9, 97, "Input"],
-Cell[11961, 333, 383, 5, 28, "Output"]
+Cell[52696, 1346, 540, 9, 97, "Input"],
+Cell[53239, 1357, 383, 5, 28, "Output"]
 }, Open  ]]
 }, Open  ]]
 }, Open  ]]
