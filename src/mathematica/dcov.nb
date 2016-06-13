@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[     12012,        344]
-NotebookOptionsPosition[     11169,        308]
-NotebookOutlinePosition[     11525,        324]
-CellTagsIndexPosition[     11482,        321]
+NotebookDataLength[     13231,        379]
+NotebookOptionsPosition[     12384,        343]
+NotebookOutlinePosition[     12739,        359]
+CellTagsIndexPosition[     12696,        356]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -160,10 +160,40 @@ Cell[BoxData[
       RowBox[{"kta", "-", "ktb"}]], "\[NotElement]", "Reals"}]}]}], 
   "]"}]], "Output",
  CellChangeTimes->{3.6736445749546137`*^9, 3.67364824149118*^9}]
-}, Open  ]],
+}, Closed]],
 
-Cell[BoxData["|"], "Input",
- CellChangeTimes->{3.673648224696868*^9}]
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"mysinc", "[", "x_", "]"}], ":=", 
+  RowBox[{
+   RowBox[{"Sin", "[", 
+    RowBox[{"\[Pi]", " ", "x"}], "]"}], "/", 
+   RowBox[{"(", 
+    RowBox[{"\[Pi]", " ", "x"}], ")"}]}]}], "\[IndentingNewLine]", 
+ RowBox[{"Simplify", "[", " ", 
+  RowBox[{"Integrate", "[", 
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{"\[Delta]t", "  ", 
+         RowBox[{"mysinc", "[", 
+          RowBox[{"\[Delta]t", " ", 
+           RowBox[{"kt", "/", 
+            RowBox[{"(", 
+             RowBox[{"2", " ", "\[Pi]"}], ")"}]}]}], "]"}]}], ")"}], "^", 
+       "2"}], "/", 
+      RowBox[{"(", 
+       RowBox[{"2", "\[Pi]"}], ")"}]}], " ", "2", " ", 
+     RowBox[{"Sin", "[", " ", 
+      RowBox[{"kt", " ", "\[Delta]tab"}], "]"}]}], ",", 
+    RowBox[{"{", 
+     RowBox[{"kt", ",", "kta", ",", " ", "ktb"}], "}"}]}], "]"}], " ", 
+  "]"}]}], "Input",
+ CellChangeTimes->{
+  3.673648224696868*^9, {3.674825386231395*^9, 3.674825415604265*^9}, 
+   3.674825470984408*^9}]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -175,7 +205,7 @@ Cell[BoxData[
  RowBox[{"\[IndentingNewLine]", 
   RowBox[{
    RowBox[{
-    RowBox[{"dcov", "[", 
+    RowBox[{"dcov_real", "[", 
      RowBox[{"kta_", ",", "ktb_", ",", "\[Delta]t_", ",", "\[Delta]tab_"}], 
      "]"}], ":=", 
     RowBox[{
@@ -243,9 +273,14 @@ Cell[BoxData[
          RowBox[{"ktb", " ", 
           RowBox[{"(", 
            RowBox[{"\[Delta]t", "+", "\[Delta]tab"}], ")"}]}], "]"}]}]}], 
-      ")"}]}]}], "\[IndentingNewLine]"}]}]], "Input",
+      ")"}]}]}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"dcov_imag", "[", 
+     RowBox[{"kta_", ",", "ktb_", ",", "\[Delta]t_", ",", "\[Delta]tab_"}], 
+     "]"}], ":=", "\[IndentingNewLine]"}]}]}]], "Input",
  CellChangeTimes->{{3.673641405055328*^9, 3.6736414057239847`*^9}, 
-   3.673644636019806*^9, 3.673648429218688*^9}],
+   3.673644636019806*^9, 3.673648429218688*^9, {3.67482537347904*^9, 
+   3.674825374380438*^9}, {3.674825439327425*^9, 3.674825448618321*^9}}],
 
 Cell[CellGroupData[{
 
@@ -307,7 +342,7 @@ Cell[BoxData["0.04463831878721674`"], "Output",
 }, Open  ]]
 },
 WindowSize->{808, 755},
-WindowMargins->{{155, Automatic}, {Automatic, 0}},
+WindowMargins->{{Automatic, 75}, {Automatic, 0}},
 FrontEndVersion->"10.3 for Mac OS X x86 (32-bit, 64-bit Kernel) (October 9, \
 2015)",
 StyleDefinitions->"Default.nb"
@@ -330,19 +365,19 @@ Cell[705, 27, 171, 2, 65, "Chapter"],
 Cell[CellGroupData[{
 Cell[901, 33, 1562, 37, 63, "Input"],
 Cell[2466, 72, 3198, 89, 210, "Output"]
-}, Open  ]],
-Cell[5679, 164, 69, 1, 28, "Input"]
-}, Open  ]],
-Cell[CellGroupData[{
-Cell[5785, 170, 110, 1, 65, "Chapter"],
-Cell[5898, 173, 2876, 74, 228, "Input"],
-Cell[CellGroupData[{
-Cell[8799, 251, 411, 11, 46, "Input"],
-Cell[9213, 264, 953, 18, 194, "Output"]
+}, Closed]],
+Cell[5679, 164, 1020, 31, 40, "Input"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[10203, 287, 540, 9, 97, "Input"],
-Cell[10746, 298, 383, 5, 28, "Output"]
+Cell[6736, 200, 110, 1, 65, "Chapter"],
+Cell[6849, 203, 3140, 79, 245, "Input"],
+Cell[CellGroupData[{
+Cell[10014, 286, 411, 11, 46, "Input"],
+Cell[10428, 299, 953, 18, 194, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[11418, 322, 540, 9, 97, "Input"],
+Cell[11961, 333, 383, 5, 28, "Output"]
 }, Open  ]]
 }, Open  ]]
 }, Open  ]]
