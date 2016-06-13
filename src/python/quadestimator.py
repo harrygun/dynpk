@@ -16,12 +16,12 @@ import covmat as covm
               ->>  Quadratic Estimator <<-
     ------------------------------------------------------------
 '''
-defaultQuadEestValueDict={
+defaultQuadestParaValueDict={
     'map_dimension':   (1000, 1000),
     }
 
 
-defaultQuadEestNameDict={
+defaultQuadestParaNameDict={
     'map_dimension':   'm_dim',
     }
 
@@ -36,8 +36,14 @@ class QuadestPara(par.Parameters):
                  prog_control=None, map=None, **pardict):
 
 
+        super(QuadestPara,self).__init__(defaultQuadestParaValueDict, 
+	                names_dict=defaultQuadestParaNameDict, paramfname=paramfname, 
+		        section=section, def_var=def_var, **pardict)
+        #->> 
+	self.map=map
 
-        __ 
+        if map!=None:
+	    self.m_dim=map.shape
 
 
         return

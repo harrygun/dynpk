@@ -22,6 +22,12 @@ def do_test(p, d):
     if p.do_testing=='False':
         return
 
+    # ->> 
+    dmean=d.mean()
+    print 'mean: ', dmean
+    d=(d-dmean)[:200,:200]
+
+
     #test_type='fft'  #'mask'
     test_type='auto_corr'  
 
@@ -67,10 +73,7 @@ param_dict={
     'power_spectrum_fname': '/home/xwang/workspace/general-data/power/fiducial_matterpower.dat',
     'cosmology_parameter_fname': 'parameters/cosparameter.cfg',
     'cosmology_parameter_sec': 'Cosmology_Parameters',
-    'a_init': 1e-2,
-    'smooth_R': 0,
-    'smooth_type': 'Gauss', 
-    'smooth_R_list_type':  'linear'
+    'qestmator_sec':       'Quadratic_Estimator',
     }
 
 prog_control={
@@ -86,11 +89,11 @@ prog_control={
 if __name__=='__main__':
 
     # ->> initialization <<- #
+    sec='General'
     init_dict=myDict(prog_control)+myDict(param_dict)
-    p=pc.prog_init(**init_dict)
+    p=pc.prog_init(section=sec, **init_dict)
 
     root='../../workspace/'
-
 
     # ->> data importing <<- #
     #fn=root+'data/DynSpec/Rickett_53560dspec.npy'
@@ -99,15 +102,18 @@ if __name__=='__main__':
     d=np.load(fn)
     print 'data shape:', d.shape
 
+    #->> do some testing <<- #
+    do_test(p, d)
+
+
+    ''' ->> now start to work <<- '''
 
     #->> define class <<- #
-    #qe=quad.QuadestPara(prog_control=p, map=d)
+    qe_dict=myDict({ })
 
-    #->> do some testing <<- #
-    dmean=d.mean()
-    dd=d-dmean
-    print 'mean: ', dmean
-    do_test(p, dd[:200,:200])
+    #->>parafname='same as parameter file' 
+    qe=quad.QuadestPara(paramfname=p.paramfname, section=p.qestmator_sec,
+            prog_control=p, map=d)
 
 
     # ->> construction KL modes <<- #
