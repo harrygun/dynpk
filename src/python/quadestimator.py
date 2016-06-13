@@ -27,11 +27,18 @@ defaultQuadEestNameDict={
 
 
 
-class QuadEstimator(par.Parameters):
+
+
+class QuadestPara(par.Parameters):
 
 
     def __init__(self, paramfname=None, section=None, def_var=True, 
-                 prog_control=None, **pardict):
+                 prog_control=None, map=None, **pardict):
+
+
+
+        __ 
+
 
         return
 
@@ -39,7 +46,8 @@ class QuadEstimator(par.Parameters):
 
 
 
-def quad_init(d):
+
+def quad_init(qd, ):
     # ->> initialization of quadratic estimator <<- #
     # ->> 
 
@@ -52,12 +60,18 @@ def quad_pk(epar, d, fcm):
             epar:  parameters for quadratic estimator 
             fcm: fidicual covariance matrix  
     '''
+
+    # ->> band power initialization <<- #
+    plist=
+
+
     # ->> obtain the derivative of covariance matrix <<- #
     dcov=covm.dcov(plist, pdiff)
     
     # ->> obtain the full covariance matrix <<- #
     fcov=covm.covfull(epar, d)
     fcov_inv=slag.inv(fcov)
+
 
     #->> obtain the estimator <<- #
     for i in range(npt):

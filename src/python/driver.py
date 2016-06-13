@@ -74,7 +74,7 @@ param_dict={
     }
 
 prog_control={
-    'do_testing': True, 
+    'do_testing': False, 
     #-------------------------------#
     #-------------------------------#
     }
@@ -101,7 +101,7 @@ if __name__=='__main__':
 
 
     #->> define class <<- #
-    #qe=quad.QuadEstimator(prog_control=p, map=d)
+    #qe=quad.QuadestPara(prog_control=p, map=d)
 
     #->> do some testing <<- #
     dmean=d.mean()

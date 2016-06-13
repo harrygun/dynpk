@@ -42,21 +42,35 @@ def dcov_1D(kti, Dkti, dt, dtab):
 
 
 
-def dcov(plist, pdiff):
-    ''' ->> get the derivative of covariance matrix <<- '''
+def dcov(plist, pdiff, speedup=False):
+    ''' ->> get the derivative of covariance matrix <<- 
+    
+    '''
 
     npt=len(plist)
+    npix=
+
     dcov=np.zeros(npt, npix, npix)
 
-    for i in range(npt):
-        # ->> 
-	#kti, kfi  =
-        #Dkti, Dkfi=
 
-        for a in range(npix):
-	    for b in range(npix):
-                dcov[i,a,b]=dcov_1D(kti, Dkti, dt, dtab)*\
-                            dcov_1D(kfi, Dkfi, df, dfab)
+    if speedup==True:
+        # ->> C loop <<- #
+        
+	return 
+
+    else:
+        # ->> python loop <<- #
+        for i in range(npt):
+
+            kti, kfi  =
+            Dkti, Dkfi=
+
+            for a in range(npix):
+	        for b in range(npix):
+                    dcov[i,a,b]=dcov_1D(kti, Dkti, dt, dtab)*\
+                                dcov_1D(kfi, Dkfi, df, dfab)
+
+
 
     return dcov
 
