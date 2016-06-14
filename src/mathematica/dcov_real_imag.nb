@@ -1,0 +1,473 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.3' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     16989,        463]
+NotebookOptionsPosition[     16658,        446]
+NotebookOutlinePosition[     17014,        462]
+CellTagsIndexPosition[     16971,        459]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"dcovReal", "[", 
+   RowBox[{"kta_", ",", "ktb_", ",", "\[Delta]t_", ",", "\[Delta]tab_"}], 
+   "]"}], ":=", 
+  RowBox[{
+   FractionBox["1", "\[Pi]"], 
+   RowBox[{"(", 
+    RowBox[{
+     FractionBox[
+      RowBox[{"2", " ", 
+       RowBox[{"Cos", "[", 
+        RowBox[{"kta", " ", "\[Delta]tab"}], "]"}]}], "kta"], "-", 
+     FractionBox[
+      RowBox[{"2", " ", 
+       RowBox[{"Cos", "[", 
+        RowBox[{"kta", " ", "\[Delta]t"}], "]"}], " ", 
+       RowBox[{"Cos", "[", 
+        RowBox[{"kta", " ", "\[Delta]tab"}], "]"}]}], "kta"], "-", 
+     FractionBox[
+      RowBox[{"2", " ", 
+       RowBox[{"Cos", "[", 
+        RowBox[{"ktb", " ", "\[Delta]tab"}], "]"}]}], "ktb"], "+", 
+     FractionBox[
+      RowBox[{"2", " ", 
+       RowBox[{"Cos", "[", 
+        RowBox[{"ktb", " ", "\[Delta]t"}], "]"}], " ", 
+       RowBox[{"Cos", "[", 
+        RowBox[{"ktb", " ", "\[Delta]tab"}], "]"}]}], "ktb"], "+", 
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"-", "\[Delta]t"}], "+", "\[Delta]tab"}], ")"}], " ", 
+      RowBox[{"SinIntegral", "[", 
+       RowBox[{"kta", " ", 
+        RowBox[{"(", 
+         RowBox[{"\[Delta]t", "-", "\[Delta]tab"}], ")"}]}], "]"}]}], "+", 
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{"\[Delta]t", "-", "\[Delta]tab"}], ")"}], " ", 
+      RowBox[{"SinIntegral", "[", 
+       RowBox[{"ktb", " ", 
+        RowBox[{"(", 
+         RowBox[{"\[Delta]t", "-", "\[Delta]tab"}], ")"}]}], "]"}]}], "+", 
+     RowBox[{"2", " ", "\[Delta]tab", " ", 
+      RowBox[{"SinIntegral", "[", 
+       RowBox[{"kta", " ", "\[Delta]tab"}], "]"}]}], "-", 
+     RowBox[{"2", " ", "\[Delta]tab", " ", 
+      RowBox[{"SinIntegral", "[", 
+       RowBox[{"ktb", " ", "\[Delta]tab"}], "]"}]}], "-", 
+     RowBox[{"\[Delta]t", " ", 
+      RowBox[{"SinIntegral", "[", 
+       RowBox[{"kta", " ", 
+        RowBox[{"(", 
+         RowBox[{"\[Delta]t", "+", "\[Delta]tab"}], ")"}]}], "]"}]}], "-", 
+     RowBox[{"\[Delta]tab", " ", 
+      RowBox[{"SinIntegral", "[", 
+       RowBox[{"kta", " ", 
+        RowBox[{"(", 
+         RowBox[{"\[Delta]t", "+", "\[Delta]tab"}], ")"}]}], "]"}]}], "+", 
+     RowBox[{"\[Delta]t", " ", 
+      RowBox[{"SinIntegral", "[", 
+       RowBox[{"ktb", " ", 
+        RowBox[{"(", 
+         RowBox[{"\[Delta]t", "+", "\[Delta]tab"}], ")"}]}], "]"}]}], "+", 
+     RowBox[{"\[Delta]tab", " ", 
+      RowBox[{"SinIntegral", "[", 
+       RowBox[{"ktb", " ", 
+        RowBox[{"(", 
+         RowBox[{"\[Delta]t", "+", "\[Delta]tab"}], ")"}]}], "]"}]}]}], 
+    ")"}]}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"dcovImag", "[", 
+    RowBox[{"kta_", ",", "ktb_", ",", "\[Delta]t_", ",", "\[Delta]tab_"}], 
+    "]"}], ":=", 
+   RowBox[{
+    FractionBox["1", 
+     RowBox[{"kta", " ", "ktb", " ", "\[Pi]"}]], 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{"kta", " ", "ktb", " ", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"-", "\[Delta]t"}], "+", "\[Delta]tab"}], ")"}], " ", 
+       RowBox[{"CosIntegral", "[", 
+        RowBox[{"kta", " ", 
+         RowBox[{"(", 
+          RowBox[{"\[Delta]t", "-", "\[Delta]tab"}], ")"}]}], "]"}]}], "+", 
+      RowBox[{"kta", " ", "ktb", " ", 
+       RowBox[{"(", 
+        RowBox[{"\[Delta]t", "-", "\[Delta]tab"}], ")"}], " ", 
+       RowBox[{"CosIntegral", "[", 
+        RowBox[{"ktb", " ", 
+         RowBox[{"(", 
+          RowBox[{"\[Delta]t", "-", "\[Delta]tab"}], ")"}]}], "]"}]}], "-", 
+      RowBox[{"2", " ", "kta", " ", "ktb", " ", "\[Delta]tab", " ", 
+       RowBox[{"CosIntegral", "[", 
+        RowBox[{"kta", " ", "\[Delta]tab"}], "]"}]}], "+", 
+      RowBox[{"2", " ", "kta", " ", "ktb", " ", "\[Delta]tab", " ", 
+       RowBox[{"CosIntegral", "[", 
+        RowBox[{"ktb", " ", "\[Delta]tab"}], "]"}]}], "+", 
+      RowBox[{"kta", " ", "ktb", " ", "\[Delta]t", " ", 
+       RowBox[{"CosIntegral", "[", 
+        RowBox[{"kta", " ", 
+         RowBox[{"(", 
+          RowBox[{"\[Delta]t", "+", "\[Delta]tab"}], ")"}]}], "]"}]}], "+", 
+      RowBox[{"kta", " ", "ktb", " ", "\[Delta]tab", " ", 
+       RowBox[{"CosIntegral", "[", 
+        RowBox[{"kta", " ", 
+         RowBox[{"(", 
+          RowBox[{"\[Delta]t", "+", "\[Delta]tab"}], ")"}]}], "]"}]}], "-", 
+      RowBox[{"kta", " ", "ktb", " ", "\[Delta]t", " ", 
+       RowBox[{"CosIntegral", "[", 
+        RowBox[{"ktb", " ", 
+         RowBox[{"(", 
+          RowBox[{"\[Delta]t", "+", "\[Delta]tab"}], ")"}]}], "]"}]}], "-", 
+      RowBox[{"kta", " ", "ktb", " ", "\[Delta]tab", " ", 
+       RowBox[{"CosIntegral", "[", 
+        RowBox[{"ktb", " ", 
+         RowBox[{"(", 
+          RowBox[{"\[Delta]t", "+", "\[Delta]tab"}], ")"}]}], "]"}]}], "+", 
+      RowBox[{"2", " ", "ktb", " ", 
+       RowBox[{"Sin", "[", 
+        RowBox[{"kta", " ", "\[Delta]tab"}], "]"}]}], "-", 
+      RowBox[{"2", " ", "ktb", " ", 
+       RowBox[{"Cos", "[", 
+        RowBox[{"kta", " ", "\[Delta]t"}], "]"}], " ", 
+       RowBox[{"Sin", "[", 
+        RowBox[{"kta", " ", "\[Delta]tab"}], "]"}]}], "-", 
+      RowBox[{"2", " ", "kta", " ", 
+       RowBox[{"Sin", "[", 
+        RowBox[{"ktb", " ", "\[Delta]tab"}], "]"}]}], "+", 
+      RowBox[{"2", " ", "kta", " ", 
+       RowBox[{"Cos", "[", 
+        RowBox[{"ktb", " ", "\[Delta]t"}], "]"}], " ", 
+       RowBox[{"Sin", "[", 
+        RowBox[{"ktb", " ", "\[Delta]tab"}], "]"}]}]}], ")"}]}]}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{"FullSimplify", "[", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"dcovReal", "[", 
+     RowBox[{"kta", ",", " ", "ktb", ",", " ", "dt", ",", " ", "dtab"}], 
+     "]"}], "*", 
+    RowBox[{"dcovImag", "[", 
+     RowBox[{"kfa", ",", " ", "kfb", ",", " ", "df", ",", " ", "dfab"}], 
+     "]"}]}], " ", "+", 
+   RowBox[{
+    RowBox[{"dcovReal", "[", 
+     RowBox[{"kfa", ",", " ", "kfb", ",", " ", "df", ",", " ", "dfab"}], 
+     "]"}], "*", 
+    RowBox[{"dcovImag", "[", 
+     RowBox[{"kta", ",", " ", "ktb", ",", " ", "dt", ",", " ", "dtab"}], 
+     "]"}]}]}], "]"}]}], "Input",
+ CellChangeTimes->{{3.674825679361865*^9, 3.6748257437398663`*^9}, {
+  3.674825783326785*^9, 3.674825879327376*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  FractionBox["1", 
+   SuperscriptBox["\[Pi]", "2"]], 
+  RowBox[{"(", 
+   RowBox[{
+    RowBox[{
+     FractionBox["1", 
+      RowBox[{"kta", " ", "ktb"}]], 
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"-", "dt"}], "+", "dtab"}], ")"}], " ", "kta", " ", "ktb", 
+         " ", 
+         RowBox[{"CosIntegral", "[", 
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{"dt", "-", "dtab"}], ")"}], " ", "kta"}], "]"}]}], "-", 
+        RowBox[{"2", " ", "dtab", " ", "kta", " ", "ktb", " ", 
+         RowBox[{"CosIntegral", "[", 
+          RowBox[{"dtab", " ", "kta"}], "]"}]}], "+", 
+        RowBox[{"dt", " ", "kta", " ", "ktb", " ", 
+         RowBox[{"CosIntegral", "[", 
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{"dt", "+", "dtab"}], ")"}], " ", "kta"}], "]"}]}], "+", 
+        RowBox[{"dtab", " ", "kta", " ", "ktb", " ", 
+         RowBox[{"CosIntegral", "[", 
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{"dt", "+", "dtab"}], ")"}], " ", "kta"}], "]"}]}], "+", 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{"dt", "-", "dtab"}], ")"}], " ", "kta", " ", "ktb", " ", 
+         RowBox[{"CosIntegral", "[", 
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{"dt", "-", "dtab"}], ")"}], " ", "ktb"}], "]"}]}], "+", 
+        RowBox[{"2", " ", "dtab", " ", "kta", " ", "ktb", " ", 
+         RowBox[{"CosIntegral", "[", 
+          RowBox[{"dtab", " ", "ktb"}], "]"}]}], "-", 
+        RowBox[{"dt", " ", "kta", " ", "ktb", " ", 
+         RowBox[{"CosIntegral", "[", 
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{"dt", "+", "dtab"}], ")"}], " ", "ktb"}], "]"}]}], "-", 
+        RowBox[{"dtab", " ", "kta", " ", "ktb", " ", 
+         RowBox[{"CosIntegral", "[", 
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{"dt", "+", "dtab"}], ")"}], " ", "ktb"}], "]"}]}], "+", 
+        RowBox[{"2", " ", "ktb", " ", 
+         RowBox[{"Sin", "[", 
+          RowBox[{"dtab", " ", "kta"}], "]"}]}], "-", 
+        RowBox[{"2", " ", "ktb", " ", 
+         RowBox[{"Cos", "[", 
+          RowBox[{"dt", " ", "kta"}], "]"}], " ", 
+         RowBox[{"Sin", "[", 
+          RowBox[{"dtab", " ", "kta"}], "]"}]}], "-", 
+        RowBox[{"2", " ", "kta", " ", 
+         RowBox[{"Sin", "[", 
+          RowBox[{"dtab", " ", "ktb"}], "]"}]}], "+", 
+        RowBox[{"2", " ", "kta", " ", 
+         RowBox[{"Cos", "[", 
+          RowBox[{"dt", " ", "ktb"}], "]"}], " ", 
+         RowBox[{"Sin", "[", 
+          RowBox[{"dtab", " ", "ktb"}], "]"}]}]}], ")"}], " ", 
+      RowBox[{"(", 
+       RowBox[{
+        FractionBox[
+         RowBox[{"2", " ", 
+          RowBox[{"Cos", "[", 
+           RowBox[{"dfab", " ", "kfa"}], "]"}]}], "kfa"], "-", 
+        FractionBox[
+         RowBox[{"2", " ", 
+          RowBox[{"Cos", "[", 
+           RowBox[{"df", " ", "kfa"}], "]"}], " ", 
+          RowBox[{"Cos", "[", 
+           RowBox[{"dfab", " ", "kfa"}], "]"}]}], "kfa"], "-", 
+        FractionBox[
+         RowBox[{"2", " ", 
+          RowBox[{"Cos", "[", 
+           RowBox[{"dfab", " ", "kfb"}], "]"}]}], "kfb"], "+", 
+        FractionBox[
+         RowBox[{"2", " ", 
+          RowBox[{"Cos", "[", 
+           RowBox[{"df", " ", "kfb"}], "]"}], " ", 
+          RowBox[{"Cos", "[", 
+           RowBox[{"dfab", " ", "kfb"}], "]"}]}], "kfb"], "+", 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"-", "df"}], "+", "dfab"}], ")"}], " ", 
+         RowBox[{"SinIntegral", "[", 
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{"df", "-", "dfab"}], ")"}], " ", "kfa"}], "]"}]}], "+", 
+        RowBox[{"2", " ", "dfab", " ", 
+         RowBox[{"SinIntegral", "[", 
+          RowBox[{"dfab", " ", "kfa"}], "]"}]}], "-", 
+        RowBox[{"df", " ", 
+         RowBox[{"SinIntegral", "[", 
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{"df", "+", "dfab"}], ")"}], " ", "kfa"}], "]"}]}], "-", 
+        RowBox[{"dfab", " ", 
+         RowBox[{"SinIntegral", "[", 
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{"df", "+", "dfab"}], ")"}], " ", "kfa"}], "]"}]}], "+", 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{"df", "-", "dfab"}], ")"}], " ", 
+         RowBox[{"SinIntegral", "[", 
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{"df", "-", "dfab"}], ")"}], " ", "kfb"}], "]"}]}], "-", 
+        RowBox[{"2", " ", "dfab", " ", 
+         RowBox[{"SinIntegral", "[", 
+          RowBox[{"dfab", " ", "kfb"}], "]"}]}], "+", 
+        RowBox[{"df", " ", 
+         RowBox[{"SinIntegral", "[", 
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{"df", "+", "dfab"}], ")"}], " ", "kfb"}], "]"}]}], "+", 
+        RowBox[{"dfab", " ", 
+         RowBox[{"SinIntegral", "[", 
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{"df", "+", "dfab"}], ")"}], " ", "kfb"}], "]"}]}]}], 
+       ")"}]}]}], "+", 
+    RowBox[{
+     FractionBox["1", 
+      RowBox[{"kfa", " ", "kfb"}]], 
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"-", "df"}], "+", "dfab"}], ")"}], " ", "kfa", " ", "kfb", 
+         " ", 
+         RowBox[{"CosIntegral", "[", 
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{"df", "-", "dfab"}], ")"}], " ", "kfa"}], "]"}]}], "-", 
+        RowBox[{"2", " ", "dfab", " ", "kfa", " ", "kfb", " ", 
+         RowBox[{"CosIntegral", "[", 
+          RowBox[{"dfab", " ", "kfa"}], "]"}]}], "+", 
+        RowBox[{"df", " ", "kfa", " ", "kfb", " ", 
+         RowBox[{"CosIntegral", "[", 
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{"df", "+", "dfab"}], ")"}], " ", "kfa"}], "]"}]}], "+", 
+        RowBox[{"dfab", " ", "kfa", " ", "kfb", " ", 
+         RowBox[{"CosIntegral", "[", 
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{"df", "+", "dfab"}], ")"}], " ", "kfa"}], "]"}]}], "+", 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{"df", "-", "dfab"}], ")"}], " ", "kfa", " ", "kfb", " ", 
+         RowBox[{"CosIntegral", "[", 
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{"df", "-", "dfab"}], ")"}], " ", "kfb"}], "]"}]}], "+", 
+        RowBox[{"2", " ", "dfab", " ", "kfa", " ", "kfb", " ", 
+         RowBox[{"CosIntegral", "[", 
+          RowBox[{"dfab", " ", "kfb"}], "]"}]}], "-", 
+        RowBox[{"df", " ", "kfa", " ", "kfb", " ", 
+         RowBox[{"CosIntegral", "[", 
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{"df", "+", "dfab"}], ")"}], " ", "kfb"}], "]"}]}], "-", 
+        RowBox[{"dfab", " ", "kfa", " ", "kfb", " ", 
+         RowBox[{"CosIntegral", "[", 
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{"df", "+", "dfab"}], ")"}], " ", "kfb"}], "]"}]}], "+", 
+        RowBox[{"2", " ", "kfb", " ", 
+         RowBox[{"Sin", "[", 
+          RowBox[{"dfab", " ", "kfa"}], "]"}]}], "-", 
+        RowBox[{"2", " ", "kfb", " ", 
+         RowBox[{"Cos", "[", 
+          RowBox[{"df", " ", "kfa"}], "]"}], " ", 
+         RowBox[{"Sin", "[", 
+          RowBox[{"dfab", " ", "kfa"}], "]"}]}], "-", 
+        RowBox[{"2", " ", "kfa", " ", 
+         RowBox[{"Sin", "[", 
+          RowBox[{"dfab", " ", "kfb"}], "]"}]}], "+", 
+        RowBox[{"2", " ", "kfa", " ", 
+         RowBox[{"Cos", "[", 
+          RowBox[{"df", " ", "kfb"}], "]"}], " ", 
+         RowBox[{"Sin", "[", 
+          RowBox[{"dfab", " ", "kfb"}], "]"}]}]}], ")"}], " ", 
+      RowBox[{"(", 
+       RowBox[{
+        FractionBox[
+         RowBox[{"2", " ", 
+          RowBox[{"Cos", "[", 
+           RowBox[{"dtab", " ", "kta"}], "]"}]}], "kta"], "-", 
+        FractionBox[
+         RowBox[{"2", " ", 
+          RowBox[{"Cos", "[", 
+           RowBox[{"dt", " ", "kta"}], "]"}], " ", 
+          RowBox[{"Cos", "[", 
+           RowBox[{"dtab", " ", "kta"}], "]"}]}], "kta"], "-", 
+        FractionBox[
+         RowBox[{"2", " ", 
+          RowBox[{"Cos", "[", 
+           RowBox[{"dtab", " ", "ktb"}], "]"}]}], "ktb"], "+", 
+        FractionBox[
+         RowBox[{"2", " ", 
+          RowBox[{"Cos", "[", 
+           RowBox[{"dt", " ", "ktb"}], "]"}], " ", 
+          RowBox[{"Cos", "[", 
+           RowBox[{"dtab", " ", "ktb"}], "]"}]}], "ktb"], "+", 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"-", "dt"}], "+", "dtab"}], ")"}], " ", 
+         RowBox[{"SinIntegral", "[", 
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{"dt", "-", "dtab"}], ")"}], " ", "kta"}], "]"}]}], "+", 
+        RowBox[{"2", " ", "dtab", " ", 
+         RowBox[{"SinIntegral", "[", 
+          RowBox[{"dtab", " ", "kta"}], "]"}]}], "-", 
+        RowBox[{"dt", " ", 
+         RowBox[{"SinIntegral", "[", 
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{"dt", "+", "dtab"}], ")"}], " ", "kta"}], "]"}]}], "-", 
+        RowBox[{"dtab", " ", 
+         RowBox[{"SinIntegral", "[", 
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{"dt", "+", "dtab"}], ")"}], " ", "kta"}], "]"}]}], "+", 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{"dt", "-", "dtab"}], ")"}], " ", 
+         RowBox[{"SinIntegral", "[", 
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{"dt", "-", "dtab"}], ")"}], " ", "ktb"}], "]"}]}], "-", 
+        RowBox[{"2", " ", "dtab", " ", 
+         RowBox[{"SinIntegral", "[", 
+          RowBox[{"dtab", " ", "ktb"}], "]"}]}], "+", 
+        RowBox[{"dt", " ", 
+         RowBox[{"SinIntegral", "[", 
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{"dt", "+", "dtab"}], ")"}], " ", "ktb"}], "]"}]}], "+", 
+        RowBox[{"dtab", " ", 
+         RowBox[{"SinIntegral", "[", 
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{"dt", "+", "dtab"}], ")"}], " ", "ktb"}], "]"}]}]}], 
+       ")"}]}]}]}], ")"}]}]], "Output",
+ CellChangeTimes->{{3.674825765992621*^9, 3.6748258133260727`*^9}, 
+   3.67482587422326*^9}]
+}, Open  ]]
+},
+WindowSize->{808, 655},
+WindowMargins->{{Automatic, 130}, {Automatic, 0}},
+FrontEndVersion->"10.3 for Mac OS X x86 (32-bit, 64-bit Kernel) (October 9, \
+2015)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 6074, 156, 403, "Input"],
+Cell[6657, 180, 9985, 263, 579, "Output"]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
+
