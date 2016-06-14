@@ -3,8 +3,10 @@ import pylab as pl
 import scipy.signal as sig
 import scipy.fftpack as sfft
 import scipy.linalg as slag
+import json
 
 import genscript.parameter as par
+import genscript.myarray as mar
 
 import misc.helper as helper
 import covmat as covm
@@ -15,17 +17,23 @@ import covmat as covm
 
 
 
-def band_power_init(bp_init_type, fname=None):
+def band_power_init(bp_init_type, fname=None, **pdict):
 
     if bp_init_type=='from_file':
+        raise Exception('from_file band_power_init() NOT supported yet.')
 
+    # ->>  <<- #
+    if bp_init_type=='internal_log':
+        
+        kt_min, kt_max, kt_num = pdict['kt_list_para']
+        kf_min, kf_max, kf_num = pdict['kf_list_para']
 
-        return
+        kt_list=np.logspace(kt_min, kt_max, kt_num) 
+        kf_list=np.logspace(kf_min, kf_max, kf_num) 
 
-    if bp_init_type=='from_file':
+        plist=mar.meshgrid(kt_list, kf_list) 
 
-
-        return
+        return plist
 
 
 
@@ -76,9 +84,11 @@ def quade_pk(epar, d, fcm):
     ------------------------------------------------------------
 '''
 defaultQuadestParaValueDict={
-    'map_dimension':   (100, 100),
+    'map_dimension':   [100, 100],
     'get_bandpower_list_type':   'from_file', 
-    'bandpower_list_fname':      'x.dat'
+    'bandpower_list_fname':      'x.dat', 
+    'kt_list_para':               [-2, 2, 10],
+    'kf_list_para':               [-2, 2, 10],
     }
 
 
@@ -86,6 +96,8 @@ defaultQuadestParaNameDict={
     'map_dimension':             'm_dim',
     'get_bandpower_list_type':   'get_bp_type', 
     'bandpower_list_fname':      'bp_list_fname',
+    'kt_list_para':               'kt_list_para',
+    'kf_list_para':               'kf_list_para',
     }
 
 class QuadestPara(par.Parameters):
@@ -103,6 +115,9 @@ class QuadestPara(par.Parameters):
         if isinstance(dmap, np.ndarray):
 	    self.m_dim=dmap.shape
 
+	# ->> initialization <<- #
+        self.band_power_init()
+
         return
 
     def get_derived(self):
@@ -110,7 +125,8 @@ class QuadestPara(par.Parameters):
 
 
     def band_power_init(self):
-
+        # ->> 
+        band_power_init(self.get_bp_type, fname=self.bp_list_fname, **self.paramdict)
         return
 
 ''' ------------------------------------------------------------ 
