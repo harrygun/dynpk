@@ -48,7 +48,7 @@ def dcov(plist, pdiff, speedup=False):
     '''
 
     npt=len(plist)
-    npix=
+    #npix=
 
     dcov=np.zeros(npt, npix, npix)
 
@@ -62,8 +62,8 @@ def dcov(plist, pdiff, speedup=False):
         # ->> python loop <<- #
         for i in range(npt):
 
-            kti, kfi  =
-            Dkti, Dkfi=
+            #kti, kfi  =
+            #Dkti, Dkfi=
 
             for a in range(npix):
 	        for b in range(npix):

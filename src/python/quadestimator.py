@@ -12,38 +12,17 @@ import covmat as covm
 
 
 
-''' ------------------------------------------------------------ 
-              ->>  Quadratic Estimator <<-
-    ------------------------------------------------------------
-'''
-defaultQuadestParaValueDict={
-    'map_dimension':   (1000, 1000),
-    }
-
-
-defaultQuadestParaNameDict={
-    'map_dimension':   'm_dim',
-    }
 
 
 
+def band_power_init(bp_init_type, fname=None):
+
+    if bp_init_type=='from_file':
 
 
-class QuadestPara(par.Parameters):
+        return
 
-
-    def __init__(self, paramfname=None, section=None, def_var=True, 
-                 prog_control=None, map=None, **pardict):
-
-
-        super(QuadestPara,self).__init__(defaultQuadestParaValueDict, 
-	                names_dict=defaultQuadestParaNameDict, paramfname=paramfname, 
-		        section=section, def_var=def_var, **pardict)
-        #->> 
-	self.map=map
-
-        if map!=None:
-	    self.m_dim=map.shape
+    if bp_init_type=='from_file':
 
 
         return
@@ -52,8 +31,7 @@ class QuadestPara(par.Parameters):
 
 
 
-
-def quad_init(qd, ):
+def quade_init(qe):
     # ->> initialization of quadratic estimator <<- #
     # ->> 
 
@@ -61,14 +39,14 @@ def quad_init(qd, ):
 
 
 
-def quad_pk(epar, d, fcm):
+def quade_pk(epar, d, fcm):
     ''' ->> construct fiducial estimator, given the fiducial pk <<- 
             epar:  parameters for quadratic estimator 
             fcm: fidicual covariance matrix  
     '''
 
     # ->> band power initialization <<- #
-    plist=
+    #plist=
 
 
     # ->> obtain the derivative of covariance matrix <<- #
@@ -86,6 +64,59 @@ def quad_pk(epar, d, fcm):
 
     return
 
+
+
+
+
+
+
+
+''' ------------------------------------------------------------ 
+              ->>  Quadratic Estimator <<-
+    ------------------------------------------------------------
+'''
+defaultQuadestParaValueDict={
+    'map_dimension':   (100, 100),
+    'get_bandpower_list_type':   'from_file', 
+    'bandpower_list_fname':      'x.dat'
+    }
+
+
+defaultQuadestParaNameDict={
+    'map_dimension':             'm_dim',
+    'get_bandpower_list_type':   'get_bp_type', 
+    'bandpower_list_fname':      'bp_list_fname',
+    }
+
+class QuadestPara(par.Parameters):
+
+    def __init__(self, paramfname=None, section=None, def_var=True, 
+                 prog_control=None, dmap=None, **pardict):
+
+        super(QuadestPara,self).__init__(defaultQuadestParaValueDict, 
+	                names_dict=defaultQuadestParaNameDict, paramfname=paramfname, 
+		        section=section, def_var=def_var, **pardict)
+
+	# ->> set the map data <<- #
+	self.dmap=dmap
+
+        if isinstance(dmap, np.ndarray):
+	    self.m_dim=dmap.shape
+
+        return
+
+    def get_derived(self):
+        pass
+
+
+    def band_power_init(self):
+
+        return
+
+''' ------------------------------------------------------------ 
+              ->>                                 <<-
+    ------------------------------------------------------------
+'''
 
 
 

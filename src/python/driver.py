@@ -109,12 +109,13 @@ if __name__=='__main__':
     ''' ->> now start to work <<- '''
 
     #->> define class <<- #
-    qe_dict=myDict({ })
-
+    qe_dict={}
     #->>parafname='same as parameter file' 
-    qe=quad.QuadestPara(paramfname=p.paramfname, section=p.qestmator_sec,
-            prog_control=p, map=d)
+    qe=qde.QuadestPara(paramfname=p.paramfname, section=p.qestmator_sec,
+            prog_control=p, dmap=d, **qe_dict)
 
+    print '\n->> QuadestPara parameters:\n', qe.paramdict
+    quit()
 
     # ->> construction KL modes <<- #
     # ->> (1). guess the covariance matrix <<- # 
