@@ -110,9 +110,11 @@ if __name__=='__main__':
 
     #->> define class <<- #
     qe_dict={}
+    dmap=d[:200,:200]
+
     #->>parafname='same as parameter file' 
     qe=qde.QuadestPara(paramfname=p.paramfname, section=p.qestmator_sec,
-            prog_control=p, dmap=d, **qe_dict)
+            prog_control=p, dmap=dmap, **qe_dict)
 
     print '\n->> QuadestPara parameters:\n', qe.paramdict
     quit()
