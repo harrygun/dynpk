@@ -40,22 +40,9 @@ def band_power_init(bp_init_type, fname=None, **pdict):
 
 
 
-def quade_init(qe):
+def quadest_init(dmap, plist):
     # ->> initialization of quadratic estimator <<- #
-    # ->> 
-
-    return
-
-
-
-def quade_pk(epar, d, fcm):
-    ''' ->> construct fiducial estimator, given the fiducial pk <<- 
-            epar:  parameters for quadratic estimator 
-            fcm: fidicual covariance matrix  
-    '''
-
-    # ->> band power initialization <<- #
-    #plist=
+    # ->> get all covariance matrices, and derivatives <<- #
 
 
     # ->> obtain the derivative of covariance matrix <<- #
@@ -66,12 +53,23 @@ def quade_pk(epar, d, fcm):
     fcov_inv=slag.inv(fcov)
 
 
+    return covs, covn, dcov
+
+
+
+def quade_pk(dmap, covs, covn, dcov, plist):
+    ''' ->> construct fiducial estimator, given the fiducial pk <<- 
+    '''
+    
+    npt=plist.shape[1] 
+
+    qi=np.zeros(npt)
+
     #->> obtain the estimator <<- #
     for i in range(npt):
         qi=np.einsum('ij,jk,ki', (fcov_inv, dcov[i], fcov_inv) )
 
-
-    return
+    return qi
 
 
 
@@ -126,15 +124,27 @@ class QuadestPara(par.Parameters):
 
         return
 
+
+    def band_power_init(self):
+        self.plist=band_power_init(self.get_bp_type, fname=self.bp_list_fname, \
+	                           **self.paramdict)
+        return 
+
+    def quade_init(self):
+        self.covs, self.covn, self.dcov=quadest_init(self.dmap, self.plist)
+        return
+
+    def get_pk(self):
+        self.pi=quade_pk(self.dmap, covs, covn, dcov, plist)
+
+	return
+
+
+
     def get_derived(self):
         pass
 
 
-    def band_power_init(self):
-
-        self.plist=band_power_init(self.get_bp_type, fname=self.bp_list_fname, \
-	                           **self.paramdict)
-        return 
 
 ''' ------------------------------------------------------------ 
               ->>                                 <<-

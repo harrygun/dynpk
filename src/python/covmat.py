@@ -55,7 +55,6 @@ def dcov(plist, pdiff, speedup=False):
 
     if speedup==True:
         # ->> C loop <<- #
-        
 	return 
 
     else:
