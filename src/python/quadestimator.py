@@ -32,8 +32,9 @@ def band_power_init(bp_init_type, fname=None, **pdict):
         kf_list=np.logspace(kf_min, kf_max, kf_num) 
 
         plist=mar.meshgrid(kt_list, kf_list) 
+	s=plist.shape
 
-        return plist
+        return plist.reshape(2,s[1]*s[2])
 
 
 
@@ -113,7 +114,12 @@ class QuadestPara(par.Parameters):
 	self.dmap=dmap
 
         if isinstance(dmap, np.ndarray):
-	    self.m_dim=dmap.shape
+
+	    # ->> update m_dim <<- #
+	    update={'m_dim': list(dmap.shape)}
+            self.update_params(**update)
+
+            #print 'dmap is np.ndarray', self.m_dim, type(self.m_dim)
 
 	# ->> initialization <<- #
         self.band_power_init()
@@ -125,9 +131,10 @@ class QuadestPara(par.Parameters):
 
 
     def band_power_init(self):
-        # ->> 
-        band_power_init(self.get_bp_type, fname=self.bp_list_fname, **self.paramdict)
-        return
+
+        self.plist=band_power_init(self.get_bp_type, fname=self.bp_list_fname, \
+	                           **self.paramdict)
+        return 
 
 ''' ------------------------------------------------------------ 
               ->>                                 <<-

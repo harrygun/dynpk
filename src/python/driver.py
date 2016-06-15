@@ -100,7 +100,7 @@ if __name__=='__main__':
     fn=root+'data/sims/ds1.npy'
 
     d=np.load(fn)
-    print 'data shape:', d.shape
+    #print 'data shape:', d.shape
 
     #->> do some testing <<- #
     do_test(p, d)
@@ -117,6 +117,7 @@ if __name__=='__main__':
             prog_control=p, dmap=dmap, **qe_dict)
 
     print '\n->> QuadestPara parameters:\n', qe.paramdict
+    print qe.plist.shape
     quit()
 
     # ->> construction KL modes <<- #
