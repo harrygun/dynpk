@@ -45,6 +45,7 @@ def dcov_1D(kti, Dkti, dt, dtab):
 def dcov(klist, plist, dt, npt, npix, speedup=False):
     ''' ->> get the derivative of covariance matrix <<- 
     '''
+    raise Exception('restart from here. ')
     dcov=np.zeros(npt, npix, npix)
 
     if speedup==True:
