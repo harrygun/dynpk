@@ -78,11 +78,24 @@ def dcov(klist, plist, speedup=False):
 def covfull(dcov, covn_vec, plist, klist):
     # ->>  from dcov and covn_vec, get the full covariance matrix <<- #
 
+    npix=len(covn_vec)
+    npt=len(plist)
+
+    for i in range(npt):
+
+        for a in range(npix):
+            for b in range(npix):
+                #
+
     return
 
 
 
 
 def fisher(icov, dcov):
+    # ->> calculate the fisher matrix <<- #
+
 
     return
+
+
