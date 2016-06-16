@@ -42,13 +42,12 @@ def dcov_1D(kti, Dkti, dt, dtab):
 
 
 
-def dcov(plist, pdiff, speedup=False):
+def dcov(klist, plist, speedup=False):
     ''' ->> get the derivative of covariance matrix <<- 
     
     '''
 
     npt=len(plist)
-    #npix=
 
     dcov=np.zeros(npt, npix, npix)
 
@@ -75,16 +74,15 @@ def dcov(plist, pdiff, speedup=False):
 
 
 
-def cov_s():
-    return
 
-
-def cov_n():
-    return
-
-
-def covfull(d):
-
+def covfull(dcov, covn_vec, plist, klist):
+    # ->>  from dcov and covn_vec, get the full covariance matrix <<- #
 
     return
 
+
+
+
+def fisher(icov, dcov):
+
+    return

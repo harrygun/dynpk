@@ -31,39 +31,39 @@ def band_power_init(bp_init_type, fname=None, **pdict):
         kt_list=np.logspace(kt_min, kt_max, kt_num) 
         kf_list=np.logspace(kf_min, kf_max, kf_num) 
 
-        plist=mar.meshgrid(kt_list, kf_list) 
-	s=plist.shape
+        klist=mar.meshgrid(kt_list, kf_list) 
+	s=klist.shape
 
-        return plist.reshape(2,s[1]*s[2])
-
-
+        return klist.reshape(2,s[1]*s[2])
 
 
 
-def quadest_init(dmap, plist):
+
+
+def dcov_init(klist, plist):
     # ->> initialization of quadratic estimator <<- #
     # ->> get all covariance matrices, and derivatives <<- #
 
 
     # ->> obtain the derivative of covariance matrix <<- #
-    dcov=covm.dcov(plist, pdiff)
-    
-    # ->> obtain the full covariance matrix <<- #
-    fcov=covm.covfull(epar, d)
-    fcov_inv=slag.inv(fcov)
+    dcov=covm.dcov(klist, plist)
 
-
-    return covs, covn, dcov
+    return dcov
 
 
 
-def quade_pk(dmap, covs, covn, dcov, plist):
+def quade_pk_single(dmap, dcov, covn_vec, plist, klist):
     ''' ->> construct fiducial estimator, given the fiducial pk <<- 
     '''
     
-    npt=plist.shape[1] 
-
+    npt=klist.shape[1] 
     qi=np.zeros(npt)
+
+    # ->> get full covariance matrix and inverse <<- #
+
+
+    fcov=covm.covfull(dcov, klist, plist, d)
+    fcov_inv=slag.inv(fcov)
 
     #->> obtain the estimator <<- #
     for i in range(npt):
@@ -73,6 +73,17 @@ def quade_pk(dmap, covs, covn, dcov, plist):
 
 
 
+
+def quade_iter(dmap, dcov, covn_vec, pfid, klist, nit=0):
+
+    # ->> first run <<- #
+    qi=quade_pk_single(dmap, dcov, covn_vec, pfid, klist)
+
+    # ->> iteration <<- #
+    for it in range(nit):
+        qi=quade_pk_single(dmap, dcov, covn_vec, qi, klist)
+
+    return qi
 
 
 
@@ -119,8 +130,11 @@ class QuadestPara(par.Parameters):
 
             #print 'dmap is np.ndarray', self.m_dim, type(self.m_dim)
 
-	# ->> initialization <<- #
+	# ->> initialization band-power list <<- #
         self.band_power_init()
+
+        # ->> initialization of quadratic estimator <<- #
+        self.quade_init(self):
 
         return
 
@@ -130,15 +144,16 @@ class QuadestPara(par.Parameters):
 	                           **self.paramdict)
         return 
 
-    def quade_init(self):
-        self.covs, self.covn, self.dcov=quadest_init(self.dmap, self.plist)
+    def dcov_init(self):
+        self.dcov=quadest_init(self.dmap, self.plist)
         return
 
+
+    '''
     def get_pk(self):
         self.pi=quade_pk(self.dmap, covs, covn, dcov, plist)
-
-	return
-
+        return
+    '''
 
 
     def get_derived(self):
