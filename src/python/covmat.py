@@ -42,15 +42,10 @@ def dcov_1D(kti, Dkti, dt, dtab):
 
 
 
-def dcov(klist, plist, speedup=False):
+def dcov(klist, plist, dt, npt, npix, speedup=False):
     ''' ->> get the derivative of covariance matrix <<- 
-    
     '''
-
-    npt=len(plist)
-
     dcov=np.zeros(npt, npix, npix)
-
 
     if speedup==True:
         # ->> C loop <<- #
@@ -59,15 +54,15 @@ def dcov(klist, plist, speedup=False):
     else:
         # ->> python loop <<- #
         for i in range(npt):
-
-            #kti, kfi  =
-            #Dkti, Dkfi=
+            kti, kfi  =
+            Dkti, Dkfi=
 
             for a in range(npix):
 	        for b in range(npix):
+                    tab=
+
                     dcov[i,a,b]=dcov_1D(kti, Dkti, dt, dtab)*\
                                 dcov_1D(kfi, Dkfi, df, dfab)
-
 
 
     return dcov
@@ -75,11 +70,13 @@ def dcov(klist, plist, speedup=False):
 
 
 
-def covfull(covf, dcov, covn_vec, plist, klist):
-    # ->>  from dcov and covn_vec, get the full covariance matrix <<- #
+def covn_vec():
 
-    npix=len(covn_vec)
-    npt=len(plist)
+    return
+
+
+def covfull(covf, dcov, covn_vec, plist, klist, npt, npix):
+    # ->>  from dcov and covn_vec, get the full covariance matrix <<- #
 
     for i in range(npt):
         covf=dcov[i]*plist[i]
@@ -87,13 +84,15 @@ def covfull(covf, dcov, covn_vec, plist, klist):
     for a in range(npix):
         covf[a,a]+=covn_vec[a]
 
-    return covf
+    return True
 
 
 
 
-def fisher(icov, dcov):
+def fisher(icov, dcov, npt, npix):
     # ->> calculate the fisher matrix <<- #
+
+    F=np.zeros((npt, npt))
 
 
     return

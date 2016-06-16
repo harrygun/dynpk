@@ -40,50 +40,40 @@ def band_power_init(bp_init_type, fname=None, **pdict):
 
 
 
-def dcov_init(klist, plist):
-    # ->> initialization of quadratic estimator <<- #
-    # ->> get all covariance matrices, and derivatives <<- #
 
-
-    # ->> obtain the derivative of covariance matrix <<- #
-    dcov=covm.dcov(klist, plist)
-
-    return dcov
-
-
-
-def quade_pk_single(dmap, covf, dcov, covn_vec, plist, klist):
+def quade_pk_single(dmap, covf, dcov, covn_vec, plist, klist, npt, npix):
     ''' ->> construct fiducial estimator, given the fiducial pk <<- 
     '''
     
-    npt=klist.shape[1] 
     qi=np.zeros(npt)
 
     # ->> get full covariance matrix and inverse <<- #
-
-
-    fcov=covm.covfull(dcov, klist, plist, d)
-    fcov_inv=slag.inv(fcov)
+    if not (covm.covfull(covf, dcov, covn_vec, plist, klist, npt, npix)):
+        raise Exception('full covariance matrix error')
+        
+    icovf=slag.inv(covf)
 
     #->> obtain the estimator <<- #
     for i in range(npt):
-        qi=np.einsum('ij,jk,ki', (fcov_inv, dcov[i], fcov_inv) )
+        qi=np.einsum('ij,jk,ki', (icovf, dcov[i], icovf) )
 
     return qi
 
 
 
 
-"""???? SHOULD I INCLUDE COVF in the argument??? <<- """
-def quade_iter(dmap, covf, dcov, covn_vec, pfid, klist, nit=0):
-    raise Exception()
+def quade_iter(dmap, dcov, covn_vec, pfid, klist, npt, npix, nit=0):
+    #raise Exception()
+
+    covf=np.zeros((npix, npix))
 
     # ->> first run <<- #
-    qi=quade_pk_single(dmap, dcov, covn_vec, pfid, klist)
+    qi=quade_pk_single(dmap, covf, dcov, covn_vec, pfid, klist, npt, npix)
 
     # ->> iteration <<- #
     for it in range(nit):
-        qi=quade_pk_single(dmap, dcov, covn_vec, qi, klist)
+        qi=quade_pk_single(dmap, covf, dcov, covn_vec, qi, klist, npt, npix)
+
 
     return qi
 
@@ -123,6 +113,8 @@ class QuadestPara(par.Parameters):
 
 	# ->> set the map data <<- #
 	self.dmap=dmap
+	#->> # of pixels <<- #
+        self.npix=np.prod(dmap.shape)
 
         if isinstance(dmap, np.ndarray):
 
@@ -136,27 +128,34 @@ class QuadestPara(par.Parameters):
         self.band_power_init()
 
         # ->> initialization of quadratic estimator <<- #
-        self.quade_init(self):
+        self.dcov_init()
+
+	#->> self.covn initialization <<- #
+	self.covn_vec_init()
 
         return
 
 
     def band_power_init(self):
-        self.plist=band_power_init(self.get_bp_type, fname=self.bp_list_fname, \
+        # ->> # of band powers <<- #
+	self.npt=self.kt_list_para[-1]*self.kf_list_para[-1]
+
+        self.klist=band_power_init(self.get_bp_type, fname=self.bp_list_fname, \
 	                           **self.paramdict)
         return 
 
     def dcov_init(self):
-        self.dcov=quadest_init(self.dmap, self.plist)
+        self.dcov=covm.dcov(self.klist, self.plist, self.npt, self.npix)
         return
 
+    def covn_vec_init(self):
+        return covm.covn_vec()
 
-    '''
-    def get_pk(self):
-        self.pi=quade_pk(self.dmap, covs, covn, dcov, plist)
-        return
-    '''
 
+    def quadest_iteration(self, pk_fid, n_iteration):
+        # ->> run iterative quadratic estimator <<- #
+        return quade_iter(self.dmap, self.dcov, self.covn_vec, \
+               pk_fid, self.klist, self.npt, self.npix, nit=n_iteration)
 
     def get_derived(self):
         pass

@@ -118,7 +118,6 @@ if __name__=='__main__':
 
     print '\n->> QuadestPara parameters:\n', qe.paramdict
     print qe.plist.shape
-    quit()
 
     # ->> construction KL modes <<- #
     # ->> (1). guess the covariance matrix <<- # 
@@ -127,7 +126,8 @@ if __name__=='__main__':
 
     # ->> (2). construct the quadratic estimator <<- # 
     # a). 2D axis list 
-      
+    n_it=0
+    qe.quadest_iteration(self, pk_fid, n_it)
 
 
     # b).  
