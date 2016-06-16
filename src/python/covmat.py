@@ -75,19 +75,19 @@ def dcov(klist, plist, speedup=False):
 
 
 
-def covfull(dcov, covn_vec, plist, klist):
+def covfull(covf, dcov, covn_vec, plist, klist):
     # ->>  from dcov and covn_vec, get the full covariance matrix <<- #
 
     npix=len(covn_vec)
     npt=len(plist)
 
     for i in range(npt):
+        covf=dcov[i]*plist[i]
 
-        for a in range(npix):
-            for b in range(npix):
-                #
+    for a in range(npix):
+        covf[a,a]+=covn_vec[a]
 
-    return
+    return covf
 
 
 

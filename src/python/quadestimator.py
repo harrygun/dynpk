@@ -52,7 +52,7 @@ def dcov_init(klist, plist):
 
 
 
-def quade_pk_single(dmap, dcov, covn_vec, plist, klist):
+def quade_pk_single(dmap, covf, dcov, covn_vec, plist, klist):
     ''' ->> construct fiducial estimator, given the fiducial pk <<- 
     '''
     
@@ -74,7 +74,9 @@ def quade_pk_single(dmap, dcov, covn_vec, plist, klist):
 
 
 
-def quade_iter(dmap, dcov, covn_vec, pfid, klist, nit=0):
+"""???? SHOULD I INCLUDE COVF in the argument??? <<- """
+def quade_iter(dmap, covf, dcov, covn_vec, pfid, klist, nit=0):
+    raise Exception()
 
     # ->> first run <<- #
     qi=quade_pk_single(dmap, dcov, covn_vec, pfid, klist)
