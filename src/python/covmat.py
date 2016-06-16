@@ -54,8 +54,8 @@ def dcov(klist, plist, dt, npt, npix, speedup=False):
     else:
         # ->> python loop <<- #
         for i in range(npt):
-            kti, kfi  =
-            Dkti, Dkfi=
+            kti, kfi   =  
+            Dkti, Dkfi =
 
             for a in range(npix):
 	        for b in range(npix):

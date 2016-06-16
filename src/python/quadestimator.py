@@ -91,6 +91,7 @@ defaultQuadestParaValueDict={
     'bandpower_list_fname':      'x.dat', 
     'kt_list_para':               [-2, 2, 10],
     'kf_list_para':               [-2, 2, 10],
+    'map_resolution':             [1, 1],
     }
 
 
@@ -98,9 +99,11 @@ defaultQuadestParaNameDict={
     'map_dimension':             'm_dim',
     'get_bandpower_list_type':   'get_bp_type', 
     'bandpower_list_fname':      'bp_list_fname',
-    'kt_list_para':               'kt_list_para',
-    'kf_list_para':               'kf_list_para',
+    'kt_list_para':              'kt_list_para',
+    'kf_list_para':              'kf_list_para',
+    'map_resolution':            'dmap_res',
     }
+
 
 class QuadestPara(par.Parameters):
 
