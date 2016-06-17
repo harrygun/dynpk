@@ -148,7 +148,7 @@ class QuadestPara(par.Parameters):
         return 
 
     def dcov_init(self):
-        self.dcov=covm.dcov(self.klist, self.plist, self.npt, self.npix)
+        self.dcov=covm.dcov(self.klist, self.plist, self.dt, self.npt, self.npix)
         return
 
     def covn_vec_init(self):
