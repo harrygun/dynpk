@@ -56,7 +56,7 @@ def dcov(klist, plist, dt_df, npt, m_dim, speedup=False):
         # ->> python loop <<- #
         for i in range(npt):
             kti, kfi   =  
-            Dkti, Dkfi =
+            Dkti, Dkfi = 
 
             for a in range(m_dim):
 	        for b in range(m_dim):
@@ -71,9 +71,10 @@ def dcov(klist, plist, dt_df, npt, m_dim, speedup=False):
 
 
 
-def covn_vec():
+def covn_vec(npt, npix):
+    covn=np.zeros()
 
-    return
+    return covn
 
 
 def covfull(covf, dcov, covn_vec, plist, klist, npt, npix):
