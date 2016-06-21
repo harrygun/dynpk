@@ -34,7 +34,9 @@ def band_power_init(bp_init_type, fname=None, **pdict):
         klist=mar.meshgrid(kt_list, kf_list) 
 	s=klist.shape
 
-        return klist.reshape(2,s[1]*s[2])
+        dk_list=
+
+        return klist.reshape(2,s[1]*s[2]), kt_list, kf_list
 
 
 
@@ -143,8 +145,8 @@ class QuadestPara(par.Parameters):
         # ->> # of band powers <<- #
 	self.npt=self.kt_list_para[-1]*self.kf_list_para[-1]
 
-        self.klist=band_power_init(self.get_bp_type, fname=self.bp_list_fname, \
-	                           **self.paramdict)
+        self.klist, self.kt_list, self.kf_list=band_power_init(self.get_bp_type, \
+                                       fname=self.bp_list_fname, **self.paramdict)
         return 
 
     def dcov_init(self):

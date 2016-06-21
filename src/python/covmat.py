@@ -11,34 +11,78 @@ import misc.helper as helper
 def SinIntegral(x):
     return spec.sici(x)[0]
 
+def CosIntegral(x):
+    return spec.sici(x)[1]
+
 def Cos(x):
     return np.cos(x)
 
+def Sin(x):
+    return np.sin(x)
 
-def dcov_1D(kti, Dkti, dt, dtab):
+def dcov_1D_real(kti, Dkti, dt, dtab):
     ''' ->> kti:   center value of kt_i <<- 
             Dkti:  Delta kt_i <<- 
 	    dt:    Delta t, pixel size
 	    dtab:  Delta t_ab
     '''
 
-    dcov1d=((-4*Cos(dtab*(-Dkti/2. + kti)))/(Dkti - 2*kti) + \
-          (4*Cos(dt*(-Dkti/2. + kti))*Cos(dtab*(-Dkti/2. + kti)))/(Dkti-2*kti) - \
-          (4*Cos(dtab*(Dkti/2. + kti)))/(Dkti + 2*kti) + \
-          (4*Cos(dt*(Dkti/2. + kti))*Cos(dtab*(Dkti/2. + kti)))/(Dkti + 2*kti) + \
-          (-dt + dtab)*SinIntegral((dt - dtab)*(-Dkti/2. + kti)) + \
-          2*dtab*SinIntegral(dtab*(-Dkti/2. + kti)) - \
-          dt*SinIntegral((dt + dtab)*(-Dkti/2. + kti)) - \
-          dtab*SinIntegral((dt + dtab)*(-Dkti/2. + kti)) + \
-          (dt - dtab)*SinIntegral((dt - dtab)*(Dkti/2. + kti)) - \
-          2*dtab*SinIntegral(dtab*(Dkti/2. + kti)) + \
-          dt*SinIntegral((dt + dtab)*(Dkti/2. + kti)) + \
-          dtab*SinIntegral((dt + dtab)*(Dkti/2. + kti)))/np.pi
+    '''
+    dc1d_real=((-4*Cos(dtab*(-Dkti/2. + kti)))/(Dkti - 2*kti) + \
+             (4*Cos(dt*(-Dkti/2. + kti))*Cos(dtab*(-Dkti/2. + kti)))/(Dkti-2*kti) - \
+             (4*Cos(dtab*(Dkti/2. + kti)))/(Dkti + 2*kti) + \
+             (4*Cos(dt*(Dkti/2. + kti))*Cos(dtab*(Dkti/2. + kti)))/(Dkti + 2*kti) + \
+             (-dt + dtab)*SinIntegral((dt - dtab)*(-Dkti/2. + kti)) + \
+             2*dtab*SinIntegral(dtab*(-Dkti/2. + kti)) - \
+             dt*SinIntegral((dt + dtab)*(-Dkti/2. + kti)) - \
+             dtab*SinIntegral((dt + dtab)*(-Dkti/2. + kti)) + \
+             (dt - dtab)*SinIntegral((dt - dtab)*(Dkti/2. + kti)) - \
+             2*dtab*SinIntegral(dtab*(Dkti/2. + kti)) + \
+             dt*SinIntegral((dt + dtab)*(Dkti/2. + kti)) + \
+             dtab*SinIntegral((dt + dtab)*(Dkti/2. + kti)))/np.pi
+    '''
+
+    dc1d_real=((4*(-1 + Cos(dt*(-Dkti/2. + kti)))*Cos(dtab*(-Dkti/2. + kti)))/ \
+                (Dkti - 2*kti) + (4*(-1 + Cos(dt*(Dkti/2. + kti)))*  \
+                      Cos(dtab*(Dkti/2. + kti)))/(Dkti + 2*kti) + \
+                   (-dt + dtab)*SinIntegral((dt - dtab)*(-Dkti/2. + kti)) + \
+                   2*dtab*SinIntegral(dtab*(-Dkti/2. + kti)) -  \
+                   dt*SinIntegral((dt + dtab)*(-Dkti/2. + kti)) -  \
+                   dtab*SinIntegral((dt + dtab)*(-Dkti/2. + kti)) +  \
+                   dt*SinIntegral((dt - dtab)*(Dkti/2. + kti)) -   \
+                   dtab*SinIntegral((dt - dtab)*(Dkti/2. + kti)) -   \
+                   2*dtab*SinIntegral(dtab*(Dkti/2. + kti)) +   \
+                   (dt + dtab)*SinIntegral((dt + dtab)*(Dkti/2. + kti)))/np.pi
+
+    return dc1d_real
 
 
-    return dcov1d
 
+def dcov_1d_imag(kti, Dkti, dt, dtab):
+    ''' ->> kti:   center value of kt_i <<- 
+            Dkti:  Delta kt_i <<- 
+	    dt:    Delta t, pixel size
+	    dtab:  Delta t_ab
+    '''
+        dc1d_imag= ((dt - dtab)*(Dkti - 2*kti)*(Dkti + 2*kti)*\
+             CosIntegral((dt - dtab)*(-Dkti/2. + kti)) +  \
+            2*dtab*(Dkti - 2*kti)*(Dkti + 2*kti)*CosIntegral(dtab*(-Dkti/2. + kti)) - \
+            dt*(Dkti - 2*kti)*(Dkti + 2*kti)*CosIntegral((dt + dtab)*(-Dkti/2. + kti)) - \
+            dtab*(Dkti - 2*kti)*(Dkti + 2*kti)* \
+             CosIntegral((dt + dtab)*(-Dkti/2. + kti)) - \ 
+            (dt - dtab)*(Dkti - 2*kti)*(Dkti + 2*kti)* \
+             CosIntegral((dt - dtab)*(Dkti/2. + kti)) -  \
+            2*dtab*(Dkti - 2*kti)*(Dkti + 2*kti)*CosIntegral(dtab*(Dkti/2. + kti)) + \
+            dt*(Dkti - 2*kti)*(Dkti + 2*kti)*CosIntegral((dt + dtab)*(Dkti/2. + kti)) + \
+            dtab*(Dkti - 2*kti)*(Dkti + 2*kti)* \
+             CosIntegral((dt + dtab)*(Dkti/2. + kti)) + \
+            4*(Dkti + 2*kti)*Sin(dtab*(-Dkti/2. + kti)) - \ 
+            4*(Dkti + 2*kti)*Cos(dt*(-Dkti/2. + kti))*Sin(dtab*(-Dkti/2. + kti)) + \
+            4*(Dkti - 2*kti)*Sin(dtab*(Dkti/2. + kti)) -  \
+            4*(Dkti - 2*kti)*Cos(dt*(Dkti/2. + kti))*Sin(dtab*(Dkti/2. + kti)))/ \
+            (4.*(-(Dkti**2*Pi)/4. + kti**2*Pi))
 
+    return dc1d_imag
 
 
 
@@ -46,7 +90,7 @@ def dcov(klist, plist, dt_df, npt, m_dim, speedup=False):
     ''' ->> get the derivative of covariance matrix <<- 
     '''
     raise Exception('restart from here. ')
-    dcov=np.zeros(npt, npix, npix)
+    dcov=np.zeros(npt, 2*npix)
 
     if speedup==True:
         # ->> C loop <<- #
@@ -55,15 +99,16 @@ def dcov(klist, plist, dt_df, npt, m_dim, speedup=False):
     else:
         # ->> python loop <<- #
         for i in range(npt):
-            kti, kfi   =  
-            Dkti, Dkfi = 
+            kti, kfi   = klist[0,i], klist[1,i]
+            Dkti, Dkfi =  
 
             for a in range(m_dim):
-	        for b in range(m_dim):
-                    #tab=
+                dtab= 2*a*npix
 
-                    dcov[i,a,b]=dcov_1D(kti, Dkti, dt, dtab)*\
-                                dcov_1D(kfi, Dkfi, df, dfab)
+                dcov[i,a,b]=2*(dcov_1D_real(kti, Dkti, dt, dtab)*  \
+                               dcov_1D_real(kfi, Dkfi, df, dfab) - \ 
+                               dcov_1D_imag(kti, Dkti, dt, dtab)*  \
+                               dcov_1D_imag(kfi, Dkfi, df, dfab)   )
 
 
     return dcov
