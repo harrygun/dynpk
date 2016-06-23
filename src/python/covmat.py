@@ -58,41 +58,39 @@ def dcov_1D_real(kti, Dkti, dt, dtab):
 
 
 
-def dcov_1d_imag(kti, Dkti, dt, dtab):
+def dcov_1D_imag(kti, Dkti, dt, dtab):
     ''' ->> kti:   center value of kt_i <<- 
             Dkti:  Delta kt_i <<- 
 	    dt:    Delta t, pixel size
 	    dtab:  Delta t_ab
     '''
-        dc1d_imag= ((dt - dtab)*(Dkti - 2*kti)*(Dkti + 2*kti)*\
+    dc1d_imag= ((dt - dtab)*(Dkti - 2*kti)*(Dkti + 2*kti)*\
              CosIntegral((dt - dtab)*(-Dkti/2. + kti)) +  \
             2*dtab*(Dkti - 2*kti)*(Dkti + 2*kti)*CosIntegral(dtab*(-Dkti/2. + kti)) - \
             dt*(Dkti - 2*kti)*(Dkti + 2*kti)*CosIntegral((dt + dtab)*(-Dkti/2. + kti)) - \
             dtab*(Dkti - 2*kti)*(Dkti + 2*kti)* \
-             CosIntegral((dt + dtab)*(-Dkti/2. + kti)) - \ 
+             CosIntegral((dt + dtab)*(-Dkti/2. + kti)) - \
             (dt - dtab)*(Dkti - 2*kti)*(Dkti + 2*kti)* \
              CosIntegral((dt - dtab)*(Dkti/2. + kti)) -  \
             2*dtab*(Dkti - 2*kti)*(Dkti + 2*kti)*CosIntegral(dtab*(Dkti/2. + kti)) + \
             dt*(Dkti - 2*kti)*(Dkti + 2*kti)*CosIntegral((dt + dtab)*(Dkti/2. + kti)) + \
             dtab*(Dkti - 2*kti)*(Dkti + 2*kti)* \
              CosIntegral((dt + dtab)*(Dkti/2. + kti)) + \
-            4*(Dkti + 2*kti)*Sin(dtab*(-Dkti/2. + kti)) - \ 
+            4*(Dkti + 2*kti)*Sin(dtab*(-Dkti/2. + kti)) - \
             4*(Dkti + 2*kti)*Cos(dt*(-Dkti/2. + kti))*Sin(dtab*(-Dkti/2. + kti)) + \
             4*(Dkti - 2*kti)*Sin(dtab*(Dkti/2. + kti)) -  \
             4*(Dkti - 2*kti)*Cos(dt*(Dkti/2. + kti))*Sin(dtab*(Dkti/2. + kti)))/ \
-            (4.*(-(Dkti**2*Pi)/4. + kti**2*Pi))
+            (4.*(-(Dkti**2*np.pi)/4. + kti**2*np.pi))
 
     return dc1d_imag
 
 
 
-def dcov(klist, Dk_list dt_df, npt, m_dim, speedup=False):
+def dcov(klist, Dk_list, dt_df, npt, m_dim, speedup=False):
     ''' ->> get the derivative of covariance matrix <<- 
     '''
-    raise Exception('restart from here. ')
-
-    dcov=np.zeros(npt, 2*m_dim[0], 2*m_dim[1])
-    dt, tf = dt_df
+    dcov=np.zeros((npt, 2*m_dim[0], 2*m_dim[1]))
+    dt, df = dt_df
 
     if speedup==True:
         # ->> C loop <<- #
@@ -109,7 +107,7 @@ def dcov(klist, Dk_list dt_df, npt, m_dim, speedup=False):
                     dtab = a*dt
                     dfab = b*df
                     dcov[i,a,b]=2*(dcov_1D_real(kti, Dkti, dt, dtab)*  \
-                                   dcov_1D_real(kfi, Dkfi, df, dfab) - \ 
+                                   dcov_1D_real(kfi, Dkfi, df, dfab) - \
                                    dcov_1D_imag(kti, Dkti, dt, dtab)*  \
                                    dcov_1D_imag(kfi, Dkfi, df, dfab)   )
     return dcov

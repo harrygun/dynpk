@@ -38,7 +38,7 @@ def band_power_init(bp_init_type, fname=None, **pdict):
         klist=mar.meshgrid(kt_list, kf_list) 
 	s=klist.shape
 
-        Dk_list=np.array(_kt_l[1:]-_kt_l[:-1], _kf_l[1:]-_kf_l[:-1])
+        Dk_list=np.array([_kt_l[1:]-_kt_l[:-1], _kf_l[1:]-_kf_l[:-1]])
 
 	print 'Dk_list shape:', Dk_list
 
@@ -127,7 +127,7 @@ class QuadestPara(par.Parameters):
 	#->> # of pixels <<- #
         self.npix=np.prod(dmap.shape)
 
-	self.dt_df=np.array(self.map_resolution)  # in unit of ...
+	self.dt_df=np.array(self.dmap_res)  # in unit of ...
 
         if isinstance(dmap, np.ndarray):
 
