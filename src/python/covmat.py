@@ -97,7 +97,7 @@ def dcov(klist, Dk_list, dt_df, npt, m_dim, speedup=True):
     if speedup==True:
         # ->> C loop <<- #
         cyth_cov.get_dcov(dcov, klist, Dk_list, dt_df, npt, m_dim)
-	returna dcov
+	return dcov
 
     else:
         dt, df = dt_df

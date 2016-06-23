@@ -40,7 +40,7 @@ src_dir= './'
 kernel_src=['covm.pyx'] 
 print kernel_src
 
-module = [ Extension("covmat", sources=[kernel_src[0]], 
+module = [ Extension("covm", sources=[kernel_src[0]], 
            include_dirs= [np.get_include(), mpi4py_include, src_dir, cython_gsl.get_cython_include_dir()], 
            libraries=cython_gsl.get_libraries()+['m'],
            library_dirs=[cython_gsl.get_library_dir(), './', src_dir]),
