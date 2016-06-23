@@ -36,13 +36,18 @@ def band_power_init(bp_init_type, fname=None, **pdict):
 	kf_list=(_kf_l[:-1]+_kf_l[1:])/2.
 
         klist=mar.meshgrid(kt_list, kf_list) 
-	s=klist.shape
+        Dk_list=mar.meshgrid(_kt_l[1:]-_kt_l[:-1], _kf_l[1:]-_kf_l[:-1])
 
-        Dk_list=np.array([_kt_l[1:]-_kt_l[:-1], _kf_l[1:]-_kf_l[:-1]])
 
-	print 'Dk_list shape:', Dk_list
+	sk=klist.shape
+	sdk=Dk_list.shape
 
-        return klist.reshape(2,s[1]*s[2]), kt_list, kf_list, Dk_list
+        #Dk_list=np.array([_kt_l[1:]-_kt_l[:-1], _kf_l[1:]-_kf_l[:-1]])
+
+	print 'Dk_list shape:', Dk_list.shape
+
+        return klist.reshape(2,sk[1]*sk[2]), kt_list, \
+	       kf_list, Dk_list.reshape(2,sdk[1]*sdk[2])
 
 
 

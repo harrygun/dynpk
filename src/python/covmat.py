@@ -6,6 +6,8 @@ import scipy.special as spec
 import genscript.parameter as par
 import misc.helper as helper
 
+import cyth.covm as cyth_cov
+
 
 
 def SinIntegral(x):
@@ -86,17 +88,20 @@ def dcov_1D_imag(kti, Dkti, dt, dtab):
 
 
 
-def dcov(klist, Dk_list, dt_df, npt, m_dim, speedup=False):
+def dcov(klist, Dk_list, dt_df, npt, m_dim, speedup=True):
     ''' ->> get the derivative of covariance matrix <<- 
     '''
     dcov=np.zeros((npt, 2*m_dim[0], 2*m_dim[1]))
-    dt, df = dt_df
+    #print npt, m_dim, Dk_list.shape, klist.shape, dt_df.shape
 
     if speedup==True:
         # ->> C loop <<- #
-	return 
+        cyth_cov.get_dcov(dcov, klist, Dk_list, dt_df, npt, m_dim)
+	returna dcov
 
     else:
+        dt, df = dt_df
+
         # ->> python loop <<- #
         for i in range(npt):
             kti,  kfi  = klist[:,i]
