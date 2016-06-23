@@ -104,21 +104,23 @@ def dcov(klist, Dk_list dt_df, npt, m_dim, speedup=False):
             kti,  kfi  = klist[:,i]
             Dkti, Dkfi = Dk_list[:,i]
 
-            for a in range(2*npix):
-	        for b in range(2*npix):
+            for a in range(2*m_dim[0]):
+	        for b in range(2*m_dim[1]):
                     dtab = a*dt
                     dfab = b*df
-                    dcov[i,a]=2*(dcov_1D_real(kti, Dkti, dt, dtab)*  \
-                                 dcov_1D_real(kfi, Dkfi, df, dfab) - \ 
-                                 dcov_1D_imag(kti, Dkti, dt, dtab)*  \
-                                 dcov_1D_imag(kfi, Dkfi, df, dfab)   )
+                    dcov[i,a,b]=2*(dcov_1D_real(kti, Dkti, dt, dtab)*  \
+                                   dcov_1D_real(kfi, Dkfi, df, dfab) - \ 
+                                   dcov_1D_imag(kti, Dkti, dt, dtab)*  \
+                                   dcov_1D_imag(kfi, Dkfi, df, dfab)   )
     return dcov
 
 
 
 
-def covn_vec(npt, npix):
-    covn=np.zeros()
+def covn_vec(npix, noise_method='by_hand'):
+
+    if noise_method=='by_hand':
+        covn=np.ones(npix)
 
     return covn
 
@@ -126,7 +128,9 @@ def covn_vec(npt, npix):
 def covfull(covf, dcov, covn_vec, plist, klist, npt, npix):
     # ->>  from dcov and covn_vec, get the full covariance matrix <<- #
 
+
     for i in range(npt):
+        _covf=np.zeros((npix, npix))
         covf=dcov[i]*plist[i]
 
     for a in range(npix):

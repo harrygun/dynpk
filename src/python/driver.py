@@ -119,6 +119,8 @@ if __name__=='__main__':
     print '\n->> QuadestPara parameters:\n', qe.paramdict
     print qe.plist.shape
 
+    quit()
+
     # ->> construction KL modes <<- #
     # ->> (1). guess the covariance matrix <<- # 
     # ->> mask=helper.gen_mask(d.shape, npt=10, mask_type='default')

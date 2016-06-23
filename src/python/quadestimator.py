@@ -35,14 +35,14 @@ def band_power_init(bp_init_type, fname=None, **pdict):
 	kt_list=(_kt_l[:-1]+_kt_l[1:])/2.
 	kf_list=(_kf_l[:-1]+_kf_l[1:])/2.
 
-	Dkt_list
-
         klist=mar.meshgrid(kt_list, kf_list) 
 	s=klist.shape
 
-        dk_list=
+        Dk_list=np.array(_kt_l[1:]-_kt_l[:-1], _kf_l[1:]-_kf_l[:-1])
 
-        return klist.reshape(2,s[1]*s[2]), kt_list, kf_list
+	print 'Dk_list shape:', Dk_list
+
+        return klist.reshape(2,s[1]*s[2]), kt_list, kf_list, Dk_list
 
 
 
@@ -127,6 +127,8 @@ class QuadestPara(par.Parameters):
 	#->> # of pixels <<- #
         self.npix=np.prod(dmap.shape)
 
+	self.dt_df=np.array(self.map_resolution)  # in unit of ...
+
         if isinstance(dmap, np.ndarray):
 
 	    # ->> update m_dim <<- #
@@ -151,16 +153,17 @@ class QuadestPara(par.Parameters):
         # ->> # of band powers <<- #
 	self.npt=self.kt_list_para[-1]*self.kf_list_para[-1]
 
-        self.klist, self.kt_list, self.kf_list=band_power_init(self.get_bp_type, \
-                                       fname=self.bp_list_fname, **self.paramdict)
+        self.klist, self.kt_list, self.kf_list, self.Dk_list=band_power_init( \
+                  self.get_bp_type, fname=self.bp_list_fname, **self.paramdict)
         return 
 
     def dcov_init(self):
-        self.dcov=covm.dcov(self.klist, self.plist, self.dt, self.npt, self.npix)
+        self.dcov=covm.dcov(self.klist, self.Dk_list, self.dt_df, self.npt, \
+	                    self.m_dim)
         return
 
     def covn_vec_init(self):
-        return covm.covn_vec()
+        return covm.covn_vec(self.npix)
 
 
     def quadest_iteration(self, pk_fid, n_iteration):
