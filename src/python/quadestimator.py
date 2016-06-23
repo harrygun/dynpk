@@ -28,8 +28,14 @@ def band_power_init(bp_init_type, fname=None, **pdict):
         kt_min, kt_max, kt_num = pdict['kt_list_para']
         kf_min, kf_max, kf_num = pdict['kf_list_para']
 
-        kt_list=np.logspace(kt_min, kt_max, kt_num) 
-        kf_list=np.logspace(kf_min, kf_max, kf_num) 
+	_kt_l=np.linspace(kt_min, kt_max, kt_num+1)
+	_kf_l=np.linspace(kf_min, kf_max, kf_num+1)
+
+        # ->> middle point <<- #
+	kt_list=(_kt_l[:-1]+_kt_l[1:])/2.
+	kf_list=(_kf_l[:-1]+_kf_l[1:])/2.
+
+	Dkt_list
 
         klist=mar.meshgrid(kt_list, kf_list) 
 	s=klist.shape

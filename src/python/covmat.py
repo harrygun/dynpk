@@ -86,7 +86,7 @@ def dcov_1d_imag(kti, Dkti, dt, dtab):
 
 
 
-def dcov(klist, plist, dt_df, npt, m_dim, speedup=False):
+def dcov(klist, Dk_list dt_df, npt, m_dim, speedup=False):
     ''' ->> get the derivative of covariance matrix <<- 
     '''
     raise Exception('restart from here. ')
@@ -100,16 +100,15 @@ def dcov(klist, plist, dt_df, npt, m_dim, speedup=False):
         # ->> python loop <<- #
         for i in range(npt):
             kti, kfi   = klist[0,i], klist[1,i]
-            Dkti, Dkfi =  
+            Dkti, Dkfi =Dk_list[0,i], Dk_list[1,i]
 
-            for a in range(m_dim):
-                dtab= 2*a*npix
+            for a in range(2*npix):
+                dtab= a*npix
 
-                dcov[i,a,b]=2*(dcov_1D_real(kti, Dkti, dt, dtab)*  \
+                dcov[i,a]=2*(dcov_1D_real(kti, Dkti, dt, dtab)*  \
                                dcov_1D_real(kfi, Dkfi, df, dfab) - \ 
                                dcov_1D_imag(kti, Dkti, dt, dtab)*  \
                                dcov_1D_imag(kfi, Dkfi, df, dfab)   )
-
 
     return dcov
 
