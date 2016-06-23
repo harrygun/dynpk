@@ -18,10 +18,10 @@ cdef double CosIntegral(double x):
     return spec.sici(x)[1]
 
 cdef double Cos(double x):
-    return cnp.cos(x)
+    return np.cos(x)
 
 cdef double Sin(double x):
-    return cnp.sin(x)
+    return np.sin(x)
 
 
 
@@ -44,7 +44,7 @@ cdef double dcov_1D_real(double kti, double Dkti, double dt, double dtab):
                    dt*SinIntegral((dt - dtab)*(Dkti/2. + kti)) -   \
                    dtab*SinIntegral((dt - dtab)*(Dkti/2. + kti)) -   \
                    2*dtab*SinIntegral(dtab*(Dkti/2. + kti)) +   \
-                   (dt + dtab)*SinIntegral((dt + dtab)*(Dkti/2. + kti)))/cnp.pi
+                   (dt + dtab)*SinIntegral((dt + dtab)*(Dkti/2. + kti)))/np.pi
 
     return dc1d_real
 
@@ -74,7 +74,7 @@ cdef dcov_1D_imag(double kti, double Dkti, double dt, double dtab):
             4*(Dkti + 2*kti)*Cos(dt*(-Dkti/2. + kti))*Sin(dtab*(-Dkti/2. + kti)) + \
             4*(Dkti - 2*kti)*Sin(dtab*(Dkti/2. + kti)) -  \
             4*(Dkti - 2*kti)*Cos(dt*(Dkti/2. + kti))*Sin(dtab*(Dkti/2. + kti)))/ \
-            (4.*(-(Dkti**2*cnp.pi)/4. + kti**2*cnp.pi))
+            (4.*(-(Dkti**2*np.pi)/4. + kti**2*np.pi))
 
     return dc1d_imag
 
