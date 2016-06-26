@@ -92,6 +92,7 @@ cpdef get_dcov(dcov, klist, Dk_list, dt_df, npt, m_dim):
     cdef:
         int i, a, b
         double dt, df
+
     dt, df = dt_df
 
     print 'get_dcov:', npt, m_dim, Dk_list.shape, klist.shape, dt_df.shape
@@ -101,6 +102,8 @@ cpdef get_dcov(dcov, klist, Dk_list, dt_df, npt, m_dim):
     for i in range(npt):
         kti,  kfi  = klist[:,i]
         Dkti, Dkfi = Dk_list[:,i]
+
+        print i, kti, kfi, Dkti, Dkfi
     
         for a in range(2*m_dim[0]):
             for b in range(2*m_dim[1]):

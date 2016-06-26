@@ -119,6 +119,10 @@ if __name__=='__main__':
     print '\n->> QuadestPara parameters:\n', qe.paramdict
     print qe.plist.shape
 
+
+    fn=root+'result/dcov.npz'
+    np.savez(fn, dcov=dcov)
+
     quit()
 
     # ->> construction KL modes <<- #
