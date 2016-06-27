@@ -105,6 +105,8 @@ if __name__=='__main__':
     #->> do some testing <<- #
     do_test(p, d)
 
+    print 'mpi.rank=', mpi.rank
+
 
     '''----------------------------------------------
                 ->>    now we start    <<- 
