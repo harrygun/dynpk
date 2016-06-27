@@ -77,18 +77,36 @@ def quade_pk_single(dmap, covf, dcov, covn_vec, plist, klist, npt, npix, m_dim):
 
 
 
-def quade_iter(dmap, dcov, covn_vec, pfid, klist, npt, npix, m_dim, nit=0, do_cyth=True):
+def quade_iter(dmap, dcov, covn_vec, pfid, klist, npt, npix, m_dim, nit=0, do_cyth=True, do_mpi=False):
 
     covf=np.zeros((npix, npix))
-    Qi=np.zeros(npt)
 
     if do_cyth==True:
+
         # ->> first run <<- #
-        cyth_cov.quad_estimator_wrapper(dmap, covf, dcov, covn_vec, pfid, \
-                                        Qi, npt, npix, m_dim)
-        # ->> iteration <<- #
-        for it in range(nit):
-            Qi=quade_pk_single(dmap, covf, dcov, covn_vec, Qi, npt, npix, m_dim)
+        if do_mpi==True:
+            _Qi_=np.zeros(npt)
+            cyth_cov.quad_estimator_wrapper(dmap, covf, dcov, covn_vec, pfid, \
+                                            _Qi_, npt, npix, m_dim, do_mpi=True)
+            Qi=mpi.gather_unify(_Qi_, root=0)
+
+
+            # ->> iteration <<- #
+            for it in range(nit):
+                _Qi_=np.zeros(npt)
+                cyth_cov.quad_estimator_wrapper(dmap, covf, dcov, covn_vec, Qi, \
+                                                _Qi_, npt, npix, m_dim, do_mpi=True)
+                Qi=mpi.gather_unify(_Qi_, root=0)
+        else:
+
+            cyth_cov.quad_estimator_wrapper(dmap, covf, dcov, covn_vec, pfid, \
+                                            _Qi_, npt, npix, m_dim)
+            Qi=mpi.gather_unify(_Qi_, root=0)
+
+            # ->> iteration <<- #
+            for it in range(nit):
+                _Qi_=(dmap, covf, dcov, covn_vec, Qi, npt, npix, m_dim)
+                Qi=mpi.gather_unify(_Qi_, root=0)
 
     else:
         # ->> first run <<- #
@@ -220,8 +238,9 @@ class QuadestPara(par.Parameters):
 
     def quadest_iteration(self, pk_fid, n_iteration):
         # ->> run iterative quadratic estimator <<- #
-        return quade_iter(self.dmap, self.dcov, self.covn_vec, \
-               pk_fid, self.klist, self.npt, self.npix, self.m_dim, nit=n_iteration)
+        return quade_iter(self.dmap, self.dcov, self.covn_vec, pk_fid, \
+                          self.klist, self.npt, self.npix, self.m_dim, \
+                          nit=n_iteration, do_mpi=self.do_mpi)
 
     def get_derived(self):
         pass

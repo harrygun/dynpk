@@ -30,6 +30,11 @@ elif machine=='HHPC':
     mpi4py_include='/home/wangxin/software/python/python/2.7.3/lib/python2.7/site-packages/mpi4py/include'
     LIB_PATH=os.environ['LD_LIBRARY_PATH'].split(':')
 
+elif machine=='cita':
+    mpi4py_include='/home/xwang/workspace/software/anaconda/lib/python2.7/site-packages/mpi4py/include'
+
+else:
+    raise Exception
 
 src_dir= './'
 

@@ -47,7 +47,7 @@ endif
 
 ifeq ($(MACHINE),cita)
     cflag="-fPIC -I /home/xwang/workspace/software/cuba/current/include -I /opt/openmpi/1.6.1-intel-12.1.5/include -I /home/xwang/workspace/lib/gsl/include  -I ../../clib/src/c"
-    libflag="-L /home/xwang/workspace/software/cuba/current/lib -L ./ -L /home/xwang/workspace/lib/gsl/lib -lgsl -lgslcblas -lm -L ../../clib/lib -lmysf"
+    libflag="-L /home/xwang/workspace/software/cuba/current/lib -L ./ -L /home/xwang/workspace/lib/gsl/lib -lgsl -lgslcblas -lm"
 
     python='python'
 endif

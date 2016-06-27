@@ -16,6 +16,9 @@ from libc.stdlib cimport malloc, free
 
 cdef double _epsilon_ = 1e-10
 
+cdef int mytrue=1
+cdef int myfalse=0
+
 
 cdef double SinIntegral(double x):
     cdef double si
@@ -244,7 +247,7 @@ cpdef get_dcov_klim(dcov, klist_low, klist_up, dt_df, npt, m_dim, do_mpi=False):
         ktia, kfia = klist_low[:,i]
         ktib, kfib = klist_up[:,i]
 
-        print i, ktia, ktib, kfia, kfib, dt, df, dtab, dfab
+        print i, ktia, ktib, kfia, kfib, dt, df
     
         for a in range(-m_dim[0], m_dim[0]):
             for b in range(-m_dim[1], m_dim[1]):
@@ -324,7 +327,7 @@ cdef void quad_estimator(cnp.ndarray[cnp.double_t, ndim=2] dmap,
                         cnp.ndarray[cnp.double_t, ndim=1] covn_vec, 
                         cnp.ndarray[cnp.double_t, ndim=1] plist, 
                         cnp.ndarray[cnp.double_t, ndim=1] Qi, 
-                        int npt, int npix, int mdim_t, int mdim_f):
+                        int npt, int npix, int mdim_t, int mdim_f, int do_mpi):
 
     cdef: 
         int i, a, b, c, d, e, f, g
@@ -341,7 +344,15 @@ cdef void quad_estimator(cnp.ndarray[cnp.double_t, ndim=2] dmap,
     idx_c=<int *>malloc(2*sizeof(int))
     idx_d=<int *>malloc(2*sizeof(int))
 
-    for i in range(npt):
+
+    if do_mpi==True:
+        prange=mpi.mpirange(npt)
+    else:
+        prange=range(npt)
+
+
+    # ->> now start <<- #
+    for i in prange:
 
         for a in range(npix):
             mpixel_idx(a, mdim_t, mdim_f, idx_a)
@@ -365,14 +376,23 @@ cdef void quad_estimator(cnp.ndarray[cnp.double_t, ndim=2] dmap,
     free(idx_d)
 
 
+
     return
 
 
 
-cpdef quad_estimator_wrapper(dmap, covf, dcov, covn_vec, plist, Qi, npt, npix, m_dim):
+
+cpdef quad_estimator_wrapper(dmap, covf, dcov, covn_vec, plist, Qi, npt, npix, m_dim, do_mpi=False):
+
+    cdef int dompi
+
+    if do_mpi==True:
+        dompi=mytrue
+    else:
+        dompi=myfalse
 
     quad_estimator(dmap, covf, dcov, covn_vec, plist, Qi, <int> npt, \
-                   <int> npix, <int> m_dim[0], <int> m_dim[1])
+                   <int> npix, <int> m_dim[0], <int> m_dim[1], dompi)
 
     return 
 
