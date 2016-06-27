@@ -144,7 +144,10 @@ if __name__=='__main__':
 
     #->> write files <<- #
     fn_qi=root+'result/Qi.npz'
-    np.savez(fn_qi, Qi=Qi)
+
+    if mpi.rank0:
+        np.savez(fn_qi, Qi=Qi)
+        mpi.barrier()
      
 
 

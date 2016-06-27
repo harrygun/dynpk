@@ -211,8 +211,12 @@ class QuadestPara(par.Parameters):
 	    else:
                 self.dcov=covm.dcov(self.klist_low, self.klist_up, self.dt_df, \
                              self.npt, self.m_dim, speedup=True, do_mpi=False)
+
             # ->> save data <<- #
-            np.savez(fn_dcov, dcov=self.dcov)
+            if mpi.rank0:
+                np.savez(fn_dcov, dcov=self.dcov)
+                mpi.barrier()
+
         else:
 	    # ->> import from files <<- #
 	    self.dcov=np.load(fn_dcov)['dcov']
