@@ -7,6 +7,7 @@ import json
 
 import genscript.parameter as par
 import genscript.myarray as mar
+import genscript.mpiutil as mpi
 
 import misc.helper as helper
 import covmat as covm
