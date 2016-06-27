@@ -236,10 +236,15 @@ cpdef get_dcov_klim(dcov, klist_low, klist_up, dt_df, npt, m_dim, do_mpi=False):
 
     print 'get_dcov:', npt, m_dim, klist_up.shape, klist_low.shape, dt_df.shape
 
+    print 'mpi:', mpi._rank, mpi._size
+
     if do_mpi==True:
         prange=mpi.mpirange(npt)
     else:
         prange=range(npt)
+
+    print 'dcov:', prange
+
 
     # ->> python loop <<- #
     for i in prange:
