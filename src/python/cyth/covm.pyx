@@ -315,3 +315,13 @@ cpdef convert_cov_full(covf, dcov, covn_vec, plist, npt, npix, m_dim):
 
 
 
+'''->> 
+'''
+cdef void quad_estimator():
+
+    return
+
+cpdef quad_estimator_wrapper(dmap, dcov, covf, qi):
+
+
+    return
