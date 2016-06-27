@@ -321,6 +321,7 @@ cdef void quad_estimator():
 
     return
 
+
 cpdef quad_estimator_wrapper(dmap, dcov, covf, qi):
 
 
