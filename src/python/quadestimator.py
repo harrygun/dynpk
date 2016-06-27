@@ -11,6 +11,7 @@ import genscript.myarray as mar
 import misc.helper as helper
 import covmat as covm
 
+import cyth.covm as cyth_cov
 
 
 
@@ -55,10 +56,10 @@ def band_power_init(bp_init_type, fname=None, **pdict):
 
 
 
+"""->> NOT IN USE <<-"""
 def quade_pk_single(dmap, covf, dcov, covn_vec, plist, klist, npt, npix, m_dim):
-    ''' ->> construct fiducial estimator, given the fiducial pk <<- 
-    '''
-    
+    ''' ->> construct fiducial estimator, given the fiducial pk <<- '''
+
     # ->> get full covariance matrix and inverse <<- #
     if not (covm.covfull(covf, dcov, covn_vec, plist, npt, npix, m_dim)):
         raise Exception('full covariance matrix error')
@@ -66,30 +67,39 @@ def quade_pk_single(dmap, covf, dcov, covn_vec, plist, klist, npt, npix, m_dim):
     icovf=slag.inv(covf)
 
     #->> quadratic estimator <<- #
-    qi=np.zeros(npt)
+    Qi=np.zeros(npt)
 
     for i in range(npt):
-        qi=np.einsum('ij,jk,ki', icovf, dcov[i], icovf)
+        Qi=np.einsum('ij,jk,ki', icovf, dcov[i], icovf)
 
-    return qi
-
-
+    return Qi
 
 
-def quade_iter(dmap, dcov, covn_vec, pfid, klist, npt, npix, m_dim, nit=0):
-    #raise Exception()
+
+
+def quade_iter(dmap, dcov, covn_vec, pfid, klist, npt, npix, m_dim, nit=0, do_cyth=True):
 
     covf=np.zeros((npix, npix))
+    Qi=np.zeros(npt)
 
-    # ->> first run <<- #
-    qi=quade_pk_single(dmap, covf, dcov, covn_vec, pfid, klist, npt, npix, m_dim)
+    if do_cyth==True:
+        # ->> first run <<- #
+        cyth_cov.quad_estimator_wrapper(dmap, covf, dcov, covn_vec, pfid, \
+                                        Qi, npt, npix, m_dim)
+        # ->> iteration <<- #
+        for it in range(nit):
+            Qi=quade_pk_single(dmap, covf, dcov, covn_vec, Qi, npt, npix, m_dim)
 
-    # ->> iteration <<- #
-    for it in range(nit):
-        qi=quade_pk_single(dmap, covf, dcov, covn_vec, qi, klist, npt, npix, m_dim)
+    else:
+        # ->> first run <<- #
+        Qi=quade_pk_single(dmap, covf, dcov, covn_vec, pfid, klist, npt, npix, m_dim)
+
+        # ->> iteration <<- #
+        for it in range(nit):
+            Qi=quade_pk_single(dmap, covf, dcov, covn_vec, Qi, klist, npt, npix, m_dim)
 
 
-    return qi
+    return Qi
 
 
 

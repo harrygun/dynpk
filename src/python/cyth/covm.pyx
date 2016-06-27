@@ -2,6 +2,7 @@ import numpy as np
 import pylab as pl
 import scipy.sparse as spm
 import scipy.special as spec
+import scipy.linalg as slag
 
 import genscript.mpiutil as mpi
 import genscript.matrix_banded as mband
@@ -315,14 +316,63 @@ cpdef convert_cov_full(covf, dcov, covn_vec, plist, npt, npix, m_dim):
 
 
 
-'''->> 
-'''
-cdef void quad_estimator():
+
+''' ->> Quadratic Estimator <<- #'''
+cdef void quad_estimator(cnp.ndarray[cnp.double_t, ndim=2] dmap, 
+                        cnp.ndarray[cnp.double_t, ndim=2] covf, 
+                        cnp.ndarray[cnp.double_t, ndim=3] dcov, 
+                        cnp.ndarray[cnp.double_t, ndim=1] covn_vec, 
+                        cnp.ndarray[cnp.double_t, ndim=1] plist, 
+                        cnp.ndarray[cnp.double_t, ndim=1] Qi, 
+                        int npt, int npix, int mdim_t, int mdim_f):
+
+    cdef: 
+        int i, a, b, c, d, e, f, g
+        int *idx_a, *idx_b, *idx_c, *idx_d
+
+
+    full_cov_recovery(covf, dcov, covn_vec, plist, npt, npix, mdim_t, mdim_f)
+    icovf=slag.inv(covf)
+
+
+    idx_a=<int *>malloc(2*sizeof(int))
+    idx_b=<int *>malloc(2*sizeof(int))
+    idx_c=<int *>malloc(2*sizeof(int))
+    idx_d=<int *>malloc(2*sizeof(int))
+
+    for i in range(npt):
+
+        for a in range(npix):
+            mpixel_idx(a, mdim_t, mdim_f, idx_a)
+
+            for b in range(npix):
+                mpixel_idx(b, mdim_t, mdim_f, idx_b)
+
+                for c in range(npix):
+                    mpixel_idx(c, mdim_t, mdim_f, idx_c)
+
+                    for d in range(npix):
+                        mpixel_idx(d, mdim_t, mdim_f, idx_d)
+
+                        Qi[i]+=dmap[idx_a[0],idx_a[1]]*icovf[a,b]*dcov[i,\
+                               idx_b[0]-idx_c[0],idx_b[1]-idx_c[1]]*icovf[c,d]\
+                               *dmap[idx_d[0],idx_d[1]]
+
+    free(idx_a)
+    free(idx_b)
+    free(idx_c)
+    free(idx_d)
+
 
     return
 
 
-cpdef quad_estimator_wrapper(dmap, dcov, covf, qi):
+
+cpdef quad_estimator_wrapper(dmap, covf, dcov, covn_vec, plist, Qi, npt, npix, m_dim):
+
+    quad_estimator(dmap, covf, dcov, covn_vec, plist, Qi, <int> npt, \
+                   <int> npix, <int> m_dim[0], <int> m_dim[1])
+
+    return 
 
 
-    return

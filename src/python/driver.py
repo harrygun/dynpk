@@ -136,13 +136,14 @@ if __name__=='__main__':
     qe.covn_vec_init(noise_level=noise_level)
 
     # ->> run estimator <<- #
-    qe.quadest_iteration(pk_fid, n_it)
+    Qi=qe.quadest_iteration(pk_fid, n_it)
 
 
 
     #->> write files <<- #
+    fn_qi=root+'result/Qi.npz'
+    np.savez(fn_qi, Qi=Qi)
      
-
 
 
     
