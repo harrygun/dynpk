@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[     55421,       1426]
-NotebookOptionsPosition[     54524,       1388]
-NotebookOutlinePosition[     54879,       1404]
-CellTagsIndexPosition[     54836,       1401]
+NotebookDataLength[     54469,       1401]
+NotebookOptionsPosition[     53574,       1363]
+NotebookOutlinePosition[     53929,       1379]
+CellTagsIndexPosition[     53886,       1376]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -1152,8 +1152,8 @@ Cell[BoxData[
                RowBox[{"Im", "[", "kta", "]"}], " ", 
                RowBox[{"Re", "[", "\[Delta]t", "]"}]}]}]}]}], ")"}]}], 
          ")"}]}], ")"}]}], ")"}]}]}], "]"}]], "Output",
- CellChangeTimes->{3.674825524501916*^9}]
-}, Closed]]
+ CellChangeTimes->{3.674825524501916*^9, 3.675956788040325*^9}]
+}, Open  ]]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -1307,81 +1307,56 @@ Cell[BoxData[
     RowBox[{"FortranForm", "[", 
      RowBox[{"FullSimplify", "[", 
       RowBox[{"dcovReal", "[", 
-       RowBox[{
-        RowBox[{"kti", "-", 
-         RowBox[{"Dkti", "/", "2"}]}], ",", 
-        RowBox[{"kti", "+", 
-         RowBox[{"Dkti", "/", "2"}]}], ",", "dt", ",", "dtab"}], "]"}], "]"}],
-      "]"}]}], "\[IndentingNewLine]", "\[IndentingNewLine]"}]}]], "Input",
+       RowBox[{"ktia", ",", "ktib", ",", "dt", ",", "dtab"}], "]"}], "]"}], 
+     "]"}]}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   "\[IndentingNewLine]"}]}]], "Input",
  CellChangeTimes->{{3.673641405055328*^9, 3.6736414057239847`*^9}, 
    3.673644636019806*^9, 3.673648429218688*^9, {3.67482537347904*^9, 
    3.674825374380438*^9}, {3.674825439327425*^9, 3.674825448618321*^9}, 
    3.6748256664545507`*^9, {3.675457588094986*^9, 3.675457638908514*^9}, {
-   3.675457822289495*^9, 3.675457869138505*^9}}],
+   3.675457822289495*^9, 3.675457869138505*^9}, 3.675957034502337*^9, {
+   3.6759571646197243`*^9, 3.6759572138653603`*^9}, 3.675957260894805*^9}],
 
 Cell["\<\
-        ((4*(-1 + Cos(dt*(-Dkti/2. + kti)))*Cos(dtab*(-Dkti/2. + kti)))/
-     -     (Dkti - 2*kti) + (4*(-1 + Cos(dt*(Dkti/2. + kti)))*
-     -       Cos(dtab*(Dkti/2. + kti)))/(Dkti + 2*kti) + 
-     -    (-dt + dtab)*SinIntegral((dt - dtab)*(-Dkti/2. + kti)) + 
-     -    2*dtab*SinIntegral(dtab*(-Dkti/2. + kti)) - 
-     -    dt*SinIntegral((dt + dtab)*(-Dkti/2. + kti)) - 
-     -    dtab*SinIntegral((dt + dtab)*(-Dkti/2. + kti)) + 
-     -    dt*SinIntegral((dt - dtab)*(Dkti/2. + kti)) - 
-     -    dtab*SinIntegral((dt - dtab)*(Dkti/2. + kti)) - 
-     -    2*dtab*SinIntegral(dtab*(Dkti/2. + kti)) + 
-     -    (dt + dtab)*SinIntegral((dt + dtab)*(Dkti/2. + kti)))/Pi\
+        (-2*ktib*(-1 + Cos(dt*ktia))*Cos(dtab*ktia) + 
+     -    2*ktia*(-1 + Cos(dt*ktib))*Cos(dtab*ktib) + 
+     -    (-dt + dtab)*ktia*ktib*SinIntegral((dt - dtab)*ktia) + 
+     -    2*dtab*ktia*ktib*SinIntegral(dtab*ktia) - 
+     -    ktia*ktib*((dt + dtab)*SinIntegral((dt + dtab)*ktia) + 
+     -       (-dt + dtab)*SinIntegral((dt - dtab)*ktib) + \
+2*dtab*SinIntegral(dtab*ktib)
+     -       ) + (dt + dtab)*ktia*ktib*SinIntegral((dt + \
+dtab)*ktib))/(ktia*ktib*Pi)\
 \>", "Output",
  CellChangeTimes->{{3.6754575903956003`*^9, 3.675457627748446*^9}, {
    3.675457814961976*^9, 3.6754578433473663`*^9}, 3.675457878100568*^9, 
-   3.67546099506406*^9}]
+   3.67546099506406*^9, 3.675957236406169*^9, 3.67595728213922*^9}]
 }, Open  ]],
 
 Cell[CellGroupData[{
 
 Cell[BoxData[
- RowBox[{"\[IndentingNewLine]", 
-  RowBox[{"resImag", "=", 
-   RowBox[{"FortranForm", "[", 
-    RowBox[{"Simplify", "[", 
-     RowBox[{"dcovImag", "[", 
-      RowBox[{
-       RowBox[{"kti", "-", 
-        RowBox[{"Dkti", "/", "2"}]}], ",", 
-       RowBox[{"kti", "+", 
-        RowBox[{"Dkti", "/", "2"}]}], ",", "dt", ",", "dtab"}], "]"}], "]"}], 
-    "]"}]}]}]], "Input",
- CellChangeTimes->{{3.675457849788969*^9, 3.675457850200026*^9}, {
-  3.675457882497641*^9, 3.675457883307065*^9}, {3.6754609761258993`*^9, 
-  3.675460976671484*^9}}],
+ RowBox[{"resImag", "=", 
+  RowBox[{"FortranForm", "[", 
+   RowBox[{"Simplify", "[", 
+    RowBox[{"dcovImag", "[", 
+     RowBox[{"ktia", ",", "ktib", ",", "dt", ",", "dtab"}], "]"}], "]"}], 
+   "]"}]}]], "Input"],
 
 Cell["\<\
-        ((dt - dtab)*(Dkti - 2*kti)*(Dkti + 2*kti)*
-     -     CosIntegral((dt - dtab)*(-Dkti/2. + kti)) + 
-     -    2*dtab*(Dkti - 2*kti)*(Dkti + 2*kti)*CosIntegral(dtab*(-Dkti/2. + \
-kti)) - 
-     -    dt*(Dkti - 2*kti)*(Dkti + 2*kti)*CosIntegral((dt + dtab)*(-Dkti/2. \
-+ kti)) - 
-     -    dtab*(Dkti - 2*kti)*(Dkti + 2*kti)*
-     -     CosIntegral((dt + dtab)*(-Dkti/2. + kti)) - 
-     -    (dt - dtab)*(Dkti - 2*kti)*(Dkti + 2*kti)*
-     -     CosIntegral((dt - dtab)*(Dkti/2. + kti)) - 
-     -    2*dtab*(Dkti - 2*kti)*(Dkti + 2*kti)*CosIntegral(dtab*(Dkti/2. + \
-kti)) + 
-     -    dt*(Dkti - 2*kti)*(Dkti + 2*kti)*CosIntegral((dt + dtab)*(Dkti/2. + \
-kti)) + 
-     -    dtab*(Dkti - 2*kti)*(Dkti + 2*kti)*
-     -     CosIntegral((dt + dtab)*(Dkti/2. + kti)) + 
-     -    4*(Dkti + 2*kti)*Sin(dtab*(-Dkti/2. + kti)) - 
-     -    4*(Dkti + 2*kti)*Cos(dt*(-Dkti/2. + kti))*Sin(dtab*(-Dkti/2. + \
-kti)) + 
-     -    4*(Dkti - 2*kti)*Sin(dtab*(Dkti/2. + kti)) - 
-     -    4*(Dkti - 2*kti)*Cos(dt*(Dkti/2. + kti))*Sin(dtab*(Dkti/2. + \
-kti)))/
-     -  (4.*(-(Dkti**2*Pi)/4. + kti**2*Pi))\
+        ((-dt + dtab)*ktia*ktib*CosIntegral((dt - dtab)*ktia) - 
+     -    2*dtab*ktia*ktib*CosIntegral(dtab*ktia) + 
+     -    dt*ktia*ktib*CosIntegral((dt + dtab)*ktia) + 
+     -    dtab*ktia*ktib*CosIntegral((dt + dtab)*ktia) + 
+     -    (dt - dtab)*ktia*ktib*CosIntegral((dt - dtab)*ktib) + 
+     -    2*dtab*ktia*ktib*CosIntegral(dtab*ktib) - 
+     -    dt*ktia*ktib*CosIntegral((dt + dtab)*ktib) - 
+     -    dtab*ktia*ktib*CosIntegral((dt + dtab)*ktib) + \
+2*ktib*Sin(dtab*ktia) - 
+     -    2*ktib*Cos(dt*ktia)*Sin(dtab*ktia) - 2*ktia*Sin(dtab*ktib) + 
+     -    2*ktia*Cos(dt*ktib)*Sin(dtab*ktib))/(ktia*ktib*Pi)\
 \>", "Output",
- CellChangeTimes->{
-  3.675457851158153*^9, {3.675460979535255*^9, 3.675460996064947*^9}}]
+ CellChangeTimes->{{3.6759572633685093`*^9, 3.675957289113834*^9}}]
 }, Open  ]]
 }, Open  ]]
 }, Open  ]]
@@ -1413,18 +1388,18 @@ Cell[2466, 72, 3198, 89, 210, "Output"]
 }, Closed]],
 Cell[CellGroupData[{
 Cell[5701, 166, 1020, 31, 40, "Input"],
-Cell[6724, 199, 38532, 955, 1358, "Output"]
-}, Closed]]
+Cell[6724, 199, 38554, 955, 1358, "Output"]
+}, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[45305, 1160, 110, 1, 65, "Chapter"],
+Cell[45327, 1160, 110, 1, 65, "Chapter"],
 Cell[CellGroupData[{
-Cell[45440, 1165, 6377, 154, 454, "Input"],
-Cell[51820, 1321, 864, 15, 190, "Output"]
+Cell[45462, 1165, 6380, 152, 471, "Input"],
+Cell[51845, 1319, 707, 13, 130, "Output"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[52721, 1341, 551, 14, 46, "Input"],
-Cell[53275, 1357, 1209, 26, 280, "Output"]
+Cell[52589, 1337, 226, 6, 28, "Input"],
+Cell[52818, 1345, 716, 13, 175, "Output"]
 }, Open  ]]
 }, Open  ]]
 }, Open  ]]

@@ -106,46 +106,42 @@ if __name__=='__main__':
     do_test(p, d)
 
 
-    ''' ->> now start to work <<- '''
-
-    #->> define class <<- #
-    qe_dict={}
+    '''----------------------------------------------
+                ->>    now we start    <<- 
+       ----------------------------------------------'''
+    #->> data initialization <<- #
+    qe_dict={'calculate_dcov': False, 
+             'fname_dcov':     root+'result/dcov.npz',
+	    }
     dmap=d[:100,:100]
 
-    #->>parafname='same as parameter file' 
+    ''' #->> Initialzing quadratic estimator class <<- #
+        #->> parafname='same as parameter file' 
+        #->> calculating dcov
+    '''
     qe=qde.QuadestPara(paramfname=p.paramfname, section=p.qestmator_sec,
             prog_control=p, dmap=dmap, **qe_dict)
 
     print '\n->> QuadestPara parameters:\n', qe.paramdict
-    print qe.plist.shape
 
 
-    fn=root+'result/dcov.npz'
-    np.savez(fn, dcov=dcov)
-
-    quit()
-
-    # ->> construction KL modes <<- #
-    # ->> (1). guess the covariance matrix <<- # 
-    # ->> mask=helper.gen_mask(d.shape, npt=10, mask_type='default')
-
-
-    # ->> (2). construct the quadratic estimator <<- # 
-    # a). 2D axis list 
+    # ->> start estimator evaluation, n_it=0 without iternation <<- #
     n_it=0
-    qe.quadest_iteration(self, pk_fid, n_it)
 
+    # ->> set fiducial power spectrum <<- #
+    pk_fid=qe.fid_pk_first_guess(guess_option='simplest')
 
-    # b).  
+    # ->> initialize noise covmat <<- #
+    noise_level='noiseless'
+    qe.covn_vec_init(noise_level=noise_level)
 
-    # ->> initialization <<- #
+    # ->> run estimator <<- #
+    qe.quadest_iteration(pk_fid, n_it)
 
-    # 
 
 
     #->> write files <<- #
-
-
+     
 
 
 

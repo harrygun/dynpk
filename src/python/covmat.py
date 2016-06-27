@@ -88,7 +88,7 @@ def dcov_1D_imag(kti, Dkti, dt, dtab):
 
 
 
-def dcov(klist, Dk_list, dt_df, npt, m_dim, speedup=True):
+def _dcov_NOT_use_(klist, Dk_list, dt_df, npt, m_dim, speedup=True, do_mpi=False):
     ''' ->> get the derivative of covariance matrix <<- 
     '''
     dcov=np.zeros((npt, 2*m_dim[0], 2*m_dim[1]))
@@ -96,7 +96,7 @@ def dcov(klist, Dk_list, dt_df, npt, m_dim, speedup=True):
 
     if speedup==True:
         # ->> C loop <<- #
-        cyth_cov.get_dcov(dcov, klist, Dk_list, dt_df, npt, m_dim)
+        cyth_cov.get_dcov_klim(dcov, klist, Dk_list, dt_df, npt, m_dim, do_mpi=do_mpi)
 	return dcov
 
     else:
@@ -119,25 +119,50 @@ def dcov(klist, Dk_list, dt_df, npt, m_dim, speedup=True):
 
 
 
+def dcov(klist_low, klist_up, dt_df, npt, m_dim, speedup=True, do_mpi=False):
+    ''' ->> get the derivative of covariance matrix <<- 
+    '''
+    dcov=np.zeros((npt, 2*m_dim[0], 2*m_dim[1]))
 
-def covn_vec(npix, noise_method='by_hand'):
+    if speedup==True:
+        # ->> cython loop <<- #
+        cyth_cov.get_dcov_klim(dcov, klist_low, klist_up, dt_df, npt, \
+	                       m_dim, do_mpi=do_mpi)
+    else:
+        raise Exception
+
+    return dcov
+
+
+
+
+def covn_vec(npix, noise_method='by_hand', noise_level='noiseless'):
 
     if noise_method=='by_hand':
-        covn=np.ones(npix)
+        if noise_level=='noiseless':
+            covn=np.zeros(npix)
+	else:
+            covn=np.ones(npix)
+    else:
+        raise Exception
 
     return covn
 
 
-def covfull(covf, dcov, covn_vec, plist, klist, npt, npix):
+def covfull(covf, dcov, covn_vec, plist, npt, npix, m_dim, speedup=True):
     # ->>  from dcov and covn_vec, get the full covariance matrix <<- #
 
+    if speedup==True:
+        # ->>
+        #print 'covfull ---  dcov shape:', dcov.shape
+        cyth_cov.convert_cov_full(covf, dcov, covn_vec, plist, npt, npix, m_dim)
 
-    for i in range(npt):
-        _covf=np.zeros((npix, npix))
-        covf=dcov[i]*plist[i]
+    else:
+        for i in range(npt):
+            covf=dcov[i]*plist[i]
 
-    for a in range(npix):
-        covf[a,a]+=covn_vec[a]
+        for a in range(npix):
+            covf[a,a]+=covn_vec[a]
 
     return True
 
