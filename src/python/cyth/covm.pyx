@@ -334,6 +334,7 @@ cdef void quad_estimator(cnp.ndarray[cnp.double_t, ndim=2] dmap,
     full_cov_recovery(covf, dcov, covn_vec, plist, npt, npix, mdim_t, mdim_f)
     icovf=slag.inv(covf)
 
+    print '->> preparation of icov & cov is done, now calculate Qe.'
 
     idx_a=<int *>malloc(2*sizeof(int))
     idx_b=<int *>malloc(2*sizeof(int))
