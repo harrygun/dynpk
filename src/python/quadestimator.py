@@ -69,7 +69,7 @@ def quade_pk_single(dmap, covf, dcov, covn_vec, plist, klist, npt, npix, m_dim):
     qi=np.zeros(npt)
 
     for i in range(npt):
-        qi=np.einsum('ij,jk,ki', (icovf, dcov[i], icovf) )
+        qi=np.einsum('ij,jk,ki', icovf, dcov[i], icovf)
 
     return qi
 
