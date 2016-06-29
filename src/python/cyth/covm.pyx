@@ -45,6 +45,13 @@ cdef double Sin(double x):
     return np.sin(x)
 
 
+cdef void mat_multiplication(cnp.ndarray[cnp.double_t, ndim=2] m1, \
+                             cnp.ndarray[cnp.double_t, ndim=2] m2, \
+                             cnp.ndarray[cnp.double_t, ndim=2] m):
+    cdef int i, j, k;
+
+    return
+
 
 
 
@@ -322,6 +329,27 @@ cpdef convert_cov_full(covf, dcov, covn_vec, plist, npt, npix, m_dim):
 
 
 ''' ->> Quadratic Estimator <<- #'''
+cdef void dcov_c_multiple(cnp.ndarray[cnp.double_t, ndim=2] icovf, 
+                          cnp.ndarray[cnp.double_t, ndim=3] dcov,
+                          cnp.ndarray[cnp.double_t, ndim=2] out, int i, int npix):
+
+    # ->> give the multiplication dcov^i_ac C^-1_cb <<- #
+
+    cdef: 
+        int a, b, c
+        int *idx_a
+
+    for a in range(npix):
+        for b in range(npix):
+
+            for c in range(npix):
+                out[a,b]+=  
+        
+
+
+    return
+
+
 cdef void quad_estimator(cnp.ndarray[cnp.double_t, ndim=2] dmap, 
                         cnp.ndarray[cnp.double_t, ndim=2] covf, 
                         cnp.ndarray[cnp.double_t, ndim=3] dcov, 
