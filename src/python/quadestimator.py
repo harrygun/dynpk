@@ -187,6 +187,8 @@ class QuadestPara(par.Parameters):
 	#->> self.covn initialization <<- #
         #self.covn_vec_init()
 
+	print 'initialization is done.'
+
         return
 
 

@@ -337,8 +337,9 @@ cdef void quad_estimator(cnp.ndarray[cnp.double_t, ndim=2] dmap,
 
     full_cov_recovery(covf, dcov, covn_vec, plist, npt, npix, mdim_t, mdim_f)
     icovf=slag.inv(covf)
+    mpi.barrier()
 
-    print '->> preparation of icov & cov is done, now calculate Qe.'
+    print '->> preparation of icov & cov is done, now calculate Qe.', mpi.rank
 
     idx_a=<int *>malloc(2*sizeof(int))
     idx_b=<int *>malloc(2*sizeof(int))
@@ -354,6 +355,7 @@ cdef void quad_estimator(cnp.ndarray[cnp.double_t, ndim=2] dmap,
 
     # ->> now start <<- #
     for i in prange:
+        print 'quadratic estimator: rank-', mpi.rank, '  prange:', i
 
         for a in range(npix):
             mpixel_idx(a, mdim_t, mdim_f, idx_a)
