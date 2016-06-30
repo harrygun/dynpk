@@ -17,11 +17,11 @@ import quadestimator as qde
 
 def auto_corr_test(p, d):
 
-    if p.do_testing=='False':
-        return
+    #if p.do_testing=='False':
+    #    return
 
     cor=qde.autocorr(d, auto_type='FFT')
-    cb=pl.imshow(cor)
+    cb=pl.imshow(cor) #, norm=colors.LogNorm())
     pl.show()
 
     quit()
@@ -57,13 +57,14 @@ if __name__=='__main__':
     root='../../workspace/'
 
     # ->> data importing <<- #
-    fn=root+'data/sims/dsU1.npy'
+    #fn=root+'data/sims/dsU1.npy'
+    fn=root+'data/sims/ds1.npy'
 
     d=np.load(fn)
     #print 'data shape:', d.shape
 
     #->> do some testing <<- #
-    auto_corr_test(p, d)
+    #auto_corr_test(p, d)
 
     print 'mpi.rank=', mpi.rank
 
@@ -87,18 +88,24 @@ if __name__=='__main__':
     print '\n->> QuadestPara parameters:\n', qe.paramdict
 
 
+    # ->> covariance matrix testing <<- #
+    print '->> now test dcov and covariace matrix <<- #'
+    print '->> Basically, assuming the correct power spectrum, I`d like to check whether dcov would produce the correct covariance matrix. <<- '
+    raise Exception()
+
 
 
 
 
 
     #->> write files <<- #
+    '''
     fn_qi=root+'result/Qi.npz'
 
     if mpi.rank0:
         np.savez(fn_qi, Qi=Qi)
         mpi.barrier()
-     
+    ''' 
 
 
     
