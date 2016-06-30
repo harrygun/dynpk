@@ -396,8 +396,11 @@ cdef void quad_estimator(cnp.ndarray[cnp.double_t, ndim=2] dmap, \
     d_ic=<double *>malloc(npix*sizeof(double))
 
     # ->> get full covariance matrix and its inverse <<- #
+    print '->> now start to recover full covariance matrix.'
     full_cov_recovery(covf, dcov, covn_vec, plist, npt, npix, mdim_t, mdim_f)
+    print '->> the inverse of covariance matrix.'
     icovf=slag.inv(covf)
+
     mpi.barrier()
 
     print '->> preparation of icov & cov is done, now calculate Qe.', mpi.rank
