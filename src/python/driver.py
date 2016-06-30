@@ -132,12 +132,15 @@ if __name__=='__main__':
 
     # ->> set fiducial power spectrum <<- #
     pk_fid=qe.fid_pk_first_guess(guess_option='simplest')
+    print '->> fiducial pk initialization done.'
 
     # ->> initialize noise covmat <<- #
     noise_level='noiseless'
     qe.covn_vec_init(noise_level=noise_level)
+    print '->> noise level initialized.'
 
     # ->> run estimator <<- #
+    print '->> start the quadratic estimator.'
     Qi=qe.quadest_iteration(pk_fid, n_it)
 
 
