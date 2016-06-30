@@ -153,10 +153,9 @@ if __name__=='__main__':
         np.savez(fn_qi, Qi=Qi)
      
 
-
-    
     # ->> The End <<- #
     p.finalize()
+    mpi.finalize()
 
 
 
