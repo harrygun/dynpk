@@ -100,14 +100,14 @@ def quade_iter(dmap, dcov, covn_vec, pfid, klist, npt, npix, m_dim, nit=0, do_cy
                 Qi=mpi.gather_unify(_Qi_, root=0)
         else:
 
+            Qi=np.zeros(npt)
             cyth_cov.quad_estimator_wrapper(dmap, covf, dcov, covn_vec, pfid, \
-                                            _Qi_, npt, npix, m_dim)
-            Qi=mpi.gather_unify(_Qi_, root=0)
+                                            Qi, npt, npix, m_dim)
 
             # ->> iteration <<- #
             for it in range(nit):
-                _Qi_=(dmap, covf, dcov, covn_vec, Qi, npt, npix, m_dim)
-                Qi=mpi.gather_unify(_Qi_, root=0)
+                cyth_cov.quad_estimator_wrapper(dmap, covf, dcov, covn_vec, Qi, \
+                                                Qi, npt, npix, m_dim)
 
     else:
         # ->> first run <<- #
