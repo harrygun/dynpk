@@ -112,7 +112,7 @@ if __name__=='__main__':
                 ->>    now we start    <<- 
        ----------------------------------------------'''
     #->> data initialization <<- #
-    qe_dict={'calculate_dcov': True, 
+    qe_dict={'calculate_dcov': False, 
              'fname_dcov':     root+'result/dcov.npz',
 	    }
     dmap=d[:100,:100]

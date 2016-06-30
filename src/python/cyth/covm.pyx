@@ -45,15 +45,44 @@ cdef double Sin(double x):
     return np.sin(x)
 
 
+cdef int matidx(int i, int j, int ndim):
+    return i*ndim+j
+
+
 cdef void mat_multiplication(cnp.ndarray[cnp.double_t, ndim=2] m1, \
                              cnp.ndarray[cnp.double_t, ndim=2] m2, \
-                             cnp.ndarray[cnp.double_t, ndim=2] m):
+                             double *m, int ndim):
     cdef int i, j, k;
+
+    for i in range(ndim):
+        for j in range(ndim):
+
+            m[matidx(i,j,ndim)]=0.
+
+            for k in range(ndim):
+                m[matidx(i,j,ndim)]+=m1[i,k]*m2[k,j] 
+    return
+
+
+
+cdef void mat_mult_vec(cnp.ndarray[cnp.double_t, ndim=2] mat, \
+                       cnp.ndarray[cnp.double_t, ndim=1] vec, \
+                       double *out, int ndim):
+    # ->> calcuate out[i]=sum_j (m[i,j]v[j])
+
+    cdef int i, j;
+
+    for i in range(ndim):
+        out[i]=0.
+        for j in range(ndim):
+            out[i]+=mat[i,j]*vec[j] 
 
     return
 
 
 
+
+'''---------------------------------------------------------------------- '''
 
 cdef double dcov_1D_real(double kti, double Dkti, double dt, double dtab):
     ''' ->> kti:   center value of kt_i <<- 
@@ -285,10 +314,10 @@ cdef int mpixel_idx_inv(int idx_t, int idx_f, int mdim_t, int mdim_f):
     return idx_t*mdim_t+idx_f
 
 
-cdef void full_cov_recovery(cnp.ndarray[cnp.double_t, ndim=2] covf, 
-                       cnp.ndarray[cnp.double_t, ndim=3] dcov, 
-                       cnp.ndarray[cnp.double_t, ndim=1] covn_vec, 
-                       cnp.ndarray[cnp.double_t, ndim=1] plist, 
+cdef void full_cov_recovery(cnp.ndarray[cnp.double_t, ndim=2] covf, \
+                       cnp.ndarray[cnp.double_t, ndim=3] dcov, \
+                       cnp.ndarray[cnp.double_t, ndim=1] covn_vec, \
+                       cnp.ndarray[cnp.double_t, ndim=1] plist, \
                        int npt, int npix, int mdim_t, int mdim_f):
 
     cdef: 
@@ -329,84 +358,71 @@ cpdef convert_cov_full(covf, dcov, covn_vec, plist, npt, npix, m_dim):
 
 
 ''' ->> Quadratic Estimator <<- #'''
-cdef void dcov_c_multiple(cnp.ndarray[cnp.double_t, ndim=2] icovf, 
-                          cnp.ndarray[cnp.double_t, ndim=3] dcov,
-                          cnp.ndarray[cnp.double_t, ndim=2] out, int i, int npix):
+cdef void icov_d_multiple(cnp.ndarray[cnp.double_t, ndim=2] icovf, \
+                          cnp.ndarray[cnp.double_t, ndim=2] dmap,\
+                          double *out, int npix, int mdim_t, int mdim_f):
 
-    # ->> give the multiplication dcov^i_ac C^-1_cb <<- #
+    # ->> give the multiplication C^-1_{ab} dmap_{b} <<- #
 
     cdef: 
-        int a, b, c
-        int *idx_a
+        int a, b, c, *idx_b
+
+    idx_b=<int *>malloc(2*sizeof(int))
 
     for a in range(npix):
+        out[a]=0.
+
         for b in range(npix):
+            mpixel_idx(b, mdim_t, mdim_f, idx_b)
+            out[a]+=icovf[a,b]*dmap[idx_b[0],idx_b[1]]
 
-            for c in range(npix):
-                out[a,b]+=  
-        
-
+    free(idx_b)
 
     return
 
 
-cdef void quad_estimator(cnp.ndarray[cnp.double_t, ndim=2] dmap, 
-                        cnp.ndarray[cnp.double_t, ndim=2] covf, 
-                        cnp.ndarray[cnp.double_t, ndim=3] dcov, 
-                        cnp.ndarray[cnp.double_t, ndim=1] covn_vec, 
-                        cnp.ndarray[cnp.double_t, ndim=1] plist, 
-                        cnp.ndarray[cnp.double_t, ndim=1] Qi, 
+cdef void quad_estimator(cnp.ndarray[cnp.double_t, ndim=2] dmap, \
+                        cnp.ndarray[cnp.double_t, ndim=2] covf, \
+                        cnp.ndarray[cnp.double_t, ndim=3] dcov, \
+                        cnp.ndarray[cnp.double_t, ndim=1] covn_vec, \
+                        cnp.ndarray[cnp.double_t, ndim=1] plist, \
+                        cnp.ndarray[cnp.double_t, ndim=1] Qi, \
                         int npt, int npix, int mdim_t, int mdim_f, int do_mpi):
 
     cdef: 
-        int i, a, b, c, d, e, f, g
-        int *idx_a, *idx_b, *idx_c, *idx_d
+        int i, a, b
+        double *d_ic
 
+    d_ic=<double *>malloc(npix*sizeof(double))
 
+    # ->> get full covariance matrix and its inverse <<- #
     full_cov_recovery(covf, dcov, covn_vec, plist, npt, npix, mdim_t, mdim_f)
     icovf=slag.inv(covf)
     mpi.barrier()
 
     print '->> preparation of icov & cov is done, now calculate Qe.', mpi.rank
 
-    idx_a=<int *>malloc(2*sizeof(int))
-    idx_b=<int *>malloc(2*sizeof(int))
-    idx_c=<int *>malloc(2*sizeof(int))
-    idx_d=<int *>malloc(2*sizeof(int))
+    # ->> get (C^{-1}.d) <<- #
+    icov_d_multiple(icovf, dmap, d_ic, npix, mdim_t, mdim_f)
 
 
+    # ->> now start <<- #
     if do_mpi==True:
         prange=mpi.mpirange(npt)
     else:
         prange=range(npt)
 
 
-    # ->> now start <<- #
     for i in prange:
         print 'quadratic estimator: rank-', mpi.rank, '  prange:', i
+	#->> for each i, calculate C^-1 dcov^i C^-1
 
+        Qi[i]=0.
         for a in range(npix):
-            mpixel_idx(a, mdim_t, mdim_f, idx_a)
-
             for b in range(npix):
-                mpixel_idx(b, mdim_t, mdim_f, idx_b)
+                Qi[i]+=d_ic[a]*icovf[a,b]*d_ic[b]
 
-                for c in range(npix):
-                    mpixel_idx(c, mdim_t, mdim_f, idx_c)
-
-                    for d in range(npix):
-                        mpixel_idx(d, mdim_t, mdim_f, idx_d)
-
-                        Qi[i]+=dmap[idx_a[0],idx_a[1]]*icovf[a,b]*dcov[i,\
-                               idx_b[0]-idx_c[0],idx_b[1]-idx_c[1]]*icovf[c,d]\
-                               *dmap[idx_d[0],idx_d[1]]
-
-    free(idx_a)
-    free(idx_b)
-    free(idx_c)
-    free(idx_d)
-
-
+    free(d_ic)
 
     return
 
