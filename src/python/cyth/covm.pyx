@@ -425,6 +425,8 @@ cdef void quad_estimator(cnp.ndarray[cnp.double_t, ndim=2] dmap, \
             for b in range(npix):
                 Qi[i]+=d_ic[a]*icovf[a,b]*d_ic[b]
 
+        print 'i=', i, '(', mpi.rank, '),  Qi=', Qi[i]
+
     free(d_ic)
 
     return
