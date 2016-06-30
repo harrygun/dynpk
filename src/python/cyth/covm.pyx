@@ -444,6 +444,8 @@ cpdef quad_estimator_wrapper(dmap, covf, dcov, covn_vec, plist, Qi, npt, npix, m
     quad_estimator(dmap, covf, dcov, covn_vec, plist, Qi, <int> npt, \
                    <int> npix, <int> m_dim[0], <int> m_dim[1], dompi)
 
+    print 'exiting quad_estimator_wrapper: rank-', mpi.rank
+
     return 
 
 

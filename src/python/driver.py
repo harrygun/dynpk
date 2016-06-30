@@ -143,7 +143,7 @@ if __name__=='__main__':
     print '->> start the quadratic estimator.'
     Qi=qe.quadest_iteration(pk_fid, n_it)
 
-
+    print mpi.rank, '->> quadratic estimator done.'
 
     #->> write files <<- #
     fn_qi=root+'result/Qi.npz'
