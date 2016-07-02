@@ -29,21 +29,6 @@ def dcov_1D_real(kti, Dkti, dt, dtab):
 	    dtab:  Delta t_ab
     '''
 
-    '''
-    dc1d_real=((-4*Cos(dtab*(-Dkti/2. + kti)))/(Dkti - 2*kti) + \
-             (4*Cos(dt*(-Dkti/2. + kti))*Cos(dtab*(-Dkti/2. + kti)))/(Dkti-2*kti) - \
-             (4*Cos(dtab*(Dkti/2. + kti)))/(Dkti + 2*kti) + \
-             (4*Cos(dt*(Dkti/2. + kti))*Cos(dtab*(Dkti/2. + kti)))/(Dkti + 2*kti) + \
-             (-dt + dtab)*SinIntegral((dt - dtab)*(-Dkti/2. + kti)) + \
-             2*dtab*SinIntegral(dtab*(-Dkti/2. + kti)) - \
-             dt*SinIntegral((dt + dtab)*(-Dkti/2. + kti)) - \
-             dtab*SinIntegral((dt + dtab)*(-Dkti/2. + kti)) + \
-             (dt - dtab)*SinIntegral((dt - dtab)*(Dkti/2. + kti)) - \
-             2*dtab*SinIntegral(dtab*(Dkti/2. + kti)) + \
-             dt*SinIntegral((dt + dtab)*(Dkti/2. + kti)) + \
-             dtab*SinIntegral((dt + dtab)*(Dkti/2. + kti)))/np.pi
-    '''
-
     dc1d_real=((4*(-1 + Cos(dt*(-Dkti/2. + kti)))*Cos(dtab*(-Dkti/2. + kti)))/ \
                 (Dkti - 2*kti) + (4*(-1 + Cos(dt*(Dkti/2. + kti)))*  \
                       Cos(dtab*(Dkti/2. + kti)))/(Dkti + 2*kti) + \
@@ -176,5 +161,9 @@ def fisher(icov, dcov, npt, npix):
 
 
     return
+
+
+
+'''->> testing routines for covariance matrix <<- '''
 
 

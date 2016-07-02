@@ -91,7 +91,7 @@ if __name__=='__main__':
     # ->> covariance matrix testing <<- #
     print '->> now test dcov and covariace matrix <<- #'
     print '->> Basically, assuming the correct power spectrum, I`d like to check whether dcov would produce the correct covariance matrix. <<- '
-    raise Exception()
+
 
 
 
@@ -99,13 +99,6 @@ if __name__=='__main__':
 
 
     #->> write files <<- #
-    '''
-    fn_qi=root+'result/Qi.npz'
-
-    if mpi.rank0:
-        np.savez(fn_qi, Qi=Qi)
-        mpi.barrier()
-    ''' 
 
 
     
