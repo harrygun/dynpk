@@ -21,22 +21,24 @@ import cyth.covm as cyth_cov
 
 
 
-def autocorr(d, auto_type='FFT'):
+def autocorr(d, auto_type='FFT', zero_padding=False):
     ''' ->> conduct the auto-correlation of the map <<- ''' 
 
     if auto_type=='scipy':
         cor=sig.correlate2d(d, d) 
 
     if auto_type=='FFT':
-       # ->> zero padding <<- #
-       dx, dy=d.shape
-       dd=np.zeros((dx*2, dy*2))
-       dd[:dx,:dy]=d
+        # ->> zero padding <<- #
+        if zero_padding==True:
+            dx, dy=d.shape
+            dd=np.zeros((dx*2, dy*2))
+            dd[:dx,:dy]=d
+        else:
+            dd=d
 
-
-       dk=np.fft.rfft2(dd)
-       cor=np.fft.irfft2(dk*np.conjugate(dk))
-       cor=np.fft.fftshift(cor)
+        dk=np.fft.rfft2(dd)
+        cor=np.fft.irfft2(dk*np.conjugate(dk))
+        cor=np.fft.fftshift(cor)
 
 
     return cor
@@ -54,8 +56,8 @@ def pk_fft_2d(d, zero_padding=False):
     else:
         dd=d
     
-    dk=np.fft.rfft2(dd)
-    pk=np.fft.fftshift(dk*np.conjugate(dk))
+    dk=np.fft.fft2(dd)
+    pk=np.fft.fftshift(np.absolute(dk)**2.)
 
     return pk
 
