@@ -100,7 +100,7 @@ if __name__=='__main__':
     print 'pk.shape, cor.shape:', pk.shape, cor.shape
     print 'pk min/max,  cor min/max: ', pk.min(), pk.max(), cor.min(), cor.max()
 
-    _show_=True
+    _show_=False
     if _show_:
         nplt, ncol = 2, 2
         fig,ax=mpl.mysubplots(nplt,ncol_max=ncol,subp_size=5.,\
@@ -112,9 +112,16 @@ if __name__=='__main__':
 
 
     # ->> generate band power <<- #
-    kmin, kmax, kn=
-    k_list=np.linspace(kmin, kmax, nk)
+    print 'map resolution', qe.dmap_res
+    rsize=qe.dmap_res*np.array(dmap.shape)
+    kdim=np.array(dmap.shape)  # ->> assuming full FFT instead of rfft <<- #
+    klist=helper.klist_fft(rsize, kdim)
 
+    #print klist
+    print klist.shape
+    print 'Now, I got the full FFT klist; next lower the resolution, to get P(k).'
+
+     
 
 
     #->> write files <<- #

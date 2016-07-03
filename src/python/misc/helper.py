@@ -1,5 +1,6 @@
 ''' ->> some routines to help to start, like random mask generator <<- '''
 import numpy as np
+import scipy.fftpack as sfft
 import pylab as pl
 import random as rnd
 
@@ -96,3 +97,19 @@ def lrez(d):
 
 
     return
+
+
+
+''' ------------------------------------------------------------ 
+             ->>       Some other routines          <<-
+    ------------------------------------------------------------
+'''
+
+def klist_fft(real_size, kdim):
+
+    k_min=np.ones(real_size.shape)*2.*np.pi/np.array(real_size)
+
+    print 'klist_fft:', real_size.shape, kdim, len(kdim), k_min
+
+    return np.array([sfft.fftfreq(kdim[i], d=1./float(kdim[i]))*k_min[i]\
+                    for i in range(len(kdim)) ] )
