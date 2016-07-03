@@ -1,6 +1,7 @@
 import os
 import pylab as pl
 import numpy as np
+import scipy as sp
 import matplotlib.colors as colors
 
 import genscript.progcontrol as pc
@@ -76,7 +77,12 @@ if __name__=='__main__':
              'fname_dcov':     root+'result/dcov.npz',
 	    }
 
-    dmap=d[:100,:100]-np.mean(d[:100,:100])
+    # ->> lower data resolution <<- #
+    zoom_factor=0.5
+    _dmap_=d[:100,:100]-np.mean(d[:100,:100])
+    dmap=sp.ndimage.interpolation.zoom(_dmap_, zoom_factor)
+
+    
 
     ''' #->> Initialzing quadratic estimator class <<- #
         #->> parafname='same as parameter file' 
@@ -105,8 +111,9 @@ if __name__=='__main__':
         nplt, ncol = 2, 2
         fig,ax=mpl.mysubplots(nplt,ncol_max=ncol,subp_size=5.,\
                               gap_size=0.5,return_figure=True)
+
         cb1=ax[0].imshow(cor) 
-        cb2=ax[1].imshow(pk) 
+        cb2=ax[1].imshow(pk, norm=colors.LogNorm()) 
 
         pl.show()
 
@@ -117,11 +124,13 @@ if __name__=='__main__':
     kdim=np.array(dmap.shape)  # ->> assuming full FFT instead of rfft <<- #
     klist=helper.klist_fft(rsize, kdim)
 
-    #print klist
-    print klist.shape
+    print klist.shape, 'klist range:', min(klist[0]), max(klist[0]), min(klist[1]), max(klist[1])
     print 'Now, I got the full FFT klist; next lower the resolution, to get P(k).'
+    print klist.shape
 
-     
+    print 'dcov shape:', qe.dcov.shape
+    
+
 
 
     #->> write files <<- #

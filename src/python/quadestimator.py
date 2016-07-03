@@ -262,3 +262,7 @@ class QuadestPara(par.Parameters):
 
 
 ''' ->> other routines <<- '''
+def dcov_to_cov(dcov, plist, klist):
+    # ->> convert dcov and P(k) into cov <<- #
+
+    return
