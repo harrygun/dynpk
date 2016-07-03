@@ -82,7 +82,21 @@ if __name__=='__main__':
     _dmap_=d[:100,:100]-np.mean(d[:100,:100])
     dmap=sp.ndimage.interpolation.zoom(_dmap_, zoom_factor)
 
+    raise Exception('update map resolution here, & redefine band pk etc.') 
+
+    # ->> generate band power <<- #
+    print 'map resolution', qe.dmap_res
+    rsize=qe.dmap_res*np.array(dmap.shape)
+    kdim=np.array(dmap.shape)  # ->> assuming full FFT instead of rfft <<- #
+    klist=helper.klist_fft(rsize, kdim)
+
+    print klist.shape, 'klist range:', min(klist[0]), max(klist[0]), min(klist[1]), max(klist[1])
+    print 'Now, I got the full FFT klist; next lower the resolution, to get P(k).'
+    print klist.shape
+
     
+    raise Exception('update everything before initialize qe')
+
 
     ''' #->> Initialzing quadratic estimator class <<- #
         #->> parafname='same as parameter file' 
@@ -92,6 +106,7 @@ if __name__=='__main__':
             prog_control=p, dmap=dmap, **qe_dict)
 
     print '\n->> QuadestPara parameters:\n', qe.paramdict
+    print 'dcov shape:', qe.dcov.shape
 
 
     # ->> covariance matrix testing <<- #
@@ -118,18 +133,6 @@ if __name__=='__main__':
         pl.show()
 
 
-    # ->> generate band power <<- #
-    print 'map resolution', qe.dmap_res
-    rsize=qe.dmap_res*np.array(dmap.shape)
-    kdim=np.array(dmap.shape)  # ->> assuming full FFT instead of rfft <<- #
-    klist=helper.klist_fft(rsize, kdim)
-
-    print klist.shape, 'klist range:', min(klist[0]), max(klist[0]), min(klist[1]), max(klist[1])
-    print 'Now, I got the full FFT klist; next lower the resolution, to get P(k).'
-    print klist.shape
-
-    print 'dcov shape:', qe.dcov.shape
-    
 
 
 
