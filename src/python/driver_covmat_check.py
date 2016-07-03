@@ -112,7 +112,8 @@ if __name__=='__main__':
 
 
     # ->> generate band power <<- #
-    pk_list=[ ]
+    kmin, kmax, kn=
+    k_list=np.linspace(kmin, kmax, nk)
 
 
 

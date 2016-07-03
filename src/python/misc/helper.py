@@ -79,33 +79,20 @@ def random_noise_generator(d, snr):
 
 
 
-def scovm_guess(d, method='default'):
-    ''' ->> Guess the signal covariance matrix <<- 
-            Just measure the covariance matrix
-    '''
-
-    if method=='default':
-        # ->>
-        pass
-
-
-    return
-
-
-
-
-
-def ncovm_guess(m):
-    ''' ->> Guess the noise covariance matrix <<- '''
-
-
-    return
-
 
 
 
 
 ''' ------------------------------------------------------------ 
-              ->>  <<-
+              ->>                               <<-
     ------------------------------------------------------------
 '''
+
+def lrez(d):
+    # ->> lower the resolution of given data <<- # 
+    # ->> either map or some measurements <<-#
+
+    s=d.shape
+
+
+    return
