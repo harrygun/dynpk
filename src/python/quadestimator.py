@@ -54,6 +54,27 @@ def band_power_init(bp_init_type, fname=None, **pdict):
                Dk_list.reshape(2,sk[1]*sk[2])
 
 
+    if bp_init_type=='FFT':
+        try:
+            dmap_res=pdict['dmap_res']
+	except:
+	    raise Exception('FFT band power initialization error')
+
+        rsize=dmap_res*np.array(dmap.shape)
+
+        # ->> assuming full FFT instead of rfft <<- #
+        kdim=np.array(dmap.shape)
+
+        k_list=helper.klist_fft(rsize, kdim)
+
+
+	klist=mar.meshgrid( )
+
+	Dk_list=None
+
+        return  
+
+
 
 
 
@@ -130,7 +151,7 @@ def quade_iter(dmap, dcov, covn_vec, pfid, klist, npt, npix, m_dim, nit=0, do_cy
 '''
 defaultQuadestParaValueDict={
     'map_dimension':   [100, 100],
-    'get_bandpower_list_type':   'from_file', 
+    'get_bandpower_list_type':    'from_file', 
     'bandpower_list_fname':       'x.dat', 
     'kt_list_para':               [-2, 2, 10],
     'kf_list_para':               [-2, 2, 10],
@@ -138,6 +159,7 @@ defaultQuadestParaValueDict={
     'do_mpi':                     False,
     'calculate_dcov':             True,
     'fname_dcov':                 'y.dat',
+    'map_zoom_factor':            0.5,
     }
 
 
@@ -151,13 +173,14 @@ defaultQuadestParaNameDict={
     'do_mpi':                    'do_mpi',
     'calculate_dcov':            'calculate_dcov',
     'fname_dcov':                'fname_dcov',
+    'map_zoom_factor':           'map_zoom_factor',
     }
 
 
 class QuadestPara(par.Parameters):
 
     def __init__(self, paramfname=None, section=None, def_var=True, 
-                 prog_control=None, dmap=None, **pardict):
+                prog_control=None, dmap=None, skip_init=False, **pardict):
 
         super(QuadestPara,self).__init__(defaultQuadestParaValueDict, 
 	                names_dict=defaultQuadestParaNameDict, paramfname=paramfname, 
@@ -168,15 +191,20 @@ class QuadestPara(par.Parameters):
 	#->> # of pixels <<- #
         self.npix=np.prod(dmap.shape)
 
-	self.dt_df=np.array(self.dmap_res)  # in unit of ...
+        # ->> scale map resolution with zoom_factor <<- #
+        _m_res_=[self.dmap_res[i]/self.map_zoom_factor \
+                 for i in range(len(self.dmap_res)) ]
 
         if isinstance(dmap, np.ndarray):
-
-	    # ->> update m_dim <<- #
-	    update={'m_dim': list(dmap.shape)}
+	    # ->> update m_dim & dmap_res <<- #
+	    update={'m_dim':      list(dmap.shape), 'dmap_res':  _m_res_ }
             self.update_params(**update)
-
             #print 'dmap is np.ndarray', self.m_dim, type(self.m_dim)
+
+	self.dt_df=np.array(self.dmap_res)  # in unit of ...
+
+        if skip_init==True:
+	    return
 
 	# ->> initialization band-power list <<- #
         self.band_power_init()

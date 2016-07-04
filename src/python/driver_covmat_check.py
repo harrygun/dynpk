@@ -72,19 +72,39 @@ if __name__=='__main__':
     '''----------------------------------------------
                 ->>    now we start    <<- 
        ----------------------------------------------'''
-    #->> data initialization <<- #
-    qe_dict={'calculate_dcov': False, 
-             'fname_dcov':     root+'result/dcov.npz',
-	    }
-
     # ->> lower data resolution <<- #
     zoom_factor=0.5
     _dmap_=d[:100,:100]-np.mean(d[:100,:100])
     dmap=sp.ndimage.interpolation.zoom(_dmap_, zoom_factor)
 
-    raise Exception('update map resolution here, & redefine band pk etc.') 
+    #->> data initialization <<- #
+    qe_dict={'calculate_dcov':   False, 
+             'fname_dcov':       root+'result/dcov.npz',
+	     'map_zoom_factor':  zoom_factor,
+	    }
 
-    # ->> generate band power <<- #
+
+    ''' #->> Initialzing quadratic estimator class <<- #
+        #->> parafname='same as parameter file' 
+        #->> calculating dcov
+    '''
+    skip_init=True  # ->> skip initialize bandpowre and dcov <<- #
+    qe=qde.QuadestPara(paramfname=p.paramfname, section=p.qestmator_sec,
+            prog_control=p, dmap=dmap, skip_init=True, **qe_dict)
+
+    print '\n->> QuadestPara parameters:\n', qe.paramdict
+
+    # ->> initialize FFT band power <<- #
+    raise Exception()
+    bp_dict={'dmap_res': ,
+            }
+    qe.band_power_init( )
+
+
+    # ->> initialize dcov <<- #
+
+
+
     print 'map resolution', qe.dmap_res
     rsize=qe.dmap_res*np.array(dmap.shape)
     kdim=np.array(dmap.shape)  # ->> assuming full FFT instead of rfft <<- #
@@ -98,15 +118,10 @@ if __name__=='__main__':
     raise Exception('update everything before initialize qe')
 
 
-    ''' #->> Initialzing quadratic estimator class <<- #
-        #->> parafname='same as parameter file' 
-        #->> calculating dcov
-    '''
-    qe=qde.QuadestPara(paramfname=p.paramfname, section=p.qestmator_sec,
-            prog_control=p, dmap=dmap, **qe_dict)
-
-    print '\n->> QuadestPara parameters:\n', qe.paramdict
     print 'dcov shape:', qe.dcov.shape
+
+
+
 
 
     # ->> covariance matrix testing <<- #
