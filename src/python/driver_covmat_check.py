@@ -95,12 +95,15 @@ if __name__=='__main__':
     print '\n->> QuadestPara parameters:\n', qe.paramdict
 
     # ->> initialize FFT band power <<- #
-    raise Exception()
-    bp_dict={'dmap_res': qe.dmap_res, }
+    #raise Exception()
+    #bp_dict={'dmap_res': qe.dmap_res, }
+    bp_dict={ }
     qe.band_power_init(**bp_dict)
 
 
     # ->> initialize dcov <<- #
+    fname_dcov_fft=root+'dcov_fft.npz'
+    qe.dcov_init(fname_dcov_fft)
 
 
 

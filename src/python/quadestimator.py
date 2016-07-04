@@ -5,6 +5,7 @@ import scipy.fftpack as sfft
 import scipy.linalg as slag
 import json
 
+from genscript.extendclass import *
 import genscript.parameter as par
 import genscript.myarray as mar
 import genscript.mpiutil as mpi
@@ -219,13 +220,13 @@ class QuadestPara(par.Parameters):
         return
 
 
-    def band_power_init(self):
+    def band_power_init(self, **paradict):
         # ->> # of band powers <<- #
 	self.npt=self.kt_list_para[-1]*self.kf_list_para[-1]
 
         self.klist, self.klist_low, self.klist_up, self.kt_list, \
             self.kf_list, self.Dk_list=band_power_init(self.get_bp_type, \
-	    fname=self.bp_list_fname, **self.paramdict)
+	    fname=self.bp_list_fname, **(myDict(self.paramdict)+myDict(paradict)) )
 
         return 
 
