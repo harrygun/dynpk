@@ -96,9 +96,8 @@ if __name__=='__main__':
 
     # ->> initialize FFT band power <<- #
     raise Exception()
-    bp_dict={'dmap_res': ,
-            }
-    qe.band_power_init( )
+    bp_dict={'dmap_res': qe.dmap_res, }
+    qe.band_power_init(**bp_dict)
 
 
     # ->> initialize dcov <<- #

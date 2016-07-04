@@ -67,8 +67,7 @@ def band_power_init(bp_init_type, fname=None, **pdict):
 
         k_list=helper.klist_fft(rsize, kdim)
 
-
-	klist=mar.meshgrid( )
+	klist=mar.meshgrid(k_list[0], k_list[1])
 
 	Dk_list=None
 
