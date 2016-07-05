@@ -131,16 +131,18 @@ if __name__=='__main__':
 
     _show_=True
     if _show_:
-        nplt, ncol = 3, 3
+        nplt, ncol = 3, 1
         fig,ax=mpl.mysubplots(nplt,ncol_max=ncol,subp_size=5.,\
                               gap_size=0.5,return_figure=True)
 
         cb1=ax[0].imshow(cor_fft) 
+        pl.colorbar(cb1)
+
         cb2=ax[1].imshow(corf)  #, norm=colors.LogNorm()) 
+        pl.colorbar(cb2)
+
         cb3=ax[2].imshow(pk2d, norm=colors.LogNorm()) 
 
-        pl.colorbar(cb1)
-        pl.colorbar(cb2)
 
         pl.show()
 
