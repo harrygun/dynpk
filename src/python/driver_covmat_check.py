@@ -13,6 +13,7 @@ import genscript.myplot as mpl
 import misc.helper as helper
 import quadestimator as qde
 import cmeasure as cms
+import cyth.covm as cyth_cov
 
 
 
@@ -79,7 +80,7 @@ if __name__=='__main__':
 
 
     #->> data initialization <<- #
-    qe_dict={'calculate_dcov':   True, 
+    qe_dict={'calculate_dcov':   False, 
              'fname_dcov':       root+'result/dcov.npz',
 	     'map_zoom_factor':  zoom_factor,
 	     'get_bp_type':      'FFT',
@@ -102,39 +103,44 @@ if __name__=='__main__':
 
 
     # ->> initialize dcov <<- #
-    fname_dcov_fft=root+'dcov_fft_50x50.npz'
+    fname_dcov_fft=root+'result/dcov_fft_50x50.npz'
     qe.dcov_init(fname_dcov_fft)
 
-    p.finalize()
-    quit()
+    # ->> measure pk and correlation function from FFT <<- #
+    pk2d=cms.pk_fft_2d(dmap)
+    cor_fft=cms.autocorr(dmap, auto_type='FFT', zero_padding=True)
 
-
-    # ->> now check the covariance matrix <<- #
-    raise Exception('in cyth/covm.pyx:  get correlation function from dcov')
-
-
+    print 'pk.shape, cor.shape:', pk2d.shape, cor_fft.shape
+    print 'pk min/max,  cor_fft min/max: ', pk2d.min(), pk2d.max(), cor_fft.min(), cor_fft.max()
 
 
     # ->> covariance matrix testing <<- #
-    print '->> now test dcov and covariace matrix <<- #'
-    print '->> Basically, assuming the correct power spectrum, I`d like to check whether dcov would produce the correct covariance matrix. <<- '
+    print 'Assuming the correct power spectrum, to check if dcov would reproduce the correct covariance matrix. <<- '
+
+    # ->> now check the covariance matrix <<- #
+    #raise Exception('in cyth/covm.pyx:  get correlation function from dcov')
+    corf=np.zeros((qe.m_dim[0]*2, qe.m_dim[1]*2))
+    cyth_cov.get_correlation(corf,  qe.dcov,  pk2d.flatten(), qe.npt, qe.npix, qe.m_dim)
+    # ->> FFT shift <<- #
+
+    corf=np.fft.fftshift(corf)
+
+    fname_cov_comp=root+'result/cov_comparison_50x50.npz'
+    np.savez(fname_cov_comp, corf=corf, cor_fft=cor_fft)
 
 
-    # ->> measure pk and correlation function <<- #
-    pk=cms.pk_fft_2d(dmap)
-    cor=cms.autocorr(dmap, auto_type='FFT')
-
-    print 'pk.shape, cor.shape:', pk.shape, cor.shape
-    print 'pk min/max,  cor min/max: ', pk.min(), pk.max(), cor.min(), cor.max()
-
-    _show_=False
+    _show_=True
     if _show_:
-        nplt, ncol = 2, 2
+        nplt, ncol = 3, 3
         fig,ax=mpl.mysubplots(nplt,ncol_max=ncol,subp_size=5.,\
                               gap_size=0.5,return_figure=True)
 
-        cb1=ax[0].imshow(cor) 
-        cb2=ax[1].imshow(pk, norm=colors.LogNorm()) 
+        cb1=ax[0].imshow(cor_fft) 
+        cb2=ax[1].imshow(corf)  #, norm=colors.LogNorm()) 
+        cb3=ax[2].imshow(pk2d, norm=colors.LogNorm()) 
+
+        pl.colorbar(cb1)
+        pl.colorbar(cb2)
 
         pl.show()
 
