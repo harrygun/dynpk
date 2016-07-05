@@ -96,7 +96,7 @@ def klist_fft(rbox_size, kdim):
             kdim:       fourier space shape
     '''
 
-    k_min=np.ones(rbox_size.shape)*2.*np.pi/np.array(rbox_size)
+    k_min=2.*np.pi/np.array(rbox_size)
 
     print 'klist_fft:', rbox_size.shape, kdim, len(kdim), k_min
 

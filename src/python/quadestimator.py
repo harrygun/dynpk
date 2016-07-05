@@ -65,7 +65,7 @@ def band_power_init(bp_init_type, fname=None, **pdict):
         rbsize=dmap_res*np.array(dmap_shape)
         # ->> assuming full FFT instead of rfft <<- #
         kdim=np.array(dmap_shape)
-        k_min=np.ones(rbsize.shape)*2.*np.pi/np.array(rbsize)
+        k_min=2.*np.pi/np.array(rbsize)
         k_list=helper.klist_fft(rbsize, kdim)
 
         # ->> 2D klist <<- #
