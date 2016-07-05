@@ -21,7 +21,7 @@ import cyth.covm as cyth_cov
 
 
 
-def autocorr(d, auto_type='FFT', zero_padding=False):
+def autocorr(d, auto_type='FFT', zero_padding=True):
     ''' ->> conduct the auto-correlation of the map <<- ''' 
 
     if auto_type=='scipy':
@@ -38,10 +38,10 @@ def autocorr(d, auto_type='FFT', zero_padding=False):
 
         dk=np.fft.rfft2(dd)
         cor=np.fft.irfft2(dk*np.conjugate(dk))
-        cor=np.fft.fftshift(cor)
+        #cor=np.fft.fftshift(cor)
 
 
-    return cor
+    return cor[:d.shape[0], :d.shape[1]]
 
 
 

@@ -118,12 +118,9 @@ if __name__=='__main__':
     print 'Assuming the correct power spectrum, to check if dcov would reproduce the correct covariance matrix. <<- '
 
     # ->> now check the covariance matrix <<- #
-    #raise Exception('in cyth/covm.pyx:  get correlation function from dcov')
-    corf=np.zeros((qe.m_dim[0]*2, qe.m_dim[1]*2))
-    cyth_cov.get_correlation(corf,  qe.dcov,  pk2d.flatten(), qe.npt, qe.npix, qe.m_dim)
-    # ->> FFT shift <<- #
+    corf=np.zeros((qe.m_dim[0], qe.m_dim[1]))
+    cyth_cov.get_correlation(corf,  qe.dcov,  pk2d.flatten(), qe.npt)
 
-    corf=np.fft.fftshift(corf)
 
     fname_cov_comp=root+'result/cov_comparison_50x50.npz'
     np.savez(fname_cov_comp, corf=corf, cor_fft=cor_fft)
@@ -131,17 +128,27 @@ if __name__=='__main__':
 
     _show_=True
     if _show_:
+        _t=np.arange(qe.m_dim[0])*qe.dmap_res[0]
+        _f=np.arange(qe.m_dim[1])*qe.dmap_res[1]
+
+	t, f = mar.meshgrid(_t, _f)
+
         nplt, ncol = 3, 1
         fig,ax=mpl.mysubplots(nplt,ncol_max=ncol,subp_size=5.,\
                               gap_size=0.5,return_figure=True)
 
-        cb1=ax[0].imshow(cor_fft) 
+        cb1=ax[0].pcolormesh(t, f, cor_fft, shading='gouraud') 
         pl.colorbar(cb1)
 
-        cb2=ax[1].imshow(corf)  #, norm=colors.LogNorm()) 
+
+	cb2=ax[1].pcolormesh(t, f, corf, shading='gouraud')
         pl.colorbar(cb2)
 
         cb3=ax[2].imshow(pk2d, norm=colors.LogNorm()) 
+	
+	for i in range(2):
+	    ax[i].set_xlim([0, _t[-1]])
+	    ax[i].set_ylim([0, _f[-1]])
 
 
         pl.show()
