@@ -467,7 +467,7 @@ cdef void correlation_recovery(cnp.ndarray[cnp.double_t, ndim=2] covf, \
     idx_b=<int *>malloc(2*sizeof(int))
 
     # ->>  obtain correlation function matrix <<- #
-    for a in range(npix):
+    for a in range(npt):
         mpixel_idx(a, mdim_t, mdim_f, idx_a)
 
         for b in range(npix):
@@ -475,8 +475,6 @@ cdef void correlation_recovery(cnp.ndarray[cnp.double_t, ndim=2] covf, \
 
             for i in range(npt):
                 covf[a,b]+=dcov[i,idx_a[0]-idx_b[0], idx_a[1]-idx_b[1]]*plist[i]
-
-        covf[a,a]+=covn_vec[a]
 
 
     free(idx_a)
