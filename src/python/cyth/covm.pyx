@@ -451,3 +451,42 @@ cpdef quad_estimator_wrapper(dmap, covf, dcov, covn_vec, plist, Qi, npt, npix, m
     return 
 
 
+
+
+
+
+cdef void correlation_recovery(cnp.ndarray[cnp.double_t, ndim=2] covf, \
+                             cnp.ndarray[cnp.double_t, ndim=3] dcov, \
+                             cnp.ndarray[cnp.double_t, ndim=1] plist, \
+                             int npt, int npix, int mdim_t, int mdim_f):
+
+    cdef: 
+        int i, a, b, *idx_a, *idx_b
+
+    idx_a=<int *>malloc(2*sizeof(int))
+    idx_b=<int *>malloc(2*sizeof(int))
+
+    # ->>  obtain correlation function matrix <<- #
+    for a in range(npix):
+        mpixel_idx(a, mdim_t, mdim_f, idx_a)
+
+        for b in range(npix):
+            mpixel_idx(b, mdim_t, mdim_f, idx_b)
+
+            for i in range(npt):
+                covf[a,b]+=dcov[i,idx_a[0]-idx_b[0], idx_a[1]-idx_b[1]]*plist[i]
+
+        covf[a,a]+=covn_vec[a]
+
+
+    free(idx_a)
+    free(idx_b)
+
+    return
+
+
+
+
+cpdef get_correlation(covf,  dcov,  plist, npt, npix, mdim_t, mdim_f):
+
+    return

@@ -109,6 +109,9 @@ if __name__=='__main__':
     quit()
 
 
+    # ->> now check the covariance matrix <<- #
+    raise Exception('in cyth/covm.pyx:  get correlation function from dcov')
+
 
 
 
