@@ -91,11 +91,14 @@ def random_noise_generator(d, snr):
     ------------------------------------------------------------
 '''
 
-def klist_fft(real_size, kdim):
+def klist_fft(rbox_size, kdim):
+    ''' ->> rbox_size:  real space box size <<- 
+            kdim:       fourier space shape
+    '''
 
-    k_min=np.ones(real_size.shape)*2.*np.pi/np.array(real_size)
+    k_min=np.ones(rbox_size.shape)*2.*np.pi/np.array(rbox_size)
 
-    print 'klist_fft:', real_size.shape, kdim, len(kdim), k_min
+    print 'klist_fft:', rbox_size.shape, kdim, len(kdim), k_min
 
-    return np.array([sfft.fftfreq(kdim[i], d=1./float(kdim[i]))*k_min[i]\
+    return np.array([sfft.fftshift(sfft.fftfreq(kdim[i], d=1./float(kdim[i]))*k_min[i])\
                     for i in range(len(kdim)) ] )

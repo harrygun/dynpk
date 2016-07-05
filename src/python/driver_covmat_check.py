@@ -77,10 +77,12 @@ if __name__=='__main__':
     _dmap_=d[:100,:100]-np.mean(d[:100,:100])
     dmap=sp.ndimage.interpolation.zoom(_dmap_, zoom_factor)
 
+
     #->> data initialization <<- #
-    qe_dict={'calculate_dcov':   False, 
+    qe_dict={'calculate_dcov':   True, 
              'fname_dcov':       root+'result/dcov.npz',
 	     'map_zoom_factor':  zoom_factor,
+	     'get_bp_type':      'FFT',
 	    }
 
 
@@ -95,32 +97,16 @@ if __name__=='__main__':
     print '\n->> QuadestPara parameters:\n', qe.paramdict
 
     # ->> initialize FFT band power <<- #
-    #raise Exception()
-    #bp_dict={'dmap_res': qe.dmap_res, }
-    bp_dict={ }
+    bp_dict={'dmap_shape':   qe.dmap.shape, } 
     qe.band_power_init(**bp_dict)
 
 
     # ->> initialize dcov <<- #
-    fname_dcov_fft=root+'dcov_fft.npz'
+    fname_dcov_fft=root+'dcov_fft_50x50.npz'
     qe.dcov_init(fname_dcov_fft)
 
-
-
-    print 'map resolution', qe.dmap_res
-    rsize=qe.dmap_res*np.array(dmap.shape)
-    kdim=np.array(dmap.shape)  # ->> assuming full FFT instead of rfft <<- #
-    klist=helper.klist_fft(rsize, kdim)
-
-    print klist.shape, 'klist range:', min(klist[0]), max(klist[0]), min(klist[1]), max(klist[1])
-    print 'Now, I got the full FFT klist; next lower the resolution, to get P(k).'
-    print klist.shape
-
-    
-    raise Exception('update everything before initialize qe')
-
-
-    print 'dcov shape:', qe.dcov.shape
+    p.finalize()
+    quit()
 
 
 

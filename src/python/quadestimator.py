@@ -58,21 +58,29 @@ def band_power_init(bp_init_type, fname=None, **pdict):
     if bp_init_type=='FFT':
         try:
             dmap_res=pdict['dmap_res']
+	    dmap_shape=pdict['dmap_shape']
 	except:
 	    raise Exception('FFT band power initialization error')
 
-        rsize=dmap_res*np.array(dmap.shape)
-
+        rbsize=dmap_res*np.array(dmap_shape)
         # ->> assuming full FFT instead of rfft <<- #
-        kdim=np.array(dmap.shape)
+        kdim=np.array(dmap_shape)
+        k_min=np.ones(rbsize.shape)*2.*np.pi/np.array(rbsize)
+        k_list=helper.klist_fft(rbsize, kdim)
 
-        k_list=helper.klist_fft(rsize, kdim)
-
+        # ->> 2D klist <<- #
 	klist=mar.meshgrid(k_list[0], k_list[1])
+	sk=klist.shape
+
+        # ->> boundary <<- #
+        klist_low=mar.meshgrid(k_list[0]-k_min[0]/2., k_list[1]-k_min[1]/2.)
+        klist_up=mar.meshgrid(k_list[0]+k_min[0]/2., k_list[1]+k_min[1]/2.)
 
 	Dk_list=None
 
-        return  
+        return klist.reshape(2,sk[1]*sk[2]), klist_low.reshape(2,sk[1]*sk[2]), \
+               klist_up.reshape(2,sk[1]*sk[2]), k_list[0], k_list[1], \
+               Dk_list
 
 
 
@@ -222,7 +230,14 @@ class QuadestPara(par.Parameters):
 
     def band_power_init(self, **paradict):
         # ->> # of band powers <<- #
-	self.npt=self.kt_list_para[-1]*self.kf_list_para[-1]
+	if 'internal' in (self.get_bp_type.split('_')):  #=='internal_log':
+	    self.npt=self.kt_list_para[-1]*self.kf_list_para[-1]
+
+	elif self.get_bp_type=='FFT':
+            self.npt=np.prod(self.dmap.shape)
+
+	else:
+	    raise Exception()
 
         self.klist, self.klist_low, self.klist_up, self.kt_list, \
             self.kf_list, self.Dk_list=band_power_init(self.get_bp_type, \
