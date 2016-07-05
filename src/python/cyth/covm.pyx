@@ -461,12 +461,14 @@ cdef void correlation_recovery(cnp.ndarray[cnp.double_t, ndim=2] covf, \
                              int npt, int mdim_t, int mdim_f):
     cdef: 
         int i, a, b
+    # ->> factor 1/2. appears becuase here we're integrating the 
+    # ->> full k-space, however, dcov include both +/- k information
 
     # ->>  obtain correlation function matrix <<- #
     for a in range(mdim_t):
         for b in range(mdim_f):
             for i in range(npt):
-                covf[a,b]+=dcov[i,a,b]*plist[i]
+                covf[a,b]+=dcov[i,a,b]*plist[i]/2.
 
     return 
 

@@ -107,7 +107,7 @@ if __name__=='__main__':
     qe.dcov_init(fname_dcov_fft)
 
     # ->> measure pk and correlation function from FFT <<- #
-    pk2d=cms.pk_fft_2d(dmap)
+    pk2d=cms.pk_fft_2d(dmap, qe.dmap_res)
     cor_fft=cms.autocorr(dmap, auto_type='FFT', zero_padding=True)
 
     print 'pk.shape, cor.shape:', pk2d.shape, cor_fft.shape
@@ -121,10 +121,10 @@ if __name__=='__main__':
     corf=np.zeros((qe.m_dim[0], qe.m_dim[1]))
     cyth_cov.get_correlation(corf,  qe.dcov,  pk2d.flatten(), qe.npt)
 
+    print 'cov comp:', corf.min(), corf.max(), cor_fft.min(), cor_fft.max()
 
     fname_cov_comp=root+'result/cov_comparison_50x50.npz'
     np.savez(fname_cov_comp, corf=corf, cor_fft=cor_fft)
-
 
     _show_=True
     if _show_:
@@ -133,7 +133,7 @@ if __name__=='__main__':
 
 	t, f = mar.meshgrid(_t, _f)
 
-        nplt, ncol = 3, 1
+        nplt, ncol = 3, 3
         fig,ax=mpl.mysubplots(nplt,ncol_max=ncol,subp_size=5.,\
                               gap_size=0.5,return_figure=True)
 

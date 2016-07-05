@@ -26,6 +26,7 @@ def autocorr(d, auto_type='FFT', zero_padding=True):
 
     if auto_type=='scipy':
         cor=sig.correlate2d(d, d) 
+	print 'cor shape:', cor.shape
 
     if auto_type=='FFT':
         # ->> zero padding <<- #
@@ -40,12 +41,11 @@ def autocorr(d, auto_type='FFT', zero_padding=True):
         cor=np.fft.irfft2(dk*np.conjugate(dk))
         #cor=np.fft.fftshift(cor)
 
-
     return cor[:d.shape[0], :d.shape[1]]
 
 
 
-def pk_fft_2d(d, zero_padding=False):
+def pk_fft_2d(d, dmap_res, zero_padding=False):
     ''' ->> measure 2D power spectrum with FFT <<- '''
 
     if zero_padding==True:
@@ -59,7 +59,7 @@ def pk_fft_2d(d, zero_padding=False):
     dk=np.fft.fft2(dd)
     pk=np.fft.fftshift(np.absolute(dk)**2.)
 
-    return pk
+    return pk*np.prod(dmap_res)/np.prod(d.shape)*(2.*np.pi)**2.
 
 
 
