@@ -463,22 +463,22 @@ cdef void correlation_recovery(cnp.ndarray[cnp.double_t, ndim=2] covf, \
     cdef: 
         int i, a, b, *idx_a, *idx_b
 
-    idx_a=<int *>malloc(2*sizeof(int))
-    idx_b=<int *>malloc(2*sizeof(int))
+    #idx_a=<int *>malloc(2*sizeof(int))
+    #idx_b=<int *>malloc(2*sizeof(int))
 
     # ->>  obtain correlation function matrix <<- #
     for a in range(npt):
-        mpixel_idx(a, mdim_t, mdim_f, idx_a)
+        #mpixel_idx(a, mdim_t, mdim_f, idx_a)
 
-        for b in range(npix):
-            mpixel_idx(b, mdim_t, mdim_f, idx_b)
+        for b in range(npt):
+            #mpixel_idx(b, mdim_t, mdim_f, idx_b)
 
             for i in range(npt):
-                covf[a,b]+=dcov[i,idx_a[0]-idx_b[0], idx_a[1]-idx_b[1]]*plist[i]
+                covf[a,b]+=dcov[i,a,b]*plist[i]
 
 
-    free(idx_a)
-    free(idx_b)
+    #free(idx_a)
+    #free(idx_b)
 
     return
 
