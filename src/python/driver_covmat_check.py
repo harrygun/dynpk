@@ -138,10 +138,12 @@ if __name__=='__main__':
                               gap_size=0.5,return_figure=True)
 
         cb1=ax[0].pcolormesh(t, f, cor_fft, shading='gouraud') 
+	cb1.set_edgecolor('face')
         pl.colorbar(cb1)
 
 
 	cb2=ax[1].pcolormesh(t, f, corf, shading='gouraud')
+	cb2.set_edgecolor('face')
         pl.colorbar(cb2)
 
         cb3=ax[2].imshow(pk2d, norm=colors.LogNorm()) 
