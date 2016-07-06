@@ -149,11 +149,11 @@ if __name__=='__main__':
         cb3=ax[2].imshow(pk2d, norm=colors.LogNorm()) 
 	
 	for i in range(2):
-	    #ax[i].set_xlim([0, _t[15]])
-	    #ax[i].set_ylim([0, _f[15]])
+	    ax[i].set_xlim([0, _t[15]])
+	    ax[i].set_ylim([0, _f[15]])
 
-	    ax[i].set_xlim([0, _t[-1]])
-	    ax[i].set_ylim([0, _f[-1]])
+	    #ax[i].set_xlim([0, _t[-1]])
+	    #ax[i].set_ylim([0, _f[-1]])
 
         pl.show()
 
