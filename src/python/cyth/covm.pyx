@@ -438,7 +438,7 @@ cdef void icov_dov_multiple(cnp.ndarray[cnp.double_t, ndim=2] icovf,\
                     mpixel_idx(c, mdim_t, mdim_f, idx_c)
 
                     ic_dcov[matidx3(i,a,b,npt,npix,npix)]+=icovf[a,c]\
-                            *dcov[i,-idx_c[0]+idx_b[0],-idx_c[1]+idx_b[1]]
+                            *dcov[i,abs(idx_c[0]+idx_b[0]),abs(idx_c[1]+idx_b[1])]
 
     free(idx_b)
     free(idx_c)
