@@ -417,7 +417,7 @@ cdef void icov_d_multiple(cnp.ndarray[cnp.double_t, ndim=2] icovf, \
 cdef void icov_dov_multiple(cnp.ndarray[cnp.double_t, ndim=2] icovf,\
                             cnp.ndarray[cnp.double_t, ndim=3] dcov, \
                             cnp.ndarray[cnp.double_t, ndim=3] ic_dcov, \
-                         int npt, int npix, int mdim_t, int mdim_f, int do_mpi):
+                           int npt, int npix, int mdim_t, int mdim_f, int do_mpi):
 
 #                            double *ic_dcov, int npt, int npix, \
 #                            int mdim_t, int mdim_f, int do_mpi):
@@ -434,14 +434,16 @@ cdef void icov_dov_multiple(cnp.ndarray[cnp.double_t, ndim=2] icovf,\
         for a in range(npix):
 
             for b in range(npix):
-                ic_dcov[matidx3(i,a,b,npt,npix,npix)]=0.
+                #ic_dcov[matidx3(i,a,b,npt,npix,npix)]=0.
+
+                ic_dcov[i,a,b]=0.
                 mpixel_idx(b, mdim_t, mdim_f, idx_b)
 
                 for c in range(npix):
                     mpixel_idx(c, mdim_t, mdim_f, idx_c)
 
-                    ic_dcov[matidx3(i,a,b,npt,npix,npix)]+=icovf[a,c]\
-                            *dcov[i,idx_c[0]-idx_b[0],idx_c[1]-idx_b[1]]
+                    #ic_dcov[matidx3(i,a,b,npt,npix,npix)]+=icovf[a,c]\
+                    ic_dcov[i,a,b]+=icovf[a,c]*dcov[i,idx_c[0]-idx_b[0],idx_c[1]-idx_b[1]]
 
     free(idx_b)
     free(idx_c)
@@ -465,10 +467,6 @@ cdef void quad_estimator(cnp.ndarray[cnp.double_t, ndim=2] dmap, \
     d_ic=<double *>malloc(npix*sizeof(double))
     #ic_dcov=<double *>malloc(npt*npix*npix*sizeof(double))
     ic_dcov=np.zeros((npt, npix, npix))
-
-    ic_dcov[0,0,0]=0
-    print 'ic_dcov testing', ic_dcov[0,0,0]
-    quit()
 
 
     idx_a=<int *>malloc(2*sizeof(int))
@@ -531,7 +529,8 @@ cdef void quad_estimator(cnp.ndarray[cnp.double_t, ndim=2] dmap, \
 
             for a in range(npix):
                 for b in range(npix):
-                    Fij[i,j]=ic_dcov[matidx3(i,a,b,npt,npix,npix)]*ic_dcov[matidx3(i,b,a,npt,npix,npix)]/2.
+                    #Fij[i,j]=ic_dcov[matidx3(i,a,b,npt,npix,npix)]*ic_dcov[matidx3(j,b,a,npt,npix,npix)]/2.
+                    Fij[i,j]=ic_dcov[i,a,b]*ic_dcov[j,b,a]/2.
 	
 
         print 'i=', i, '(', mpi.rank, '),  Qi=', Qi_p[i]
