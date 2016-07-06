@@ -535,9 +535,11 @@ cdef void quad_estimator(cnp.ndarray[cnp.double_t, ndim=2] dmap, \
 
 
     free(d_ic)
-    free(ic_dcov)
+    #free(ic_dcov)
     free(idx_a)
     free(idx_b)
+
+    del ic_dcov
 
 
     return
