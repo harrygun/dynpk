@@ -48,7 +48,7 @@ cdef double Sin(double x):
 cdef int matidx2(int i, int j, int ndim):
     return i*ndim+j
 
-cdef int matidx3(int i, int j, k, int ni, int nj, int nk):
+cdef int matidx3(int i, int j, int k, int ni, int nj, int nk):
     return i*nj*nk+j*nk+k
 
 
@@ -429,16 +429,16 @@ cdef void icov_dov_multiple(cnp.ndarray[cnp.double_t, ndim=2] icovf,\
     for i in range(npt):
 
         for a in range(npix):
+
             for b in range(npix):
                 ic_dcov[matidx3(i,a,b,npt,npix,npix)]=0.
-
                 mpixel_idx(b, mdim_t, mdim_f, idx_b)
 
                 for c in range(npix):
                     mpixel_idx(c, mdim_t, mdim_f, idx_c)
 
                     ic_dcov[matidx3(i,a,b,npt,npix,npix)]+=icovf[a,c]\
-                            *dcov[i,abs(idx_c[0]+idx_b[0]),abs(idx_c[1]+idx_b[1])]
+                            *dcov[i,idx_c[0]-idx_b[0]],idx_c[1]-idx_b[1]]
 
     free(idx_b)
     free(idx_c)
