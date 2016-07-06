@@ -238,6 +238,7 @@ class QuadestPara(par.Parameters):
 
 	elif self.get_bp_type=='FFT':
             self.npt=np.prod(self.dmap.shape)
+	    paradict={'dmap_shape':   self.dmap.shape, }
 
 	else:
 	    raise Exception()
@@ -279,7 +280,7 @@ class QuadestPara(par.Parameters):
 
     def fid_pk_first_guess(self, guess_option=None):
 
-        if guess_option=None:
+        if guess_option==None:
 	    guess_option=self.fid_pk_type
 
         if guess_option=='simplest':
@@ -290,7 +291,7 @@ class QuadestPara(par.Parameters):
 	    if self.get_bp_type!='FFT':  
 	        raise Exception('Inconsistent fiducial pk setting.')
 
-	    pk_fid=cms.pk_fft_2d(self.dmap, self..dmap_res).flatten() 
+	    pk_fid=cms.pk_fft_2d(self.dmap, self.dmap_res).flatten() 
 
         return pk_fid
 
