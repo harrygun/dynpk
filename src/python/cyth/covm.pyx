@@ -334,7 +334,7 @@ cdef void full_cov_recovery(cnp.ndarray[cnp.double_t, ndim=2] covf, \
             mpixel_idx(b, mdim_t, mdim_f, idx_b)
 
             for i in range(npt):
-                covf[a,b]+=dcov[i,idx_a[0]-idx_b[0], idx_a[1]-idx_b[1]]*plist[i]
+                covf[a,b]+=dcov[i,idx_a[0]-idx_b[0], idx_a[1]-idx_b[1]]*plist[i]/2.
 
         covf[a,a]+=covn_vec[a]
 
@@ -390,16 +390,30 @@ cdef void quad_estimator(cnp.ndarray[cnp.double_t, ndim=2] dmap, \
                         int npt, int npix, int mdim_t, int mdim_f, int do_mpi):
 
     cdef: 
-        int i, a, b
+        int i, a, b, *idx_a, *idx_b
         double *d_ic
 
     d_ic=<double *>malloc(npix*sizeof(double))
+    idx_a=<int *>malloc(2*sizeof(int))
+    idx_b=<int *>malloc(2*sizeof(int))
 
     # ->> get full covariance matrix and its inverse <<- #
     print '->> now start to recover full covariance matrix.'
     full_cov_recovery(covf, dcov, covn_vec, plist, npt, npix, mdim_t, mdim_f)
     print '->> the inverse of covariance matrix.'
     icovf=slag.inv(covf)
+
+    _testing_=False
+    if _testing_:
+
+        if mpi.rank0:
+            fname='../../workspace/result/covariance.npz'
+            np.savez(fname, covf=covf, icovf=icovf)
+
+            print 'output the covariance matrix'
+
+        mpi.finalize()
+        quit()
 
     mpi.barrier()
 
@@ -422,12 +436,18 @@ cdef void quad_estimator(cnp.ndarray[cnp.double_t, ndim=2] dmap, \
 
         Qi[i]=0.
         for a in range(npix):
+            mpixel_idx(a, mdim_t, mdim_f, idx_a)
+
             for b in range(npix):
-                Qi[i]+=d_ic[a]*icovf[a,b]*d_ic[b]
+                mpixel_idx(b, mdim_t, mdim_f, idx_b)
+                Qi[i]+=d_ic[a]*dcov[i,idx_a[0]-idx_b[0], idx_a[1]-idx_b[1]]*d_ic[b]/2.
 
         print 'i=', i, '(', mpi.rank, '),  Qi=', Qi[i]
 
+
     free(d_ic)
+    free(idx_a)
+    free(idx_b)
 
     return
 
