@@ -462,6 +462,11 @@ cdef void quad_estimator(cnp.ndarray[cnp.double_t, ndim=2] dmap, \
     d_ic=<double *>malloc(npix*sizeof(double))
     ic_dcov=<double *>malloc(npt*npix*npix*sizeof(double))
 
+    ic_dcov[0]=0
+    print 'ic_dcov testing', ic_dcov[0]
+    quit()
+
+
     idx_a=<int *>malloc(2*sizeof(int))
     idx_b=<int *>malloc(2*sizeof(int))
 
