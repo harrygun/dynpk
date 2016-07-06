@@ -14,6 +14,7 @@ import misc.helper as helper
 import covmat as covm
 
 import cyth.covm as cyth_cov
+import cmeasure as cms
 
 
 
@@ -168,6 +169,7 @@ defaultQuadestParaValueDict={
     'calculate_dcov':             True,
     'fname_dcov':                 'y.dat',
     'map_zoom_factor':            0.5,
+    'fiducial_pk_type':          'FFT_P(k)',
     }
 
 
@@ -182,6 +184,7 @@ defaultQuadestParaNameDict={
     'calculate_dcov':            'calculate_dcov',
     'fname_dcov':                'fname_dcov',
     'map_zoom_factor':           'map_zoom_factor',
+    'fiducial_pk_type':          'fid_pk_type',
     }
 
 
@@ -274,7 +277,10 @@ class QuadestPara(par.Parameters):
 
 
 
-    def fid_pk_first_guess(self, guess_option='simplest'):
+    def fid_pk_first_guess(self, guess_option=None):
+
+        if guess_option=None:
+	    guess_option=self.fid_pk_type
 
         if guess_option=='simplest':
             pk_fid=np.ones(self.npt)
@@ -284,7 +290,7 @@ class QuadestPara(par.Parameters):
 	    if self.get_bp_type!='FFT':  
 	        raise Exception('Inconsistent fiducial pk setting.')
 
-            pk_fid=np.ones(self.npt)
+	    pk_fid=cms.pk_fft_2d(self.dmap, self..dmap_res).flatten() 
 
         return pk_fid
 

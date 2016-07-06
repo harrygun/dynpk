@@ -10,6 +10,7 @@ import genscript.myarray as mar
 
 import misc.helper as helper
 import quadestimator as qde
+import cmeasure as cms
 
 
 
@@ -139,7 +140,7 @@ if __name__=='__main__':
     n_it=0
 
     # ->> set fiducial power spectrum <<- #
-    pk_fid=qe.fid_pk_first_guess(guess_option='simplest')
+    pk_fid=qe.fid_pk_first_guess()
     print '->> fiducial pk initialization done.'
 
     # ->> initialize noise covmat <<- #
@@ -154,7 +155,7 @@ if __name__=='__main__':
     print mpi.rank, '->> quadratic estimator done.'
 
     #->> write files <<- #
-    fn_qi=root+'result/Qi.npz'
+    fn_qi=root+'result/Qi_fft.npz'
 
     mpi.barrier()
     if mpi.rank0:
