@@ -103,7 +103,7 @@ if __name__=='__main__':
 
     # ->> run estimator <<- #
     print '->> start the quadratic estimator.'
-    Qi=qe.quadest_iteration(pk_fid, n_it)
+    Qi, Fij=qe.quadest_iteration(pk_fid, n_it)
 
     print mpi.rank, '->> quadratic estimator done.'
 
@@ -112,7 +112,7 @@ if __name__=='__main__':
 
     mpi.barrier()
     if mpi.rank0:
-        np.savez(fn_qi, Qi=Qi)
+        np.savez(fn_qi, Qi=Qi, Fij=Fij)
      
 
     # ->> The End <<- #

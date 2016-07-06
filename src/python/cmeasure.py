@@ -60,7 +60,10 @@ def pk_fft_2d(d, dmap_res, zero_padding=False):
     pk=np.fft.fftshift(np.absolute(dk)**2.)
 
     #return pk*np.prod(dmap_res)/np.prod(d.shape)*(2.*np.pi)**2.
-    return pk*np.prod(dmap_res)**2./(2.*np.pi)**2.
+
+
+    #return pk*np.prod(dmap_res)**2./(2.*np.pi)**2.
+    return pk*np.prod(dmap_res)**2./(2.*np.pi)**3.
 
 
 

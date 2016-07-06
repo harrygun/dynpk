@@ -112,32 +112,19 @@ def quade_iter(dmap, dcov, covn_vec, pfid, klist, npt, npix, m_dim, nit=0, do_cy
 
     covf=np.zeros((npix, npix))
 
+    Qi=np.zeros(npt)
+    Fij=np.zeros((npt, npt))
+
     if do_cyth==True:
 
         # ->> first run <<- #
-        if do_mpi==True:
-            _Qi_=np.zeros(npt)
-            cyth_cov.quad_estimator_wrapper(dmap, covf, dcov, covn_vec, pfid, \
-                                            _Qi_, npt, npix, m_dim, do_mpi=True)
-            Qi=mpi.gather_unify(_Qi_, root=0)
+        cyth_cov.quad_estimator_wrapper(dmap, covf, dcov, covn_vec, pfid, \
+                                            Qi, Fij, npt, npix, m_dim, do_mpi=True)
 
-
-            # ->> iteration <<- #
-            for it in range(nit):
-                _Qi_=np.zeros(npt)
-                cyth_cov.quad_estimator_wrapper(dmap, covf, dcov, covn_vec, Qi, \
-                                                _Qi_, npt, npix, m_dim, do_mpi=True)
-                Qi=mpi.gather_unify(_Qi_, root=0)
-        else:
-
-            Qi=np.zeros(npt)
-            cyth_cov.quad_estimator_wrapper(dmap, covf, dcov, covn_vec, pfid, \
-                                            Qi, npt, npix, m_dim)
-
-            # ->> iteration <<- #
-            for it in range(nit):
-                cyth_cov.quad_estimator_wrapper(dmap, covf, dcov, covn_vec, Qi, \
-                                                Qi, npt, npix, m_dim)
+        # ->> iteration <<- #
+        for it in range(nit):
+            cyth_cov.quad_estimator_wrapper(dmap, covf, dcov, covn_vec, Qi, \
+                                                Qi, Fij, npt, npix, m_dim, do_mpi=True)
 
     else:
         # ->> first run <<- #
@@ -148,7 +135,7 @@ def quade_iter(dmap, dcov, covn_vec, pfid, klist, npt, npix, m_dim, nit=0, do_cy
             Qi=quade_pk_single(dmap, covf, dcov, covn_vec, Qi, klist, npt, npix, m_dim)
 
 
-    return Qi
+    return Qi, Fij
 
 
 
