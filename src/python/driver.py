@@ -97,10 +97,9 @@ if __name__=='__main__':
 
     # ->> data importing <<- #
     #fn=root+'data/DynSpec/Rickett_53560dspec.npy'
-    fn=root+'data/sims/ds1.npy'
+    fn=root+'data/sims/dsU1.npy'
 
     d=np.load(fn)
-    #print 'data shape:', d.shape
 
     #->> do some testing <<- #
     do_test(p, d)
@@ -111,11 +110,20 @@ if __name__=='__main__':
     '''----------------------------------------------
                 ->>    now we start    <<- 
        ----------------------------------------------'''
+
+    # ->> lower data resolution <<- #
+    zoom_factor=0.5
+    _dmap_=d[:100,:100]-np.mean(d[:100,:100])
+    dmap=sp.ndimage.interpolation.zoom(_dmap_, zoom_factor)
+
+
+
     #->> data initialization <<- #
-    qe_dict={'calculate_dcov': False, 
-             'fname_dcov':     root+'result/dcov.npz',
+    qe_dict={'calculate_dcov':   False, 
+             'fname_dcov':       root+'result/dcov_fft_50x50.npz',
+	     'map_zoom_factor':  zoom_factor,
+	     'get_bp_type':      'FFT',
 	    }
-    dmap=d[:100,:100]
 
     ''' #->> Initialzing quadratic estimator class <<- #
         #->> parafname='same as parameter file' 

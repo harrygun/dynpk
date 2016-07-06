@@ -278,7 +278,12 @@ class QuadestPara(par.Parameters):
 
         if guess_option=='simplest':
             pk_fid=np.ones(self.npt)
-        else:
+
+        elif guess_option=='FFT_P(k)':
+
+	    if self.get_bp_type!='FFT':  
+	        raise Exception('Inconsistent fiducial pk setting.')
+
             pk_fid=np.ones(self.npt)
 
         return pk_fid
