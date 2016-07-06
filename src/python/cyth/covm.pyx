@@ -416,8 +416,11 @@ cdef void icov_d_multiple(cnp.ndarray[cnp.double_t, ndim=2] icovf, \
 
 cdef void icov_dov_multiple(cnp.ndarray[cnp.double_t, ndim=2] icovf,\
                             cnp.ndarray[cnp.double_t, ndim=3] dcov, \
-                            double *ic_dcov, int npt, int npix, \
-                            int mdim_t, int mdim_f, int do_mpi):
+                            cnp.ndarray[cnp.double_t, ndim=3] ic_dcov, \
+                         int npt, int npix, int mdim_t, int mdim_f, int do_mpi):
+
+#                            double *ic_dcov, int npt, int npix, \
+#                            int mdim_t, int mdim_f, int do_mpi):
     cdef:
         int a, b, c, i, *idx_b, *idx_c
 
