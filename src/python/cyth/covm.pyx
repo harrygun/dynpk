@@ -440,6 +440,7 @@ cdef void icov_dov_multiple(cnp.ndarray[cnp.double_t, ndim=2] icovf,\
 
     #for i in range(npt):
     for i in prange:
+        print 'icov_dcov:', i, mpi.rank
 
         for a in range(npix):
             for b in range(npix):
