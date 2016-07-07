@@ -430,12 +430,12 @@ cdef void icov_dov_multiple(cnp.ndarray[cnp.double_t, ndim=2] icovf,\
 
     #print 'icov_dov start', mpi.rank, 'npt=', npt, 'npix=', npix
 
+    _ic_dcov_=np.zeros((npt, npix, npix))
+
     if do_mpi==mytrue:
         prange=mpi.mpirange(npt)
-        _ic_dcov_=np.zeros((npt, npix, npix))
     else:
         prange=range(npt)
-        _ic_dcov_=ic_dcov
 
 
     #for i in range(npt):
@@ -454,10 +454,14 @@ cdef void icov_dov_multiple(cnp.ndarray[cnp.double_t, ndim=2] icovf,\
     if do_mpi==mytrue:
         ic_dcov=mpi.gather_unify(_ic_dcov_, root=0)
         #mpi.bcast(ic_dcov, rank=0)
+    else:
+        ic_dcov=np.copy(_ic_dcov_)
 
 
     free(idx_b)
     free(idx_c)
+
+    del _ic_dcov_
 
     return
 
