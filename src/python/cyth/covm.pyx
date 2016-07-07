@@ -95,6 +95,8 @@ cdef int mpixel_idx_inv(int idx_t, int idx_f, int mdim_t, int mdim_f):
 
 
 
+
+
 '''---------------------------------------------------------------------- '''
 
 cdef double dcov_1D_real(double kti, double Dkti, double dt, double dtab):
@@ -350,7 +352,7 @@ cdef void full_cov_recovery(cnp.ndarray[cnp.double_t, ndim=2] covf, \
 
         print 'now gather full covariance matrix'
         covf=mpi.gather_unify(_covf_, root=0)
-        mpi.bcast(covf, rank=0)
+        #mpi.bcast(covf, rank=0)
 
         del(_covf_)
 
@@ -417,33 +419,42 @@ cdef void icov_d_multiple(cnp.ndarray[cnp.double_t, ndim=2] icovf, \
 cdef void icov_dov_multiple(cnp.ndarray[cnp.double_t, ndim=2] icovf,\
                             cnp.ndarray[cnp.double_t, ndim=3] dcov, \
                             cnp.ndarray[cnp.double_t, ndim=3] ic_dcov, \
-                           int npt, int npix, int mdim_t, int mdim_f, int do_mpi):
+                            int npt, int npix, int mdim_t, \
+                            int mdim_f, int do_mpi):
 
-#                            double *ic_dcov, int npt, int npix, \
-#                            int mdim_t, int mdim_f, int do_mpi):
     cdef:
         int a, b, c, i, *idx_b, *idx_c
 
     idx_b=<int *>malloc(2*sizeof(int))
     idx_c=<int *>malloc(2*sizeof(int))
 
-    print 'icov_dov start', mpi.rank, 'npt=', npt, 'npix=', npix
+    #print 'icov_dov start', mpi.rank, 'npt=', npt, 'npix=', npix
 
-    for i in range(npt):
+    if do_mpi==mytrue:
+        prange=mpi.mpirange(npt)
+        _ic_dcov_=np.zeros((npt, npix, npix))
+    else:
+        prange=range(npt)
+        _ic_dcov_=ic_dcov
+
+
+    #for i in range(npt):
+    for i in prange:
 
         for a in range(npix):
-
             for b in range(npix):
-                #ic_dcov[matidx3(i,a,b,npt,npix,npix)]=0.
 
-                ic_dcov[i,a,b]=0.
+                _ic_dcov_[i,a,b]=0.
                 mpixel_idx(b, mdim_t, mdim_f, idx_b)
 
                 for c in range(npix):
                     mpixel_idx(c, mdim_t, mdim_f, idx_c)
+                    _ic_dcov_[i,a,b]+=icovf[a,c]*dcov[i,idx_c[0]-idx_b[0],idx_c[1]-idx_b[1]]
 
-                    #ic_dcov[matidx3(i,a,b,npt,npix,npix)]+=icovf[a,c]\
-                    ic_dcov[i,a,b]+=icovf[a,c]*dcov[i,idx_c[0]-idx_b[0],idx_c[1]-idx_b[1]]
+    if do_mpi==mytrue:
+        ic_dcov=mpi.gather_unify(_ic_dcov_, root=0)
+        #mpi.bcast(ic_dcov, rank=0)
+
 
     free(idx_b)
     free(idx_c)
@@ -592,8 +603,8 @@ cpdef quad_estimator_wrapper(dmap, covf, dcov, covn_vec, plist, Qi, Fij, npt, np
         Qi_p=mpi.gather_unify(_Qi_p_, root=0)
         Fij=mpi.gather_unify(_Fij_, root=0)
         
-        mpi.bcast(Qi_p, rank=0)
-        mpi.bcast(Fij, rank=0)
+        #mpi.bcast(Qi_p, rank=0)
+        #mpi.bcast(Fij, rank=0)
     else:
         Qi_p=_Qi_p_
         Fij=np.copy(_Fij_)
@@ -607,7 +618,7 @@ cpdef quad_estimator_wrapper(dmap, covf, dcov, covn_vec, plist, Qi, Fij, npt, np
 
     if dompi:
         Qi=mpi.gather_unify(_Qi_, root=0)
-        mpi.bcast(Qi, rank=0)
+        #mpi.bcast(Qi, rank=0)
     else:
         Qi=np.copy(_Qi_)
 
