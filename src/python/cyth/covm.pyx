@@ -443,6 +443,8 @@ cdef void icov_dov_multiple(cnp.ndarray[cnp.double_t, ndim=2] icovf,\
         print 'icov_dcov:', i, mpi.rank
 
         for a in range(npix):
+            print 'icov_dcov i, a:', i, a, '(',mpi.rank,')'
+
             for b in range(npix):
 
                 _ic_dcov_[i,a,b]=0.
@@ -579,7 +581,7 @@ cdef void quad_est_fish_qi(cnp.ndarray[cnp.double_t, ndim=2] i_Fij, \
 
     for i in prange:
         Qi[i]=0.
-        for i in range(npt):
+        for j in range(npt):
             Qi[i]+=i_Fij[i,j]*Qi_p[j]
 
     return
