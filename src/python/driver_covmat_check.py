@@ -126,6 +126,17 @@ if __name__=='__main__':
     fname_cov_comp=root+'result/cov_comparison_50x50.npz'
     np.savez(fname_cov_comp, corf=corf, cor_fft=cor_fft)
 
+
+    _output_bp_dcov_=True
+    if _output_bp_dcov_:
+        fn_out_dcov=root+'result/dcov_out.dat'
+        fn_out_plist=root+'result/plist.dat'
+
+        (qe.dcov[:,:qe.m_dim[0],:qe.m_dim[1]]).tofile(fn_out_dcov) 
+        (pk2d.flatten()).tofile(fn_out_plist) 
+
+
+
     _show_=True
     if _show_:
         _t=np.arange(qe.m_dim[0])*qe.dmap_res[0]
