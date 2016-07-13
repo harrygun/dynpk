@@ -85,6 +85,15 @@ if __name__=='__main__':
 	pl.show()
 
 
+    if True:
+        fn_dcov=root+'result/plist.dat'
+        plist=np.fromfile(fn_dcov).reshape(50,50)
+
+	print plist.shape
+
+	cb=pl.imshow(plist, norm=colors.LogNorm())
+	#pl.colorbar(cb)
+	pl.show()
 
 
     # ->> The End <<- #

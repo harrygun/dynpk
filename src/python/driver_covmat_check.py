@@ -144,7 +144,7 @@ if __name__=='__main__':
 
 	t, f = mar.meshgrid(_t, _f)
 
-        nplt, ncol = 3, 3
+        nplt, ncol = 2, 2
         fig,ax=mpl.mysubplots(nplt,ncol_max=ncol,subp_size=5.,\
                               gap_size=0.5,return_figure=True)
 
@@ -157,8 +157,8 @@ if __name__=='__main__':
 	cb2.set_edgecolor('face')
         #pl.colorbar(cb2)
 
-        cb3=ax[2].imshow(pk2d, norm=colors.LogNorm()) 
-        pl.colorbar(cb3)
+        #cb3=ax[2].imshow(pk2d, norm=colors.LogNorm()) 
+        #pl.colorbar(cb3)
 	
 	for i in range(2):
 	    ax[i].set_xlim([0, _t[15]])
