@@ -668,3 +668,19 @@ cpdef get_correlation(covf,  dcov,  plist, npt):
 
     correlation_recovery(covf, dcov, plist, <int>npt, mdim_t, mdim_f)
     return
+
+
+
+''' ->> send to Carly <<- '''
+cdef return_full_dcov(cnp.ndarray[cnp.double_t, ndim=3] dcov, \
+                      cnp.ndarray[cnp.double_t, ndim=3] dcov, \
+                      int npt, int mdim_t, int mdim_f):
+    cdef:
+        int i, a, b
+
+
+    return
+
+cpdef get_full_dcov(dcov, dcov_full npt, mdim_t, mdim_f):
+
+    return
