@@ -673,14 +673,29 @@ cpdef get_correlation(covf,  dcov,  plist, npt):
 
 ''' ->> send to Carly <<- '''
 cdef return_full_dcov(cnp.ndarray[cnp.double_t, ndim=3] dcov, \
-                      cnp.ndarray[cnp.double_t, ndim=3] dcov, \
-                      int npt, int mdim_t, int mdim_f):
+                      cnp.ndarray[cnp.double_t, ndim=2] dcov_f, \
+                      int pi_idx, int npt, int mdim_t, int mdim_f):
     cdef:
-        int i, a, b
+        int a, b, *idx_a, *idx_b
 
+    idx_a=<int *>malloc(2*sizeof(int))
+    idx_b=<int *>malloc(2*sizeof(int))
 
+    for a in range(npt):
+        mpixel_idx(a, mdim_t, mdim_f, idx_a)
+
+        for b in range(npt):
+            #dcov_f[a,b]=0.
+
+            mpixel_idx(b, mdim_t, mdim_f, idx_b)
+            dcov_f[a,b]=dcov[pi_idx,abs(idx_a[0]-idx_b[0]), abs(idx_a[1]-idx_b[1])]
+
+    free(idx_a)
+    free(idx_b)
+    
     return
 
-cpdef get_full_dcov(dcov, dcov_full npt, mdim_t, mdim_f):
 
-    return
+cpdef get_full_dcov(dcov, dcov_f, pi_idx, npt, mdim_t, mdim_f):
+    return return_full_dcov(dcov, dcov_f, <int>pi_idx, <int>npt, \
+                            <int>mdim_t, <int>mdim_f)
