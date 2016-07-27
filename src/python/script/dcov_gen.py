@@ -11,6 +11,10 @@ import genscript.mpiutil as mpi
 import genscript.myarray as mar
 import genscript.myplot as mpl
 
+import misc.helper as helper
+import quadestimator as qde
+import cmeasure as cms
+import cyth.covm as cyth_cov
 
 
 
@@ -40,8 +44,58 @@ if __name__=='__main__':
     root='../../workspace/'
 
     # ->> data importing <<- #
-    fn_dcov=root+'result/dcov_out.dat'
-    fn_plit=root+'result/plist.dat' 
+    fn=root+'data/sims/dsU1.npy'
+    #fn=root+'data/sims/ds1.npy'
+
+    d=np.load(fn)
+    #print 'data shape:', d.shape
+
+    print 'mpi.rank=', mpi.rank
+
+
+    '''----------------------------------------------
+                ->>    now we start    <<- 
+       ----------------------------------------------'''
+    # ->> lower data resolution <<- #
+    zoom_factor=0.5
+    _dmap_=d[:100,:100]-np.mean(d[:100,:100])
+    dmap=sp.ndimage.interpolation.zoom(_dmap_, zoom_factor)
+
+
+    #->> data initialization <<- #
+    qe_dict={'calculate_dcov':   False, 
+             'fname_dcov':       root+'result/dcov.npz',
+	     'map_zoom_factor':  zoom_factor,
+	     'get_bp_type':      'FFT',
+	    }
+
+
+    ''' #->> Initialzing quadratic estimator class <<- #
+        #->> parafname='same as parameter file' 
+        #->> calculating dcov
+    '''
+    skip_init=True  # ->> skip initialize bandpowre and dcov <<- #
+    qe=qde.QuadestPara(paramfname=p.paramfname, section=p.qestmator_sec,
+            prog_control=p, dmap=dmap, skip_init=True, **qe_dict)
+
+    print '\n->> QuadestPara parameters:\n', qe.paramdict
+
+    # ->> initialize FFT band power <<- #
+    bp_dict={'dmap_shape':   qe.dmap.shape, } 
+    qe.band_power_init(**bp_dict)
+
+
+    # ->> initialize dcov <<- #
+    fname_dcov_fft=root+'result/dcov_fft_50x50.npz'
+    qe.dcov_init(fname_dcov_fft)
+
+    # ->> 
+    print 'klist', qe.klist.shape, qe.kt_list.shape, qe.kf_list.shape
+    print qe.kf_list[25]
+
+    print 'index where kf=0:', np.where(qe.klist[1]==0)
+
+
 
 
 

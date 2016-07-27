@@ -35,7 +35,8 @@
 
 
 
-  void Fisher(){
+  void Fisher(double *dcov, double *icov, double *Fij){
+
 
 
     return;
