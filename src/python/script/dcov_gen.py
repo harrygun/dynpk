@@ -99,7 +99,9 @@ if __name__=='__main__':
 
     print 'so, let me just select k_f=0, and output dcov, cov, and icov.'
 
+
     fno_dcov=root+'result/1d/dcov.dat'
+    idx=np.where()
 
 
 
