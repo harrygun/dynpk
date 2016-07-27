@@ -1,3 +1,4 @@
+''' ->> for generating the 1D/2D data sending to Carly <<- '''
 import os
 import pylab as pl
 import numpy as np
@@ -10,8 +11,6 @@ import genscript.mpiutil as mpi
 import genscript.myarray as mar
 import genscript.myplot as mpl
 
-
-import cyth.covm as cyth_cov
 
 
 
@@ -41,32 +40,17 @@ if __name__=='__main__':
     root='../../workspace/'
 
     # ->> data importing <<- #
-    fn_in=root+'result/dcov_out.dat'
+    fn_dcov=root+'result/dcov_out.dat'
+    fn_plit=root+'result/plist.dat' 
 
-    if mpi.rank0:
-        data=np.fromfile(fn_in).reshape(2500,50,50)
-    else: data=0
 
-    dcov=mpi.bcast(data, root=0)
 
-    # ->> 
-    npt=2500
-    mdim_t, mdim_f = 50, 50
-    dcov_full=np.zeros((2500,2500))
 
-    mpirange=mpi.mpirange(2500)
-    for i in mpirange:
 
-        fn_out=root+'result/dcov_full_fft/dcov_full_'+str(i)+'.dat'
-	print 'rank=', mpi.rank, fn_out
-
-        cyth_cov.get_full_dcov(dcov, dcov_full, i, npt, mdim_t, mdim_f)
-        dcov_full.tofile(fn_out)
 
 
     # ->> The End <<- #
     p.finalize()
-    mpi.finalize()
 
 
 
