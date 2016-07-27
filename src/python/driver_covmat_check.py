@@ -136,6 +136,8 @@ if __name__=='__main__':
         (pk2d.flatten()).tofile(fn_out_plist) 
 
 
+    print 'corf shape:', corf.shape, cor_fft.shape
+
 
     _show_=True
     if _show_:
