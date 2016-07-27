@@ -94,8 +94,12 @@ if __name__=='__main__':
     print qe.kf_list[25]
 
     print 'index where kf=0:', np.where(qe.klist[1]==0)
+    print 'or in 2D:', np.where(qe.klist.reshape(2,50,50)[1]==0)
 
 
+    print 'so, let me just select k_f=0, and output dcov, cov, and icov.'
+
+    fno_dcov=root+'result/1d/dcov.dat'
 
 
 
