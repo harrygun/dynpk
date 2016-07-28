@@ -23,11 +23,11 @@
 
 
 #ifdef _MPI_
-  #include "mpi.h"
+  #include <mpi.h>
 #endif
 
-#ifdef _OPEN_MP_
-  #include "omp.h"
+#ifdef _OMP_
+  #include <omp.h>
 #endif
 
 
@@ -35,7 +35,41 @@
 
 
 
-  void Fisher(double *dcov, double *icov, double *Fij){
+
+
+
+  void Fisher(MPIpar *mpi, double *dcov, double *icov, double *F,
+                                         size_t npix, size_t n_bp)  {
+    size_t i, j, a, b, c, d, idx;
+
+
+    mpi->max=n_bp*n_bp;    mpi->start=0;
+    mpi_loop_init(mpi, "output");
+
+
+    for(idx=0; idx<mpi->ind_run; idx++) {
+
+      i=(int)(idx/(double)n_bp);
+      j=idx-i*n_bp;
+
+      #ifdef _OMP_
+      #pragma omp parallel for private(a,b,c,d)
+      #endif
+
+      abort("need to optimize the parallization here.");
+
+      F[idx]=0.;
+      for(a=0; a<npix; a++)
+          for(b=0; b<npix; b++)
+            for(c=0; c<npix; c++)
+              for(d=0; d<npix; d++) {
+
+                F[idx]+= ;
+                }
+
+      printf("Fij[%d, %d]=%lg\n", i, j, F[idx]);
+      fflush(stdout);
+      }
 
 
 

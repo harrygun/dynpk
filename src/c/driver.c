@@ -23,14 +23,15 @@
 
   #include "glbvarb.h"
   #include "mpinit.h"
+  #include "io.h"
 
 
 #ifdef _MPI_
-  #include "mpi.h"
+  #include <mpi.h>
 #endif
 
-#ifdef _OPEN_MP_
-  #include "omp.h"
+#ifdef _OMP_
+  #include <omp.h>
 #endif
 
 
@@ -109,9 +110,23 @@
       fn_cov=sprintf("result/cov.dat");
       fn_icov=sprintf("result/icov.dat");
 
-      fp=fopen(fn_dcov, "r"); 
-      fread(m, sizeof(double), 2500*2500, fp);
-      fclose(fp);
+
+      // ->>   <<- //
+      size_t mdim, npix, n_bp;
+      double *Fij;
+
+      mdim=50; 
+      npix=mdim*mdim;
+      nbp=10;   //mdim*mdim;
+
+      qe.dcov=malloc(sizeof(double)*npix*npix);
+      qe.icov=malloc(sizeof(double)*npix*npix);
+
+      Fij=malloc(sizeof(double)*nbp*nbp);
+
+
+      import_data(fn_dcov, dcov, sizeof(double), npix*npix);
+      import_data(fn_icov, icov, sizeof(double), npix*npix);
 
 
 
