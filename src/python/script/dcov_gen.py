@@ -97,11 +97,28 @@ if __name__=='__main__':
     print 'or in 2D:', np.where(qe.klist.reshape(2,50,50)[1]==0)
 
 
-    print 'so, let me just select k_f=0, and output dcov, cov, and icov.'
+    print 'Let me just select k_f=0, and output dcov, cov, and icov.'
+    print 'Also, for dcov in 1D, I have to set delta_f=0 among all pixels.'
+
+    print 'dcov:', qe.dcov.shape
 
 
+    #
     fno_dcov=root+'result/1d/dcov.dat'
-    idx=np.where()
+    fno_cov=root+'result/1d/cov.dat'
+    ddcov=qe.dcov.reshape(50,50,100,100)[:,25,:50,0]
+
+
+    ff=np.fromfile(root+'result/cov.dat').reshape(50,50,50,50)
+    ccov=ff[:,0,:,0]
+
+
+
+    # ->> output <<- #
+    ddcov.tofile(fno_dcov)
+    ccov.tofile(fno_cov)
+     
+
 
 
 
