@@ -56,7 +56,7 @@
       #pragma omp parallel for private(a,b,c,d)
       #endif
 
-      abort("need to optimize the parallization here.");
+      //abort("need to optimize the parallization here.");
 
       F[idx]=0.;
       for(a=0; a<npix; a++)
