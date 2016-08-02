@@ -126,7 +126,7 @@
       qe.cov=malloc(sizeof(double)*npix*npix);
       qe.icov=malloc(sizeof(double)*npix*npix);
 
-      Fij=malloc(sizeof(double)*nbp*nbp);
+      if(mpi.rank==0){ Fij=malloc(sizeof(double)*nbp*nbp); }
 
 
       import_data(fn_dcov, qe.dcov, sizeof(double), npix*npix);
@@ -139,7 +139,10 @@
 
       
       // ->> output <<- //
-      write_data(fn_out, Fij, sizeof(double), nbp*nbp);
+      
+      if(mpi.rank==0){ 
+        write_data(fn_out, Fij, sizeof(double), nbp*nbp);
+      }
 
 
 
@@ -150,7 +153,9 @@
       iniparser_freedict(dict);
 
       free(qe.dcov);   free(qe.icov); 
-      free(qe.cov);    free(Fij);
+      free(qe.cov);    
+      
+      if(mpi.rank==0){free(Fij); }
 
       #ifdef _MPI_
       MPI_Finalize();

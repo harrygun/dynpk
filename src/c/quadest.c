@@ -41,11 +41,13 @@
   void Fisher(MPIpar *mpi, double *dcov, double *icov, double *F,
                                          size_t npix, size_t n_bp)  {
     size_t i, j, a, b, c, d, idx;
+    double *Fs, *Fg;
 
 
     mpi->max=n_bp*n_bp;    mpi->start=0;
     mpi_loop_init(mpi, "output");
 
+    Fs=malloc(mpi->ind_run*sizeof(double));
 
     for(idx=0; idx<mpi->ind_run; idx++) {
 
@@ -56,9 +58,8 @@
       //#pragma omp parallel for private(a,b,c,d)
       //#endif
 
-      //abort("need to optimize the parallization here.");
-
-      F[idx]=0.;
+      //F[idx]=0.;
+      Fs[idx]=0.;
       for(a=0; a<npix; a++)
           for(b=0; b<npix; b++)
             for(c=0; c<npix; c++)
@@ -73,5 +74,16 @@
       }
 
 
+    if(mpi.rank==0){
+      Fg=malloc(sizeof(double)*n_bp*n_bp);
+      }
+    MPI_Gather(Fs, 100, MPI_CHAR, 0, MPI_COMM_WORLD);
+
+
+    if(mpi.rank==0){
+
+      }
+
+    free(Fs);
     return;
     }
