@@ -18,6 +18,18 @@ import cyth.covm as cyth_cov
 
 
 
+
+
+
+def fisher(dcov, cov):
+
+
+
+
+    return
+
+
+
 param_dict={
     'power_spectrum_fname': '/home/xwang/workspace/general-data/power/fiducial_matterpower.dat',
     'cosmology_parameter_fname': 'parameters/cosparameter.cfg',
