@@ -39,3 +39,18 @@
     fclose(fp);
     return;
     }
+
+
+  void write_data(char *fn, void *d, size_t size, size_t count){
+    FILE *fp;
+
+    if(!(fp=fopen(fn, "wb"))) {
+      printf("can't open file `%s`\n", fn); fflush(stdout);
+      exit(0);
+      }
+
+    fwrite(d, size, count, fp);
+
+    fclose(fp);
+    return;
+    }

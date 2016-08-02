@@ -64,13 +64,13 @@
             for(c=0; c<npix; c++)
               for(d=0; d<npix; d++) {
 
-                F[idx]+= ;
+                F[idx]+=ArrayAccess2D_n2(dcov, npix, ndim, i, fabs(a-b))*icov[b,c]
+		       *ArrayAccess2D_n2(dcov, npix, ndim, j, fabs(c-d))*icov[d,a];
                 }
 
       printf("Fij[%d, %d]=%lg\n", i, j, F[idx]);
       fflush(stdout);
       }
-
 
 
     return;

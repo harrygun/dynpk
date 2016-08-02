@@ -24,6 +24,7 @@
   #include "glbvarb.h"
   #include "mpinit.h"
   #include "io.h"
+  #include "quadest.h"
 
 
 #ifdef _MPI_
@@ -104,20 +105,20 @@
       mpi.start = 0;   // mpi.max = 1;
       printf("==================================\n"); fflush(stdout);
 
-      FILE *fp;
-      char *fn_dcov, *fn_cov, *fn_icov;
+      char *fn_dcov, *fn_cov, *fn_icov, *fn_out;
       fn_dcov=sprintf("result/dcov_out.dat");
       fn_cov=sprintf("result/cov.dat");
       fn_icov=sprintf("result/icov.dat");
+      fn_out=sprintf("result/Fij.dat");
 
 
       // ->>   <<- //
-      size_t mdim, npix, n_bp;
+      size_t mdim, npix, nbp;
       double *Fij;
 
       mdim=50; 
       npix=mdim*mdim;
-      nbp=10;   //mdim*mdim;
+      nbp=50;   //mdim*mdim;
 
       qe.dcov=malloc(sizeof(double)*npix*npix);
       qe.icov=malloc(sizeof(double)*npix*npix);
@@ -129,6 +130,13 @@
       import_data(fn_icov, icov, sizeof(double), npix*npix);
 
 
+   
+      // ->> calculate Fisher matrix <<- //
+      Fisher(&mpi, qe.dcov, qe.icov, Fij, npix, nbp);
+
+      
+      // ->> output <<- //
+      write_data(fn_out, Fij, sizeof(double), nbp*nbp);
 
 
 

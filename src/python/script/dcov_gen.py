@@ -3,6 +3,7 @@ import os
 import pylab as pl
 import numpy as np
 import scipy as sp
+import scipy.linalg as slag
 import matplotlib.colors as colors
 
 import genscript.progcontrol as pc
@@ -18,15 +19,48 @@ import cyth.covm as cyth_cov
 
 
 
+def mpixel_idx(a, mdim_t, mdim_f):
 
+    ai=a/mdim_t
+    aj=a-mdim_t*ai
+
+    return ai, aj
 
 
 def fisher(dcov, cov):
 
+    print dcov.shape, cov.shape
 
+    ndim=cov.shape[0]
+    npix=dcov.shape[0]
 
+    icov=slag.inv(cov)
 
-    return
+    # ->> 
+    Fij=np.zeros((npix, npix))
+
+    for i in range(npix):
+        for j in range(npix):
+
+	    for a in range(ndim):
+                #ai, aj=mpixel_idx(a, ndim, ndim)
+
+	        for b in range(ndim):
+                    #bi, bj=mpixel_idx(b, ndim, ndim)
+
+	            for c in range(ndim):
+                        #ci, cj=mpixel_idx(c, ndim, ndim)
+
+	                for d in range(ndim):
+                            #di, dj=mpixel_idx(d, ndim, ndim)
+
+	                    #Fij[i,j]+=dcov[i,abs(ai-bi), abs(aj-bj)]*icov[b,c]\
+                            #         *dcov[j,abs(ci-di), abs(cj-dj)]*icov[d,a]
+
+	                    Fij[i,j]+=dcov[i,abs(a-b)]*icov[b,c]\
+                                     *dcov[j,abs(c-d)]*icov[d,a]
+
+    return Fij
 
 
 
@@ -127,12 +161,17 @@ if __name__=='__main__':
 
 
     # ->> output <<- #
-    ddcov.tofile(fno_dcov)
-    ccov.tofile(fno_cov)
+    #ddcov.tofile(fno_dcov)
+    #ccov.tofile(fno_cov)
      
 
+    Fij=fisher(ddcov, ccov)
 
 
+    # ->> 
+    cb=pl.imshow(Fij)
+    pl.colorbar(cb)
+    pl.show()
 
 
 

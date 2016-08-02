@@ -28,6 +28,7 @@
   #define MemIdx3D_n3(n1, n2, n3, i1, i2, i3)  (i3+n3*(i2+n2*i1))
 
   // ->> for equal-length cubic array <<- //
+  #define ArrayAccess2D(a, n, i, j) (a)[ j+n*i ]
   #define ArrayAccess3D(a, n, i, j, k) ((a)[(i)*(n)*(n)+(j)*(n)+(k)])
 
   // ->> non-equal-length cubic array <<- //

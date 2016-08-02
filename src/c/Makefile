@@ -224,12 +224,11 @@ ARFLAGS=-r
 RANLIB=ranlib
 
 
-default: pk_set
+default: quadest
 
 
 #--------------------------------------------------#
-pk_set: pk_set_1loop.o ndintegration_cuba.o pk_set_cuba.o pk_wrapper.o \
-        misc.o  mpinit.o driver.o
+quadest: quadest.o io.o mpinit.o driver.o
 	$(CC)  $^ -o $(WORKSPACE)/$@  $(LIB)
 
 

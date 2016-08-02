@@ -4,5 +4,4 @@
   void Fisher(MPIpar *mpi, double *dcov, double *icov, double *F,
                                          size_t npix, size_t n_bp);
 
-
 #endif
