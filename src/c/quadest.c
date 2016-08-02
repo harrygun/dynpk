@@ -52,9 +52,9 @@
       i=(int)(idx/(double)n_bp);
       j=idx-i*n_bp;
 
-      #ifdef _OMP_
-      #pragma omp parallel for private(a,b,c,d)
-      #endif
+      //#ifdef _OMP_
+      //#pragma omp parallel for private(a,b,c,d)
+      //#endif
 
       //abort("need to optimize the parallization here.");
 
