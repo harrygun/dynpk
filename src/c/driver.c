@@ -106,28 +106,31 @@
       printf("==================================\n"); fflush(stdout);
 
       char *fn_dcov, *fn_cov, *fn_icov, *fn_out;
-      fn_dcov=sprintf("result/dcov_out.dat");
-      fn_cov=sprintf("result/cov.dat");
-      fn_icov=sprintf("result/icov.dat");
-      fn_out=sprintf("result/Fij.dat");
 
+      fn_dcov="result/1d/dcov.dat";
+      fn_cov ="result/1d/cov.dat";
+      fn_icov="result//icov.dat";
+      fn_out ="result/1d/Fij.dat";
 
       // ->>   <<- //
       size_t mdim, npix, nbp;
       double *Fij;
 
       mdim=50; 
-      npix=mdim*mdim;
+      //npix=mdim*mdim;
+
+      npix=mdim;
       nbp=50;   //mdim*mdim;
 
       qe.dcov=malloc(sizeof(double)*npix*npix);
+      qe.cov=malloc(sizeof(double)*npix*npix);
       qe.icov=malloc(sizeof(double)*npix*npix);
 
       Fij=malloc(sizeof(double)*nbp*nbp);
 
 
-      import_data(fn_dcov, dcov, sizeof(double), npix*npix);
-      import_data(fn_icov, icov, sizeof(double), npix*npix);
+      import_data(fn_dcov, qe.dcov, sizeof(double), npix*npix);
+      import_data(fn_icov, qe.icov, sizeof(double), npix*npix);
 
 
    
@@ -145,6 +148,9 @@
   -----------------------------------------------------*/
     stop:
       iniparser_freedict(dict);
+
+      free(qe.dcov);   free(qe.icov); 
+      free(qe.cov);    free(Fij);
 
       #ifdef _MPI_
       MPI_Finalize();

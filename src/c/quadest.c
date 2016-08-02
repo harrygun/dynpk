@@ -64,8 +64,8 @@
             for(c=0; c<npix; c++)
               for(d=0; d<npix; d++) {
 
-                F[idx]+=ArrayAccess2D_n2(dcov, npix, ndim, i, fabs(a-b))*icov[b,c]
-		       *ArrayAccess2D_n2(dcov, npix, ndim, j, fabs(c-d))*icov[d,a];
+                F[idx]+=ArrayAccess2D_n2(dcov, n_bp, npix, i, (size_t)fabs(a-b))*icov[b,c]
+		       *ArrayAccess2D_n2(dcov, n_bp, npix, j, (size_t)fabs(c-d))*icov[d,a];
                 }
 
       printf("Fij[%d, %d]=%lg\n", i, j, F[idx]);

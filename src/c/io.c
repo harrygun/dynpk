@@ -31,7 +31,7 @@
       exit(0);
       }
 
-    if(!(fread(d, size, count, fp)) ) 
+    if(!(fread(d, size, count, fp)) ) {
       printf("File '%s' import Error.\n", fn); fflush(stdout);
       exit(0);
       }

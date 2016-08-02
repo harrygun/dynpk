@@ -152,17 +152,23 @@ if __name__=='__main__':
     #
     fno_dcov=root+'result/1d/dcov.dat'
     fno_cov=root+'result/1d/cov.dat'
+    fno_icov=root+'result/1d/icov.dat'
     ddcov=qe.dcov.reshape(50,50,100,100)[:,25,:50,0]
 
 
     ff=np.fromfile(root+'result/cov.dat').reshape(50,50,50,50)
     ccov=ff[:,0,:,0]
 
+    iccov=slag.inv(ccov)
+
 
 
     # ->> output <<- #
-    #ddcov.tofile(fno_dcov)
-    #ccov.tofile(fno_cov)
+    ddcov.tofile(fno_dcov)
+    ccov.tofile(fno_cov)
+    iccov.tofile(fno_icov)
+
+    quit()
      
 
     Fij=fisher(ddcov, ccov)
