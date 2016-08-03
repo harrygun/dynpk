@@ -40,8 +40,8 @@
 
   void Fisher(MPIpar *mpi, double *dcov, double *icov, double *F,
                                          size_t npix, size_t n_bp)  {
-    size_t i, j, a, b, c, d, idx;
-    double *Fs, *Fg;
+    size_t i, j, a, b, c, d, idx, id, irk, nrun;
+    double *Fs, *Frev;
 
 
     mpi->max=n_bp*n_bp;    mpi->start=0;
@@ -51,37 +51,45 @@
 
     for(idx=0; idx<mpi->ind_run; idx++) {
 
-      i=(int)(idx/(double)n_bp);
-      j=idx-i*n_bp;
+      id=mpi_id(mpi, idx);
+      i=(int)(id/(double)n_bp);
+      j=id-i*n_bp;
 
       //#ifdef _OMP_
       //#pragma omp parallel for private(a,b,c,d)
       //#endif
 
-      //F[idx]=0.;
       Fs[idx]=0.;
       for(a=0; a<npix; a++)
           for(b=0; b<npix; b++)
             for(c=0; c<npix; c++)
               for(d=0; d<npix; d++) {
 
-                F[idx]+=ArrayAccess2D_n2(dcov, n_bp, npix, i, (size_t)fabs(a-b))*icov[b,c]
+                Fs[idx]+=ArrayAccess2D_n2(dcov, n_bp, npix, i, (size_t)fabs(a-b))*icov[b,c]
 		       *ArrayAccess2D_n2(dcov, n_bp, npix, j, (size_t)fabs(c-d))*icov[d,a];
                 }
 
-      printf("Fij[%d, %d]=%lg\n", i, j, F[idx]);
-      fflush(stdout);
+        //printf("Fij[%d, %d]=%lg\n", i, j, Fs[idx]);
+        //fflush(stdout);
       }
+    printf("Fisher is done.\n"); fflush(stdout);
 
 
-    if(mpi.rank==0){
-      Fg=malloc(sizeof(double)*n_bp*n_bp);
-      }
-    MPI_Gather(Fs, 100, MPI_CHAR, 0, MPI_COMM_WORLD);
+    if(mpi->rank==0){ Frev=malloc(sizeof(double)*n_bp*n_bp); }
 
+    // ->> gather all data by root <<- //
+    MPI_Gather(Fs, mpi->ind_run, MPI_DOUBLE, Frev, mpi->ind_run, MPI_DOUBLE, 0, MPI_COMM_WORLD);
 
-    if(mpi.rank==0){
+    if(mpi->rank==0){
 
+      for(irk=0; irk<mpi->ntask; irk++) {
+        nrun=mpi_nrun(mpi->max, irk, mpi->ntask);
+
+        for(i=0; i<nrun; i++)
+          F[mpi_get_id(irk, mpi->ntask, i)]=Frev[irk*nrun+i];
+	  }
+
+      free(Frev);
       }
 
     free(Fs);

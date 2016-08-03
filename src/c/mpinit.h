@@ -6,4 +6,8 @@
 
   int mpi_id(MPIpar *mpi, int i);
 
+
+  int mpi_nrun(int totrun, int rank, int ntask);
+  int mpi_get_id(int rank, int ntask, int i);
+
   #endif

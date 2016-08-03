@@ -62,4 +62,18 @@
 
 
 
+  int mpi_nrun(int totrun, int rank, int ntask){
+    int ind_run;
 
+    ind_run= totrun/ntask;
+    if(rank - (totrun-ntask*(int)(totrun/ntask) )<0 ) 
+      ind_run +=1;
+
+    return ind_run;
+    }
+
+
+  int mpi_get_id(int rank, int ntask, int i) {
+
+    return i*ntask+rank;
+    }
