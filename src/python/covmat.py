@@ -41,7 +41,7 @@ def dcov_1D_real(kti, Dkti, dt, dtab):
                    2*dtab*SinIntegral(dtab*(Dkti/2. + kti)) +   \
                    (dt + dtab)*SinIntegral((dt + dtab)*(Dkti/2. + kti)))/np.pi
 
-    return dc1d_real
+    return dc1d_real/2.
 
 
 
@@ -69,7 +69,7 @@ def dcov_1D_imag(kti, Dkti, dt, dtab):
             4*(Dkti - 2*kti)*Cos(dt*(Dkti/2. + kti))*Sin(dtab*(Dkti/2. + kti)))/ \
             (4.*(-(Dkti**2*np.pi)/4. + kti**2*np.pi))
 
-    return dc1d_imag
+    return dc1d_imag/2.
 
 
 

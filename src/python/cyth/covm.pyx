@@ -122,7 +122,7 @@ cdef double dcov_1D_real(double kti, double Dkti, double dt, double dtab):
     if np.isnan(dc1d_real):
         print 'real:', kti, Dkti, dt, dtab
 
-    return dc1d_real
+    return dc1d_real/2.
 
 
 
@@ -156,7 +156,7 @@ cdef dcov_1D_imag(double kti, double Dkti, double dt, double dtab):
     if np.isnan(dc1d_imag):
         print 'imag:', kti, Dkti, dt, dtab
 
-    return dc1d_imag
+    return dc1d_imag/2.
 
 
 
@@ -220,7 +220,7 @@ cdef double dcov1d_klim_real(double ktia, double ktib, double dt, double dtab):
     if np.isnan(dc1d_real):
         print 'real:', ktia, ktib, dt, dtab
 
-    return dc1d_real
+    return dc1d_real/2.
 
 
 cdef double dcov1d_klim_imag(double ktia, double ktib, double dt, double dtab):
@@ -270,7 +270,7 @@ cdef double dcov1d_klim_imag(double ktia, double ktib, double dt, double dtab):
     if np.isnan(dc1d_imag):
         print 'imag:', ktia, ktib, dt, dtab
 
-    return dc1d_imag
+    return dc1d_imag/2.
 
 
 
