@@ -176,16 +176,29 @@ if __name__=='__main__':
     Fij=np.fromfile(fni_Fij).reshape(50,50)
     iFij=slag.inv(Fij)
 
+    cb=pl.imshow(iFij)
+    pl.colorbar(cb)
+    pl.show()
+
 
     # ->> check 1D band power <<- #
-    qi=
+    qi=np.load(root+'result/Qi_fft_noFij.npz')['Qi'].reshape(50,50)[:,25]
+    print qi.shape
 
+
+    Q=np.einsum('ij,j', iFij, qi)
+
+    print Q.shape
+
+    pl.plot(Q, 'k-')
+    pl.plot(qi, 'b-')
+    pl.show()
 
 
     # ->> 
-    cb=pl.imshow(Fij)
-    pl.colorbar(cb)
-    pl.show()
+    #cb=pl.imshow(Fij)
+    #pl.colorbar(cb)
+    #pl.show()
 
 
 
