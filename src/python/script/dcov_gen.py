@@ -150,6 +150,8 @@ if __name__=='__main__':
 
 
     #
+    fni_Fij=root+'result/1d/Fij.dat'
+
     fno_dcov=root+'result/1d/dcov.dat'
     fno_cov=root+'result/1d/cov.dat'
     fno_icov=root+'result/1d/icov.dat'
@@ -164,14 +166,20 @@ if __name__=='__main__':
 
 
     # ->> output <<- #
+    '''
     ddcov.tofile(fno_dcov)
     ccov.tofile(fno_cov)
     iccov.tofile(fno_icov)
+    '''
 
-    quit()
-     
 
-    Fij=fisher(ddcov, ccov)
+    Fij=np.fromfile(fni_Fij).reshape(50,50)
+    iFij=slag.inv(Fij)
+
+
+    # ->> check 1D band power <<- #
+
+
 
 
     # ->> 
