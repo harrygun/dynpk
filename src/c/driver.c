@@ -122,11 +122,11 @@
       npix=mdim;
       nbp=50;   //mdim*mdim;
 
-      qe.dcov=malloc(sizeof(double)*npix*npix);
-      qe.cov=malloc(sizeof(double)*npix*npix);
-      qe.icov=malloc(sizeof(double)*npix*npix);
+      qe.dcov=(double *)malloc(sizeof(double)*npix*npix);
+      qe.cov= (double *)malloc(sizeof(double)*npix*npix);
+      qe.icov=(double *)malloc(sizeof(double)*npix*npix);
 
-      if(mpi.rank==0){ Fij=malloc(sizeof(double)*nbp*nbp); }
+      if(mpi.rank==0){ Fij=(double *)malloc(sizeof(double)*nbp*nbp); }
 
 
       import_data(fn_dcov, qe.dcov, sizeof(double), npix*npix);

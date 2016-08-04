@@ -5,8 +5,10 @@ DO_MPI= yes
 
 ifeq ($(DO_MPI), yes)
   CC= mpicc
+  #CC= mpic++
 else
   CC= gcc
+  #CC= g++
 endif
 MPICC= mpicc
 FC= ifort

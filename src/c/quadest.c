@@ -47,7 +47,7 @@
     mpi->max=n_bp*n_bp;    mpi->start=0;
     mpi_loop_init(mpi, "output");
 
-    Fs=malloc(mpi->ind_run*sizeof(double));
+    Fs=(double *)malloc(mpi->ind_run*sizeof(double));
 
     for(idx=0; idx<mpi->ind_run; idx++) {
 
@@ -75,7 +75,7 @@
     printf("Fisher is done.\n"); fflush(stdout);
 
 
-    if(mpi->rank==0){ Frev=malloc(sizeof(double)*n_bp*n_bp); }
+    if(mpi->rank==0){ Frev=(double *)malloc(sizeof(double)*n_bp*n_bp); }
 
     // ->> gather all data by root <<- //
     MPI_Gather(Fs, mpi->ind_run, MPI_DOUBLE, Frev, mpi->ind_run, MPI_DOUBLE, 0, MPI_COMM_WORLD);
