@@ -11,7 +11,7 @@ import genscript.myarray as mar
 import genscript.myplot as mpl
 
 import misc.helper as helper
-import quadestimator as qde1d
+import quadestimator_r1D as qde1d
 import cmeasure as cms
 import cyth.covm as cyth_cov
 
@@ -100,6 +100,8 @@ if __name__=='__main__':
             prog_control=p, dmap=dmap, skip_init=True, **qe_dict)
 
     print '\n->> QuadestPara parameters:\n', qe.paramdict
+
+    quit()
 
     # ->> initialize FFT band power <<- #
     bp_dict={'dmap_shape':   qe.dmap.shape, } 

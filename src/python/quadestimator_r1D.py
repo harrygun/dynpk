@@ -160,7 +160,7 @@ class Quadest1dPara(par.Parameters):
     def __init__(self, paramfname=None, section=None, def_var=True, 
                 prog_control=None, dmap=None, skip_init=False, **pardict):
 
-        super(QuadestPara,self).__init__(defaultQuadest1dParaValueDict, 
+        super(Quadest1dPara,self).__init__(defaultQuadest1dParaValueDict, 
 	                names_dict=defaultQuadest1dParaNameDict, paramfname=paramfname, 
 		        section=section, def_var=def_var, **pardict)
 
