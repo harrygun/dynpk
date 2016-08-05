@@ -316,6 +316,47 @@ cpdef get_dcov_klim(dcov, klist_low, klist_up, dt_df, npt, m_dim, do_mpi=False):
 
 
 
+
+
+cpdef get_dcov_klim_1D(dcov, klist_low, klist_up, dt, npt, m_dim, do_mpi=False):
+
+    ''' ->> get the derivative of covariance matrix <<- '''
+
+    cdef:
+        int i, a, b
+        double dt, df
+
+    dt, df = dt_df
+
+    print 'get_dcov:', npt, m_dim, klist_up.shape, klist_low.shape, dt_df.shape
+
+    if do_mpi==True:
+        prange=mpi.mpirange(npt)
+    else:
+        prange=range(npt)
+
+
+    # ->> python loop <<- #
+    for i in prange:
+        #kti,  kfi  = klist[:,i]
+        ktia, kfia = klist_low[:,i]
+        ktib, kfib = klist_up[:,i]
+
+        print i, ktia, ktib, kfia, kfib, dt, df
+    
+        for a in range(-m_dim[0], m_dim[0]):
+            for b in range(-m_dim[1], m_dim[1]):
+                dtab = a*dt
+
+                dcov[i,a,b]=2*dcov1d_klim_real(ktia, ktib, dt, dtab)
+			    
+    return dcov
+
+
+
+
+
+
 '''------------------------------------------------------------------------------'''
 '''------------------------------------------------------------------------------'''
 
