@@ -101,12 +101,15 @@ if __name__=='__main__':
 
     print '\n->> QuadestPara parameters:\n', qe.paramdict
 
-    quit()
 
     # ->> initialize FFT band power <<- #
     bp_dict={'dmap_shape':   qe.dmap.shape, } 
     qe.band_power_init(**bp_dict)
 
+    print qe.klist
+
+
+    quit()
 
     # ->> initialize dcov <<- #
     fname_dcov_fft=root+'result/dcov_fft_50x50.npz'

@@ -21,13 +21,14 @@ import cmeasure as cms
 
 
 
-def band_power_init(bp_init_type, fname=None, **pdict):
+def one_dim_band_power_init(bp_init_type, fname=None, **pdict):
 
     if bp_init_type=='from_file':
         raise Exception('from_file band_power_init() NOT supported yet.')
 
     # ->>  <<- #
     if bp_init_type=='internal_log':
+        raise Exception('NOT SUPPORTED NOW YET, NEED TO MODIFY BEFORE USE.')
         
         kt_min, kt_max, kt_num = pdict['kt_list_para']
         kf_min, kf_max, kf_num = pdict['kf_list_para']
@@ -67,22 +68,20 @@ def band_power_init(bp_init_type, fname=None, **pdict):
         # ->> assuming full FFT instead of rfft <<- #
         kdim=np.array(dmap_shape)
         k_min=2.*np.pi/np.array(rbsize)
-        k_list=helper.klist_fft(rbsize, kdim)
 
-        # ->> 2D klist <<- #
-	klist=mar.meshgrid(k_list[0], k_list[1])
-	sk=klist.shape
+	print 'kdim:', kdim, k_min
+
+        klist=helper.klist_fft(rbsize, kdim)[0]
 
         # ->> boundary <<- #
-        klist_low=mar.meshgrid(k_list[0]-k_min[0]/2., k_list[1]-k_min[1]/2.)
-        klist_up=mar.meshgrid(k_list[0]+k_min[0]/2., k_list[1]+k_min[1]/2.)
+        klist_low=klist-k_min/2.
+        klist_up =klist+k_min/2.
 
-	Dk_list=None
 
-        return klist.reshape(2,sk[1]*sk[2]), klist_low.reshape(2,sk[1]*sk[2]), \
-               klist_up.reshape(2,sk[1]*sk[2]), k_list[0], k_list[1], \
-               Dk_list
+	raise Exception('ONLY HALF PLAN IS NEEDED.')
 
+
+        return klist, klist_low, klist_up
 
 
 
@@ -179,7 +178,7 @@ class Quadest1dPara(par.Parameters):
             self.update_params(**update)
             #print 'dmap is np.ndarray', self.m_dim, type(self.m_dim)
 
-	self.dt_df=np.array(self.dmap_res)  # in unit of ...
+	self.dt=np.array(self.dmap_res)  # in unit of ...
 
         if skip_init==True:
 	    return
@@ -200,19 +199,21 @@ class Quadest1dPara(par.Parameters):
 
     def band_power_init(self, **paradict):
         # ->> # of band powers <<- #
-	if 'internal' in (self.get_bp_type.split('_')):  #=='internal_log':
-	    self.npt=self.kt_list_para[-1]*self.kf_list_para[-1]
-
-	elif self.get_bp_type=='FFT':
+	if self.get_bp_type=='FFT':
             self.npt=np.prod(self.dmap.shape)
 	    paradict={'dmap_shape':   self.dmap.shape, }
+
+        # ->> might need to modify this part later, DON'T think so though. <<-# 
+        elif 'internal' in (self.get_bp_type.split('_')):  #=='internal_log':
+	    self.npt=self.kt_list_para[-1]
+	    raise Exception('NOT USED NOW.')
 
 	else:
 	    raise Exception()
 
-        self.klist, self.klist_low, self.klist_up, self.kt_list, \
-            self.kf_list, self.Dk_list=band_power_init(self.get_bp_type, \
-	    fname=self.bp_list_fname, **(myDict(self.paramdict)+myDict(paradict)) )
+        self.klist, self.klist_low, self.klist_up=one_dim_band_power_init(\
+	                             self.get_bp_type, fname=self.bp_list_fname, \
+			             **(myDict(self.paramdict)+myDict(paradict)) )
 
         return 
 
@@ -221,11 +222,11 @@ class Quadest1dPara(par.Parameters):
         if self.calculate_dcov==True:
 
             if self.do_mpi==True:
-                _dcov_=covm.dcov(self.klist_low, self.klist_up, self.dt_df, \
+                _dcov_=covm.dcov(self.klist_low, self.klist_up, self.dt, \
                              self.npt, self.m_dim, speedup=True, do_mpi=self.do_mpi)
                 self.dcov=mpi.gather_unify(_dcov_, root=0)
 	    else:
-                self.dcov=covm.dcov(self.klist_low, self.klist_up, self.dt_df, \
+                self.dcov=covm.dcov(self.klist_low, self.klist_up, self.dt, \
                              self.npt, self.m_dim, speedup=True, do_mpi=False)
 
             # ->> save data <<- #
@@ -276,15 +277,3 @@ class Quadest1dPara(par.Parameters):
 
 
 
-''' ------------------------------------------------------------ 
-              ->>                                 <<-
-    ------------------------------------------------------------
-'''
-
-
-
-''' ->> other routines <<- '''
-def dcov_to_cov(dcov, plist, klist):
-    # ->> convert dcov and P(k) into cov <<- #
-
-    return
