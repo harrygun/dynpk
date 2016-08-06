@@ -141,6 +141,7 @@
       // ->> output <<- //
       
       if(mpi.rank==0){ 
+        printf("Output data.\n");
         write_data(fn_out, Fij, sizeof(double), nbp*nbp);
       }
 
