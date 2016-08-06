@@ -77,9 +77,6 @@
             for(c=0; c<npix; c++)
               for(d=0; d<npix; d++) {
 
-                //Fs[idx]+=ArrayAccess2D_n2(dcov, n_bp, npix, i, (size_t)fabs(a-b))*icov[b,c]
-		//       *ArrayAccess2D_n2(dcov, n_bp, npix, j, (size_t)fabs(c-d))*icov[d,a];
-
                 Fs[idx]+=access_dcov(dcov, n_bp, npix, i, a, b, map_dim)*icov[b,c]
 		        *access_dcov(dcov, n_bp, npix, j, c, d, map_dim)*icov[d,a];
                 }
@@ -87,7 +84,7 @@
         //printf("Fij[%d, %d]=%lg\n", i, j, Fs[idx]);
         //fflush(stdout);
       }
-    printf("Fisher is done. %d\n"); fflush(stdout);
+    printf("Fisher is done. (rank %d)\n", mpi->rank); fflush(stdout);
 
 
     if(mpi->rank==0){ Frev=(double *)malloc(sizeof(double)*n_bp*n_bp); }
@@ -96,7 +93,6 @@
     MPI_Gather(Fs, mpi->ind_run, MPI_DOUBLE, Frev, mpi->ind_run, MPI_DOUBLE, 0, MPI_COMM_WORLD);
 
     if(mpi->rank==0){
-      printf("re-store data.\n"); fflush(stdout);
 
       for(irk=0; irk<mpi->ntask; irk++) {
         nrun=mpi_nrun(mpi->max, irk, mpi->ntask);
@@ -105,12 +101,27 @@
           F[mpi_get_id(irk, mpi->ntask, i)]=Frev[irk*nrun+i];
 	  }
 
-      printf("re-store data finished.\n"); fflush(stdout);
       free(Frev);
       }
 
-    if(mpi->rank==0){ printf("before existing.\n"); fflush(stdout); }
-
     free(Fs);
+    return;
+    }
+
+
+
+  void full_covmat_recov(MPIpar *mpi, double *dcov, double *cov, double *covn_v, 
+                         double *plist, size_t n_bp, size_t npix, int map_dim) {
+    // ->> obtain full covariance matrix from dvoc and pk_list <<- //
+ 
+
+
+  
+    return;
+    }
+
+
+  void quad_est() {
+    // ->> calculate quadratic estimator <<- //
     return;
     }

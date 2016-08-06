@@ -751,10 +751,108 @@ cpdef get_dcov_klim_r1d(dcov, klist_low, klist_up, dt, npt, m_dim, do_mpi=False)
 
 
 
+cdef void quad_estimator_r1d(cnp.ndarray[cnp.double_t, ndim=2] dmap, \
+                          cnp.ndarray[cnp.double_t, ndim=2] covf, \
+                          cnp.ndarray[cnp.double_t, ndim=2] dcov, \
+                          cnp.ndarray[cnp.double_t, ndim=1] covn_vec, \
+                          cnp.ndarray[cnp.double_t, ndim=1] plist, \
+                          cnp.ndarray[cnp.double_t, ndim=1] Qi_p, \
+                          cnp.ndarray[cnp.double_t, ndim=2] Fij, \
+                          int npt, int npix, int mdim_t, int do_mpi):
+
+    cdef: 
+        int i, a, b, *idx_a, *idx_b
+        double *d_ic #, *ic_dcov
+
+    d_ic=<double *>malloc(npix*sizeof(double))
+    #ic_dcov=<double *>malloc(npt*npix*npix*sizeof(double))
+    ic_dcov=np.zeros((npt, npix, npix))
 
 
-cpdef quad_estimator_r1d_wrapper(dmap, covf, dcov, covn_vec, plist, Qi, Fij, npt, npix, m_dim, do_mpi=False):
+    idx_a=<int *>malloc(2*sizeof(int))
+    idx_b=<int *>malloc(2*sizeof(int))
 
+    # ->> get full covariance matrix and its inverse <<- #
+    print '->> now start to recover full covariance matrix.'
+    full_cov_recovery(covf, dcov, covn_vec, plist, npt, npix, mdim_t, mdim_f, do_mpi)
+    print '->> the inverse of covariance matrix.'
+    icovf=slag.inv(covf)
+
+    _testing_=False
+    if _testing_:
+
+        if mpi.rank0:
+            fname='../../workspace/result/covariance.npz'
+            np.savez(fname, covf=covf, icovf=icovf)
+
+            print 'output the covariance matrix'
+
+        mpi.finalize()
+        quit()
+
+    mpi.barrier()
+
+    print '->> preparation of icov & cov is done, now calculate Qe.', mpi.rank
+
+    # ->> get (C^{-1}.d) <<- #
+    icov_d_multiple(icovf, dmap, d_ic, npix, mdim_t, mdim_f)
+    print '->> icov.d is done.', mpi.rank
+
+    # ->> get (C^{-1}.dcov[i]) <<- #
+    icov_dov_multiple(icovf, dcov, ic_dcov, npt, npix, mdim_t, mdim_f, do_mpi)
+    print '->> icov.dcov is done.', mpi.rank
+
+
+    # ->> now start <<- #
+    if do_mpi==mytrue:
+        prange=mpi.mpirange(npt)
+    else:
+        prange=range(npt)
+
+
+    for i in prange:
+        print 'quadratic estimator: rank-', mpi.rank, '  prange:', i
+	#->> for each i, calculate C^-1 dcov^i C^-1
+
+        Qi_p[i]=0.
+        Fij[i,j]=0.
+
+        for a in range(npix):
+            mpixel_idx(a, mdim_t, mdim_f, idx_a)
+
+            for b in range(npix):
+                mpixel_idx(b, mdim_t, mdim_f, idx_b)
+                Qi_p[i]+=d_ic[a]*dcov[i,idx_a[0]-idx_b[0], idx_a[1]-idx_b[1]]*d_ic[b]/2.
+
+        # ->> Fisher matrix <<- #
+        for j in range(npt):
+
+            for a in range(npix):
+                for b in range(npix):
+                    Fij[i,j]=ic_dcov[i,a,b]*ic_dcov[j,b,a]/2.
+	
+
+        print 'i=', i, '(', mpi.rank, '),  Qi=', Qi_p[i]
+
+
+    free(d_ic)
+    #free(ic_dcov)
+    free(idx_a)
+    free(idx_b)
+
+    del ic_dcov
+
+
+    return
+
+
+
+
+
+
+_1D_do_Fisher_=False
+cpdef quad_estimator_r1d_wrapper(dmap, covf, dcov, covn_vec, plist, Qi, Fij, \
+                                 npt, npix, m_dim, do_mpi=False):
     cdef int dompi
 
     if do_mpi==True:
@@ -767,8 +865,8 @@ cpdef quad_estimator_r1d_wrapper(dmap, covf, dcov, covn_vec, plist, Qi, Fij, npt
     _Qi_=np.zeros(npt)
     _Fij_=np.zeros((npt, npt))
 
-    quad_estimator(dmap, covf, dcov, covn_vec, plist, _Qi_p_, _Fij_, <int> npt, \
-                   <int> npix, <int> m_dim[0], <int> m_dim[1], dompi)
+    quad_estimator_r1d(dmap, covf, dcov, covn_vec, plist, _Qi_p_, _Fij_, <int> npt, \
+                       <int> npix, <int> m_dim[0], dompi)
 
     # ->> gather & broadcast <<- #
     if dompi:
@@ -780,21 +878,26 @@ cpdef quad_estimator_r1d_wrapper(dmap, covf, dcov, covn_vec, plist, Qi, Fij, npt
         Fij=np.copy(_Fij_)
 
 
-    # ->> inverse Fij <<- #
-    i_Fij=slag.inv(Fij)
+    if not _1D_do_Fisher_:
+        Qi=np.copy(Qi_p)
+        return 
 
-    # ->> Qi=sum_j (F_ij Q_j) <<- #
-    quad_est_fish_qi(i_Fij, Qi_p, _Qi_, npt, npix, dompi)
-
-    if dompi:
-        Qi=mpi.gather_unify(_Qi_, root=0)
-        #mpi.bcast(Qi, rank=0)
     else:
-        Qi=np.copy(_Qi_)
+        # ->> inverse Fij <<- #
+        i_Fij=slag.inv(Fij)
+
+        # ->> Qi=sum_j (F_ij Q_j) <<- #
+        quad_est_fish_qi(i_Fij, Qi_p, _Qi_, npt, npix, dompi)
+
+        if dompi:
+            Qi=mpi.gather_unify(_Qi_, root=0)
+            #mpi.bcast(Qi, rank=0)
+        else:
+            Qi=np.copy(_Qi_)
 
 
-    del _Qi_p_, _Qi_, _Fij_
-    print 'exiting quad_estimator_wrapper: rank-', mpi.rank
+        del _Qi_p_, _Qi_, _Fij_
+        print 'exiting quad_estimator_wrapper: rank-', mpi.rank
 
-    return 
+        return 
 

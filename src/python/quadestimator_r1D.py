@@ -93,13 +93,13 @@ def quade_iter(dmap, dcov, covn_vec, pfid, klist, npt, npix, m_dim, nit=0, do_mp
     Fij=np.zeros((npt, npt))
 
     # ->> first run <<- #
-    cyth_cov.quad_estimator_wrapper(dmap, covf, dcov, covn_vec, pfid, \
-                                    Qi, Fij, npt, npix, m_dim, do_mpi=True)
+    cyth_cov.quad_estimator_r1d_wrapper(dmap, covf, dcov, covn_vec, pfid, \
+                                    Qi, Fij, npt, npix, m_dim, do_mpi=do_mpi)
 
     # ->> iteration <<- #
     for it in range(nit):
-        cyth_cov.quad_estimator_wrapper(dmap, covf, dcov, covn_vec, Qi, \
-                                        Qi, Fij, npt, npix, m_dim, do_mpi=True)
+        cyth_cov.quad_estimator_r1d_wrapper(dmap, covf, dcov, covn_vec, Qi, \
+                                        Qi, Fij, npt, npix, m_dim, do_mpi=do_mpi)
 
     else:
         raise Exception('ONLLY SUPPORT CYTHON VERSION.')
