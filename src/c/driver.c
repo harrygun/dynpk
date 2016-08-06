@@ -109,7 +109,7 @@
 
       fn_dcov="result/1d/dcov.dat";
       fn_cov ="result/1d/cov.dat";
-      fn_icov="result//icov.dat";
+      fn_icov="result/1d/icov.dat";
       fn_out ="result/1d/Fij.dat";
 
       // ->>   <<- //
