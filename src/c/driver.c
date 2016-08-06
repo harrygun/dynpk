@@ -135,7 +135,7 @@
 
    
       // ->> calculate Fisher matrix <<- //
-      Fisher(&mpi, qe.dcov, qe.icov, Fij, npix, nbp);
+      Fisher(&mpi, qe.dcov, qe.icov, Fij, npix, nbp, 1);  // 1D map
 
       
       // ->> output <<- //

@@ -69,17 +69,13 @@ def one_dim_band_power_init(bp_init_type, fname=None, **pdict):
         kdim=np.array(dmap_shape)
         k_min=2.*np.pi/np.array(rbsize)
 
-	print 'kdim:', kdim, k_min
+	print 'kdim', kdim
 
-        klist=helper.klist_fft(rbsize, kdim)[0]
+        klist=helper.klist_fft(rbsize, kdim)[0,int(kdim[0]/2)+1:]
 
         # ->> boundary <<- #
         klist_low=klist-k_min/2.
         klist_up =klist+k_min/2.
-
-
-	raise Exception('ONLY HALF PLAN IS NEEDED.')
-
 
         return klist, klist_low, klist_up
 
@@ -89,32 +85,24 @@ def one_dim_band_power_init(bp_init_type, fname=None, **pdict):
 
 
 
-def quade_iter(dmap, dcov, covn_vec, pfid, klist, npt, npix, m_dim, nit=0, do_cyth=True, do_mpi=False):
+def quade_iter(dmap, dcov, covn_vec, pfid, klist, npt, npix, m_dim, nit=0, do_mpi=False):
 
     covf=np.zeros((npix, npix))
 
     Qi=np.zeros(npt)
     Fij=np.zeros((npt, npt))
 
-    if do_cyth==True:
+    # ->> first run <<- #
+    cyth_cov.quad_estimator_wrapper(dmap, covf, dcov, covn_vec, pfid, \
+                                    Qi, Fij, npt, npix, m_dim, do_mpi=True)
 
-        # ->> first run <<- #
-        cyth_cov.quad_estimator_wrapper(dmap, covf, dcov, covn_vec, pfid, \
-                                            Qi, Fij, npt, npix, m_dim, do_mpi=True)
-
-        # ->> iteration <<- #
-        for it in range(nit):
-            cyth_cov.quad_estimator_wrapper(dmap, covf, dcov, covn_vec, Qi, \
-                                                Qi, Fij, npt, npix, m_dim, do_mpi=True)
+    # ->> iteration <<- #
+    for it in range(nit):
+        cyth_cov.quad_estimator_wrapper(dmap, covf, dcov, covn_vec, Qi, \
+                                        Qi, Fij, npt, npix, m_dim, do_mpi=True)
 
     else:
-        # ->> first run <<- #
-        Qi=quade_pk_single(dmap, covf, dcov, covn_vec, pfid, klist, npt, npix, m_dim)
-
-        # ->> iteration <<- #
-        for it in range(nit):
-            Qi=quade_pk_single(dmap, covf, dcov, covn_vec, Qi, klist, npt, npix, m_dim)
-
+        raise Exception('ONLLY SUPPORT CYTHON VERSION.')
 
     return Qi, Fij
 
@@ -199,8 +187,12 @@ class Quadest1dPara(par.Parameters):
 
     def band_power_init(self, **paradict):
         # ->> # of band powers <<- #
+
 	if self.get_bp_type=='FFT':
-            self.npt=np.prod(self.dmap.shape)
+            #self.npt=np.prod(self.dmap.shape)
+
+            _kdim=np.prod(self.dmap.shape)
+            self.npt=int(_kdim/2)-1
 	    paradict={'dmap_shape':   self.dmap.shape, }
 
         # ->> might need to modify this part later, DON'T think so though. <<-# 
@@ -217,16 +209,17 @@ class Quadest1dPara(par.Parameters):
 
         return 
 
+
     def dcov_init(self, fn_dcov):
 
         if self.calculate_dcov==True:
 
             if self.do_mpi==True:
-                _dcov_=covm.dcov(self.klist_low, self.klist_up, self.dt, \
+                _dcov_=covm.dcov_r1d(self.klist_low, self.klist_up, self.dt, \
                              self.npt, self.m_dim, speedup=True, do_mpi=self.do_mpi)
                 self.dcov=mpi.gather_unify(_dcov_, root=0)
 	    else:
-                self.dcov=covm.dcov(self.klist_low, self.klist_up, self.dt, \
+                self.dcov=covm.dcov_r1d(self.klist_low, self.klist_up, self.dt, \
                              self.npt, self.m_dim, speedup=True, do_mpi=False)
 
             # ->> save data <<- #
@@ -239,6 +232,7 @@ class Quadest1dPara(par.Parameters):
 	    self.dcov=np.load(fn_dcov)['dcov']
 
         return
+
 
     def covn_vec_init(self, noise_level='noiseless'):
         self.covn_vec=covm.covn_vec(self.npix, noise_level=noise_level)
@@ -259,7 +253,7 @@ class Quadest1dPara(par.Parameters):
 	    if self.get_bp_type!='FFT':  
 	        raise Exception('Inconsistent fiducial pk setting.')
 
-	    pk_fid=cms.pk_fft_2d(self.dmap, self.dmap_res).flatten() 
+	    pk_fid=cms.pk_fft_1d(self.dmap, self.dmap_res).flatten() 
 
         return pk_fid
 

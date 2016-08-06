@@ -167,3 +167,18 @@ def fisher(icov, dcov, npt, npix):
 '''->> testing routines for covariance matrix <<- '''
 
 
+
+
+def dcov_r1d(klist_low, klist_up, dt, npt, m_dim, speedup=True, do_mpi=False):
+    ''' ->> get the derivative of covariance matrix real-space 1D <<- '''
+
+    dcov=np.zeros((npt, m_dim[0]))
+
+    if speedup==True:
+        # ->> cython loop <<- #
+        cyth_cov.get_dcov_klim_r1d(dcov, klist_low, klist_up, dt, npt, \
+	                           m_dim, do_mpi=do_mpi)
+    else:
+        raise Exception
+
+    return dcov

@@ -68,3 +68,20 @@ def pk_fft_2d(d, dmap_res, zero_padding=False):
 
 
 
+
+
+def pk_fft_1d(d, dmap_res, zero_padding=False):
+    ''' ->> measure 1D power spectrum with FFT <<- '''
+
+    if zero_padding==True:
+        # ->> zero padding <<- #
+        dd=np.zeros(d.shape[0]*2)
+        dd[:dx]=d
+    else:
+        dd=d
+    
+    dk=np.fft.fft(dd)
+    pk=np.fft.fftshift(np.absolute(dk)**2.)
+
+    return pk*np.prod(dmap_res)**2./(2.*np.pi)
+

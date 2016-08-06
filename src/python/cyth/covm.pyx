@@ -318,42 +318,6 @@ cpdef get_dcov_klim(dcov, klist_low, klist_up, dt_df, npt, m_dim, do_mpi=False):
 
 
 
-cpdef get_dcov_klim_1D(dcov, klist_low, klist_up, dt, npt, m_dim, do_mpi=False):
-
-    ''' ->> get the derivative of covariance matrix <<- '''
-
-    cdef:
-        int i, a, b
-        double dt, df
-
-    dt, df = dt_df
-
-    print 'get_dcov:', npt, m_dim, klist_up.shape, klist_low.shape, dt_df.shape
-
-    if do_mpi==True:
-        prange=mpi.mpirange(npt)
-    else:
-        prange=range(npt)
-
-
-    # ->> python loop <<- #
-    for i in prange:
-        #kti,  kfi  = klist[:,i]
-        ktia, kfia = klist_low[:,i]
-        ktib, kfib = klist_up[:,i]
-
-        print i, ktia, ktib, kfia, kfib, dt, df
-    
-        for a in range(-m_dim[0], m_dim[0]):
-            for b in range(-m_dim[1], m_dim[1]):
-                dtab = a*dt
-
-                dcov[i,a,b]=2*dcov1d_klim_real(ktia, ktib, dt, dtab)
-			    
-    return dcov
-
-
-
 
 
 
@@ -740,3 +704,97 @@ cdef return_full_dcov(cnp.ndarray[cnp.double_t, ndim=3] dcov, \
 cpdef get_full_dcov(dcov, dcov_f, pi_idx, npt, mdim_t, mdim_f):
     return return_full_dcov(dcov, dcov_f, <int>pi_idx, <int>npt, \
                             <int>mdim_t, <int>mdim_f)
+
+
+
+
+
+
+
+'''-------------------------------------------------------------------------
+      ->>           Real-space One-dimensional Calculation          <<-
+   -------------------------------------------------------------------------
+'''
+
+
+
+
+cpdef get_dcov_klim_r1d(dcov, klist_low, klist_up, dt, npt, m_dim, do_mpi=False):
+
+    ''' ->> get the derivative of covariance matrix <<- '''
+
+    cdef:
+        int i, a, b
+        double ktia, ktib
+
+    print 'get_dcov:', npt, m_dim, klist_up.shape, klist_low.shape
+
+    if do_mpi==True:
+        prange=mpi.mpirange(npt)
+    else:
+        prange=range(npt)
+
+
+    # ->> python loop <<- #
+    for i in prange:
+
+        ktia = klist_low[i]
+        ktib = klist_up[i]
+
+        print i, ktia, ktib, dt
+    
+        for a in range(m_dim[0]):
+                dtab = a*dt
+                dcov[i,a]=2*dcov1d_klim_real(ktia, ktib, dt, dtab)
+
+    return dcov
+
+
+
+
+
+cpdef quad_estimator_r1d_wrapper(dmap, covf, dcov, covn_vec, plist, Qi, Fij, npt, npix, m_dim, do_mpi=False):
+
+    cdef int dompi
+
+    if do_mpi==True:
+        dompi=mytrue
+    else:
+        dompi=myfalse
+
+
+    _Qi_p_=np.zeros(npt)
+    _Qi_=np.zeros(npt)
+    _Fij_=np.zeros((npt, npt))
+
+    quad_estimator(dmap, covf, dcov, covn_vec, plist, _Qi_p_, _Fij_, <int> npt, \
+                   <int> npix, <int> m_dim[0], <int> m_dim[1], dompi)
+
+    # ->> gather & broadcast <<- #
+    if dompi:
+        Qi_p=mpi.gather_unify(_Qi_p_, root=0)
+        Fij=mpi.gather_unify(_Fij_, root=0)
+        
+    else:
+        Qi_p=_Qi_p_
+        Fij=np.copy(_Fij_)
+
+
+    # ->> inverse Fij <<- #
+    i_Fij=slag.inv(Fij)
+
+    # ->> Qi=sum_j (F_ij Q_j) <<- #
+    quad_est_fish_qi(i_Fij, Qi_p, _Qi_, npt, npix, dompi)
+
+    if dompi:
+        Qi=mpi.gather_unify(_Qi_, root=0)
+        #mpi.bcast(Qi, rank=0)
+    else:
+        Qi=np.copy(_Qi_)
+
+
+    del _Qi_p_, _Qi_, _Fij_
+    print 'exiting quad_estimator_wrapper: rank-', mpi.rank
+
+    return 
+

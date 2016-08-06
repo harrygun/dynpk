@@ -84,8 +84,8 @@ if __name__=='__main__':
 
 
     #->> data initialization <<- #
-    qe_dict={'calculate_dcov':   True, 
-             'fname_dcov':       root+'result/r1d/dcov.npz',
+    qe_dict={'calculate_dcov':   False,
+             'fname_dcov':       root+'result/r1d/dcov_r1d_fft_49.npz',
 	     'map_zoom_factor':  zoom_factor,
 	     'get_bp_type':      'FFT',
 	    }
@@ -95,28 +95,68 @@ if __name__=='__main__':
         #->> parafname='same as parameter file' 
         #->> calculating dcov
     '''
-    skip_init=True  # ->> skip initialize bandpowre and dcov <<- #
+    skip_init=False # ->> skip initialize bandpowre and dcov <<- #
     qe=qde1d.Quadest1dPara(paramfname=p.paramfname, section=p.qestmator_sec,
-            prog_control=p, dmap=dmap, skip_init=True, **qe_dict)
+            prog_control=p, dmap=dmap, skip_init=skip_init, **qe_dict)
 
     print '\n->> QuadestPara parameters:\n', qe.paramdict
 
 
-    # ->> initialize FFT band power <<- #
-    bp_dict={'dmap_shape':   qe.dmap.shape, } 
-    qe.band_power_init(**bp_dict)
+    # ->> 
+    # ->> start estimator evaluation, n_it=0 without iternation <<- #
+    n_it=0
 
-    print qe.klist
+    # ->> set fiducial power spectrum <<- #
+    _pk_=qe.fid_pk_first_guess()
+    kdim=len(_pk_)
+    pk_fid=_pk_[kdim/2+1:]
 
+    print '->> fiducial pk initialization done.'
+
+
+
+    # ->> initialize noise covmat <<- #
+    noise_level='noiseless'
+    qe.covn_vec_init(noise_level=noise_level)
+    print '->> noise level initialized.'
+
+    # ->> run estimator <<- #
+    print '->> start the quadratic estimator.'
+    Qi, Fij=qe.quadest_iteration(pk_fid, n_it)
+
+    print mpi.rank, '->> quadratic estimator done.'
+
+    #->> write files <<- #
+    fn_qi=root+'result/r1d/Qi_fft.npz'
+
+    mpi.barrier()
+    if mpi.rank0:
+        np.savez(fn_qi, Qi=Qi, Fij=Fij)
+     
 
     quit()
 
+
+
+    # ->> initialize FFT band power <<- #
+    #bp_dict={'dmap_shape':   qe.dmap.shape, } 
+    #qe.band_power_init(**bp_dict)
+
+    #print 'klist len:', len(qe.klist), 'dt:', qe.dt, 'npt:', qe.npt
+
+
     # ->> initialize dcov <<- #
-    fname_dcov_fft=root+'result/dcov_fft_50x50.npz'
-    qe.dcov_init(fname_dcov_fft)
+    #fname_dcov_fft=root+'result/r1d/dcov_r1d_fft_49.npz'
+    #qe.dcov_init(fname_dcov_fft)
+
+
 
     # ->> measure pk and correlation function from FFT <<- #
-    pk2d=cms.pk_fft_2d(dmap, qe.dmap_res)
+    pk=cms.pk_fft(dmap, qe.dmap_res)
+    dk=np.fft.fft(dmap)
+    pk=np.abs(np.fft.fftshift(dk))**2.
+
+
     cor_fft=cms.autocorr(dmap, auto_type='FFT', zero_padding=True)
 
     print 'pk.shape, cor.shape:', pk2d.shape, cor_fft.shape

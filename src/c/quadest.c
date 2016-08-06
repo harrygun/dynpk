@@ -33,13 +33,25 @@
 
 
 
+  double access_dcov(double *dcov, size_t n_bp, size_t npix, size_t i, 
+                                      size_t a, size_t b, int map_dim) {
+    // ->> i:    index of bandpower
+    // ->> a/b:  indices of map pixels 
+
+    if(map_dim==1)
+      {return ArrayAccess2D_n2(dcov, n_bp, npix, i, (size_t)fabs(a-b));}
+
+    else if(map_dim==2) {abort();}
+
+    else {abort();}
+    }
 
 
 
 
 
   void Fisher(MPIpar *mpi, double *dcov, double *icov, double *F,
-                                         size_t npix, size_t n_bp)  {
+                                size_t npix, size_t n_bp, int map_dim)  {
     size_t i, j, a, b, c, d, idx, id, irk, nrun;
     double *Fs, *Frev;
 
@@ -65,8 +77,11 @@
             for(c=0; c<npix; c++)
               for(d=0; d<npix; d++) {
 
-                Fs[idx]+=ArrayAccess2D_n2(dcov, n_bp, npix, i, (size_t)fabs(a-b))*icov[b,c]
-		       *ArrayAccess2D_n2(dcov, n_bp, npix, j, (size_t)fabs(c-d))*icov[d,a];
+                //Fs[idx]+=ArrayAccess2D_n2(dcov, n_bp, npix, i, (size_t)fabs(a-b))*icov[b,c]
+		//       *ArrayAccess2D_n2(dcov, n_bp, npix, j, (size_t)fabs(c-d))*icov[d,a];
+
+                Fs[idx]+=access_dcov(dcov, n_bp, npix, i, a, b, map_dim)*icov[b,c]
+		        *access_dcov(dcov, n_bp, npix, i, c, d, map_dim)*icov[d,a];
                 }
 
         //printf("Fij[%d, %d]=%lg\n", i, j, Fs[idx]);
