@@ -230,7 +230,7 @@ default: quadest
 
 
 #--------------------------------------------------#
-quadest: quadest.o io.o mpinit.o driver.o
+quadest: quadest.o io.o mpinit.o misc.o driver.o
 	$(CC)  $^ -o $(WORKSPACE)/$@  $(LIB)
 
 

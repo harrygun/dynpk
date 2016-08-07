@@ -17,6 +17,7 @@
 
 
       double *dcov, *cov, *icov, *plist;
+      double *qi_p, *qi, *Fij, *iFij;
 
       
       //Interpar *initp;

@@ -4,8 +4,6 @@
   #include <math.h>
   #include <string.h>
 
-  #include <gsl/gsl_integration.h>
-  #include <gsl/gsl_sf.h>
   #include <iniparser.h>
 
   #include "const.h"
@@ -20,6 +18,7 @@
 
   #include "glbvarb.h"
   #include "mpinit.h"
+  #incldue "misc.h"
 
 
 #ifdef _MPI_
@@ -104,6 +103,8 @@
       free(Frev);
       }
 
+    MPI_Bcast(F, n_bp*n_bp, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+
     free(Fs);
     return;
     }
@@ -174,12 +175,56 @@
 
   void quad_est(MPIpar *mpi, QEpar *qe) {
     // ->> calculate quadratic estimator <<- //
-
+    size_t a, b, i, j, idx, id;
 
     // ->> first recover the full covariance matrix <<- //
     full_covmat_recov(mpi, qe->dcov, qe->cov, qe->covn_v, qe->plist, 
                       qe->n_bp, qe->npix, qe->map_dim);
 
+    // ->> inverse matrix <<- //
+    mat_inv(mpi, qe->cov, qe->icov, qe->npix);
+
+    // ->> calculate Fisher matrix and its inverse <<- //
+    qe->Fij=(double *)malloc(sizeof(double)*qe.n_bp*qe.n_bp); 
+    Fisher(&mpi, qe->dcov, qe->icov, qe->Fij, qe->npix, qe->n_bp, qe->map_dim);
+    mat_inv(mpi, qe->Fij, qe->iFij, qe->npix);
+
+
+    // ->> calculate Qi <<- //
+    double *Qip_s=(double *)malloc(mpi->ind_run*sizeof(double));
+
+    mpi->max=qe->n_bp*qe->n_bp;    mpi->start=0;
+    mpi_loop_init(mpi, "Qi_p");
+
+    for(idx=0; idx<mpi->ind_run; idx++) {
+
+      id=mpi_id(mpi, idx);
+
+      //a=(int)(id/(double)npix);
+      //b=id-a*npix;
+
+      qip_s[idx]=0.;
+
+      for(a=0; a<qe->npix; a++)
+        for(b=0; b<qe->npix; b++) {
+          Qi_p_s[i]+=d_ic[a]*dcov[i,idx_a[0]-idx_b[0], idx_a[1]-idx_b[1]]*d_ic[b]/2.
+          }
+
+
+
+      }
+
+
+    // ->> gather all data by root <<- //
+    MPI_Gather(Fs, mpi->ind_run, MPI_DOUBLE, Frev, mpi->ind_run, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+
+
+    qe->qi=(double *)malloc(mpi->ind_run*sizeof(double))
+
+
+
+
+    free(qip_s);
     return;
     }
 
