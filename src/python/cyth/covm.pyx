@@ -351,7 +351,7 @@ cdef void full_cov_recovery(cnp.ndarray[cnp.double_t, ndim=2] covf, \
             mpixel_idx(b, mdim_t, mdim_f, idx_b)
 
             for i in range(npt):
-                _covf_[a,b]+=dcov[i,idx_a[0]-idx_b[0], idx_a[1]-idx_b[1]]*plist[i]/2.
+                _covf_[a,b]+=dcov[i,idx_a[0]-idx_b[0], idx_a[1]-idx_b[1]]*plist[i]#/2.
 
             _covf_[a,a]+=covn_vec[a]
 
@@ -371,7 +371,7 @@ cdef void full_cov_recovery(cnp.ndarray[cnp.double_t, ndim=2] covf, \
                 mpixel_idx(b, mdim_t, mdim_f, idx_b)
 
                 for i in range(npt):
-                    covf[a,b]+=dcov[i,idx_a[0]-idx_b[0], idx_a[1]-idx_b[1]]*plist[i]/2.
+                    covf[a,b]+=dcov[i,idx_a[0]-idx_b[0], idx_a[1]-idx_b[1]]*plist[i]#/2.
 
             covf[a,a]+=covn_vec[a]
 

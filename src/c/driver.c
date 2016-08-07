@@ -114,36 +114,44 @@
       fn_out ="result/1d/Fij.dat";
 
       // ->>   <<- //
-      size_t mdim, npix, nbp;
+      //size_t mdim, npix, nbp;
       double *Fij;
 
-      mdim=50; 
+      qe.mdim=50; 
       //npix=mdim*mdim;
 
-      npix=mdim;
-      nbp=50;   //mdim*mdim;
-
-      qe.dcov=(double *)malloc(sizeof(double)*npix*npix);
-      qe.cov= (double *)malloc(sizeof(double)*npix*npix);
-      qe.icov=(double *)malloc(sizeof(double)*npix*npix);
-
-      if(mpi.rank==0){ Fij=(double *)malloc(sizeof(double)*nbp*nbp); }
+      qe.npix=qe.mdim;
+      qe.n_bp=50;   //mdim*mdim;
+      qe.map_dim=1;
 
 
-      import_data(fn_dcov, qe.dcov, sizeof(double), npix*npix);
-      import_data(fn_icov, qe.icov, sizeof(double), npix*npix);
+      qe.dcov=(double *)malloc(sizeof(double)*qe.n_bp*qe.npix);
+      qe.cov= (double *)malloc(sizeof(double)*qe.npix*qe.npix);
+      qe.icov=(double *)malloc(sizeof(double)*qe.npix*qe.npix);
+      qe.plist=(double *)malloc(sizeof(double)*qe.n_bp);
 
+      if(mpi.rank==0){ Fij=(double *)malloc(sizeof(double)*qe.n_bp*qe.n_bp); }
+
+
+      import_data(fn_dcov, qe.dcov, sizeof(double), qe.npix*qe.npix);
+      import_data(fn_icov, qe.icov, sizeof(double), qe.npix*qe.npix);
+
+      //->>import plist as well <<= //
+      abort();
+
+      // ->> call quad_est() <<- //
+      quad_est(&mpi, &qe);
 
    
       // ->> calculate Fisher matrix <<- //
-      Fisher(&mpi, qe.dcov, qe.icov, Fij, npix, nbp, 1);  // 1D map
+      Fisher(&mpi, qe.dcov, qe.icov, Fij, qe.npix, qe.n_bp, map_dim);  // 1D map
 
       
       // ->> output <<- //
       
       if(mpi.rank==0){ 
         printf("Output data.\n");
-        write_data(fn_out, Fij, sizeof(double), nbp*nbp);
+        write_data(fn_out, Fij, sizeof(double), qe.n_bp*qe.n_bp);
       }
 
 

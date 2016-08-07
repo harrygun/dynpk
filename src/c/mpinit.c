@@ -29,8 +29,8 @@
 
   #ifdef _MPI_
     asprintf(&mpi->fname, "%s_%d.dat", prefix, mpi->rank);
-    printf("proc(%d): %s\n", mpi->rank, mpi->fname); 
-    fflush(stdout);
+    //printf("proc(%d): %s\n", mpi->rank, mpi->fname); 
+    //fflush(stdout);
 
     /* total run needed */
     mpi->totrun=mpi->max-mpi->start;
