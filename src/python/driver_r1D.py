@@ -111,6 +111,14 @@ if __name__=='__main__':
     kdim=len(_pk_)
     pk_fid=_pk_[kdim/2+1:]
 
+
+    # ->> 
+    qe.dcov.tofile(root+'result/r1d/dcov.dat')
+    pk_fid.tofile(root+'result/r1d/plist.dat')
+    dmap.tofile(root+'result/r1d/dmap.dat')
+
+    quit()
+
     print '->> fiducial pk initialization done.'
 
 
