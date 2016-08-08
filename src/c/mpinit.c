@@ -33,28 +33,39 @@
     size_t irk, i, nrun;
     double *rev;
     
-    if(mpi->rank==0)
-      (double *)malloc(sizeof(double)*count_tot); 
+    //if(mpi->rank==0)
+    rev=(double *)malloc(sizeof(double)*count_tot); 
 
     // ->> gather <<- //
     MPI_Gather(in, count_pp, MPI_DOUBLE, rev, count_pp, MPI_DOUBLE, 0, MPI_COMM_WORLD);
 
+    printf("MPI_gather.\n"); fflush(stdout);
+
     // ->> re-organize <<- //
     if(mpi->rank==0){
 
+      printf("Before calculating... \n"); fflush(stdout);
+
       for(irk=0; irk<mpi->ntask; irk++) {
+
+        printf("irk=%d, ", irk); fflush(stdout);
+
         nrun=mpi_nrun(count_tot, irk, mpi->ntask);
+
+	printf("%d\n", nrun); fflush(stdout);
 
         for(i=0; i<nrun; i++)
           out[mpi_get_id(irk, mpi->ntask, i)]=rev[irk*nrun+i];
 	  }
 
-      free(rev);
+      printf("MPI_gather before free.\n"); fflush(stdout);
       }
 
     // ->> broadcast <<- //
+    MPI_Barrier(MPI_COMM_WORLD);
     MPI_Bcast(out, count_tot, MPI_DOUBLE, 0, MPI_COMM_WORLD);
 
+    free(rev);
     return;
     }
 

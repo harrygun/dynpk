@@ -86,7 +86,7 @@
       }
     printf("Fisher is done. (rank %d)\n", mpi->rank); fflush(stdout);
 
-
+    /*
     if(mpi->rank==0){ Frev=(double *)malloc(sizeof(double)*n_bp*n_bp); }
 
     // ->> gather all data by root <<- //
@@ -101,11 +101,18 @@
           F[mpi_get_id(irk, mpi->ntask, i)]=Frev[irk*nrun+i];
 	  }
 
+      printf("got here.\n", mpi->rank); fflush(stdout);
       free(Frev);
       }
 
     MPI_Bcast(F, n_bp*n_bp, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+    */
 
+    MPI_Barrier(MPI_COMM_WORLD);
+
+    mpi_gather_dist_double(mpi, Fs, F, mpi->ind_run, mpi->max);
+
+    printf("Existing Fisher.\n", mpi->rank); fflush(stdout);
     free(Fs);
     return;
     }
@@ -207,6 +214,7 @@
     // ->> calculate Fisher matrix and its inverse <<- //
     qe->Fij=(double *)malloc(sizeof(double)*qe->n_bp*qe->n_bp); 
     Fisher(mpi, qe->dcov, qe->icov, qe->Fij, qe->npix, qe->n_bp, qe->map_dim);
+
     mat_inv(mpi, qe->Fij, qe->iFij, qe->npix);
 
     printf("(inv)-Fisher Matrix done.\n"); fflush(stdout);
