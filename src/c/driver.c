@@ -108,10 +108,11 @@
 
       char *fn_dcov, *fn_cov, *fn_icov, *fn_out;
 
-      fn_dcov="result/1d/dcov.dat";
-      fn_cov ="result/1d/cov.dat";
-      fn_icov="result/1d/icov.dat";
-      fn_out ="result/1d/Fij.dat";
+      fn_dcov="result/r1d/dcov.dat";
+      //fn_cov ="result/1d/cov.dat";
+      //fn_icov="result/1d/icov.dat";
+      fn_plist="result/r1d/"
+      fn_out ="result/r1d/Qi.dat";
 
       // ->>   <<- //
       //size_t mdim, npix, nbp;
@@ -121,7 +122,7 @@
       //npix=mdim*mdim;
 
       qe.npix=qe.mdim;
-      qe.n_bp=50;   //mdim*mdim;
+      qe.n_bp=49;   //mdim*mdim;
       qe.map_dim=1;
 
 
@@ -130,28 +131,27 @@
       qe.icov=(double *)malloc(sizeof(double)*qe.npix*qe.npix);
       qe.plist=(double *)malloc(sizeof(double)*qe.n_bp);
 
-      if(mpi.rank==0){ Fij=(double *)malloc(sizeof(double)*qe.n_bp*qe.n_bp); }
+      //if(mpi.rank==0){ Fij=(double *)malloc(sizeof(double)*qe.n_bp*qe.n_bp); }
 
 
-      import_data(fn_dcov, qe.dcov, sizeof(double), qe.npix*qe.npix);
-      import_data(fn_icov, qe.icov, sizeof(double), qe.npix*qe.npix);
-
-      //->>import plist as well <<= //
-      abort();
+      import_data(fn_dcov, qe.dcov, sizeof(double), qe.n_bp*qe.npix);
+      import_data(fn_plist, qe.plist, sizeof(double), qe.n_bp);
 
       // ->> call quad_est() <<- //
       quad_est(&mpi, &qe);
 
    
       // ->> calculate Fisher matrix <<- //
-      Fisher(&mpi, qe.dcov, qe.icov, Fij, qe.npix, qe.n_bp, map_dim);  // 1D map
+      //Fisher(&mpi, qe.dcov, qe.icov, Fij, qe.npix, qe.n_bp, map_dim);  // 1D map
 
       
       // ->> output <<- //
       
       if(mpi.rank==0){ 
         printf("Output data.\n");
-        write_data(fn_out, Fij, sizeof(double), qe.n_bp*qe.n_bp);
+        //write_data(fn_out, Fij, sizeof(double), qe.n_bp*qe.n_bp);
+        write_data(fn_out, qe->Qip, sizeof(double), qe.n_bp);
+        write_data(fn_out, qe->Qi, sizeof(double), qe.n_bp);
       }
 
 
@@ -165,7 +165,7 @@
       free(qe.dcov);   free(qe.icov); 
       free(qe.cov);    
       
-      if(mpi.rank==0){free(Fij); }
+      //if(mpi.rank==0){free(Fij); }
 
       #ifdef _MPI_
       MPI_Finalize();

@@ -97,3 +97,21 @@
     }
   
 
+
+
+  void mat_vec_mult(double *m, double *v, double *out, size_t nm, size_t nv) {
+    // ->> m:  (nm, nv);   v:  (nv);    out: (nm)
+    // ->> could be easily parallized by OpenMP <<- #
+
+    size_t i, j;
+
+    for(i=0; i<nm; i++) {
+      out[i]=0.;
+
+      for(j=0; j<nv; j++) 
+        out[i]+=ArrayAccess2D_n2(m, nm, nv, i, j)*v[j];
+
+      }
+
+    return;
+    }

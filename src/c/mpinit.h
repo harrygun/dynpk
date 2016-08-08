@@ -1,6 +1,11 @@
   #ifndef _H_MPI_INIT_
   #define _H_MPI_INIT_
 
+
+  void mpi_gather_dist(MPIpar *mpi, void *in, void *out, size_t count_pp,
+                                    size_t count_tot, MPI_Datatype dtype);
+
+
   void mpi_loop_init(MPIpar *mpi, char *prefix);
 
 
@@ -9,5 +14,7 @@
 
   int mpi_nrun(int totrun, int rank, int ntask);
   int mpi_get_id(int rank, int ntask, int i);
+
+
 
   #endif

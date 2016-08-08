@@ -16,8 +16,8 @@
       char *get_bp_type, *bp_list_fname;
 
 
-      double *dcov, *cov, *icov, *plist;
-      double *qi_p, *qi, *Fij, *iFij;
+      double *dcov, *cov, *icov, *plist, *map;
+      double *Qip, *Qi, *Fij, *iFij;
 
       
       //Interpar *initp;

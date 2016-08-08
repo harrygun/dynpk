@@ -6,4 +6,7 @@
 
   void Fisher(MPIpar *mpi, double *dcov, double *icov, double *F,
                                 size_t npix, size_t n_bp, int map_dim);
+
+  void quad_est(MPIpar *mpi, QEpar *qe);
+
 #endif

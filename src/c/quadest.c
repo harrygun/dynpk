@@ -77,7 +77,7 @@
               for(d=0; d<npix; d++) {
 
                 Fs[idx]+=access_dcov(dcov, n_bp, npix, i, a, b, map_dim)*icov[b,c]
-		        *access_dcov(dcov, n_bp, npix, j, c, d, map_dim)*icov[d,a];
+		        *access_dcov(dcov, n_bp, npix, j, c, d, map_dim)*icov[d,a]/2.;
                 }
 
         //printf("Fij[%d, %d]=%lg\n", i, j, Fs[idx]);
@@ -189,42 +189,47 @@
     Fisher(&mpi, qe->dcov, qe->icov, qe->Fij, qe->npix, qe->n_bp, qe->map_dim);
     mat_inv(mpi, qe->Fij, qe->iFij, qe->npix);
 
+  
+    // ->> some pre-calculation of Qi <<- //
+    // ->> (C^{-1}.d) <<- //
+    double *d_ic=(double *)malloc(sizeof(double)*qe->npix);
+    mat_vec_mult(qe->icov, qe->map, d_ic, qe->npix, qe->npix);
 
-    // ->> calculate Qi <<- //
-    double *Qip_s=(double *)malloc(mpi->ind_run*sizeof(double));
 
-    mpi->max=qe->n_bp*qe->n_bp;    mpi->start=0;
+    // ->> calculate Qi' <<- //
+    double *Qip_s, *Qi_s;
+    Qip_s=(double *)malloc(mpi->ind_run*sizeof(double));
+    Qi_s=(double *)malloc(mpi->ind_run*sizeof(double));
+
+    mpi->max=qe->n_bp;    mpi->start=0;
     mpi_loop_init(mpi, "Qi_p");
 
     for(idx=0; idx<mpi->ind_run; idx++) {
-
       id=mpi_id(mpi, idx);
 
-      //a=(int)(id/(double)npix);
-      //b=id-a*npix;
-
-      qip_s[idx]=0.;
-
+      Qip_s[idx]=0.;
       for(a=0; a<qe->npix; a++)
         for(b=0; b<qe->npix; b++) {
-          Qi_p_s[i]+=d_ic[a]*dcov[i,idx_a[0]-idx_b[0], idx_a[1]-idx_b[1]]*d_ic[b]/2.
+          Qip_s[idx]+=d_ic[a]*access_dcov(qe->dcov, qe->n_bp, qe->npix, id, a, b, qe->map_dim)*d_ic[b]/2.
           }
 
-
-
+      Qi_s[idx]=0;
+      for(j=0; j<qe->n_bp; j++) {
+        Qi_s[idx]+=Qip_s[idx]*ArrayAccess2D(qe->iFij, qe->n_bp, id, j);
+        }
       }
 
 
     // ->> gather all data by root <<- //
-    MPI_Gather(Fs, mpi->ind_run, MPI_DOUBLE, Frev, mpi->ind_run, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+    
+    qe->Qip=(double *)malloc(qe->n_bp*sizeof(double));
+    qe->Qi =(double *)malloc(qe->n_bp*sizeof(double));
+
+    mpi_gather_dist(mpi, Qip_s, qe->Qip, count_pp, count_tot, MPI_DOUBLE);
+    mpi_gather_dist(mpi, Qi_s, qe->Qi, count_pp, count_tot, MPI_DOUBLE);
 
 
-    qe->qi=(double *)malloc(mpi->ind_run*sizeof(double))
-
-
-
-
-    free(qip_s);
+    free(Qip_s); free(Qi_s); free(d_ic);
     return;
     }
 

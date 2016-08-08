@@ -18,11 +18,45 @@
   #include "myinterpolate.h"
 
   #include "glbvarb.h"
+  #include "mpinit.h"
 
 
 #ifdef _MPI_
   #include "mpi.h"
 #endif
+
+
+  void mpi_gather_dist(MPIpar *mpi, void *in, void *out, size_t count_pp, 
+                                    size_t count_tot, MPI_Datatype dtype) {
+    // ->> gather & redistribution:  count_pp: count per process 
+    
+    size_t irk, i, nrun;
+    dtype *rev;
+    
+    if(mpi->rank==0)
+      (dtype *)malloc(sizeof(dtype)*count_tot); 
+
+    // ->> gather <<- //
+    MPI_Gather(in, count_pp, dtype, rev, count_pp, dtype, 0, MPI_COMM_WORLD);
+
+    // ->> re-organize <<- //
+    if(mpi->rank==0){
+
+      for(irk=0; irk<mpi->ntask; irk++) {
+        nrun=mpi_nrun(count_tot, irk, mpi->ntask);
+
+        for(i=0; i<nrun; i++)
+          out[mpi_get_id(irk, mpi->ntask, i)]=rev[irk*nrun+i];
+	  }
+
+      free(rev);
+      }
+
+    // ->> broadcast <<- //
+    MPI_Bcast(out, count_tot, dtype, 0, MPI_COMM_WORLD);
+
+    return;
+    }
 
 
   void mpi_loop_init(MPIpar *mpi, char *prefix) {
