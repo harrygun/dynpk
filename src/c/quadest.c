@@ -149,7 +149,7 @@
 
         for(ip=0; ip<n_bp; ip++){
 	  // ->> summing over all bandpowr <<- //
-          cov_s[idx]+=access_dcov(dcov, n_bp, npix, ip, a, b, map_dim)*plist[i];
+          cov_s[idx]+=access_dcov(dcov, n_bp, npix, ip, a, b, map_dim)*plist[ip];
 	  }
 
       if(a==b){ cov_s[idx]+=covn_v[idx]; }
@@ -197,14 +197,19 @@
     full_covmat_recov(mpi, qe->dcov, qe->cov, qe->covn_v, qe->plist, 
                       qe->n_bp, qe->npix, qe->map_dim);
 
+    printf("Full covariance matrix done.\n"); fflush(stdout);
+
     // ->> inverse matrix <<- //
     mat_inv(mpi, qe->cov, qe->icov, qe->npix);
+
+    printf("inverse of covariance matrix done.\n"); fflush(stdout);
 
     // ->> calculate Fisher matrix and its inverse <<- //
     qe->Fij=(double *)malloc(sizeof(double)*qe->n_bp*qe->n_bp); 
     Fisher(mpi, qe->dcov, qe->icov, qe->Fij, qe->npix, qe->n_bp, qe->map_dim);
     mat_inv(mpi, qe->Fij, qe->iFij, qe->npix);
 
+    printf("(inv)-Fisher Matrix done.\n"); fflush(stdout);
   
     // ->> some pre-calculation of Qi <<- //
     // ->> (C^{-1}.d) <<- //

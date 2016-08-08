@@ -111,7 +111,7 @@
 
       fn_dcov="result/r1d/dcov.dat";
       fn_map ="result/r1d/dmap.dat";
-      fn_plist="result/r1d/plist";
+      fn_plist="result/r1d/plist.dat";
       fn_out ="result/r1d/Qi.dat";
 
       // ->>   <<- //
