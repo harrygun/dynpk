@@ -18,7 +18,7 @@
 
   #include "glbvarb.h"
   #include "mpinit.h"
-  #incldue "misc.h"
+  #include "misc.h"
 
 
 #ifdef _MPI_
@@ -56,7 +56,8 @@
 
 
     mpi->max=n_bp*n_bp;    mpi->start=0;
-    mpi_loop_init(mpi, "Fisher");
+    //mpi_loop_init(mpi, "Fisher");
+    mpi_loop_init(mpi, NULL);
 
     Fs=(double *)malloc(mpi->ind_run*sizeof(double));
 
@@ -111,6 +112,20 @@
 
 
 
+  void cov_noise(MPIpar *mpi, double *covn_v, size_t npix, char *type){
+    size_t i;
+
+    if(type==NULL) {
+      for(i=0; i<npix; i++)
+        covn_v[i]=0;
+      }
+    else abort();
+
+
+    return;
+    }
+
+
   void full_covmat_recov(MPIpar *mpi, double *dcov, double *cov, double *covn_v, 
                          double *plist, size_t n_bp, size_t npix, int map_dim) {
     // ->> obtain full covariance matrix from dvoc and pk_list <<- //
@@ -120,7 +135,7 @@
 
 
     mpi->max=npix*npix;    mpi->start=0;
-    mpi_loop_init(mpi, "covm");
+    mpi_loop_init(mpi, NULL);
 
     cov_s=(double *)malloc(mpi->ind_run*sizeof(double));
 
@@ -137,7 +152,7 @@
           cov_s[idx]+=access_dcov(dcov, n_bp, npix, ip, a, b, map_dim)*plist[i];
 	  }
 
-      if(a==b){ cov_s[idx]+=covn_vec[idx]; }
+      if(a==b){ cov_s[idx]+=covn_v[idx]; }
 
       }
 
@@ -177,6 +192,7 @@
     // ->> calculate quadratic estimator <<- //
     size_t a, b, i, j, idx, id;
 
+
     // ->> first recover the full covariance matrix <<- //
     full_covmat_recov(mpi, qe->dcov, qe->cov, qe->covn_v, qe->plist, 
                       qe->n_bp, qe->npix, qe->map_dim);
@@ -185,8 +201,8 @@
     mat_inv(mpi, qe->cov, qe->icov, qe->npix);
 
     // ->> calculate Fisher matrix and its inverse <<- //
-    qe->Fij=(double *)malloc(sizeof(double)*qe.n_bp*qe.n_bp); 
-    Fisher(&mpi, qe->dcov, qe->icov, qe->Fij, qe->npix, qe->n_bp, qe->map_dim);
+    qe->Fij=(double *)malloc(sizeof(double)*qe->n_bp*qe->n_bp); 
+    Fisher(mpi, qe->dcov, qe->icov, qe->Fij, qe->npix, qe->n_bp, qe->map_dim);
     mat_inv(mpi, qe->Fij, qe->iFij, qe->npix);
 
   
@@ -202,7 +218,7 @@
     Qi_s=(double *)malloc(mpi->ind_run*sizeof(double));
 
     mpi->max=qe->n_bp;    mpi->start=0;
-    mpi_loop_init(mpi, "Qi_p");
+    mpi_loop_init(mpi, NULL);
 
     for(idx=0; idx<mpi->ind_run; idx++) {
       id=mpi_id(mpi, idx);
@@ -210,7 +226,7 @@
       Qip_s[idx]=0.;
       for(a=0; a<qe->npix; a++)
         for(b=0; b<qe->npix; b++) {
-          Qip_s[idx]+=d_ic[a]*access_dcov(qe->dcov, qe->n_bp, qe->npix, id, a, b, qe->map_dim)*d_ic[b]/2.
+          Qip_s[idx]+=d_ic[a]*access_dcov(qe->dcov, qe->n_bp, qe->npix, id, a, b, qe->map_dim)*d_ic[b]/2.;
           }
 
       Qi_s[idx]=0;
@@ -225,8 +241,8 @@
     qe->Qip=(double *)malloc(qe->n_bp*sizeof(double));
     qe->Qi =(double *)malloc(qe->n_bp*sizeof(double));
 
-    mpi_gather_dist(mpi, Qip_s, qe->Qip, count_pp, count_tot, MPI_DOUBLE);
-    mpi_gather_dist(mpi, Qi_s, qe->Qi, count_pp, count_tot, MPI_DOUBLE);
+    mpi_gather_dist_double(mpi, Qip_s, qe->Qip, mpi->ind_run, mpi->max);
+    mpi_gather_dist_double(mpi, Qi_s, qe->Qi, mpi->ind_run, mpi->max);
 
 
     free(Qip_s); free(Qi_s); free(d_ic);

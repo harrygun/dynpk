@@ -7,7 +7,7 @@
 
     typedef struct {
       int  init, debug;
-      size_t ndim;
+      size_t mdim;
       size_t map_dim, n_bp, npix;
 
       double m_dim[2], kt_list_para[3], kf_list_para[3], dmap_res[2];
@@ -16,7 +16,7 @@
       char *get_bp_type, *bp_list_fname;
 
 
-      double *dcov, *cov, *icov, *plist, *map;
+      double *dcov, *cov, *icov, *covn_v, *plist, *map;
       double *Qip, *Qi, *Fij, *iFij;
 
       

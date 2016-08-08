@@ -26,18 +26,18 @@
 #endif
 
 
-  void mpi_gather_dist(MPIpar *mpi, void *in, void *out, size_t count_pp, 
-                                    size_t count_tot, MPI_Datatype dtype) {
+  void mpi_gather_dist_double(MPIpar *mpi, double *in, double *out, 
+                                       size_t count_pp, size_t count_tot ) {
     // ->> gather & redistribution:  count_pp: count per process 
     
     size_t irk, i, nrun;
-    dtype *rev;
+    double *rev;
     
     if(mpi->rank==0)
-      (dtype *)malloc(sizeof(dtype)*count_tot); 
+      (double *)malloc(sizeof(double)*count_tot); 
 
     // ->> gather <<- //
-    MPI_Gather(in, count_pp, dtype, rev, count_pp, dtype, 0, MPI_COMM_WORLD);
+    MPI_Gather(in, count_pp, MPI_DOUBLE, rev, count_pp, MPI_DOUBLE, 0, MPI_COMM_WORLD);
 
     // ->> re-organize <<- //
     if(mpi->rank==0){
@@ -53,7 +53,7 @@
       }
 
     // ->> broadcast <<- //
-    MPI_Bcast(out, count_tot, dtype, 0, MPI_COMM_WORLD);
+    MPI_Bcast(out, count_tot, MPI_DOUBLE, 0, MPI_COMM_WORLD);
 
     return;
     }
@@ -62,7 +62,7 @@
   void mpi_loop_init(MPIpar *mpi, char *prefix) {
 
   #ifdef _MPI_
-    asprintf(&mpi->fname, "%s_%d.dat", prefix, mpi->rank);
+    //asprintf(&mpi->fname, "%s_%d.dat", prefix, mpi->rank);
     //printf("proc(%d): %s\n", mpi->rank, mpi->fname); 
     //fflush(stdout);
 
@@ -82,7 +82,7 @@
 
    #else 
      mpi->ind_run = mpi->max-mpi->start; 
-     asprintf(&mpi->fname, "%s.dat", prefix);
+     //asprintf(&mpi->fname, "%s.dat", prefix);
    #endif
 
     return;

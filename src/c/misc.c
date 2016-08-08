@@ -43,7 +43,7 @@
     gsl_matrix_view mat = gsl_matrix_view_array (matx, n, n);
 
     
-    gsl_vector vec_e=gsl_vector_alloc(n);;
+    gsl_vector *vec_e=gsl_vector_alloc(n);;
     gsl_vector_view vec_inv;
 
 
@@ -53,7 +53,7 @@
     // ->> !!! LET's parallize the code later !!! <<- //
     
     // ->> LU decomposition <<- //
-    gsl_linalg_LU_decomp(mat.matrix, perm, &signum);
+    gsl_linalg_LU_decomp(&mat.matrix, perm, &signum);
 
 
     // ->> get inverse <<- //
@@ -63,12 +63,12 @@
 
       for(j=0; j<n; j++) {
         if(j==i)
-          gsl_vector_set(vec_e[i], j, 1);
+          gsl_vector_set(vec_e, j, 1);
         else
-          gsl_vector_set(vec_e[i], j, 0);
+          gsl_vector_set(vec_e, j, 0);
         }
     
-      gsl_linalg_LU_solve(mat.matrix, perm, vec_e, vec_inv.vector);
+      gsl_linalg_LU_solve(&mat.matrix, perm, vec_e, &vec_inv.vector);
       }
     
 

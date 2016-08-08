@@ -25,6 +25,7 @@
   #include "mpinit.h"
   #include "io.h"
   #include "quadest.h"
+  #include "misc.h"
 
 
 #ifdef _MPI_
@@ -106,17 +107,15 @@
       mpi.start = 0;   // mpi.max = 1;
       printf("==================================\n"); fflush(stdout);
 
-      char *fn_dcov, *fn_cov, *fn_icov, *fn_out;
+      char *fn_dcov, *fn_cov, *fn_icov, *fn_out, *fn_map, *fn_plist;
 
       fn_dcov="result/r1d/dcov.dat";
-      //fn_cov ="result/1d/cov.dat";
-      //fn_icov="result/1d/icov.dat";
-      fn_plist="result/r1d/"
+      fn_map ="result/r1d/dmap.dat";
+      fn_plist="result/r1d/plist";
       fn_out ="result/r1d/Qi.dat";
 
       // ->>   <<- //
       //size_t mdim, npix, nbp;
-      double *Fij;
 
       qe.mdim=50; 
       //npix=mdim*mdim;
@@ -130,28 +129,28 @@
       qe.cov= (double *)malloc(sizeof(double)*qe.npix*qe.npix);
       qe.icov=(double *)malloc(sizeof(double)*qe.npix*qe.npix);
       qe.plist=(double *)malloc(sizeof(double)*qe.n_bp);
+      qe.map=(double *)malloc(sizeof(double)*qe.npix);
 
-      //if(mpi.rank==0){ Fij=(double *)malloc(sizeof(double)*qe.n_bp*qe.n_bp); }
 
 
+      import_data(fn_map, qe.map, sizeof(double), qe.npix);
       import_data(fn_dcov, qe.dcov, sizeof(double), qe.n_bp*qe.npix);
       import_data(fn_plist, qe.plist, sizeof(double), qe.n_bp);
 
-      // ->> call quad_est() <<- //
+
+      // ->> noise covariance matrix <<- //
+      qe.covn_v=(double *)malloc(sizeof(double)*qe.npix);
+      cov_noise(&mpi, qe.covn_v, qe.npix, NULL);
+
+      // ->> call Quadratic Estimator <<- //
       quad_est(&mpi, &qe);
 
    
-      // ->> calculate Fisher matrix <<- //
-      //Fisher(&mpi, qe.dcov, qe.icov, Fij, qe.npix, qe.n_bp, map_dim);  // 1D map
-
-      
       // ->> output <<- //
-      
       if(mpi.rank==0){ 
         printf("Output data.\n");
-        //write_data(fn_out, Fij, sizeof(double), qe.n_bp*qe.n_bp);
-        write_data(fn_out, qe->Qip, sizeof(double), qe.n_bp);
-        write_data(fn_out, qe->Qi, sizeof(double), qe.n_bp);
+        //write_data(fn_out, qe.Qip, sizeof(double), qe.n_bp);
+        write_data(fn_out, qe.Qi, sizeof(double), qe.n_bp);
       }
 
 
@@ -164,8 +163,7 @@
 
       free(qe.dcov);   free(qe.icov); 
       free(qe.cov);    
-      
-      //if(mpi.rank==0){free(Fij); }
+
 
       #ifdef _MPI_
       MPI_Finalize();
