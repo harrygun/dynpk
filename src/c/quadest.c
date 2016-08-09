@@ -253,6 +253,8 @@
     //MPI_Finalize();
     //abort();
 
+    abort();
+
 
     mat_inv(mpi, qe->Fij, qe->iFij, qe->npix);
 
