@@ -19,6 +19,7 @@
   #include "glbvarb.h"
   #include "mpinit.h"
   #include "misc.h"
+  #include "io.h"
 
 
 #ifdef _MPI_
@@ -86,7 +87,7 @@
       }
     printf("Fisher is done. (rank %d)\n", mpi->rank); fflush(stdout);
 
-    /*
+
     if(mpi->rank==0){ Frev=(double *)malloc(sizeof(double)*n_bp*n_bp); }
 
     // ->> gather all data by root <<- //
@@ -106,11 +107,9 @@
       }
 
     MPI_Bcast(F, n_bp*n_bp, MPI_DOUBLE, 0, MPI_COMM_WORLD);
-    */
 
-    MPI_Barrier(MPI_COMM_WORLD);
-
-    mpi_gather_dist_double(mpi, Fs, F, mpi->ind_run, mpi->max);
+    //MPI_Barrier(MPI_COMM_WORLD);
+    //mpi_gather_dist_double(mpi, Fs, F, mpi->ind_run, mpi->max);
 
     printf("Existing Fisher.\n", mpi->rank); fflush(stdout);
     free(Fs);
@@ -198,6 +197,7 @@
   void quad_est(MPIpar *mpi, QEpar *qe) {
     // ->> calculate quadratic estimator <<- //
     size_t a, b, i, j, idx, id;
+    char *fn;
 
 
     // ->> first recover the full covariance matrix <<- //
@@ -205,6 +205,12 @@
                       qe->n_bp, qe->npix, qe->map_dim);
 
     printf("Full covariance matrix done.\n"); fflush(stdout);
+
+    fn="result/r1d/cov_out.dat";
+    if(mpi->rank==0){
+      write_data(fn, qe->cov, sizeof(double), qe->npix*qe->npix);
+      }
+
 
     // ->> inverse matrix <<- //
     mat_inv(mpi, qe->cov, qe->icov, qe->npix);
@@ -214,6 +220,15 @@
     // ->> calculate Fisher matrix and its inverse <<- //
     qe->Fij=(double *)malloc(sizeof(double)*qe->n_bp*qe->n_bp); 
     Fisher(mpi, qe->dcov, qe->icov, qe->Fij, qe->npix, qe->n_bp, qe->map_dim);
+
+    fn="result/r1d/Fij.dat";
+    if(mpi->rank==0){
+      write_data(fn, qe->Fij, sizeof(double), qe->n_bp*qe->n_bp);
+      }
+
+    //MPI_Finalize();
+    //abort();
+
 
     mat_inv(mpi, qe->Fij, qe->iFij, qe->npix);
 
