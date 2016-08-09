@@ -72,7 +72,7 @@ if __name__=='__main__':
        ----------------------------------------------'''
     # ->> lower data resolution <<- #
     zoom_factor=0.5
-    _dmap_=d[:200,10]-np.mean(d[:200,10])
+    _dmap_=d[:100,10]-np.mean(d[:100,10])
     dmap=sp.ndimage.interpolation.zoom(_dmap_, zoom_factor)
 
     if False:
@@ -84,8 +84,8 @@ if __name__=='__main__':
 
 
     #->> data initialization <<- #
-    qe_dict={'calculate_dcov':   False,
-             'fname_dcov':       root+'result/r1d/dcov_r1d_fft_49.npz',
+    qe_dict={'calculate_dcov':   True,
+             'fname_dcov':       root+'result/r1d/dcov_r1d_fft_24.npz',
 	     'map_zoom_factor':  zoom_factor,
 	     'get_bp_type':      'FFT',
 	    }
@@ -111,6 +111,7 @@ if __name__=='__main__':
     kdim=len(_pk_)
     pk_fid=_pk_[kdim/2+1:]
 
+    print 'n_bp:', len(pk_fid), qe.dcov.shape, pk_fid.shape, dmap.shape
 
     # ->> 
     qe.dcov.tofile(root+'result/r1d/dcov.dat')
