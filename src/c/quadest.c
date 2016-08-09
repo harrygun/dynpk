@@ -34,7 +34,7 @@
 
 
   double access_dcov(double *dcov, size_t n_bp, size_t npix, size_t i, 
-                                      size_t a, size_t b, int map_dim) {
+                                      size_t a, size_t b, size_t map_dim) {
     // ->> i:    index of bandpower
     // ->> a/b:  indices of map pixels 
 
@@ -51,10 +51,12 @@
 
 
   void Fisher(MPIpar *mpi, double *dcov, double *icov, double *F,
-                                size_t npix, size_t n_bp, int map_dim)  {
+                                size_t npix, size_t n_bp, size_t map_dim)  {
     size_t i, j, a, b, c, d, idx, id, irk, nrun;
     double *Fs, *Frev;
 
+
+    MPI_Barrier(MPI_COMM_WORLD);
 
     mpi->max=n_bp*n_bp;    mpi->start=0;
     mpi_loop_init(mpi, "Fisher");
@@ -65,7 +67,7 @@
     for(idx=0; idx<mpi->ind_run; idx++) {
 
       id=mpi_id(mpi, idx);
-      i=(int)(id/(double)n_bp);
+      i=(size_t)(id/(double)n_bp);
       j=id-i*n_bp;
 
       //#ifdef _OMP_
@@ -133,12 +135,13 @@
 
 
   void full_covmat_recov(MPIpar *mpi, double *dcov, double *cov, double *covn_v, 
-                         double *plist, size_t n_bp, size_t npix, int map_dim) {
+                         double *plist, size_t n_bp, size_t npix, size_t map_dim) {
     // ->> obtain full covariance matrix from dvoc and pk_list <<- //
 
     size_t ip, i, j, a, b, c, d, idx, id, irk, nrun;
     double *cov_s, *crev;
 
+    MPI_Barrier(MPI_COMM_WORLD);
 
     mpi->max=npix*npix;    mpi->start=0;
     mpi_loop_init(mpi, "cov");
@@ -147,22 +150,41 @@
 
     for(idx=0; idx<mpi->ind_run; idx++) {
 
+      // ->> pixel location <<- //
       id=mpi_id(mpi, idx);
-      a=(int)(id/(double)npix);
-      b=id-a*npix;
 
-      cov_s[idx]=0.;
+      // ->> 2D map <<- //
+      if(map_dim==1)  {
 
+        // ->> convert to pixel index <<- //
+        a=(size_t)(id/(double)npix);
+        b=id-a*npix;
+
+        cov_s[idx]=0.;
         for(ip=0; ip<n_bp; ip++){
-	  // ->> summing over all bandpowr <<- //
+          // ->> summing over all bandpowr <<- //
           cov_s[idx]+=access_dcov(dcov, n_bp, npix, ip, a, b, map_dim)*plist[ip];
-	  }
+          }
 
-      if(a==b){ cov_s[idx]+=covn_v[idx]; }
+        if(a==b){ cov_s[idx]+=covn_v[idx]; }
+        }
+
+      // ->> 1D map <<- //
+      if(map_dim==2)  {
+        abort();   // ->> DEFINITELY some error here. <<- //
+
+        cov_s[idx]=0.;
+        for(ip=0; ip<n_bp; ip++){
+          // ->> summing over all bandpowr <<- //
+          cov_s[idx]+=access_dcov(dcov, n_bp, npix, ip, a, b, map_dim)*plist[ip];
+          }
+
+        if(a==b){ cov_s[idx]+=covn_v[idx]; }
+        }
 
       }
 
-
+    /*
     // ->> gather all data by root <<- //
     if(mpi->rank==0){ crev=(double *)malloc(sizeof(double)*npix*npix); }
 
@@ -184,7 +206,9 @@
 
     // ->> broadcast <<- //
     MPI_Bcast(cov, npix*npix, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+    */
 
+    mpi_gather_dist_double(mpi, cov_s, cov, mpi->ind_run, mpi->max);
 
     free(cov_s);
     return;
@@ -239,6 +263,8 @@
     double *d_ic=(double *)malloc(sizeof(double)*qe->npix);
     mat_vec_mult(qe->icov, qe->map, d_ic, qe->npix, qe->npix);
 
+
+    MPI_Barrier(MPI_COMM_WORLD);
 
     // ->> calculate Qi' <<- //
     double *Qip_s, *Qi_s;

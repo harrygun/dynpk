@@ -82,8 +82,8 @@
     /* total run needed */
     mpi->totrun=mpi->max-mpi->start;
     /* run 'mpi->ind_run' times for each individual process. */
-    mpi->ind_run= mpi->totrun/mpi->ntask;
-    if( mpi->rank - (mpi->totrun-mpi->ntask*(int)(mpi->totrun/mpi->ntask) )<0 ) 
+    mpi->ind_run= (size_t)(mpi->totrun/mpi->ntask);
+    if( mpi->rank - (mpi->totrun-mpi->ntask*(size_t)(mpi->totrun/mpi->ntask) )<0 ) 
       mpi->ind_run +=1;
 
     printf("proc(%d): nrun=%d, totrun=%d\n", mpi->rank, mpi->ind_run, mpi->totrun);
@@ -102,25 +102,25 @@
   }
 
 
-  int mpi_id(MPIpar *mpi, int i) {
+  size_t mpi_id(MPIpar *mpi, size_t i) {
     return (i*mpi->ntask + mpi->rank + mpi->start);
   }
 
 
 
 
-  int mpi_nrun(int totrun, int rank, int ntask){
-    int ind_run;
+  size_t mpi_nrun(size_t totrun, size_t rank, size_t ntask){
+    size_t ind_run;
 
-    ind_run= totrun/ntask;
-    if(rank - (totrun-ntask*(int)(totrun/ntask) )<0 ) 
+    ind_run= (size_t)(totrun/ntask);
+    if(rank - (totrun-ntask*(size_t)(totrun/ntask) )<0 ) 
       ind_run +=1;
 
     return ind_run;
     }
 
 
-  int mpi_get_id(int rank, int ntask, int i) {
+  size_t mpi_get_id(size_t rank, size_t ntask, size_t i) {
 
     return i*ntask+rank;
     }

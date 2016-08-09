@@ -17,11 +17,11 @@
   void mpi_loop_init(MPIpar *mpi, char *prefix);
 
 
-  int mpi_id(MPIpar *mpi, int i);
+  size_t mpi_id(MPIpar *mpi, size_t i);
 
 
-  int mpi_nrun(int totrun, int rank, int ntask);
-  int mpi_get_id(int rank, int ntask, int i);
+  size_t mpi_nrun(size_t totrun, size_t rank, size_t ntask);
+  size_t mpi_get_id(size_t rank, size_t ntask, size_t i);
 
 
 
