@@ -56,8 +56,8 @@
 
 
     mpi->max=n_bp*n_bp;    mpi->start=0;
-    //mpi_loop_init(mpi, "Fisher");
-    mpi_loop_init(mpi, NULL);
+    mpi_loop_init(mpi, "Fisher");
+    //mpi_loop_init(mpi, NULL);
 
     Fs=(double *)malloc(mpi->ind_run*sizeof(double));
 
@@ -142,7 +142,7 @@
 
 
     mpi->max=npix*npix;    mpi->start=0;
-    mpi_loop_init(mpi, NULL);
+    mpi_loop_init(mpi, "cov");
 
     cov_s=(double *)malloc(mpi->ind_run*sizeof(double));
 
@@ -231,7 +231,7 @@
     Qi_s=(double *)malloc(mpi->ind_run*sizeof(double));
 
     mpi->max=qe->n_bp;    mpi->start=0;
-    mpi_loop_init(mpi, NULL);
+    mpi_loop_init(mpi, "Qi");
 
     for(idx=0; idx<mpi->ind_run; idx++) {
       id=mpi_id(mpi, idx);

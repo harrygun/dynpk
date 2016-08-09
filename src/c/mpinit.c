@@ -33,13 +33,14 @@
     size_t irk, i, nrun;
     double *rev;
     
-    //if(mpi->rank==0)
-    rev=(double *)malloc(sizeof(double)*count_tot); 
+    if(mpi->rank==0)
+      rev=(double *)malloc(sizeof(double)*count_tot); 
 
     // ->> gather <<- //
     MPI_Gather(in, count_pp, MPI_DOUBLE, rev, count_pp, MPI_DOUBLE, 0, MPI_COMM_WORLD);
 
-    printf("MPI_gather.\n"); fflush(stdout);
+
+    printf("MPI_gather (rank=%d)\n", mpi->rank); fflush(stdout);
 
     // ->> re-organize <<- //
     if(mpi->rank==0){
@@ -59,13 +60,14 @@
 	  }
 
       printf("MPI_gather before free.\n"); fflush(stdout);
-      }
+
+    free(rev);
+    }
 
     // ->> broadcast <<- //
     MPI_Barrier(MPI_COMM_WORLD);
     MPI_Bcast(out, count_tot, MPI_DOUBLE, 0, MPI_COMM_WORLD);
 
-    free(rev);
     return;
     }
 
