@@ -177,7 +177,8 @@
         cov_s[idx]=0.;
         for(ip=0; ip<n_bp; ip++){
           // ->> summing over all bandpowr <<- //
-          cov_s[idx]+=access_dcov(dcov, n_bp, npix, ip, a, b, map_dim)*plist[ip];
+          //cov_s[idx]+=access_dcov(dcov, n_bp, npix, ip, a, b, map_dim)*plist[ip];
+          cov_s[idx]+=1.;//access_dcov(dcov, n_bp, npix, ip, a, b, map_dim)*plist[ip];
           }
 
         if(a==b){ cov_s[idx]+=covn_v[idx]; }
@@ -209,17 +210,7 @@
     MPI_Bcast(cov, npix*npix, MPI_DOUBLE, 0, MPI_COMM_WORLD);
     */
 
-    if (mpi->ntask>1){
-      mpi_gather_dist_double(mpi, cov_s, cov, mpi->ind_run, mpi->max);
-      }
-    else{
-       cov=cov_s;
-
-      fn="result/r1d/cov_out.dat";
-      if(mpi->rank==0){
-        write_data(fn, cov_s, sizeof(double), npix*npix);
-        }
-      }
+    mpi_gather_dist_double(mpi, cov_s, cov, mpi->ind_run, mpi->max);
 
 
 
