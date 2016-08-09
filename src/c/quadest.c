@@ -217,7 +217,7 @@
 
       fn="result/r1d/cov_out.dat";
       if(mpi->rank==0){
-        write_data(fn, cov_s, sizeof(double), qe->npix*qe->npix);
+        write_data(fn, cov_s, sizeof(double), npix*npix);
         }
       }
 
