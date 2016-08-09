@@ -140,6 +140,7 @@
 
     size_t ip, i, j, a, b, c, d, idx, id, irk, nrun;
     double *cov_s, *crev;
+    char *fn;
 
     MPI_Barrier(MPI_COMM_WORLD);
 
@@ -210,11 +211,19 @@
 
     if (mpi->ntask>1){
       mpi_gather_dist_double(mpi, cov_s, cov, mpi->ind_run, mpi->max);
-      free(cov_s);
       }
-    else
+    else{
        cov=cov_s;
 
+      fn="result/r1d/cov_out.dat";
+      if(mpi->rank==0){
+        write_data(fn, cov_s, sizeof(double), qe->npix*qe->npix);
+        }
+      }
+
+
+
+    free(cov_s);
     return;
     }
 
@@ -232,12 +241,15 @@
     full_covmat_recov(mpi, qe->dcov, qe->cov, qe->covn_v, qe->plist, 
                       qe->n_bp, qe->npix, qe->map_dim);
 
+    abort();
+
     printf("Full covariance matrix done.\n"); fflush(stdout);
 
     fn="result/r1d/cov_out.dat";
     if(mpi->rank==0){
       write_data(fn, qe->cov, sizeof(double), qe->npix*qe->npix);
       }
+
 
 
     // ->> inverse matrix <<- //
@@ -257,7 +269,6 @@
     //MPI_Finalize();
     //abort();
 
-    abort();
 
 
     mat_inv(mpi, qe->Fij, qe->iFij, qe->npix);
