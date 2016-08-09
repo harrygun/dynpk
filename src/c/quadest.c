@@ -208,9 +208,13 @@
     MPI_Bcast(cov, npix*npix, MPI_DOUBLE, 0, MPI_COMM_WORLD);
     */
 
-    mpi_gather_dist_double(mpi, cov_s, cov, mpi->ind_run, mpi->max);
+    if (mpi->ntask>1){
+      mpi_gather_dist_double(mpi, cov_s, cov, mpi->ind_run, mpi->max);
+      free(cov_s);
+      }
+    else
+       cov=cov_s;
 
-    free(cov_s);
     return;
     }
 
