@@ -36,7 +36,8 @@
   
   void mat_inv(MPIpar *mpi, double *matx, double *matx_inv, size_t n) {
 
-    size_t i, j, k, signum;
+    size_t i, j, k; 
+    int signum;
     double ele;
     
     gsl_permutation *perm=gsl_permutation_alloc(n);

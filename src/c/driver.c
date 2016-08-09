@@ -60,8 +60,8 @@
            MPI_Abort(MPI_COMM_WORLD, mpi.rc);
            }
 
-      MPI_Comm_size(MPI_COMM_WORLD,&mpi.ntask);
-      MPI_Comm_rank(MPI_COMM_WORLD,&mpi.rank);
+      MPI_Comm_size(MPI_COMM_WORLD,&(int)(mpi.ntask));
+      MPI_Comm_rank(MPI_COMM_WORLD,&(int)(mpi.rank));
 
       printf ("Number of tasks= %d My rank= %d\n", mpi.ntask, mpi.rank);
 
