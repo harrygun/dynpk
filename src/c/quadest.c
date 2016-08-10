@@ -16,11 +16,11 @@
   #include "cospara.h"
   #include "myinterpolate.h"
 
+  #include "quadest.h"
   #include "glbvarb.h"
   #include "mpinit.h"
   #include "misc.h"
   #include "io.h"
-  #include "quadest.h"
 
 
 #ifdef _MPI_
