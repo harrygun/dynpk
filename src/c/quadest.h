@@ -1,6 +1,8 @@
 #ifndef _H_QUADEST_
 #define _H_QUADEST_
 
+  #include "glbvarb.h"
+
   double access_dcov(double *dcov, size_t n_bp, size_t npix, size_t i, 
                                       size_t a, size_t b, int map_dim);
 

@@ -17,7 +17,7 @@
   #include "myinterpolate.h"
 
   #include "glbvarb.h"
-  #include "quadest.h"
+  //#include "quadest.h"
   #include "mpinit.h"
   #include "misc.h"
   #include "io.h"
@@ -45,6 +45,8 @@
     else if(map_dim==2) {abort();}
 
     else {abort();}
+
+    return;
     }
 
 
