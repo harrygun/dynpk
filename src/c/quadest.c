@@ -142,7 +142,6 @@
     // ->> obtain full covariance matrix from dvoc and pk_list <<- //
 
     int ip, i, j, a, b, c, d, idx, id, irk, nrun;
-    int a, b;
     double *cov_s, *crev;
     char *fn;
 
