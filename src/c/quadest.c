@@ -232,8 +232,6 @@
     full_covmat_recov(mpi, qe->dcov, qe->cov, qe->covn_v, qe->plist, 
                       qe->n_bp, qe->npix, qe->map_dim);
 
-    abort();
-
     printf("Full covariance matrix done.\n"); fflush(stdout);
 
     fn="result/r1d/cov_out.dat";
@@ -241,6 +239,7 @@
       write_data(fn, qe->cov, sizeof(double), qe->npix*qe->npix);
       }
 
+    abort();
 
 
     // ->> inverse matrix <<- //
