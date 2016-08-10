@@ -164,6 +164,8 @@
         a=(size_t)(id/(double)npix);
         b=id-a*npix;
 
+	printf("%d  %d  %d (r=%d)\n", a, b, id, mpi->rank);
+
         //cov_s[idx]=0.;
         cov_s[idx]=a-b;
 	/*
