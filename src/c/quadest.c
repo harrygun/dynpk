@@ -166,9 +166,9 @@
 
 
         //cov_s[idx]=0.;
-        cov_s[idx]=(double)(a-b);
+        cov_s[idx]=(double)((int)a-(int)b);
 
-	printf("%d  %d  %d  %lg  %lg (r=%d)\n", a, b, id, (double)(a-b), cov_s[idx], mpi->rank);
+	printf("%d  %d  %d  %lg (r=%d)\n", a, b, id, cov_s[idx], mpi->rank);
 
 	/*
         for(ip=0; ip<n_bp; ip++){
