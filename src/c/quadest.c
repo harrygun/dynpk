@@ -17,7 +17,6 @@
   #include "myinterpolate.h"
 
   #include "glbvarb.h"
-  //#include "quadest.h"
   #include "mpinit.h"
   #include "misc.h"
   #include "io.h"
@@ -165,7 +164,6 @@
         b=(int)(id-a*npix);
 
         cov_s[idx]=0.;
-
         for(ip=0; ip<n_bp; ip++){
           // ->> summing over all bandpowr <<- //
           cov_s[idx]+=access_dcov(dcov, n_bp, npix, ip, a, b, map_dim)*plist[ip];
@@ -242,9 +240,8 @@
       write_data(fn, qe->cov, sizeof(double), qe->npix*qe->npix);
       }
 
-    MPI_Barrier(MPI_COMM_WORLD);
-    abort();
-
+    //MPI_Barrier(MPI_COMM_WORLD);
+    //abort();
 
     // ->> inverse matrix <<- //
     mat_inv(mpi, qe->cov, qe->icov, qe->npix);
@@ -259,10 +256,6 @@
     if(mpi->rank==0){
       write_data(fn, qe->Fij, sizeof(double), qe->n_bp*qe->n_bp);
       }
-
-    //MPI_Finalize();
-    //abort();
-
 
 
     mat_inv(mpi, qe->Fij, qe->iFij, qe->npix);
