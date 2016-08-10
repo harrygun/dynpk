@@ -167,7 +167,7 @@
           cov_s[idx]+=1.; //access_dcov(dcov, n_bp, npix, ip, a, b, map_dim)*plist[ip];
           }
 
-        if(a==b){ cov_s[idx]+=covn_v[idx]; }
+        //if(a==b){ cov_s[idx]+=covn_v[idx]; }
         }
 
       // ->> 2D map <<- //
