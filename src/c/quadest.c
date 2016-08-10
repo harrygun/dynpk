@@ -164,11 +164,14 @@
         a=(size_t)(id/(double)npix);
         b=id-a*npix;
 
-        cov_s[idx]=0.;
+        //cov_s[idx]=0.;
+        cov_s[idx]=a-b;
+	/*
         for(ip=0; ip<n_bp; ip++){
           // ->> summing over all bandpowr <<- //
-          cov_s[idx]+=(a-b)/((double)n_bp);//access_dcov(dcov, n_bp, npix, ip, a, b, map_dim); //*plist[ip];
+          cov_s[idx]+=(a-b)/((double)n_bp);//access_dcov(dcov, n_bp, npix, ip, a, b, map_dim); // *plist[ip];
           }
+	*/
 
         //if(a==b){ cov_s[idx]+=covn_v[idx]; }
         }
