@@ -167,7 +167,7 @@
 	printf("%d  %d  %d (r=%d)\n", a, b, id, mpi->rank);
 
         //cov_s[idx]=0.;
-        cov_s[idx]=a-b;
+        cov_s[idx]=(double)(a-b);
 	/*
         for(ip=0; ip<n_bp; ip++){
           // ->> summing over all bandpowr <<- //
