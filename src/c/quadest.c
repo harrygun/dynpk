@@ -20,6 +20,7 @@
   #include "mpinit.h"
   #include "misc.h"
   #include "io.h"
+  #include "quadest.h"
 
 
 #ifdef _MPI_
@@ -164,7 +165,7 @@
         cov_s[idx]=0.;
         for(ip=0; ip<n_bp; ip++){
           // ->> summing over all bandpowr <<- //
-          cov_s[idx]+=access_dcov(dcov, n_bp, npix, ip, a, b, map_dim); //*plist[ip];
+          cov_s[idx]+=(a-b)/((double)n_bp);//access_dcov(dcov, n_bp, npix, ip, a, b, map_dim); //*plist[ip];
           }
 
         //if(a==b){ cov_s[idx]+=covn_v[idx]; }
@@ -177,8 +178,7 @@
         cov_s[idx]=0.;
         for(ip=0; ip<n_bp; ip++){
           // ->> summing over all bandpowr <<- //
-          //cov_s[idx]+=access_dcov(dcov, n_bp, npix, ip, a, b, map_dim)*plist[ip];
-          cov_s[idx]+=1.;//access_dcov(dcov, n_bp, npix, ip, a, b, map_dim)*plist[ip];
+          cov_s[idx]+=access_dcov(dcov, n_bp, npix, ip, a, b, map_dim)*plist[ip];
           }
 
         if(a==b){ cov_s[idx]+=covn_v[idx]; }
