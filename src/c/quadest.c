@@ -154,7 +154,7 @@
       // ->> pixel location <<- //
       id=mpi_id(mpi, idx);
 
-      // ->> 2D map <<- //
+      // ->> 1D map <<- //
       if(map_dim==1)  {
 
         // ->> convert to pixel index <<- //
@@ -164,13 +164,13 @@
         cov_s[idx]=0.;
         for(ip=0; ip<n_bp; ip++){
           // ->> summing over all bandpowr <<- //
-          cov_s[idx]+=access_dcov(dcov, n_bp, npix, ip, a, b, map_dim)*plist[ip];
+          cov_s[idx]+=1.; //access_dcov(dcov, n_bp, npix, ip, a, b, map_dim)*plist[ip];
           }
 
         if(a==b){ cov_s[idx]+=covn_v[idx]; }
         }
 
-      // ->> 1D map <<- //
+      // ->> 2D map <<- //
       if(map_dim==2)  {
         abort();   // ->> DEFINITELY some error here. <<- //
 
