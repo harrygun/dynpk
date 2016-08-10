@@ -3,8 +3,8 @@
 
   #include "glbvarb.h"
 
-  double access_dcov(double *dcov, size_t n_bp, size_t npix, size_t i, 
-                                      size_t a, size_t b, int map_dim);
+  double access_dcov(double *dcov, size_t n_bp, size_t npix, int i, 
+                                      int a, int b, size_t map_dim);
 
   void cov_noise(MPIpar *mpi, double *covn_v, size_t npix, char *type);
 

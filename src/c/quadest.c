@@ -34,13 +34,13 @@
 
 
 
-  double access_dcov(double *dcov, size_t n_bp, size_t npix, size_t i, 
-                                      size_t a, size_t b, size_t map_dim) {
+  double access_dcov(double *dcov, size_t n_bp, size_t npix, int i, 
+                                      int a, int b, size_t map_dim) {
     // ->> i:    index of bandpower
     // ->> a/b:  indices of map pixels 
 
     if(map_dim==1)
-      {return ArrayAccess2D_n2(dcov, n_bp, npix, i, (size_t)fabs(a-b));}
+      {return ArrayAccess2D_n2(dcov, n_bp, npix, i, (int)fabs(a-b));}
 
     else if(map_dim==2) {abort();}
 
@@ -55,7 +55,7 @@
 
   void Fisher(MPIpar *mpi, double *dcov, double *icov, double *F,
                                 size_t npix, size_t n_bp, size_t map_dim)  {
-    size_t i, j, a, b, c, d, idx, id, irk, nrun;
+    int i, j, a, b, c, d, idx, id, irk, nrun;
     double *Fs, *Frev;
 
 
@@ -70,7 +70,7 @@
     for(idx=0; idx<mpi->ind_run; idx++) {
 
       id=mpi_id(mpi, idx);
-      i=(size_t)(id/(double)n_bp);
+      i=(int)(id/(double)n_bp);
       j=id-i*n_bp;
 
       //#ifdef _OMP_
@@ -124,7 +124,7 @@
 
 
   void cov_noise(MPIpar *mpi, double *covn_v, size_t npix, char *type){
-    size_t i;
+    int i;
 
     if(type==NULL) {
       for(i=0; i<npix; i++)
@@ -141,7 +141,8 @@
                          double *plist, size_t n_bp, size_t npix, size_t map_dim) {
     // ->> obtain full covariance matrix from dvoc and pk_list <<- //
 
-    size_t ip, i, j, a, b, c, d, idx, id, irk, nrun;
+    int ip, i, j, a, b, c, d, idx, id, irk, nrun;
+    int a, b;
     double *cov_s, *crev;
     char *fn;
 
@@ -161,21 +162,15 @@
       if(map_dim==1)  {
 
         // ->> convert to pixel index <<- //
-        a=(size_t)(id/(double)npix);
-        b=id-a*npix;
+        a=(int)(id/(double)npix);
+        b=(int)(id-a*npix);
 
+        cov_s[idx]=0.;
 
-        //cov_s[idx]=0.;
-        cov_s[idx]=(double)((int)a-(int)b);
-
-	printf("%d  %d  %d  %lg (r=%d)\n", a, b, id, cov_s[idx], mpi->rank);
-
-	/*
         for(ip=0; ip<n_bp; ip++){
           // ->> summing over all bandpowr <<- //
           cov_s[idx]+=(a-b)/((double)n_bp);//access_dcov(dcov, n_bp, npix, ip, a, b, map_dim); // *plist[ip];
           }
-	*/
 
         //if(a==b){ cov_s[idx]+=covn_v[idx]; }
         }
@@ -233,7 +228,7 @@
 
   void quad_est(MPIpar *mpi, QEpar *qe) {
     // ->> calculate quadratic estimator <<- //
-    size_t a, b, i, j, idx, id;
+    int a, b, i, j, idx, id;
     char *fn;
 
 
