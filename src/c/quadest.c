@@ -164,10 +164,12 @@
         a=(size_t)(id/(double)npix);
         b=id-a*npix;
 
-	printf("%d  %d  %d (r=%d)\n", a, b, id, mpi->rank);
 
         //cov_s[idx]=0.;
         cov_s[idx]=(double)(a-b);
+
+	printf("%d  %d  %d  %lg (r=%d)\n", a, b, id, cov_s[idx], mpi->rank);
+
 	/*
         for(ip=0; ip<n_bp; ip++){
           // ->> summing over all bandpowr <<- //
