@@ -232,7 +232,7 @@
     full_covmat_recov(mpi, qe->dcov, qe->cov, qe->covn_v, qe->plist, 
                       qe->n_bp, qe->npix, qe->map_dim);
 
-    printf("Full covariance matrix done.(%d)\n", mpi.rank); fflush(stdout);
+    printf("Full covariance matrix done.(%d)\n", mpi->rank); fflush(stdout);
 
     fn="result/r1d/cov_out.dat";
     if(mpi->rank==0){
