@@ -34,6 +34,8 @@
   void import_data_double(MPIpar *mpi, char *fn, void *d, size_t size, size_t count) {
     FILE *fp;
 
+    MPI_Barrier(MPI_COMM_WORLD);
+
     if(mpi->rank==0){
 
       if(!(fp=fopen(fn, "r"))) {
