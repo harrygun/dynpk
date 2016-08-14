@@ -236,7 +236,7 @@
     printf("Full covariance matrix done.(%d)\n", mpi->rank); fflush(stdout);
 
     fn="result/r1d/cov_out.dat";
-    write_data(fn, qe->cov, sizeof(double), qe->npix*qe->npix);
+    write_data(mpi, fn, qe->cov, sizeof(double), qe->npix*qe->npix);
 
     //MPI_Barrier(MPI_COMM_WORLD);
     //abort();
