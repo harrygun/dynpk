@@ -253,7 +253,6 @@
 
     fn="result/r1d/Fij.dat";
     write_data(mpi, fn, qe->Fij, sizeof(double), qe->n_bp*qe->n_bp);
-
     */
 
     //mat_inv(mpi, qe->Fij, qe->iFij, qe->npix);
