@@ -133,9 +133,9 @@
 
 
      
-      import_data(&mpi, fn_map, qe.map, sizeof(double), qe.npix);
-      import_data(&mpi, fn_dcov, qe.dcov, sizeof(double), qe.n_bp*qe.npix);
-      import_data(&mpi, fn_plist, qe.plist, sizeof(double), qe.n_bp);
+      import_data_double(&mpi, fn_map, qe.map, sizeof(double), qe.npix);
+      import_data_double(&mpi, fn_dcov, qe.dcov, sizeof(double), qe.n_bp*qe.npix);
+      import_data_double(&mpi, fn_plist, qe.plist, sizeof(double), qe.n_bp);
 
 
       // ->> noise covariance matrix <<- //

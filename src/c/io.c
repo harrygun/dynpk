@@ -49,7 +49,7 @@
       fclose(fp);
       }
     
-
+    MPI_Barrier(MPI_COMM_WORLD);
     MPI_Bcast(d, count, MPI_DOUBLE, 0, MPI_COMM_WORLD);
 
     return;

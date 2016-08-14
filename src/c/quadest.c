@@ -255,8 +255,8 @@
 
 
     //mat_inv(mpi, qe->Fij, qe->iFij, qe->npix);
-    fn="result/r1d/Fij_inv.dat";
-    import_data(fn, qe.map, sizeof(double), qe.npix);
+    fn="result/r1d/inv_Fij.dat";
+    import_data_double(mpi, fn, qe->iFij, sizeof(double), qe->n_bp*qe->n_bp);
 
     printf("(inv)-Fisher Matrix done.\n"); fflush(stdout);
   
