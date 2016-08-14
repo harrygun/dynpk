@@ -100,6 +100,14 @@
 
 
 
+  void mat_inv_gsl(){
+
+    return;
+    }
+
+
+
+
   void mat_vec_mult(double *m, double *v, double *out, size_t nm, size_t nv) {
     // ->> m:  (nm, nv);   v:  (nv);    out: (nm)
     // ->> could be easily parallized by OpenMP <<- #

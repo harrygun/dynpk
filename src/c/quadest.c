@@ -236,9 +236,7 @@
     printf("Full covariance matrix done.(%d)\n", mpi->rank); fflush(stdout);
 
     fn="result/r1d/cov_out.dat";
-    if(mpi->rank==0){
-      write_data(fn, qe->cov, sizeof(double), qe->npix*qe->npix);
-      }
+    write_data(fn, qe->cov, sizeof(double), qe->npix*qe->npix);
 
     //MPI_Barrier(MPI_COMM_WORLD);
     //abort();
@@ -253,12 +251,12 @@
     Fisher(mpi, qe->dcov, qe->icov, qe->Fij, qe->npix, qe->n_bp, qe->map_dim);
 
     fn="result/r1d/Fij.dat";
-    if(mpi->rank==0){
-      write_data(fn, qe->Fij, sizeof(double), qe->n_bp*qe->n_bp);
-      }
+    write_data(mpi, fn, qe->Fij, sizeof(double), qe->n_bp*qe->n_bp);
 
 
-    mat_inv(mpi, qe->Fij, qe->iFij, qe->npix);
+    //mat_inv(mpi, qe->Fij, qe->iFij, qe->npix);
+    fn="result/r1d/Fij_inv.dat";
+    import_data(fn, qe.map, sizeof(double), qe.npix);
 
     printf("(inv)-Fisher Matrix done.\n"); fflush(stdout);
   

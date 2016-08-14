@@ -132,10 +132,10 @@
       qe.map=(double *)malloc(sizeof(double)*qe.npix);
 
 
-
-      import_data(fn_map, qe.map, sizeof(double), qe.npix);
-      import_data(fn_dcov, qe.dcov, sizeof(double), qe.n_bp*qe.npix);
-      import_data(fn_plist, qe.plist, sizeof(double), qe.n_bp);
+     
+      import_data(&mpi, fn_map, qe.map, sizeof(double), qe.npix);
+      import_data(&mpi, fn_dcov, qe.dcov, sizeof(double), qe.n_bp*qe.npix);
+      import_data(&mpi, fn_plist, qe.plist, sizeof(double), qe.n_bp);
 
 
       // ->> noise covariance matrix <<- //
@@ -147,12 +147,8 @@
 
    
       // ->> output <<- //
-      if(mpi.rank==0){ 
-        printf("Output data.\n");
-        //write_data(fn_out, qe.Qip, sizeof(double), qe.n_bp);
-        write_data(fn_out, qe.Qi, sizeof(double), qe.n_bp);
-      }
-
+      printf("Output data.\n"); fflush(stdout);
+      write_data(&mpi, fn_out, qe.Qi, sizeof(double), qe.n_bp);
 
 
   /*-----------------------------------------------------
