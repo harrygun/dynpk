@@ -259,6 +259,7 @@
     //mat_inv(mpi, qe->Fij, qe->iFij, qe->npix);
     printf("import inv_fisher\n"); fflush(stdout);
     fn="result/r1d/inv_Fij.dat";
+    qe->iFij=(double *)malloc(sizeof(double)*qe->n_bp*qe->n_bp);
     import_data_double(mpi, fn, qe->iFij, sizeof(double), qe->n_bp*qe->n_bp);
 
     printf("(inv)-Fisher Matrix done.\n"); fflush(stdout);
