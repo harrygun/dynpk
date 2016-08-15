@@ -113,7 +113,7 @@ if __name__=='__main__':
 
     print 'n_bp:', len(pk_fid), qe.dcov.shape, pk_fid.shape, dmap.shape
     
-    raise Exception('Something WRONG with PK_fid.')
+    #raise Exception('Something WRONG with PK_fid.')
 
     # ->> 
     qe.dcov.tofile(root+'result/r1d/dcov.dat')
@@ -135,7 +135,8 @@ if __name__=='__main__':
 
     if True:
         pl.plot(cor, 'k-')
-        pl.plot(cor_fft, 'r--')
+        pl.plot(cor_fft*65, 'r--')
+        pl.plot(cor_fft, 'b--')
 
 	pl.show()
 

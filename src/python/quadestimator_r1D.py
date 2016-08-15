@@ -253,6 +253,7 @@ class Quadest1dPara(par.Parameters):
 	    if self.get_bp_type!='FFT':  
 	        raise Exception('Inconsistent fiducial pk setting.')
 
+
 	    pk_fid=cms.pk_fft_1d(self.dmap, self.dmap_res).flatten() 
 
         return pk_fid

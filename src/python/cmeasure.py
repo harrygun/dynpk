@@ -83,7 +83,8 @@ def pk_fft_1d(d, dmap_res, zero_padding=False):
     dk=np.fft.fft(dd)
     pk=np.fft.fftshift(np.absolute(dk)**2.)
 
-    return pk*np.prod(dmap_res)**2./(2.*np.pi)
+    #return pk*np.prod(dmap_res)/(2.*np.pi)
+    return pk
 
 
 
