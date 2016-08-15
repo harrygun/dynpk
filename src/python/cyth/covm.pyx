@@ -902,7 +902,7 @@ cpdef quad_estimator_r1d_wrapper(dmap, covf, dcov, covn_vec, plist, Qi, Fij, \
 
 
 
-cdef void correlation_recovery_r1d(cnp.ndarray[cnp.double_t, ndim=1] pk_rec, \
+cdef void correlation_recovery_r1d(cnp.ndarray[cnp.double_t, ndim=1] cor, \
                              cnp.ndarray[cnp.double_t, ndim=2] dcov, \
                              cnp.ndarray[cnp.double_t, ndim=1] plist, \
                              int npt, int nmap):
@@ -911,20 +911,20 @@ cdef void correlation_recovery_r1d(cnp.ndarray[cnp.double_t, ndim=1] pk_rec, \
 
     # ->>  obtain correlation function matrix <<- #
     for a in range(nmap):
-        pk_rec[a]=0.
+        cor[a]=0.
         for i in range(npt):
-            pk_rec[a]+=dcov[i,a]*plist[i]
+            cor[a]+=dcov[i,a]*plist[i]
 
     return 
 
 
 
 
-cpdef get_correlation_r1d(pk_rec,  dcov,  plist):
+cpdef get_correlation_r1d(cor,  dcov,  plist):
     cdef int nmap, npt
 
-    nmap=pk_rec.shape[0]
+    nmap=cor.shape[0]
     npt=plist.shape[0]
 
-    correlation_recovery_r1d(pk_rec, dcov, plist, npt, nmap)
+    correlation_recovery_r1d(cor, dcov, plist, npt, nmap)
     return

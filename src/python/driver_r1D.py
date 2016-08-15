@@ -112,6 +112,8 @@ if __name__=='__main__':
     pk_fid=_pk_[kdim/2+1:]
 
     print 'n_bp:', len(pk_fid), qe.dcov.shape, pk_fid.shape, dmap.shape
+    
+    raise Exception('Something WRONG with PK_fid.')
 
     # ->> 
     qe.dcov.tofile(root+'result/r1d/dcov.dat')
@@ -120,11 +122,24 @@ if __name__=='__main__':
 
 
     # ->> check the covariance matrix <<- #
-    print 'dcov', qe.dcov.shape
-    pk_rec=np.zeros(pk_fid.shape)
-    cyth_cov.get_correlation_r1d(pk_rec,  qe.dcov,  pk_fid)
 
-    pk_rec.tofile(root+'result/r1d/pk_rec.dat')
+    cor_fft=cms.autocorr_1d(dmap)
+
+    print 'dcov', qe.dcov.shape
+    cor=np.zeros(pk_fid.shape)
+    cyth_cov.get_correlation_r1d(cor,  qe.dcov,  pk_fid)
+
+    cor.tofile(root+'result/r1d/cor.dat')
+    cor_fft.tofile(root+'result/r1d/cor_fft.dat')
+
+
+    if True:
+        pl.plot(cor, 'k-')
+        pl.plot(cor_fft, 'r--')
+
+	pl.show()
+
+
     quit()
 
     print '->> fiducial pk initialization done.'

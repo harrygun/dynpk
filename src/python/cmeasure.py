@@ -85,3 +85,24 @@ def pk_fft_1d(d, dmap_res, zero_padding=False):
 
     return pk*np.prod(dmap_res)**2./(2.*np.pi)
 
+
+
+
+def autocorr_1d(d, auto_type='FFT', zero_padding=True):
+    ''' ->> conduct the auto-correlation of the map <<- ''' 
+
+    if auto_type=='FFT':
+        # ->> zero padding <<- #
+        if zero_padding==True:
+            dx=d.shape[0]
+            dd=np.zeros(dx*2)
+            dd[:dx]=d
+        else:
+            dd=d
+
+        dk=np.fft.rfft(dd)
+        cor=np.fft.irfft(dk*np.conjugate(dk))
+        #cor=np.fft.fftshift(cor)
+
+
+    return cor[:d.shape[0]]
