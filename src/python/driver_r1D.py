@@ -118,6 +118,13 @@ if __name__=='__main__':
     pk_fid.tofile(root+'result/r1d/plist.dat')
     dmap.tofile(root+'result/r1d/dmap.dat')
 
+
+    # ->> check the covariance matrix <<- #
+    print 'dcov', qe.dcov.shape
+    pk_rec=np.zeros(pk_fid.shape)
+    cyth_cov.get_correlation_r1d(pk_rec,  qe.dcov,  pk_fid)
+
+    pk_rec.tofile(root+'result/r1d/pk_rec.dat')
     quit()
 
     print '->> fiducial pk initialization done.'

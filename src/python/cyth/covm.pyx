@@ -718,7 +718,6 @@ cpdef get_full_dcov(dcov, dcov_f, pi_idx, npt, mdim_t, mdim_f):
 
 
 
-
 cpdef get_dcov_klim_r1d(dcov, klist_low, klist_up, dt, npt, m_dim, do_mpi=False):
 
     ''' ->> get the derivative of covariance matrix <<- '''
@@ -751,6 +750,7 @@ cpdef get_dcov_klim_r1d(dcov, klist_low, klist_up, dt, npt, m_dim, do_mpi=False)
 
 
 
+"""
 cdef void quad_estimator_r1d(cnp.ndarray[cnp.double_t, ndim=2] dmap, \
                           cnp.ndarray[cnp.double_t, ndim=2] covf, \
                           cnp.ndarray[cnp.double_t, ndim=2] dcov, \
@@ -848,8 +848,6 @@ cdef void quad_estimator_r1d(cnp.ndarray[cnp.double_t, ndim=2] dmap, \
 
 
 
-
-
 _1D_do_Fisher_=False
 cpdef quad_estimator_r1d_wrapper(dmap, covf, dcov, covn_vec, plist, Qi, Fij, \
                                  npt, npix, m_dim, do_mpi=False):
@@ -900,4 +898,33 @@ cpdef quad_estimator_r1d_wrapper(dmap, covf, dcov, covn_vec, plist, Qi, Fij, \
         print 'exiting quad_estimator_wrapper: rank-', mpi.rank
 
         return 
+"""
 
+
+
+cdef void correlation_recovery_r1d(cnp.ndarray[cnp.double_t, ndim=1] pk_rec, \
+                             cnp.ndarray[cnp.double_t, ndim=2] dcov, \
+                             cnp.ndarray[cnp.double_t, ndim=1] plist, \
+                             int npt, int nmap):
+    cdef: 
+        int i, a
+
+    # ->>  obtain correlation function matrix <<- #
+    for a in range(nmap):
+        pk_rec[a]=0.
+        for i in range(npt):
+            pk_rec[a]+=dcov[i,a]*plist[i]
+
+    return 
+
+
+
+
+cpdef get_correlation_r1d(pk_rec,  dcov,  plist):
+    cdef int nmap, npt
+
+    nmap=pk_rec.shape[0]
+    npt=plist.shape[0]
+
+    correlation_recovery_r1d(pk_rec, dcov, plist, npt, nmap)
+    return
