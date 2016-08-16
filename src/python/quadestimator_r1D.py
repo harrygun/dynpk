@@ -77,6 +77,12 @@ def one_dim_band_power_init(bp_init_type, fname=None, **pdict):
         klist_low=klist-k_min/2.
         klist_up =klist+k_min/2.
 
+	#print 'klist_low', klist_low
+	#print 'klist_up', klist_up
+
+	#klist_low[0]=0.
+
+
         return klist, klist_low, klist_up
 
 
