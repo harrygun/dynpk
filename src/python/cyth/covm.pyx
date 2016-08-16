@@ -750,6 +750,39 @@ cpdef get_dcov_klim_r1d(dcov, klist_low, klist_up, dt, npt, m_dim, do_mpi=False)
 
 
 
+
+cdef void correlation_recovery_r1d(cnp.ndarray[cnp.double_t, ndim=1] cor, \
+                             cnp.ndarray[cnp.double_t, ndim=2] dcov, \
+                             cnp.ndarray[cnp.double_t, ndim=1] plist, \
+                             int npt, int nmap):
+    cdef: 
+        int i, a
+
+    # ->>  obtain correlation function matrix <<- #
+    for a in range(nmap):
+        cor[a]=0.
+        for i in range(npt):
+            cor[a]+=dcov[i,a]*plist[i]
+
+    return 
+
+
+
+
+cpdef get_correlation_r1d(cor,  dcov,  plist):
+    cdef int nmap, npt
+
+    nmap=cor.shape[0]
+    npt=plist.shape[0]
+
+    correlation_recovery_r1d(cor, dcov, plist, npt, nmap)
+    return
+
+
+
+
+
+
 """
 cdef void quad_estimator_r1d(cnp.ndarray[cnp.double_t, ndim=2] dmap, \
                           cnp.ndarray[cnp.double_t, ndim=2] covf, \
@@ -900,31 +933,3 @@ cpdef quad_estimator_r1d_wrapper(dmap, covf, dcov, covn_vec, plist, Qi, Fij, \
         return 
 """
 
-
-
-cdef void correlation_recovery_r1d(cnp.ndarray[cnp.double_t, ndim=1] cor, \
-                             cnp.ndarray[cnp.double_t, ndim=2] dcov, \
-                             cnp.ndarray[cnp.double_t, ndim=1] plist, \
-                             int npt, int nmap):
-    cdef: 
-        int i, a
-
-    # ->>  obtain correlation function matrix <<- #
-    for a in range(nmap):
-        cor[a]=0.
-        for i in range(npt):
-            cor[a]+=dcov[i,a]*plist[i]
-
-    return 
-
-
-
-
-cpdef get_correlation_r1d(cor,  dcov,  plist):
-    cdef int nmap, npt
-
-    nmap=cor.shape[0]
-    npt=plist.shape[0]
-
-    correlation_recovery_r1d(cor, dcov, plist, npt, nmap)
-    return

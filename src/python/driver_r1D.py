@@ -109,7 +109,7 @@ if __name__=='__main__':
     # ->> set fiducial power spectrum <<- #
     _pk_=qe.fid_pk_first_guess()
     kdim=len(_pk_)
-    pk_fid=_pk_[kdim/2+1:]
+    pk_fid=_pk_[kdim/2+1:]/65.
 
     print 'n_bp:', len(pk_fid), qe.dcov.shape, pk_fid.shape, dmap.shape
     
@@ -123,20 +123,21 @@ if __name__=='__main__':
 
     # ->> check the covariance matrix <<- #
 
+    #cor_fft=cms.autocorr_1d(dmap, auto_type='scipy')
     cor_fft=cms.autocorr_1d(dmap)
 
     print 'dcov', qe.dcov.shape
-    cor=np.zeros(pk_fid.shape)
+    cor=np.zeros(dmap.shape)
     cyth_cov.get_correlation_r1d(cor,  qe.dcov,  pk_fid)
 
     cor.tofile(root+'result/r1d/cor.dat')
     cor_fft.tofile(root+'result/r1d/cor_fft.dat')
 
+    print cor.shape
 
     if True:
         pl.plot(cor, 'k-')
-        pl.plot(cor_fft*65, 'r--')
-        pl.plot(cor_fft, 'b--')
+        pl.plot(cor_fft, 'r--')
 
 	pl.show()
 
