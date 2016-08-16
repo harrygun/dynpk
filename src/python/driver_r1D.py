@@ -109,7 +109,7 @@ if __name__=='__main__':
     # ->> set fiducial power spectrum <<- #
     _pk_=qe.fid_pk_first_guess()
     kdim=len(_pk_)
-    pk_fid=_pk_[kdim/2+1:]/65.
+    pk_fid=_pk_[kdim/2+1:]
 
     print 'n_bp:', len(pk_fid), qe.dcov.shape, pk_fid.shape, dmap.shape
     

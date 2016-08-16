@@ -75,6 +75,7 @@ def pk_fft_1d(d, dmap_res, zero_padding=False):
 
     if zero_padding==True:
         # ->> zero padding <<- #
+        dx=d.shape[0]
         dd=np.zeros(d.shape[0]*2)
         dd[:dx]=d
     else:
@@ -84,6 +85,7 @@ def pk_fft_1d(d, dmap_res, zero_padding=False):
     pk=np.fft.fftshift(np.absolute(dk)**2.)
 
     return pk*np.prod(dmap_res)/(2.*np.pi)
+    #return pk*np.prod(dmap_res)/np.prod(d.shape)*(2.*np.pi)
 
 
 
