@@ -84,8 +84,8 @@ def pk_fft_1d(d, dmap_res, zero_padding=False):
     dk=np.fft.fft(dd)
     pk=np.fft.fftshift(np.absolute(dk)**2.)
 
-    return pk*np.prod(dmap_res)/(2.*np.pi)
-    #return pk*np.prod(dmap_res)/np.prod(d.shape)*(2.*np.pi)
+    #return pk/(2.*np.pi)
+    return pk*np.prod(dmap_res)/np.prod(d.shape)*(2.*np.pi)
 
 
 
@@ -94,7 +94,8 @@ def autocorr_1d(d, auto_type='FFT', zero_padding=True):
     ''' ->> conduct the auto-correlation of the map <<- ''' 
 
     if auto_type=='scipy':
-        cor=sig.correlate(d, d, mode='same') 
+        #cor=sig.correlate(d, d, mode='same') 
+        cor=sig.correlate(d, d) 
 	print 'cor shape:', cor.shape
 
         return cor
