@@ -57,8 +57,9 @@
     int i, j, a, b, c, d, idx, id, irk, nrun;
     double *Fs, *Frev;
 
-
+    #ifdef _MPI_
     MPI_Barrier(MPI_COMM_WORLD);
+    #endif
 
     mpi->max=n_bp*n_bp;    mpi->start=0;
     mpi_loop_init(mpi, "Fisher");
@@ -95,7 +96,11 @@
     if(mpi->rank==0){ Frev=(double *)malloc(sizeof(double)*n_bp*n_bp); }
 
     // ->> gather all data by root <<- //
+    #ifdef _MPI_
     MPI_Gather(Fs, mpi->ind_run, MPI_DOUBLE, Frev, mpi->ind_run, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+    #else
+
+    #endif
 
     if(mpi->rank==0){
 
@@ -110,7 +115,9 @@
       free(Frev);
       }
 
+    #ifdef _MPI_
     MPI_Bcast(F, n_bp*n_bp, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+    #endif
 
     //MPI_Barrier(MPI_COMM_WORLD);
     //mpi_gather_dist_double(mpi, Fs, F, mpi->ind_run, mpi->max);

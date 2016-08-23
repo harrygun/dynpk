@@ -117,11 +117,11 @@
       // ->>   <<- //
       //size_t mdim, npix, nbp;
 
-      qe.mdim=100; 
+      qe.mdim=50; 
       //npix=mdim*mdim;
 
       qe.npix=qe.mdim;
-      qe.n_bp=49;   //24;   //mdim*mdim;
+      qe.n_bp=24;   //mdim*mdim;
       qe.map_dim=1;
 
 
