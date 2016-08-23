@@ -80,7 +80,7 @@ if __name__=='__main__':
 
 
     #->> data initialization <<- #
-    qe_dict={'calculate_dcov':   False, 
+    qe_dict={'calculate_dcov':   True, 
              'fname_dcov':       root+'result/dcov.npz',
 	     'map_zoom_factor':  zoom_factor,
 	     'get_bp_type':      'FFT',

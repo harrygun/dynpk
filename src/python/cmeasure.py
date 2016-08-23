@@ -63,7 +63,7 @@ def pk_fft_2d(d, dmap_res, zero_padding=False):
 
 
     #return pk*np.prod(dmap_res)**2./(2.*np.pi)**2.
-    return pk*np.prod(dmap_res)**2./(2.*np.pi)**3.
+    return pk/np.prod(dmap_res)**2.
 
 
 
@@ -84,9 +84,8 @@ def pk_fft_1d(d, dmap_res, zero_padding=False):
     dk=np.fft.fft(dd)
     pk=np.fft.fftshift(np.absolute(dk)**2.)
 
-    #return pk/(2.*np.pi)
-    return pk*np.prod(dmap_res)/np.prod(d.shape)*(2.*np.pi)
-
+    #return pk*np.prod(dmap_res)/np.prod(d.shape)*(2.*np.pi)
+    return pk/np.prod(dmap_res)
 
 
 
@@ -114,3 +113,4 @@ def autocorr_1d(d, auto_type='FFT', zero_padding=True):
         #cor=np.fft.fftshift(cor)
 
         return cor[:d.shape[0]]
+
