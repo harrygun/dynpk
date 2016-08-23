@@ -246,14 +246,17 @@
 
     printf("inverse of covariance matrix done.\n"); fflush(stdout);
 
-    /*
     // ->> calculate Fisher matrix and its inverse <<- //
     qe->Fij=(double *)malloc(sizeof(double)*qe->n_bp*qe->n_bp); 
     Fisher(mpi, qe->dcov, qe->icov, qe->Fij, qe->npix, qe->n_bp, qe->map_dim);
 
     fn="result/r1d/Fij.dat";
     write_data(mpi, fn, qe->Fij, sizeof(double), qe->n_bp*qe->n_bp);
-    */
+
+    //
+    MPI_Finalize();
+    abort();
+    //
 
     //mat_inv(mpi, qe->Fij, qe->iFij, qe->npix);
     printf("import inv_fisher\n"); fflush(stdout);
