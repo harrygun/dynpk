@@ -94,8 +94,8 @@ def autocorr_1d(d, auto_type='FFT', zero_padding=True):
     ''' ->> conduct the auto-correlation of the map <<- ''' 
 
     if auto_type=='scipy':
-        #cor=sig.correlate(d, d, mode='same') 
-        cor=sig.correlate(d, d) 
+        cor=sig.correlate(d, d, mode='same') 
+        #cor=sig.correlate(d, d) 
 	print 'cor shape:', cor.shape
 
         return cor
