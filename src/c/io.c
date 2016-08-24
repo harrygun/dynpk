@@ -65,6 +65,10 @@
   void write_data(MPIpar *mpi, char *fn, void *d, size_t size, size_t count){
     FILE *fp;
 
+    #ifdef _MPI_
+    MPI_Barrier(MPI_COMM_WORLD);
+    #endif
+
     if(mpi->rank==0){
       if(!(fp=fopen(fn, "wb"))) {
         printf("can't open file `%s`\n", fn); fflush(stdout);

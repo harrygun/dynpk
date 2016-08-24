@@ -287,6 +287,10 @@
     qe->Fij=Fisher(mpi, qe->dcov, qe->icov, qe->npix, qe->n_bp, qe->map_dim);
     fn="result/r1d/Fij.dat";
     write_data(mpi, fn, qe->Fij, sizeof(double), qe->n_bp*qe->n_bp);
+
+
+
+    
     
     mat_inv(mpi, qe->Fij, qe->iFij, qe->npix);
     fn="result/r1d/inv_Fij.dat";
