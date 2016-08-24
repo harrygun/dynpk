@@ -1,6 +1,6 @@
 #---------------------------#
-#DO_MPI= no
-DO_MPI= yes
+DO_MPI= no
+#DO_MPI= yes
 
 
 ifeq ($(DO_MPI), yes)
@@ -190,7 +190,7 @@ ifeq ($(MACHINE),cita)
     ifeq ($(DO_MPI), yes)
 	CFLAGS = -g -D _MPI_ -I /home/xwang/workspace/lib/gsl/include -I $(MYLIBPATH) -I $(INIPATH) -I $(MPIINCLUDE)   -I $(CUBAINCLUDE)
     else
-	CFLAGS = -g -fPIC -I /home/xwang/workspace/lib/gsl/include -I $(MYLIBPATH) -I $(INIPATH) -I $(MPIINCLUDE)   -I $(CUBAINCLUDE)
+	CFLAGS = -g -I /home/xwang/workspace/lib/gsl/include -I $(MYLIBPATH) -I $(INIPATH)   -I $(CUBAINCLUDE)
     endif
 
 
