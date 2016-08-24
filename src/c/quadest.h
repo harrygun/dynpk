@@ -13,6 +13,10 @@
   double *Fisher(MPIpar *mpi, double *dcov, double *icov, size_t npix, 
                  size_t n_bp, size_t map_dim);
 
+  double *full_covmat_recov(MPIpar *mpi, double *dcov, double *covn_v, double *plist, 
+                            size_t n_bp, size_t npix, size_t map_dim);
+
+
   void quad_est(MPIpar *mpi, QEpar *qe);
 
 #endif

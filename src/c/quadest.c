@@ -20,6 +20,7 @@
   #include "mpinit.h"
   #include "misc.h"
   #include "io.h"
+  #include "quadest.h"
 
 
 #ifdef _MPI_
