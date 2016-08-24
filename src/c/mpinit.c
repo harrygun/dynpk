@@ -26,13 +26,23 @@
 #endif
 
 
-  void mpi_gather_dist_double(MPIpar *mpi, double *in, double *out, 
+  //void mpi_gather_dist_double(MPIpar *mpi, double *in, double *out, 
+  //                                     size_t count_pp, size_t count_tot ) {
+
+  double *mpi_gather_dist_double(MPIpar *mpi, double *in, 
                                        size_t count_pp, size_t count_tot ) {
     // ->> gather & redistribution:  count_pp: count per process 
     
     int irk, i, nrun;
-    double *rev;
+    double *rev, *out;
+
+    #ifdef _MPI_
+    MPI_Barrier(MPI_COMM_WORLD);
+
+    if(mpi->ntask==1){return in;}
     
+    out=(double *)malloc(sizeof(double)*count_tot); 
+
     if(mpi->rank==0)
       rev=(double *)malloc(sizeof(double)*count_tot); 
 
@@ -68,8 +78,17 @@
     MPI_Barrier(MPI_COMM_WORLD);
     MPI_Bcast(out, count_tot, MPI_DOUBLE, 0, MPI_COMM_WORLD);
 
-    return;
+    #else
+    // ->> no MPI <<- //
+    out=in;
+    #endif
+
+    return out;
     }
+
+
+
+
 
 
   void mpi_loop_init(MPIpar *mpi, char *prefix) {

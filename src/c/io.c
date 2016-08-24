@@ -34,7 +34,9 @@
   void import_data_double(MPIpar *mpi, char *fn, void *d, size_t size, size_t count) {
     FILE *fp;
 
+    #ifdef _MPI_
     MPI_Barrier(MPI_COMM_WORLD);
+    #endif
 
     if(mpi->rank==0){
 
@@ -51,8 +53,10 @@
       fclose(fp);
       }
     
+    #ifdef _MPI_
     MPI_Barrier(MPI_COMM_WORLD);
     MPI_Bcast(d, count, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+    #endif
 
     return;
     }

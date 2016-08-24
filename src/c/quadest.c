@@ -39,23 +39,27 @@
     // ->> a/b:  indices of map pixels 
 
     if(map_dim==1)
-      {return ArrayAccess2D_n2(dcov, n_bp, npix, i, (int)fabs(a-b));}
+      {return ArrayAccess2D_n2(dcov, n_bp, npix, i, (int)fabs((double)(a-b)));}
 
     else if(map_dim==2) {abort();}
 
     else {abort();}
 
-    return;
+    return -99.;
     }
 
 
 
 
 
-  void Fisher(MPIpar *mpi, double *dcov, double *icov, double *F,
-                                size_t npix, size_t n_bp, size_t map_dim)  {
+  //void Fisher(MPIpar *mpi, double *dcov, double *icov, double *F,
+  //                              size_t npix, size_t n_bp, size_t map_dim)  {
+
+  double *Fisher(MPIpar *mpi, double *dcov, double *icov, size_t npix, 
+                 size_t n_bp, size_t map_dim)  {
+
     int i, j, a, b, c, d, idx, id, irk, nrun;
-    double *Fs, *Frev;
+    double *Fs, *Frev, *F;
 
     #ifdef _MPI_
     MPI_Barrier(MPI_COMM_WORLD);
@@ -83,8 +87,9 @@
             for(c=0; c<npix; c++)
               for(d=0; d<npix; d++) {
 
-                Fs[idx]+=access_dcov(dcov, n_bp, npix, i, a, b, map_dim)*icov[b,c]
-		        *access_dcov(dcov, n_bp, npix, j, c, d, map_dim)*icov[d,a]/2.;
+                Fs[idx]+=access_dcov(dcov, n_bp, npix, i, a, b, map_dim)*
+                         ArrayAccess2D(icov, npix, b, c)*access_dcov(dcov, n_bp, npix, 
+			 j, c, d, map_dim)*ArrayAccess2D(icov, npix, d, a)/2.;
                 }
 
         //printf("Fij[%d, %d]=%lg\n", i, j, Fs[idx]);
@@ -93,6 +98,7 @@
     printf("Fisher is done. (rank %d)\n", mpi->rank); fflush(stdout);
 
 
+    /*
     if(mpi->rank==0){ Frev=(double *)malloc(sizeof(double)*n_bp*n_bp); }
 
     // ->> gather all data by root <<- //
@@ -111,20 +117,29 @@
           F[mpi_get_id(irk, mpi->ntask, i)]=Frev[irk*nrun+i];
 	  }
 
-      printf("got here.\n", mpi->rank); fflush(stdout);
+      printf("got here. (rank-%d)\n", mpi->rank); fflush(stdout);
       free(Frev);
       }
 
     #ifdef _MPI_
     MPI_Bcast(F, n_bp*n_bp, MPI_DOUBLE, 0, MPI_COMM_WORLD);
     #endif
+    */
 
-    //MPI_Barrier(MPI_COMM_WORLD);
     //mpi_gather_dist_double(mpi, Fs, F, mpi->ind_run, mpi->max);
+    F=mpi_gather_dist_double(mpi, Fs, mpi->ind_run, mpi->max);
 
-    printf("Existing Fisher.\n", mpi->rank); fflush(stdout);
+    printf("Existing Fisher. (rank-%d)\n", mpi->rank); fflush(stdout);
+
+    char *fn="result/r1d/Fij_ins.dat";
+    write_data(mpi, fn, Fs, sizeof(double), n_bp*n_bp);
+
+
+    #ifndef _MPI_
     free(Fs);
-    return;
+    #endif
+
+    return F;
     }
 
 
@@ -143,15 +158,21 @@
     }
 
 
-  void full_covmat_recov(MPIpar *mpi, double *dcov, double *cov, double *covn_v, 
-                         double *plist, size_t n_bp, size_t npix, size_t map_dim) {
+  //void full_covmat_recov(MPIpar *mpi, double *dcov, double *cov, double *covn_v, 
+  //                       double *plist, size_t n_bp, size_t npix, size_t map_dim) {
+
+  double *full_covmat_recov(MPIpar *mpi, double *dcov, double *covn_v, double *plist, 
+                            size_t n_bp, size_t npix, size_t map_dim) {
+
     // ->> obtain full covariance matrix from dvoc and pk_list <<- //
 
     int ip, i, j, a, b, c, d, idx, id, irk, nrun;
-    double *cov_s, *crev;
+    double *cov_s, *crev, *cov;
     char *fn;
 
+    #ifdef _MPI_
     MPI_Barrier(MPI_COMM_WORLD);
+    #endif
 
     mpi->max=npix*npix;    mpi->start=0;
     mpi_loop_init(mpi, "cov");
@@ -218,12 +239,16 @@
     MPI_Bcast(cov, npix*npix, MPI_DOUBLE, 0, MPI_COMM_WORLD);
     */
 
-    mpi_gather_dist_double(mpi, cov_s, cov, mpi->ind_run, mpi->max);
+
+    //mpi_gather_dist_double(mpi, cov_s, cov, mpi->ind_run, mpi->max);
+    cov=mpi_gather_dist_double(mpi, cov_s, mpi->ind_run, mpi->max);
 
 
-
+    #ifndef _MPI_
     free(cov_s);
-    return;
+    #endif
+
+    return cov;
     }
 
 
@@ -237,8 +262,11 @@
 
 
     // ->> first recover the full covariance matrix <<- //
-    full_covmat_recov(mpi, qe->dcov, qe->cov, qe->covn_v, qe->plist, 
-                      qe->n_bp, qe->npix, qe->map_dim);
+    //full_covmat_recov(mpi, qe->dcov, qe->cov, qe->covn_v, qe->plist, 
+    //                  qe->n_bp, qe->npix, qe->map_dim);
+
+    qe->cov=full_covmat_recov(mpi, qe->dcov, qe->covn_v, qe->plist, 
+                              qe->n_bp, qe->npix, qe->map_dim);
 
     printf("Full covariance matrix done.(%d)\n", mpi->rank); fflush(stdout);
 
@@ -250,26 +278,26 @@
 
     // ->> inverse matrix <<- //
     mat_inv(mpi, qe->cov, qe->icov, qe->npix);
+    fn="result/r1d/icov_out.dat";
+    write_data(mpi, fn, qe->icov, sizeof(double), qe->npix*qe->npix);
 
     printf("inverse of covariance matrix done.\n"); fflush(stdout);
 
     // ->> calculate Fisher matrix and its inverse <<- //
-    qe->Fij=(double *)malloc(sizeof(double)*qe->n_bp*qe->n_bp); 
-    Fisher(mpi, qe->dcov, qe->icov, qe->Fij, qe->npix, qe->n_bp, qe->map_dim);
-
+    qe->Fij=Fisher(mpi, qe->dcov, qe->icov, qe->npix, qe->n_bp, qe->map_dim);
     fn="result/r1d/Fij.dat";
     write_data(mpi, fn, qe->Fij, sizeof(double), qe->n_bp*qe->n_bp);
-
-    //
-    MPI_Finalize();
-    abort();
-    //
-
-    //mat_inv(mpi, qe->Fij, qe->iFij, qe->npix);
-    printf("import inv_fisher\n"); fflush(stdout);
+    
+    mat_inv(mpi, qe->Fij, qe->iFij, qe->npix);
     fn="result/r1d/inv_Fij.dat";
-    qe->iFij=(double *)malloc(sizeof(double)*qe->n_bp*qe->n_bp);
-    import_data_double(mpi, fn, qe->iFij, sizeof(double), qe->n_bp*qe->n_bp);
+    write_data(mpi, fn, qe->iFij, sizeof(double), qe->n_bp*qe->n_bp);
+
+
+    //printf("import inv_fisher\n"); fflush(stdout);
+    //fn="result/r1d/inv_Fij.dat";
+    //qe->iFij=(double *)malloc(sizeof(double)*qe->n_bp*qe->n_bp);
+    //import_data_double(mpi, fn, qe->iFij, sizeof(double), qe->n_bp*qe->n_bp);
+
 
     printf("(inv)-Fisher Matrix done.\n"); fflush(stdout);
   
@@ -279,7 +307,9 @@
     mat_vec_mult(qe->icov, qe->map, d_ic, qe->npix, qe->npix);
 
 
+    #ifdef _MPI_
     MPI_Barrier(MPI_COMM_WORLD);
+    #endif
 
     // ->> calculate Qi' <<- //
     double *Qip_s, *Qi_s;
@@ -310,9 +340,11 @@
     qe->Qip=(double *)malloc(qe->n_bp*sizeof(double));
     qe->Qi =(double *)malloc(qe->n_bp*sizeof(double));
 
-    mpi_gather_dist_double(mpi, Qip_s, qe->Qip, mpi->ind_run, mpi->max);
-    mpi_gather_dist_double(mpi, Qi_s, qe->Qi, mpi->ind_run, mpi->max);
+    //mpi_gather_dist_double(mpi, Qip_s, qe->Qip, mpi->ind_run, mpi->max);
+    //mpi_gather_dist_double(mpi, Qi_s, qe->Qi, mpi->ind_run, mpi->max);
 
+    qe->Qip=mpi_gather_dist_double(mpi, Qip_s, mpi->ind_run, mpi->max);
+    qe->Qi=mpi_gather_dist_double(mpi, Qi_s, mpi->ind_run, mpi->max);
 
     free(Qip_s); free(Qi_s); free(d_ic);
     return;

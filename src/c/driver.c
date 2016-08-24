@@ -126,7 +126,7 @@
 
 
       qe.dcov=(double *)malloc(sizeof(double)*qe.n_bp*qe.npix);
-      qe.cov= (double *)malloc(sizeof(double)*qe.npix*qe.npix);
+      //qe.cov= (double *)malloc(sizeof(double)*qe.npix*qe.npix);
       qe.icov=(double *)malloc(sizeof(double)*qe.npix*qe.npix);
       qe.plist=(double *)malloc(sizeof(double)*qe.n_bp);
       qe.map=(double *)malloc(sizeof(double)*qe.npix);

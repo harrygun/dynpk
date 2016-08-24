@@ -42,7 +42,7 @@ ifeq ($(MACHINE),mypro13)
 	CFLAGS = -g -arch x86_64 -D_MPI_ -I /Users/wangxin/workspace/lib/gsl/include -I $(MYLIBPATH) -I $(INIPATH) -I $(MPIINCLUDE)  
     else
 	CFLAGS = -g -arch i386 -arch x86_64 -I /Users/wangxin/workspace/lib/gsl/include \
-		 -I $(MYLIBPATH) -I $(INIPATH)  -I $(MPIINCLUDE)
+		 -I $(MYLIBPATH) -I $(INIPATH)  
 
 	#CFLAGS = -g -I /Users/wangxin/workspace/lib/gsl/include \
 	#	 -I $(MYLIBPATH) -I $(INIPATH)  -I $(MPIINCLUDE)
