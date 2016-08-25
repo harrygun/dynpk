@@ -13,8 +13,9 @@
 
   //void mpi_gather_dist_double(MPIpar *mpi, double *in, double *out, 
   //                                     size_t count_pp, size_t count_tot );
-  double *mpi_gather_dist_double(MPIpar *mpi, double *in, 
-                                       size_t count_pp, size_t count_tot );
+
+  double *mpi_gather_dist_double(MPIpar *mpi, double *in, size_t count_pp, 
+                                 size_t count_tot );
 
   void mpi_loop_init(MPIpar *mpi, char *prefix);
 

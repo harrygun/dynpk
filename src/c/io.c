@@ -62,8 +62,10 @@
     }
 
 
-  void write_data(MPIpar *mpi, char *fn, void *d, size_t size, size_t count){
+  void write_data(MPIpar *mpi, char *fn, const void *d, size_t size, size_t count){
     FILE *fp;
+
+    //printf("write_data: %p\n", d);
 
     #ifdef _MPI_
     MPI_Barrier(MPI_COMM_WORLD);

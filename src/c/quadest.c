@@ -241,14 +241,14 @@
     */
 
 
-    //mpi_gather_dist_double(mpi, cov_s, cov, mpi->ind_run, mpi->max);
     cov=mpi_gather_dist_double(mpi, cov_s, mpi->ind_run, mpi->max);
+    printf("pointer: %p  %p  (%d  %d)\n", cov, cov_s, mpi->ind_run, mpi->max);
 
 
-    #ifndef _MPI_
+    fn="result/r1d/cov_out_ss.dat";
+    write_data(mpi, fn, cov_s, sizeof(double), npix*npix);
+
     free(cov_s);
-    #endif
-
     return cov;
     }
 
@@ -261,7 +261,6 @@
     int a, b, i, j, idx, id;
     char *fn;
 
-
     // ->> first recover the full covariance matrix <<- //
     //full_covmat_recov(mpi, qe->dcov, qe->cov, qe->covn_v, qe->plist, 
     //                  qe->n_bp, qe->npix, qe->map_dim);
@@ -269,6 +268,7 @@
     qe->cov=full_covmat_recov(mpi, qe->dcov, qe->covn_v, qe->plist, 
                               qe->n_bp, qe->npix, qe->map_dim);
 
+    printf("qe->cov pointer: %p\n", qe->cov);
     printf("Full covariance matrix done.(%d)\n", mpi->rank); fflush(stdout);
 
     fn="result/r1d/cov_out.dat";
