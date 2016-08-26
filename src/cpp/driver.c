@@ -7,25 +7,14 @@
   #include <math.h>
   #include <string.h>
 
-  #include <gsl/gsl_integration.h>
-  #include <gsl/gsl_sf.h>
-  #include <iniparser.h>
-
-  #include "const.h"
-  #include "varb.h"
-  #include "mymath.h"
-  #include "myerr.h"
-  #include "matrix.h"
-  #include "init.h"
-  #include "power.h"
-  #include "cospara.h"
-  #include "myinterpolate.h"
+  //#include <gsl/gsl_integration.h>
+  //#include <gsl/gsl_sf.h>
 
   #include "glbvarb.h"
-  #include "mpinit.h"
   #include "io.h"
-  #include "quadest.h"
-  #include "misc.h"
+  //#include "mpinit.h"
+  //#include "quadest.h"
+  //#include "misc.h"
 
 
 #ifdef _MPI_
@@ -83,8 +72,8 @@
   --------------------------------------*/
 
       printf("Opening File '%s'.\n", ini_name);
-      dictionary * dict;
-      dict = iniparser_load(ini_name);
+      //dictionary * dict;
+      //dict = iniparser_load(ini_name);
 
   /*-----------------------------------------------
         initialize the QE parameters
@@ -140,25 +129,25 @@
 
       // ->> noise covariance matrix <<- //
       qe.covn_v=(double *)malloc(sizeof(double)*qe.npix);
-      cov_noise(&mpi, qe.covn_v, qe.npix, NULL);
+      //cov_noise(&mpi, qe.covn_v, qe.npix, NULL);
 
       // ->> call Quadratic Estimator <<- //
-      quad_est(&mpi, &qe);
+      //quad_est(&mpi, &qe);
 
    
       // ->> output <<- //
-      printf("Output data.\n"); fflush(stdout);
-      write_data(&mpi, fn_out, qe.Qi, sizeof(double), qe.n_bp);
+      //printf("Output data.\n"); fflush(stdout);
+      //write_data(&mpi, fn_out, qe.Qi, sizeof(double), qe.n_bp);
 
 
   /*-----------------------------------------------------
                      free all
   -----------------------------------------------------*/
     stop:
-      iniparser_freedict(dict);
 
       free(qe.dcov);   free(qe.icov); 
-      free(qe.cov);    
+      free(qe.cov);    free(qe.map);
+      free(qe.plist);  free(qe.covn_v);
 
 
       #ifdef _MPI_
