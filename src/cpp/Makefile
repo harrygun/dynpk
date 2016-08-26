@@ -7,8 +7,8 @@ ifeq ($(DO_MPI), yes)
   #CC= mpicc
   CC= mpic++
 else
-  #CC= gcc
-  CC= g++
+  CC= gcc
+  CXX= g++
 endif
 #---------------------------#
 
@@ -117,13 +117,15 @@ LIB  = $(GSLIB)
 
 
 
-.SUFFIXES : .o .c
+.SUFFIXES : .o .c .cpp
 .c.o :
 	$(CC) $(CFLAGS) -c $<
 
 .f.o :
 	$(FC) $(FFLAGS) -c $<
 
+.cpp.o :
+	$(CXX) $(CFLAGS) -c $<
 
 
 
@@ -140,7 +142,7 @@ default: quadestxx
 
 #--------------------------------------------------#
 quadestxx:  io.o driver.o
-	$(CC)  $^ -o $(WORKSPACE)/$@  $(LIB)
+	$(CXX)  $^ -o $(WORKSPACE)/$@  $(LIB)
 
 
 

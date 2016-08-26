@@ -1,11 +1,11 @@
   /*--------------------------------------------------------------------------
           >>>         Driver for Quadratic Estimator       <<<
   --------------------------------------------------------------------------*/
+  #include <iostream>
+  #include <cmath>
+  #include <cstring>
 
-  #include <stdio.h>
-  #include <stdlib.h>
-  #include <math.h>
-  #include <string.h>
+  using namespace std;
 
   //#include <gsl/gsl_integration.h>
   //#include <gsl/gsl_sf.h>
@@ -45,7 +45,7 @@
       mpi.rc = MPI_Init(&argc, &argv);
 
       if (mpi.rc != MPI_SUCCESS) {
-           printf ("Error starting MPI program. Terminating.\n");
+           cout << "Error starting MPI program. Terminating." << endl; 
            MPI_Abort(MPI_COMM_WORLD, mpi.rc);
            }
 
@@ -71,7 +71,7 @@
          End of MPI initialization.
   --------------------------------------*/
 
-      printf("Opening File '%s'.\n", ini_name);
+      cout << "Opening File:  " << ini_name << endl;
       //dictionary * dict;
       //dict = iniparser_load(ini_name);
 
@@ -94,9 +94,9 @@
 
       /* Calculating Eulerian Biasing Model */
       mpi.start = 0;   // mpi.max = 1;
-      printf("==================================\n"); fflush(stdout);
+      cout << "==================================" << endl; fflush(stdout);
 
-      char *fn_dcov, *fn_cov, *fn_icov, *fn_out, *fn_map, *fn_plist;
+      const char *fn_dcov, *fn_cov, *fn_icov, *fn_out, *fn_map, *fn_plist;
 
       fn_dcov="result/r1d/dcov.dat";
       fn_map ="result/r1d/dmap.dat";

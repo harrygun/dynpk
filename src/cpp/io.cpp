@@ -1,7 +1,13 @@
-  #include <stdio.h>
-  #include <stdlib.h>
-  #include <math.h>
-  #include <string.h>
+  //#include <stdio.h>
+  //#include <stdlib.h>
+  //#include <math.h>
+  //#include <string.h>
+
+  #include <iostream>
+  #include <cmath>
+  #include <cstring>
+
+  using namespace std;
 
   //#include <gsl/gsl_integration.h>
   //#include <gsl/gsl_sf.h>
@@ -21,7 +27,7 @@
 
 
 
-  void import_data_double(MPIpar *mpi, char *fn, void *d, size_t size, size_t count) {
+  void import_data_double(MPIpar *mpi, const char *fn, void *d, size_t size, size_t count) {
     FILE *fp;
 
     #ifdef _MPI_
@@ -52,7 +58,7 @@
     }
 
 
-  void write_data(MPIpar *mpi, char *fn, const void *d, size_t size, size_t count){
+  void write_data(MPIpar *mpi, const char *fn, const void *d, size_t size, size_t count){
     FILE *fp;
 
     //printf("write_data: %p\n", d);
