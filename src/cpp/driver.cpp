@@ -131,6 +131,7 @@
       qe.covn_v=(double *)malloc(sizeof(double)*qe.npix);
       //cov_noise(&mpi, qe.covn_v, qe.npix, NULL);
 
+
       // ->> call Quadratic Estimator <<- //
       //quad_est(&mpi, &qe);
 

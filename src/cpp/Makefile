@@ -4,8 +4,8 @@ DO_MPI= no
 
 
 ifeq ($(DO_MPI), yes)
-  #CC= mpicc
-  CC= mpic++
+  CC= mpicc
+  CXX= mpic++
 else
   CC= gcc
   CXX= g++
