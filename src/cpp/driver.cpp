@@ -4,6 +4,7 @@
   #include <iostream>
   #include <cmath>
   #include <cstring>
+  #include <stdio.h>
   //#include <El.hpp>
 
   //using namespace El;
