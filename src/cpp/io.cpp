@@ -31,12 +31,12 @@
 
       if(!(fp=fopen(fn, "r"))) {
         printf("can't open file `%s`\n", fn); fflush(stdout);
-        exit(0);
+        abort();
         }
 
       if(!(fread(d, size, count, fp)) ) {
         printf("File '%s' import Error.\n", fn); fflush(stdout);
-        exit(0);
+        abort();
         }
 
       fclose(fp);
@@ -63,7 +63,7 @@
     if(mpi->rank==0){
       if(!(fp=fopen(fn, "wb"))) {
         printf("can't open file `%s`\n", fn); fflush(stdout);
-        exit(0);
+        abort();
         }
 
       fwrite(d, size, count, fp);
