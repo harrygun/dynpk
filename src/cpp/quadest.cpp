@@ -3,6 +3,8 @@
   #include <iostream>
   #include <cmath>
   #include <cstring>
+  #include <cstdlib>
+  #include <cstdio>
   #include "El.hpp"
 
   #include "glbvarb.hpp"
