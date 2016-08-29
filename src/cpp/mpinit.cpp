@@ -1,7 +1,9 @@
   #include <iostream>
   #include <cmath>
   #include <cstring>
-  #include <stdio.h>
+  //#include <stdio.h>
+  #include <cstdlib>
+  #include <cstdio>
 
   #include "glbvarb.hpp"
   #include "io.hpp"

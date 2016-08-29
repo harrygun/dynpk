@@ -4,7 +4,9 @@
   #include <iostream>
   #include <cmath>
   #include <cstring>
-  #include <stdio.h>
+  //#include <stdio.h>
+  #include <cstdlib>
+  #include <cstdio>
   //#include <El.hpp>
 
   //using namespace El;

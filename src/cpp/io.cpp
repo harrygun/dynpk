@@ -1,7 +1,10 @@
   #include <iostream>
   #include <cmath>
   #include <cstring>
-  #include <stdio.h>
+  //#include <stdio.h>
+  //#include <stdlib.h>
+  #include <cstdlib>
+  #include <cstdio>
   using namespace std;
 
 
@@ -31,12 +34,12 @@
 
       if(!(fp=fopen(fn, "r"))) {
         printf("can't open file `%s`\n", fn); fflush(stdout);
-        abort();
+        exit(0);
         }
 
       if(!(fread(d, size, count, fp)) ) {
         printf("File '%s' import Error.\n", fn); fflush(stdout);
-        abort();
+        exit(0);
         }
 
       fclose(fp);
@@ -63,7 +66,7 @@
     if(mpi->rank==0){
       if(!(fp=fopen(fn, "wb"))) {
         printf("can't open file `%s`\n", fn); fflush(stdout);
-        abort();
+        exit(0);
         }
 
       fwrite(d, size, count, fp);
