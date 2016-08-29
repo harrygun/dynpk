@@ -141,7 +141,8 @@ default: quadestxx
 
 
 #--------------------------------------------------#
-quadestxx:  io.o driver.o
+#quadestxx: io.o mpinit.o quadest.o driver.o
+quadestxx: io.o mpinit.o driver.o
 	$(CXX)  $^ -o $(WORKSPACE)/$@  $(LIB)
 
 

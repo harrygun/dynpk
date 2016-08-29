@@ -1,7 +1,7 @@
   #ifndef _H_IO_
   #define _H_IO_
 
-  #include "glbvarb.h"
+  #include "glbvarb.hpp"
 
   void import_data_double(MPIpar *mpi, const char *fn, void *d, size_t size, size_t count);
 

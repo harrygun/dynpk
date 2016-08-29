@@ -4,26 +4,20 @@
   #include <iostream>
   #include <cmath>
   #include <cstring>
+  //#include <El.hpp>
+
+  //using namespace El;
+
+  #include "glbvarb.hpp"
+  #include "io.hpp"
+  #include "mpinit.hpp"
+  //#include "quadest.hpp"
 
   using namespace std;
 
-  //#include <gsl/gsl_integration.h>
-  //#include <gsl/gsl_sf.h>
-
-  #include "glbvarb.h"
-  #include "io.h"
-  //#include "mpinit.h"
-  //#include "quadest.h"
-  //#include "misc.h"
-
-
-#ifdef _MPI_
+  #ifdef _MPI_
   #include <mpi.h>
-#endif
-
-#ifdef _OMP_
-  #include <omp.h>
-#endif
+  #endif
 
 
 

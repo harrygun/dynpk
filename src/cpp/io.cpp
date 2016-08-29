@@ -1,18 +1,10 @@
-  //#include <stdio.h>
-  //#include <stdlib.h>
-  //#include <math.h>
-  //#include <string.h>
-
   #include <iostream>
   #include <cmath>
   #include <cstring>
-
   using namespace std;
 
-  //#include <gsl/gsl_integration.h>
-  //#include <gsl/gsl_sf.h>
 
-  #include "glbvarb.h"
+  #include "glbvarb.hpp"
   //#include "mpinit.h"
 
 
