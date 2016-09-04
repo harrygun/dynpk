@@ -66,10 +66,8 @@
   /*--------------------------------------
          End of MPI initialization.
   --------------------------------------*/
-
       cout << "Opening File:  " << ini_name << endl;
-      //dictionary * dict;
-      //dict = iniparser_load(ini_name);
+
 
   /*-----------------------------------------------
         initialize the QE parameters
