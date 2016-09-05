@@ -1,0 +1,28 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+Autocovariance1DReal	src/VectorFunctions.cpp	/^void Autocovariance1DReal(vector<double>& v,vector<double>& autocovariance)$/;"	f
+C	FisherMatrix.cpp	/^typedef Complex<Real> C;$/;"	t	file:
+Combine_dcovi	src/FisherHelperFunctions.cpp	/^void Combine_dcovi(std::string basename, int nmatrices, int nrows, int ncols, DistMatrix<double>& full_dcovi)$/;"	f
+DistMatrixToVector	src/VectorFunctions.cpp	/^void DistMatrixToVector(DistMatrix<double>& A, vector<double>& v_out)$/;"	f
+FISHERHELPERFUNCTIONS_H	include/FisherHelperFunctions.hpp	2;"	d
+FillBlockToeplitz	src/MatrixSetUpFunctions.cpp	/^void FillBlockToeplitz(DistMatrix<double>& A,DistMatrix<double>& X)$/;"	f
+GetAutocovarianceMatrix	src/MatrixSetUpFunctions.cpp	/^void GetAutocovarianceMatrix(DistMatrix<double>& v_data, DistMatrix<double>&  CovarMatrix)$/;"	f
+GetAutocovarianceVector	src/VectorFunctions.cpp	/^void GetAutocovarianceVector(vector<double>& v, vector<double>&v_out)$/;"	f
+GetAveragedAutocovarianceMatrix	src/MatrixSetUpFunctions.cpp	/^void GetAveragedAutocovarianceMatrix(DistMatrix<double>& M_data, DistMatrix<double>&  CovarMatrix)$/;"	f
+GetCirculantGeneratingVector	src/VectorFunctions.cpp	/^void GetCirculantGeneratingVector(vector<double>& v_original, vector<double>& v_out)$/;"	f
+GetCovarianceMatrix	src/FisherHelperFunctions.cpp	/^double GetCovarianceMatrix(int pixeldimension, int submatrixlength, int dx0, int dx1, DistMatrix<double>& bandpower, DistMatrix<double>& dcov)$/;"	f
+GetFisherMatrix	src/FisherHelperFunctions.cpp	/^void GetFisherMatrix(DistMatrix<double>& dcovfull, int nmatrices, DistMatrix<double>& Cov, DistMatrix<double>& FisherMatrix)$/;"	f
+GetRow	src/VectorFunctions.cpp	/^void GetRow(DistMatrix<double>& A,int row,vector<double>& v)$/;"	f
+MATRIXSETUPFUNCTIONS_H	include/MatrixSetUpFunctions.hpp	2;"	d
+Real	FisherMatrix.cpp	/^typedef double Real;$/;"	t	file:
+Real	src/FisherHelperFunctions.cpp	/^typedef double Real;$/;"	t	file:
+Real	src/MatrixSetUpFunctions.cpp	/^typedef double Real;$/;"	t	file:
+Real	src/VectorFunctions.cpp	/^typedef double Real;$/;"	t	file:
+VECTORFUNCTIONS_H	include/VectorFunctions.hpp	2;"	d
+VectorToDistMatrix	src/VectorFunctions.cpp	/^void VectorToDistMatrix(vector<double>& v, DistMatrix<double>& M)$/;"	f
+main	FisherMatrix.cpp	/^main( int argc, char* argv[] )$/;"	f
+mpixel_idx	src/FisherHelperFunctions.cpp	/^void mpixel_idx(int pixel,int timedimension, int freqdimension, vector<int>& idx)$/;"	f
