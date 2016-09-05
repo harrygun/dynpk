@@ -30,8 +30,11 @@
 
       //if(argc!=2)  //
       //  myerr("Input parameters file is needed.", FALSE);
+      //
+      //
+      Environment env( argc, argv );
 
-      ini_name=argv[1];
+      //ini_name=argv[1];
 /*------------------------------------------------
             MPI initialization.
 ------------------------------------------------*/
@@ -127,7 +130,7 @@
 
 
       // ->> call Quadratic Estimator <<- //
-      //quad_est(&mpi, &qe);
+      quad_est_dismat(&mpi, &qe);
 
    
       // ->> output <<- //
