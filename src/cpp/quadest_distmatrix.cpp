@@ -191,7 +191,7 @@
 
 
 
-  void quad_est(MPIpar *mpi, QEpar *qe) {
+  void quad_est_distmat(MPIpar *mpi, QEpar *qe) {
     // ->> calculate quadratic estimator <<- //
     int a, b, i, j, idx, id;
     char *fn;
