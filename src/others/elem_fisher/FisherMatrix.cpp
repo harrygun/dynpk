@@ -23,10 +23,14 @@ main( int argc, char* argv[] )
   
   // Read in the covariance matrix
   DistMatrix<double> Cov(nrows,ncols);   // initialize covariance matrix "Cov"
-  Read(Cov,Cfile);                       // fill covariance matrix with contents of "Cfile"
+  Read(Cov,Cfile, sequential=true);     // fill covariance matrix with contents of "Cfile"
   
   // Get the Fisher Matrix
-  DistMatrix<double> FisherMatrix(ndcov_i,ndcov_i),dcovfull(nrows,ncols*ndcov_i);   // initialize Fisher matrix, derivative matrix
+  //DistMatrix<double> FisherMatrix(ndcov_i,ndcov_i),dcovfull(nrows,ncols*ndcov_i);   // initialize Fisher matrix, derivative matrix
+
+
+  DistMatrix<double> FisherMatrix(ndcov_i,ndcov_i),dcovfull(ndcov_i,nrows*ncols);   // initialize Fisher matrix, derivative matrix
+
   Combine_dcovi(dcovi_dir, ndcov_i, nrows, ncols, dcovfull);   // makes matrices out of derivative matrix (turns rows into Toeplitz matrices)
   GetFisherMatrix(dcovfull, ndcov_i, Cov, FisherMatrix);       // performs inversion of Cov and matrix multiplication w/ derivatives to get Fisher   
   Write(FisherMatrix,FisherOut,MATRIX_MARKET);           // write FisherMatrix to file as MATRIX_MARKET type (read in python w/ scipy.io's mmread)
