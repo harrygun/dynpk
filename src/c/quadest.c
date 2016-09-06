@@ -300,7 +300,8 @@
     */
 
     printf("import inv_fisher\n"); fflush(stdout);
-    fn="result/r1d/inv_Fij_mm.dat";
+    //fn="result/r1d/inv_Fij_mm.dat";
+    fn="result/r1d/Carly/Fij_inv.dat";
     qe->iFij=(double *)malloc(sizeof(double)*qe->n_bp*qe->n_bp);
     import_data_double(mpi, fn, qe->iFij, sizeof(double), qe->n_bp*qe->n_bp);
 
