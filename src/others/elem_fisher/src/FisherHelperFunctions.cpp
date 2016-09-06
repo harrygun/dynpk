@@ -77,6 +77,7 @@ void Combine_dcovi(std::string basename, int nmatrices, int nrows, int ncols, Di
       DistMatrixToVector(colmatrix,colvector);
       GetSymmetricCirculantVector(colvector, colvectorsymm);
 
+      /*
       if(k==0){
 	fout.open("dC_ext.dat", std::ios::out | std::ios::binary);
         fout.write((char *)&colvectorsymm, ((size_t)colvectorsymm.size())*sizeof(colvectorsymm[0]) );
@@ -86,15 +87,18 @@ void Combine_dcovi(std::string basename, int nmatrices, int nrows, int ncols, Di
         fout.write((char *)&colvector, ((size_t)colvector.size())*sizeof(colvector[0]) );
         fout.close();
 	}
+    */
 
       Toeplitz(dCk,nrows,nrows,colvectorsymm);
       full_dcovi(IR(0,nrows),IR(k*nmatrices,k*nmatrices+ncols))=dCk(IR(0,nrows),IR(0,ncols));
 
+      /*
       if(k==0){
         Write(dCk(IR(0,nrows),IR(0,ncols)),"./dC0", MATRIX_MARKET); 
         Write(colmatrix, "./dC0_vm", MATRIX_MARKET); 
         Write(dcovcols, "./dC_orig", MATRIX_MARKET); 
         }
+      */
 
     }
 
@@ -112,6 +116,9 @@ void GetFisherMatrix(DistMatrix<double>& dcovfull, int nmatrices, DistMatrix<dou
   Cinv=Cov;
   HPDInverse(LOWER,Cinv);
   MakeHermitian(LOWER,Cinv);
+
+  Write(Cinv,"./Cinv", MATRIX_MARKET); 
+
   Zeros(dCi,nrows,ncols);
   Zeros(dCj,nrows,ncols);
   Zeros(FisherMatrix,nmatrices,nmatrices);
