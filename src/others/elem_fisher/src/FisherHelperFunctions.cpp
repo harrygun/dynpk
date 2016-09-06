@@ -69,7 +69,7 @@ void Combine_dcovi(std::string basename, int nmatrices, int nrows, int ncols, Di
   // ->> column major <<- //
   //Transpose(dcovcols,dcovcols);
 
-  ofstream fout;
+  //ofstream fout;
 
   for (int k=0;k<nmatrices;k++)
     {
