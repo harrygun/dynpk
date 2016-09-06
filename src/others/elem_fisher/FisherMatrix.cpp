@@ -28,8 +28,8 @@ main( int argc, char* argv[] )
   Read(Cov,Cfile);     // fill covariance matrix with contents of "Cfile"
   
   // Get the Fisher Matrix
-  //DistMatrix<double> FisherMatrix(ndcov_i,ndcov_i),dcovfull(nrows,ncols*ndcov_i);  //initialize matrices
-  DistMatrix<double> FisherMatrix(ndcov_i,ndcov_i),dcovfull(nrows*ncols, ndcov_i); 
+  DistMatrix<double> FisherMatrix(ndcov_i,ndcov_i),dcovfull(nrows,ncols*ndcov_i);  //initialize matrices
+  //DistMatrix<double> FisherMatrix(ndcov_i,ndcov_i),dcovfull(nrows*ncols, ndcov_i); 
 
   Combine_dcovi(dcovi_dir, ndcov_i, nrows, ncols, dcovfull);   // makes matrices out of derivative matrix (turns rows into Toeplitz matrices)
   GetFisherMatrix(dcovfull, ndcov_i, Cov, FisherMatrix);       // performs inversion of Cov and matrix multiplication w/ derivatives to get Fisher   
