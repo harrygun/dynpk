@@ -1,6 +1,9 @@
+#include <iostream>
+#include <fstream>
 #include <El.hpp>
 #include "../include/MatrixSetUpFunctions.hpp"
 #include "../include/VectorFunctions.hpp"
+
 using namespace El;
 typedef double Real;
 
@@ -75,8 +78,15 @@ void Combine_dcovi(std::string basename, int nmatrices, int nrows, int ncols, Di
       full_dcovi(IR(0,nrows),IR(k*nmatrices,k*nmatrices+ncols))=dCk(IR(0,nrows),IR(0,ncols));
 
       if(k==0){
-        Write(colvectorsymm,"./dC_ext.dat"); 
-        Write(dCk(IR(0,nrows),IR(0,ncols)),"./dC0.dat"); 
+        //Write(colvectorsymm,"./dC_ext.dat"); 
+
+        ofstream fout("dC_ext.dat", ios::out | ios::binary);
+        fout.write((double*)&colvectorsymm[0], colvectorsymm.size()*sizeof(double));
+        fout.close();
+
+	
+	std::ofstream output_file("./example.txt");
+        Write(dCk(IR(0,nrows),IR(0,ncols)),"./dC0.dat", MATRIX_MARKET); 
         }
 
     }
