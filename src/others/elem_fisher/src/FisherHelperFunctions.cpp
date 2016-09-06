@@ -88,7 +88,7 @@ void Combine_dcovi(std::string basename, int nmatrices, int nrows, int ncols, Di
         //Output("sizeof colvectorsymm= (", colvectorsymm.size(),")");
 
 
-        fout.write(colvectorsymm[0], ((size_t)colvectorsymm.size())*sizeof(colvectorsymm[0]) );
+        fout.write((char *)&colvectorsymm, ((size_t)colvectorsymm.size())*sizeof(colvectorsymm[0]) );
         fout.close();
 
 	
