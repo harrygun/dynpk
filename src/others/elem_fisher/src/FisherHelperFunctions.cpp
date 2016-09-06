@@ -58,7 +58,7 @@ void Combine_dcovi(std::string basename, int nmatrices, int nrows, int ncols, Di
   //DistMatrix<double> dCk(nrows,nrows);
   DistMatrix<double> dCk(2*nrows-1,2*nrows-1);
 
-  DistMatrix<double> dcovcols(nmatrices, nrows), colmatrix(nrows,1);
+  DistMatrix<double> dcovcols(nrows, nmatrices), colmatrix(nrows,1);
   vector<double> colvector(nrows),colvectorsymm(2*nrows-1);
 
   Zeros(colmatrix,nrows,1);
