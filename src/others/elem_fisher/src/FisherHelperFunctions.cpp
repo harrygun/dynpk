@@ -52,13 +52,16 @@ void GetSymmetricCirculantVector(vector<double>& v, vector<double>&v_out)
 
 void Combine_dcovi(std::string basename, int nmatrices, int nrows, int ncols, DistMatrix<double>& full_dcovi)
 {
-  DistMatrix<double> dCk(nrows,nrows);
+  //DistMatrix<double> dCk(nrows,nrows);
+  DistMatrix<double> dCk(2*nrows-1,2*nrows-1);
+
   DistMatrix<double> dcovcols(nmatrices, nrows), colmatrix(nrows,1);
   vector<double> colvector(nrows),colvectorsymm(2*nrows-1);
 
   Zeros(colmatrix,nrows,1);
   Read(dcovcols,basename, sequential=true);
 
+  // ->> column major <<- //
   Transpose(dcovcols,dcovcols);
 
   for (int k=0;k<nmatrices;k++)
@@ -67,7 +70,7 @@ void Combine_dcovi(std::string basename, int nmatrices, int nrows, int ncols, Di
       DistMatrixToVector(colmatrix,colvector);
       GetSymmetricCirculantVector(colvector, colvectorsymm);
       Toeplitz(dCk,nrows,nrows,colvectorsymm);
-      full_dcovi(IR(0,nrows),IR(k*nmatrices,k*nmatrices+ncols))=dCk;
+      full_dcovi(IR(0,nrows),IR(k*nmatrices,k*nmatrices+ncols))=dCk(IR(0,nrows),IR(0,ncols));
     }
 
 }
