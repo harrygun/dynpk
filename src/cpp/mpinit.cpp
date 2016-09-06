@@ -16,6 +16,40 @@
 
 
 
+
+  void mpi_init(MPIpar mpi, int argc, char *argv[]){
+
+    #ifdef _MPI_
+      //int mpi_ntask, mpi_rank, mpi_rc;
+      mpi.rc = MPI_Init(&argc, &argv);
+
+      if (mpi.rc != MPI_SUCCESS) {
+           cout << "Error starting MPI program. Terminating." << endl; 
+           MPI_Abort(MPI_COMM_WORLD, mpi.rc);
+           }
+
+      MPI_Comm_size(MPI_COMM_WORLD,&mpi.ntask);
+      MPI_Comm_rank(MPI_COMM_WORLD,&mpi.rank);
+
+      printf ("Number of tasks= %d My rank= %d\n", mpi.ntask, mpi.rank);
+
+  /* MPI initialization ends. */
+      if(mpi.rank==0) 
+        printf("%d Sending parameter filename %s to other processes.\n", mpi.rank, ini_name);
+
+      MPI_Bcast( ini_name, 100, MPI_CHAR, 0, MPI_COMM_WORLD);
+
+      if(mpi.rank!=0) 
+        printf("%d Received parameter filename %s.\n", mpi.rank, ini_name);
+    #else
+      mpi.ntask = 1;
+      mpi.rank = 0;
+    #endif
+
+    return;
+    }
+
+
   double *mpi_gather_dist_double(MPIpar *mpi, double *in, size_t count_pp, 
                                  size_t count_tot ) {
     // ->> gather & redistribution:  count_pp: count per process 

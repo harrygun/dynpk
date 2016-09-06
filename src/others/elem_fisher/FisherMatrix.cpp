@@ -1,3 +1,4 @@
+#include <iostream>
 #include <El.hpp>
 #include "./include/FisherHelperFunctions.hpp"
 using namespace El;
@@ -32,6 +33,8 @@ main( int argc, char* argv[] )
 
   Combine_dcovi(dcovi_dir, ndcov_i, nrows, ncols, dcovfull);   // makes matrices out of derivative matrix (turns rows into Toeplitz matrices)
   GetFisherMatrix(dcovfull, ndcov_i, Cov, FisherMatrix);       // performs inversion of Cov and matrix multiplication w/ derivatives to get Fisher   
+
+  std::cout << "Fisher is Doen." << endl;
   Write(FisherMatrix,FisherOut,MATRIX_MARKET);           // write FisherMatrix to file as MATRIX_MARKET type (read in python w/ scipy.io's mmread)
 
   return 0;
