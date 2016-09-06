@@ -82,12 +82,14 @@ void Combine_dcovi(std::string basename, int nmatrices, int nrows, int ncols, Di
       if(k==0){
         //Write(colvectorsymm,"./dC_ext.dat"); 
 
-	fout.open("dC_ext.dat", std::ios::in | std::ios::binary);
+	//fout.open("dC_ext.dat", std::ios::in | std::ios::binary);
 	
-        //Output("sizeof colvectorsymm= (", sizeof colvectorsymm ,")");
+        Output("sizeof colvectorsymm= (", sizeof(colvectorsymm),")");
+        Output("sizeof colvectorsymm= (", colvectorsymm.size(),")");
 
-        fout.write(colvectorsymm[0], ((size_t)colvectorsymm.size())*sizeof(colvectorsymm[0]) );
-        fout.close();
+
+        //fout.write(colvectorsymm[0], ((size_t)colvectorsymm.size())*sizeof(colvectorsymm[0]) );
+        //fout.close();
 
 	
 	std::ofstream output_file("./example.txt");
