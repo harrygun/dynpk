@@ -59,7 +59,9 @@ void Combine_dcovi(std::string basename, int nmatrices, int nrows, int ncols, Di
   vector<double> colvector(nrows),colvectorsymm(2*nrows-1);
 
   Zeros(colmatrix,nrows,1);
-  Read(dcovcols,basename, bool sequential=true);
+
+  //Read(dcovcols,basename, bool sequential=true);
+  Read(dcovcols,basename);
 
   // ->> column major <<- //
   Transpose(dcovcols,dcovcols);
