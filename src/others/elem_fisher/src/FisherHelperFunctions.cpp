@@ -73,6 +73,12 @@ void Combine_dcovi(std::string basename, int nmatrices, int nrows, int ncols, Di
       GetSymmetricCirculantVector(colvector, colvectorsymm);
       Toeplitz(dCk,nrows,nrows,colvectorsymm);
       full_dcovi(IR(0,nrows),IR(k*nmatrices,k*nmatrices+ncols))=dCk(IR(0,nrows),IR(0,ncols));
+
+      if(k==0){
+
+        Write(dCk(IR(0,nrows),IR(0,ncols)),"./dC0",MATRIX_MARKET); 
+        }
+
     }
 
 }
