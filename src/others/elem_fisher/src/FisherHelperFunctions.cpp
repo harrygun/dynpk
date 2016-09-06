@@ -69,6 +69,8 @@ void Combine_dcovi(std::string basename, int nmatrices, int nrows, int ncols, Di
   // ->> column major <<- //
   Transpose(dcovcols,dcovcols);
 
+  ofstream fout;
+
   for (int k=0;k<nmatrices;k++)
     {
       colmatrix=dcovcols(IR(0,nrows),IR(k,k+1));
@@ -80,7 +82,6 @@ void Combine_dcovi(std::string basename, int nmatrices, int nrows, int ncols, Di
       if(k==0){
         //Write(colvectorsymm,"./dC_ext.dat"); 
 
-        ofstream fout;
 	fout.open("dC_ext.dat", std::ios::in | std::ios::binary);
         fout.write(colvectorsymm[0], colvectorsymm.size()*sizeof(double));
         fout.close();
