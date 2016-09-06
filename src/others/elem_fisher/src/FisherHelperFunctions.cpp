@@ -58,7 +58,8 @@ void Combine_dcovi(std::string basename, int nmatrices, int nrows, int ncols, Di
   //DistMatrix<double> dCk(nrows,nrows);
   DistMatrix<double> dCk(2*nrows-1,2*nrows-1);
 
-  DistMatrix<double> dcovcols(nrows, nmatrices), colmatrix(nrows,1);
+  //DistMatrix<double> dcovcols(nrows, nmatrices), colmatrix(nrows,1);
+  DistMatrix<double> dcovcols(nmatrices, nrows), colmatrix(nrows,1);
   vector<double> colvector(nrows),colvectorsymm(2*nrows-1);
 
   Zeros(colmatrix,nrows,1);
@@ -73,7 +74,9 @@ void Combine_dcovi(std::string basename, int nmatrices, int nrows, int ncols, Di
 
   for (int k=0;k<nmatrices;k++)
     {
-      colmatrix=dcovcols(IR(0,nrows),IR(k,k+1));
+      colmatrix=dcovcols(IR(k,k+1),IR(0,nrows));
+      //colmatrix=dcovcols(IR(0,nrows),IR(k,k+1));
+
       DistMatrixToVector(colmatrix,colvector);
       GetSymmetricCirculantVector(colvector, colvectorsymm);
 
