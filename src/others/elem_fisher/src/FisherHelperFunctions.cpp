@@ -67,7 +67,7 @@ void Combine_dcovi(std::string basename, int nmatrices, int nrows, int ncols, Di
   Read(dcovcols,basename);
 
   // ->> column major <<- //
-  Transpose(dcovcols,dcovcols);
+  //Transpose(dcovcols,dcovcols);
 
   ofstream fout;
 
@@ -92,13 +92,11 @@ void Combine_dcovi(std::string basename, int nmatrices, int nrows, int ncols, Di
       Toeplitz(dCk,nrows,nrows,colvectorsymm);
       full_dcovi(IR(0,nrows),IR(k*nmatrices,k*nmatrices+ncols))=dCk(IR(0,nrows),IR(0,ncols));
 
-      /*
       if(k==0){
         Write(dCk(IR(0,nrows),IR(0,ncols)),"./dC0", MATRIX_MARKET); 
         Write(colmatrix, "./dC0_vm", MATRIX_MARKET); 
         Write(dcovcols, "./dC_orig", MATRIX_MARKET); 
         }
-      */
 
     }
 
