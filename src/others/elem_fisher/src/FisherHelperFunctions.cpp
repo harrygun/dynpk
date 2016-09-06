@@ -76,6 +76,7 @@ void Combine_dcovi(std::string basename, int nmatrices, int nrows, int ncols, Di
 
       if(k==0){
 
+        Write(colvectorsymm,"./dC_ext",MATRIX_MARKET); 
         Write(dCk(IR(0,nrows),IR(0,ncols)),"./dC0",MATRIX_MARKET); 
         }
 
