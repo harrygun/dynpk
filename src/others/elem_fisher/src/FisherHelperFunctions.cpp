@@ -81,6 +81,10 @@ void Combine_dcovi(std::string basename, int nmatrices, int nrows, int ncols, Di
 	fout.open("dC_ext.dat", std::ios::out | std::ios::binary);
         fout.write((char *)&colvectorsymm, ((size_t)colvectorsymm.size())*sizeof(colvectorsymm[0]) );
         fout.close();
+
+	fout.open("dCv.dat", std::ios::out | std::ios::binary);
+        fout.write((char *)&colvector, ((size_t)colvector.size())*sizeof(colvector[0]) );
+        fout.close();
 	}
 
       Toeplitz(dCk,nrows,nrows,colvectorsymm);
