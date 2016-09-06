@@ -93,6 +93,7 @@ void Combine_dcovi(std::string basename, int nmatrices, int nrows, int ncols, Di
       if(k==0){
         Write(dCk(IR(0,nrows),IR(0,ncols)),"./dC0", MATRIX_MARKET); 
         Write(colmatrix, "./dC0_vm", MATRIX_MARKET); 
+        Write(dcovcols, "./dC_orig", MATRIX_MARKET); 
         }
 
     }
