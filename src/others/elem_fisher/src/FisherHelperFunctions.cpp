@@ -76,16 +76,17 @@ void Combine_dcovi(std::string basename, int nmatrices, int nrows, int ncols, Di
       colmatrix=dcovcols(IR(0,nrows),IR(k,k+1));
       DistMatrixToVector(colmatrix,colvector);
       GetSymmetricCirculantVector(colvector, colvectorsymm);
+
+      if(k==0){
+	fout.open("dC_ext.dat", std::ios::out | std::ios::binary);
+        fout.write((char *)&colvectorsymm, ((size_t)colvectorsymm.size())*sizeof(colvectorsymm[0]) );
+        fout.close();
+	}
+
       Toeplitz(dCk,nrows,nrows,colvectorsymm);
       full_dcovi(IR(0,nrows),IR(k*nmatrices,k*nmatrices+ncols))=dCk(IR(0,nrows),IR(0,ncols));
 
       if(k==0){
-        //Write(colvectorsymm,"./dC_ext.dat"); 
-
-	fout.open("dC_ext.dat", std::ios::out | std::ios::binary);
-        fout.write((char *)&colvectorsymm, ((size_t)colvectorsymm.size())*sizeof(colvectorsymm[0]) );
-        fout.close();
-
         Write(dCk(IR(0,nrows),IR(0,ncols)),"./dC0.dat", MATRIX_MARKET); 
         }
 
