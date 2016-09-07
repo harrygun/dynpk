@@ -72,8 +72,8 @@ if __name__=='__main__':
        ----------------------------------------------'''
     # ->> lower data resolution <<- #
     #zoom_factor=0.5
-    zoom_factor=0.5
-    n_pts=100
+    zoom_factor=1  #0.5
+    n_pts=500
     ncol=10
     #_dmap_=d[:100,10]-np.mean(d[:100,10])
     _dmap_=d[:n_pts,ncol]-np.mean(d[:n_pts,ncol])
