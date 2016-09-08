@@ -24,17 +24,18 @@
 
 
 
-  void QE_init(QEpar &qe, const string &mat_type="DistMatrix") {
+  void QE_init(QEpar &qe, const string fname_dcov, const string &mat_type="DistMatrix") {
      
     if (mat_type.compare("DistMatrix") != 0)
       throw runtime_error("Error: Only DistMatrix type is Supported.");
 
-    DistMatrix<double> qe.dcov_vec(qe.n_bp, qe.npix), qe.dcov_i(qe.npix, qe.npix), 
-                       qe.cov(qe.npix, qe.npix),   qe.icov(qe.npix, qe.npix);
+    //DistMatrix<double> qe.dcov_vec(qe.n_bp, qe.npix), qe.dcov_i(qe.npix, qe.npix), 
+    //                   qe.cov(qe.npix, qe.npix),   qe.icov(qe.npix, qe.npix);
+
+    Read(qe.dcov_vec, fname); 
 
     return;
     }
-
 
 
 
