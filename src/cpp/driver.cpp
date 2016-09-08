@@ -14,6 +14,7 @@
   #include "io.hpp"
   #include "mpinit.hpp"
   //#include "quadest.hpp"
+  #include "quadest_init.hpp"
 
   using namespace std;
 
@@ -27,6 +28,7 @@
 
       char *ini_name;
       Environment env( argc, argv );
+      ProcessInput();
 
       //ini_name=argv[1];
   
@@ -69,37 +71,40 @@
       fn_plist="result/r1d/plist.dat";
       fn_out ="result/r1d/Qi.dat";
 
+
       // ->>   <<- //
       //size_t mdim, npix, nbp;
-
       qe.mdim=50; 
-      //npix=mdim*mdim;
+      qe.npix=qe.mdim; // 1D
 
-      qe.npix=qe.mdim;
       qe.n_bp=24;   //mdim*mdim;
       qe.map_dim=1;
 
 
-      qe.dcov=(double *)malloc(sizeof(double)*qe.n_bp*qe.npix);
-      qe.cov= (double *)malloc(sizeof(double)*qe.npix*qe.npix);
-      qe.icov=(double *)malloc(sizeof(double)*qe.npix*qe.npix);
-      qe.plist=(double *)malloc(sizeof(double)*qe.n_bp);
-      qe.map=(double *)malloc(sizeof(double)*qe.npix);
+      //qe.dcov=(double *)malloc(sizeof(double)*qe.n_bp*qe.npix);
+      //qe.cov= (double *)malloc(sizeof(double)*qe.npix*qe.npix);
+      //qe.icov=(double *)malloc(sizeof(double)*qe.npix*qe.npix);
+      //qe.plist=(double *)malloc(sizeof(double)*qe.n_bp);
+      //qe.map=(double *)malloc(sizeof(double)*qe.npix);
 
 
-     
-      import_data_double(&mpi, fn_map, qe.map, sizeof(double), qe.npix);
-      import_data_double(&mpi, fn_dcov, qe.dcov, sizeof(double), qe.n_bp*qe.npix);
-      import_data_double(&mpi, fn_plist, qe.plist, sizeof(double), qe.n_bp);
 
+      //import_data_double(&mpi, fn_map, qe.map, sizeof(double), qe.npix);
+      //import_data_double(&mpi, fn_dcov, qe.dcov, sizeof(double), qe.n_bp*qe.npix);
+      //import_data_double(&mpi, fn_plist, qe.plist, sizeof(double), qe.n_bp);
 
       // ->> noise covariance matrix <<- //
-      qe.covn_v=(double *)malloc(sizeof(double)*qe.npix);
+      //qe.covn_v=(double *)malloc(sizeof(double)*qe.npix);
       //cov_noise(&mpi, qe.covn_v, qe.npix, NULL);
 
 
+
+
+      QE_init(qe);
+      abort();
+
       // ->> call Quadratic Estimator <<- //
-      quad_est_dismat(&mpi, &qe);
+      //quad_est_dismat(&mpi, &qe);
 
    
       // ->> output <<- //
@@ -112,15 +117,12 @@
   -----------------------------------------------------*/
     stop:
 
-      free(qe.dcov);   free(qe.icov); 
-      free(qe.cov);    free(qe.map);
-      free(qe.plist);  free(qe.covn_v);
+      //free(qe.dcov);   free(qe.icov); 
+      //free(qe.cov);    free(qe.map);
+      //free(qe.plist);  free(qe.covn_v);
 
 
-      #ifdef _MPI_
-      MPI_Finalize();
-      #endif
-      
+    return 0;
     }
 
 

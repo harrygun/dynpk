@@ -1,7 +1,8 @@
 #---------------------------#
-DO_MPI= no
-#DO_MPI= yes
+#DO_MPI= no
+DO_MPI= yes
 
+With_Elemental=yes
 
 ifeq ($(DO_MPI), yes)
   CC= mpicc
@@ -11,6 +12,10 @@ else
   CXX= g++
 endif
 #---------------------------#
+
+ifeq ($(With_Elemental),yes)
+  include ./include/ElVars
+endif
 
 
 
@@ -142,8 +147,8 @@ default: quadestxx
 
 #--------------------------------------------------#
 #quadestxx: io.o mpinit.o quadest.o driver.o
-quadestxx: io.o mpinit.o driver.o
-	$(CXX)  $^ -o $(WORKSPACE)/$@  $(LIB)
+quadestxx: io.o mpinit.o quadest_init.o driver.o
+	$(CXX) $(EL_LINK_FLAGS)  $^ -o $(WORKSPACE)/$@  $(EL_LIBS)
 
 
 

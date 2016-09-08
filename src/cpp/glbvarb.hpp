@@ -2,6 +2,9 @@
   #ifndef _H_GLB_VARB_
     #define _H_GLB_VARB_
 
+    #include "El.hpp"
+
+
     //#include "myinterpolate.h"
 
     typedef struct {
@@ -15,8 +18,12 @@
       char *get_bp_type, *bp_list_fname;
 
 
-      double *dcov, *cov, *icov, *covn_v, *plist, *map;
-      double *Qip, *Qi, *Fij, *iFij;
+      //double *dcov, *cov, *icov, *covn_v, *plist, *map;
+      //double *Qip, *Qi, *Fij, *iFij;
+
+      // ->> DistMatrix <<- //
+      DistMatrix<double> &dcov_vec, &dcov_i, &cov, &icov;
+
       }QEpar;
 
 
@@ -26,6 +33,8 @@
       int max, start, totrun, ind_run;
       char *fname, *extfname[5];
       } MPIpar;
+
+
 
   // ->>
   #define MemIdx3D(n, i1, i2, i3)  (i3+n*(i2+n*i1))
