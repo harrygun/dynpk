@@ -30,7 +30,8 @@ main( int argc, char* argv[] )
 
 
   // ->> testing <<- //
-  DistMatrix<double> Cov_arr(nrows,ncols)[ndcov_i];  
+  // ->> WRONG <<- //
+  new DistMatrix<double> Cov_arr(nrows,ncols)[ndcov_i];  
 
 
   
