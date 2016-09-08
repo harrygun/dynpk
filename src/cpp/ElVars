@@ -1,0 +1,30 @@
+# To help simplify including Elemental in external projects
+
+EL_INC = /scinet/gpc/tools/elemental/0.86-rc1-1056-g4a97eb8/include
+EL_LIB = /scinet/gpc/tools/elemental/0.86-rc1-1056-g4a97eb8/lib
+
+CC = /scinet/gpc/mpi/openmpi/1.8.3-gcc-v4.8.1/bin/mpicc
+CXX = /scinet/gpc/mpi/openmpi/1.8.3-gcc-v4.8.1/bin/mpicxx
+
+EL_LINK_FLAGS = -L${EL_LIB}  -Wl,-rpath  -Wl,/opt/torque/lib  -Wl,-rpath  -Wl,/opt/torque/lib  -Wl,-rpath  -Wl,/opt/torque/lib  -Wl,-rpath  -Wl,/opt/torque/lib  -Wl,-rpath  -Wl,/scinet/gpc/Libraries/MXM_1.5/lib/  -Wl,-rpath  -Wl,/scinet/gpc/mpi/openmpi/1.8.3-gcc-v4.8.1/lib  -Wl,--enable-new-dtags
+
+ALL_MATH_INC = -I${EL_INC} 
+ALL_MATH_LIBS = -lEl -lpmrrr -lElSuiteSparse  \
+                 -Wl,--no-as-needed -L/scinet/gpc/intel/compilers_and_libraries_2016.3.210/linux/mkl/lib/intel64 -lmkl_scalapack_lp64 -lmkl_intel_lp64 -lmkl_core -lmkl_gnu_thread -lmkl_blacs_openmpi_lp64 -lpthread -lm -ldl  /scinet/gpc/tools/elemental/0.86-rc1-1056-g4a97eb8/lib/libparmetis.so /scinet/gpc/tools/elemental/0.86-rc1-1056-g4a97eb8/lib/libmetis.so
+ALL_MPI_FLAGS =  -I/scinet/gpc/mpi/openmpi/1.8.3-gcc-v4.8.1/include 
+ifeq (,TRUE)
+  ALL_MATH_INC := ${ALL_MATH_INC}  -IQD_INCLUDES-NOTFOUND
+endif
+ifeq (,TRUE)
+  ALL_MATH_INC := ${ALL_MATH_INC} \
+       -IGMP_INCLUDES-NOTFOUND
+endif
+
+EL_COMPILE_FLAGS = -O3 -std=gnu++11  -fopenmp ${ALL_MATH_INC} ${ALL_MPI_FLAGS}
+EL_LIBS = ${ALL_MATH_LIBS}  /scinet/gpc/mpi/openmpi/1.8.3-gcc-v4.8.1/lib/libmpi_cxx.so /scinet/gpc/mpi/openmpi/1.8.3-gcc-v4.8.1/lib/libmpi.so
+
+ifeq (FALSE,TRUE)
+  EL_COMPILE_FLAGS := ${EL_COMPILE_FLAGS} \
+      
+  EL_LIBS := ${EL_LIBS} -L -lQt5Widgets -lQt5Gui -lQt5Core
+endif
