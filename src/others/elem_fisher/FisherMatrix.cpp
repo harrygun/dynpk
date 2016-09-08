@@ -26,6 +26,13 @@ main( int argc, char* argv[] )
   DistMatrix<double> Cov(nrows,ncols);   // initialize covariance matrix "Cov"
   //Read(Cov,Cfile, bool sequential=true);     // fill covariance matrix with contents of "Cfile"
   Read(Cov,Cfile);     // fill covariance matrix with contents of "Cfile"
+
+
+
+  // ->> testing <<- //
+  DistMatrix<double> Cov_arr(nrows,ncols)[ndcov_i];  
+
+
   
   // Get the Fisher Matrix
   DistMatrix<double> FisherMatrix(ndcov_i,ndcov_i),dcovfull(nrows,ncols*ndcov_i);  //initialize matrices
