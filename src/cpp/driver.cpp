@@ -64,8 +64,8 @@
         //char *output_prefix, *klam_fname, *plin_name;
         //output_prefix=iniparser_getstring(dict,"General:output_prefix", NULL);
 
-        qe.mdim=pt.get<double>(sec+".map_resolution_val");
-	qe.nbp=pt.get<double>(sec+".num_band_power");
+        qe.mdim=pt.get<size_t>(sec+".map_resolution_val");
+	qe.nbp=pt.get<size_t>(sec+".num_band_power");
 	qe.npix=qe.mdim;
         qe.map_dim=1;
         }
