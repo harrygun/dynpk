@@ -36,38 +36,42 @@
       Environment env( argc, argv );
       ProcessInput();
 
+      // ->> Initialization <<- //
       ini_name=argv[1];
 
-      boost::property_tree::ptree pt;
-      boost::property_tree::ini_parser::read_ini(ini_name, pt);
-      // examples //
-      //cout << pt.get<string>("Section1.Value1") << endl;
-      //cout << pt.get<string>("Section1.Value2") << endl;
-  
+
     /*------------------------------------------------
                 MPI initialization.
     ------------------------------------------------*/
-      MPIpar mpi;
+      MPIpar mpiwd;
+      mpi_init(mpiwd, argc, argv);
 
-  /*--------------------------------------
-         End of MPI initialization.
-  --------------------------------------*/
+
+    /*-----------------------------------------------
+             Parameters Initialization 
+    -----------------------------------------------*/
       cout << "Opening File:  " << ini_name << endl;
+      boost::property_tree::ptree pt;
+      boost::property_tree::ini_parser::read_ini(ini_name, pt);
 
 
-  /*-----------------------------------------------
-        initialize the QE parameters
-  -----------------------------------------------*/
+      // examples //
+      std::string sec="Quadratic_Estimator";
+  
+
       QEpar qe;
-      /*
-      if(mpi::rank==0){
-        char *output_prefix, *klam_fname, *plin_name;
-        qe.= iniparser_getstring(dict, "General:", NULL);
-        output_prefix=iniparser_getstring(dict,"General:output_prefix", NULL);
-        qe.= iniparser_getint(dict, "General:", 0);
-        qe.= iniparser_getdouble(dict, "General:", 1);
+      if(mpiwd.rank==0){
+        //char *output_prefix, *klam_fname, *plin_name;
+	//string 
+
+        //qe.= iniparser_getstring(dict, "General:", NULL);
+        //output_prefix=iniparser_getstring(dict,"General:output_prefix", NULL);
+
+        qe.mdim=qe.pt.get<double>(strcat(sec, ".map_resolution_val");
+	qe.nbp=qe.pt.get<double>(strcat(sec, ".num_band_power");
+	qe.npix=qe.mdim;
+        qe.map_dim=1;
         }
-      */
 
 
     /*-----------------------------------------------
@@ -75,7 +79,6 @@
     -----------------------------------------------*/
 
       /* Calculating Eulerian Biasing Model */
-      mpi.start = 0;   // mpi.max = 1;
       cout << "==================================" << endl; fflush(stdout);
 
       const char *fn_dcov, *fn_cov, *fn_icov, *fn_out, *fn_map, *fn_plist;
@@ -88,11 +91,10 @@
 
       // ->>   <<- //
       //size_t mdim, npix, nbp;
-      qe.mdim=50; 
-      qe.npix=qe.mdim; // 1D
+      //qe.mdim=50; 
+      //qe.npix=qe.mdim; // 1D
 
-      qe.nbp=24;   //mdim*mdim;
-      qe.map_dim=1;
+      //qe.nbp=24;   //mdim*mdim;
 
 
       // ->> initialization <<- //

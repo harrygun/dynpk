@@ -17,7 +17,7 @@
 
 
 
-  void mpi_init(MPIpar mpi, int argc, char *argv[]){
+  void mpi_init(MPIpar &mpi, int argc, char *argv[]){
 
     #ifdef _MPI_
       //int mpi_ntask, mpi_rank, mpi_rc;

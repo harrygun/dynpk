@@ -7,6 +7,13 @@
   
 
 
+
+
+  void mpi_init(MPIpar &mpi, int argc, char *argv[]);
+
+
+
+
   double *mpi_gather_dist_double(MPIpar *mpi, double *in, size_t count_pp, 
                                  size_t count_tot );
 
