@@ -70,7 +70,7 @@
         qe.map_dim=1;
         }
 
-      cout << "mdim=" << qe.mdim << "; nbp=" qe.nbp << "; npix=" << qe.npix << endl;
+      cout << "mdim=" << qe.mdim << "; nbp=" qe.nbp << "; npix=" << qe.npix +1 << endl;
 
     /*-----------------------------------------------
                Here begin the calculation.
