@@ -113,7 +113,7 @@ endif
 #---
 GSLPATH=/home/p/pen/wangxin/workspace/lib
 CFLAGS= -I $(GSLPATH)/include
-
+GSLIB= -L$(GSLPATH)
 
 
 
