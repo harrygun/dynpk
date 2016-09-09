@@ -31,9 +31,9 @@ main( int argc, char* argv[] )
 
   // ->> testing <<- //
   //new DistMatrix<double> Cov_arr(nrows,ncols)[ndcov_i];  
-  DistMatrix<double> Cov_arr[ndcov_i];
+  DistMatrix<double> dcov_arr[ndcov_i];
   for(int i=0; i<ndcov_i; i++) {
-    Cov_arr[i]=DistMatrix<double>(nrows,ncols);
+    dov_arr[i]=DistMatrix<double>(nrows,ncols);
     }
 
 

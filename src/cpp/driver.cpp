@@ -81,23 +81,11 @@
       qe.map_dim=1;
 
 
-      //qe.dcov=(double *)malloc(sizeof(double)*qe.n_bp*qe.npix);
-      //qe.cov= (double *)malloc(sizeof(double)*qe.npix*qe.npix);
-      //qe.icov=(double *)malloc(sizeof(double)*qe.npix*qe.npix);
-      //qe.plist=(double *)malloc(sizeof(double)*qe.n_bp);
-      //qe.map=(double *)malloc(sizeof(double)*qe.npix);
-
-
-
-      //import_data_double(&mpi, fn_map, qe.map, sizeof(double), qe.npix);
-      //import_data_double(&mpi, fn_dcov, qe.dcov, sizeof(double), qe.n_bp*qe.npix);
-      //import_data_double(&mpi, fn_plist, qe.plist, sizeof(double), qe.n_bp);
-
-      // ->> noise covariance matrix <<- //
-      //qe.covn_v=(double *)malloc(sizeof(double)*qe.npix);
-      //cov_noise(&mpi, qe.covn_v, qe.npix, NULL);
-
-
+      // ->> initialization <<- //
+      DistMatrix<double> dcov_arr[n_bp], cov(npix,npix), icov(npix,npix);
+      for(int i=0; i<n_bp; i++) {
+        dov[i]=DistMatrix<double>(npix,npix);
+        }
 
 
       QE_init(qe);
