@@ -33,19 +33,16 @@
   int main( int argc, char *argv[])  {
 
       char *ini_name;
+      ini_name=argv[1];
+
       Environment env( argc, argv );
       ProcessInput();
 
-      // ->> Initialization <<- //
-      ini_name=argv[1];
-
-
     /*------------------------------------------------
-                MPI initialization.
+             Global MPI initialization.
     ------------------------------------------------*/
-      MPIpar mpiwd;
-      mpi_init(mpiwd, argc, argv);
-
+      //MPIpar mpiwd;
+      //mpi_init(mpiwd, argc, argv);
 
     /*-----------------------------------------------
              Parameters Initialization 
@@ -70,7 +67,7 @@
         qe.map_dim=1;
         }
 
-      cout << "rank-" << mpiwd.rank << "mdim=" << qe.mdim << "; nbp=" << qe.nbp << "; npix=" << qe.npix << endl;
+      cout << "rank-" << MPI::rank << ":  mdim=" << qe.mdim << "; nbp=" << qe.nbp << "; npix=" << qe.npix << endl;
 
     /*-----------------------------------------------
                Here begin the calculation.
