@@ -100,7 +100,7 @@
 
 
 
-      //QE_init(qe);
+      QE_init(qe);
       //abort();
 
       // ->> call Quadratic Estimator <<- //
