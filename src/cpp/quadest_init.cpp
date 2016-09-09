@@ -43,8 +43,8 @@
     //->>
     vector <double> colvectorsymm;
 
-    for(int i=0; i<nbp; i++) {
-      dov[i]=DistMatrix<double>(qe.npix,qe.npix);
+    for(int i=0; i<qe.nbp; i++) {
+      dcov[i]=DistMatrix<double>(qe.npix,qe.npix);
       Toeplitz(dcov[i], qe.npix, qe.npix, colvectorsymm);
       }
 
