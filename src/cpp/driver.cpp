@@ -62,9 +62,6 @@
       QEpar qe;
       if(mpiwd.rank==0){
         //char *output_prefix, *klam_fname, *plin_name;
-	//string 
-
-        //qe.= iniparser_getstring(dict, "General:", NULL);
         //output_prefix=iniparser_getstring(dict,"General:output_prefix", NULL);
 
         qe.mdim=pt.get<double>(sec+".map_resolution_val");
@@ -73,8 +70,7 @@
         qe.map_dim=1;
         }
 
-
-      cout << qe.mdim, qe.nbp, qe.npix << endl;
+      cout << qe.mdim << qe.nbp << qe.npix << endl;
 
     /*-----------------------------------------------
                Here begin the calculation.
