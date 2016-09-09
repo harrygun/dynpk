@@ -24,7 +24,7 @@
 
 
 
-  void QE_init(QEpar &qe, const string fname_dcov, const string &mat_type="DistMatrix") {
+  void QE_init(QEpar &qe, const string &mat_type="DistMatrix") {
      
     if (mat_type.compare("DistMatrix") != 0)
       throw runtime_error("Error: Only DistMatrix type is Supported.");
