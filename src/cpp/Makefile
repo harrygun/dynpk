@@ -112,7 +112,7 @@ endif
 
 #---
 GSLPATH=/home/p/pen/wangxin/workspace/lib
-CFLAGS=$(CFLAGS) -I $(GSLPATH) 
+CFLAGS= -I $(GSLPATH) 
 
 
 
