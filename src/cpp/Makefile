@@ -110,7 +110,9 @@ ifeq ($(MACHINE),cita)
 endif
 
 
-
+#---
+GSLPATH=/home/p/pen/wangxin/workspace/lib
+CFLAGS=$(CFLAGS) -I $(GSLPATH) 
 
 
 
@@ -148,7 +150,7 @@ default: quadestxx
 #--------------------------------------------------#
 #quadestxx: io.o mpinit.o quadest.o driver.o
 quadestxx: io.o mpinit.o quadest_init.o cov.o driver.o
-	$(CXX) $(EL_LINK_FLAGS)  $^ -o $(WORKSPACE)/$@  $(EL_LIBS)
+	$(CXX) $(EL_LINK_FLAGS) $(CFLAGS) $^ -o $(WORKSPACE)/$@  $(EL_LIBS)
 
 
 
