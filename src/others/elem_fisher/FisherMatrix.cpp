@@ -31,7 +31,8 @@ main( int argc, char* argv[] )
 
   // ->> testing <<- //
   // ->> WRONG <<- //
-  new DistMatrix<double> Cov_arr(nrows,ncols)[ndcov_i];  
+  //new DistMatrix<double> Cov_arr(nrows,ncols)[ndcov_i];  
+  DistMatrix<double> Cov_arr[ndcov_i];  
 
 
   
