@@ -60,11 +60,13 @@
   -----------------------------------------------*/
       QEpar qe;
       /*
-      char *output_prefix, *klam_fname, *plin_name;
-      qe.= iniparser_getstring(dict, "General:", NULL);
-      output_prefix=iniparser_getstring(dict,"General:output_prefix", NULL);
-      qe.= iniparser_getint(dict, "General:", 0);
-      qe.= iniparser_getdouble(dict, "General:", 1);
+      if(mpi::rank==0){
+        char *output_prefix, *klam_fname, *plin_name;
+        qe.= iniparser_getstring(dict, "General:", NULL);
+        output_prefix=iniparser_getstring(dict,"General:output_prefix", NULL);
+        qe.= iniparser_getint(dict, "General:", 0);
+        qe.= iniparser_getdouble(dict, "General:", 1);
+        }
       */
 
 
