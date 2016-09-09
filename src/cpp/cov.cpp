@@ -1,4 +1,3 @@
-
   #include <iostream>
   #include <cmath>
   #include <cstring>
@@ -17,7 +16,6 @@
   using namespace std;
   using namespace El;
 
-  typedef double Real;
 
   #ifdef _MPI_
   #include <mpi.h>
@@ -58,9 +56,10 @@
              (-dt + dtab)*SinIntegral((dt - dtab)*ktib) + 2*dtab*SinIntegral(dtab*ktib)
              ) + (dt + dtab)*ktia*ktib*SinIntegral((dt + dtab)*ktib))/(ktia*ktib*M_PI);
               
-    if (isnan(dc1d_real)!=0){
-      cout << "real:", ktia, ktib, dt, dtab << endl; fflush(stdout);
-      }
+    //if (isnan(dc1d_real)) {
+    //  cout << "real:", ktia, ktib, dt, dtab << endl; 
+    //  fflush(stdout);
+    //  }
 
     return dc1d_real/2.;
     }
@@ -113,9 +112,9 @@
                 2*ktia*Cos(dt*ktib)*Sin(dtab*ktib))/(ktia*ktib*M_PI);
       }
 
-    if (isnan(dc1d_imag)!=0){
-      cout << "imag:", ktia, ktib, dt, dtab << endl; fflush(stdout);
-      }
+    //if (isnan(dc1d_imag)){
+    //  cout << "imag:", ktia, ktib, dt, dtab << endl; fflush(stdout);
+    //  }
 
     return dc1d_imag/2.;
     }
