@@ -67,8 +67,8 @@
         //qe.= iniparser_getstring(dict, "General:", NULL);
         //output_prefix=iniparser_getstring(dict,"General:output_prefix", NULL);
 
-        qe.mdim=qe.pt.get<double>(strcat(sec, ".map_resolution_val");
-	qe.nbp=qe.pt.get<double>(strcat(sec, ".num_band_power");
+        qe.mdim=pt.get<double>(strcat(sec, ".map_resolution_val");
+	qe.nbp=pt.get<double>(strcat(sec, ".num_band_power");
 	qe.npix=qe.mdim;
         qe.map_dim=1;
         }

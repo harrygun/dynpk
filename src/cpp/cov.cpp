@@ -122,20 +122,19 @@
 
 
 
-  void get_dcov_vector(vector<double> & ) {
+  //void get_dcov_vector(vector<double> & ) {
 
-    return;
-    }
+  //  return;
+  //  }
 
-
-/*
+  /*
   void get_dcov_klim_r1d(DistMatrix<double> &dcov_vec, vector<double> &klist_low, 
                          vector<double> &klist_up, double dt, size_t nbp, 
 			 double m_dim, bool do_mpi=true)  {
     //             ->> get the derivative of covariance matrix <<-                      //
     // ->> I'd like to have a copy of dcov_vec for every process, or what I could do is 
     // ->> to define DistMatrix with particular distribution and then re-distribute <<- //
-    throw runtime_error("Should I dfine dcov_vec as DistMatrix<double> or simply Matrix<double>??");
+    //throw runtime_error("Should I dfine dcov_vec as DistMatrix<double> or simply Matrix<double>??");
 
     int i, a, b;
     double ktia, ktib;
@@ -162,8 +161,7 @@
 
     return;
     }
-*/
-
+  */
 
 
 
