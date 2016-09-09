@@ -41,8 +41,8 @@
     /*------------------------------------------------
              Global MPI initialization.
     ------------------------------------------------*/
-      //MPIpar mpiwd;
-      //mpi_init(mpiwd, argc, argv);
+      MPIpar mpiwd;
+      mpi_init(mpiwd, argc, argv);
 
     /*-----------------------------------------------
              Parameters Initialization 
@@ -57,6 +57,7 @@
   
 
       QEpar qe;
+      if(mpiwd.rank==0){
         //char *output_prefix, *klam_fname, *plin_name;
         //output_prefix=iniparser_getstring(dict,"General:output_prefix", NULL);
 
@@ -64,8 +65,9 @@
 	qe.nbp=pt.get<size_t>(sec+".num_band_power");
 	qe.npix=qe.mdim;
         qe.map_dim=1;
+        }
 
-      cout << "rank-" << MPI::rank << ":  mdim=" << qe.mdim << "; nbp=" << qe.nbp << "; npix=" << qe.npix << endl;
+      cout << "rank-" << mpiwd.rank << ":  mdim=" << qe.mdim << "; nbp=" << qe.nbp << "; npix=" << qe.npix << endl;
 
     /*-----------------------------------------------
                Here begin the calculation.

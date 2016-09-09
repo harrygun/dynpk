@@ -112,7 +112,7 @@ endif
 
 #---
 GSLPATH=/home/p/pen/wangxin/workspace/lib
-CFLAGS= -I $(GSLPATH)/include
+CFLAGS= -g -D _MPI_ -I $(GSLPATH)/include
 GSLIB= -L$(GSLPATH)/lib -lgsl -lgslcblas -lm
 
 
