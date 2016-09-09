@@ -32,7 +32,11 @@ main( int argc, char* argv[] )
   // ->> testing <<- //
   // ->> WRONG <<- //
   //new DistMatrix<double> Cov_arr(nrows,ncols)[ndcov_i];  
-  DistMatrix<double> Cov_arr[ndcov_i];  
+  DistMatrix<double> Cov_arr[ndcov_i];
+  for(int i=0; i<ndcov_i; i++) {
+    Cov_arr[i]=DistMatrix<double>(nrows,ncols);
+    }
+
 
 
   
