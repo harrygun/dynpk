@@ -58,7 +58,7 @@
              (-dt + dtab)*SinIntegral((dt - dtab)*ktib) + 2*dtab*SinIntegral(dtab*ktib)
              ) + (dt + dtab)*ktia*ktib*SinIntegral((dt + dtab)*ktib))/(ktia*ktib*M_PI);
               
-    if (isnan(dc1d_real)){
+    if (isnan(dc1d_real)!=0){
       cout << "real:", ktia, ktib, dt, dtab << endl; fflush(stdout);
       }
 
@@ -113,7 +113,7 @@
                 2*ktia*Cos(dt*ktib)*Sin(dtab*ktib))/(ktia*ktib*M_PI);
       }
 
-    if (isnan(dc1d_imag)){
+    if (isnan(dc1d_imag)!=0){
       cout << "imag:", ktia, ktib, dt, dtab << endl; fflush(stdout);
       }
 
