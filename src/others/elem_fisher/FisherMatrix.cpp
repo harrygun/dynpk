@@ -33,7 +33,7 @@ main( int argc, char* argv[] )
   //new DistMatrix<double> Cov_arr(nrows,ncols)[ndcov_i];  
   DistMatrix<double> dcov_arr[ndcov_i];
   for(int i=0; i<ndcov_i; i++) {
-    dov_arr[i]=DistMatrix<double>(nrows,ncols);
+    dcov_arr[i]=DistMatrix<double>(nrows,ncols);
     }
 
 
