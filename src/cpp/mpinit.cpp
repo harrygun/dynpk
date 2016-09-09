@@ -19,6 +19,9 @@
 
   void mpi_init(MPIpar &mpi, int argc, char *argv[]){
 
+      char *ini_name;
+      ini_name=argv[1];
+
     #ifdef _MPI_
       //int mpi_ntask, mpi_rank, mpi_rc;
       mpi.rc = MPI_Init(&argc, &argv);
