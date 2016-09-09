@@ -10,7 +10,7 @@
     typedef struct {
       int  init, debug;
       size_t mdim;
-      size_t map_dim, n_bp, npix;
+      size_t map_dim, nbp, npix;
 
       double m_dim[2], kt_list_para[3], kf_list_para[3], dmap_res[2];
       double map_zoom_factor;

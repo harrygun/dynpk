@@ -6,9 +6,9 @@
   #include <cstring>
   #include <cstdlib>
   #include <cstdio>
-  //#include <El.hpp>
-
-  //using namespace El;
+  #include <El.hpp>
+  #include <boost/property_tree/ptree.hpp>
+  #include <boost/property_tree/ini_parser.hpp>
 
   #include "glbvarb.hpp"
   #include "io.hpp"
@@ -17,10 +17,16 @@
   #include "quadest_init.hpp"
 
   using namespace std;
+  using namespace El;
 
   #ifdef _MPI_
   #include <mpi.h>
   #endif
+
+
+
+
+
 
 
 
@@ -30,11 +36,17 @@
       Environment env( argc, argv );
       ProcessInput();
 
-      //ini_name=argv[1];
+      ini_name=argv[1];
+
+      boost::property_tree::ptree pt;
+      boost::property_tree::ini_parser::read_ini(ini_name, pt);
+      // examples //
+      //cout << pt.get<string>("Section1.Value1") << endl;
+      //cout << pt.get<string>("Section1.Value2") << endl;
   
-/*------------------------------------------------
-            MPI initialization.
-------------------------------------------------*/
+    /*------------------------------------------------
+                MPI initialization.
+    ------------------------------------------------*/
       MPIpar mpi;
 
   /*--------------------------------------
@@ -77,12 +89,12 @@
       qe.mdim=50; 
       qe.npix=qe.mdim; // 1D
 
-      qe.n_bp=24;   //mdim*mdim;
+      qe.nbp=24;   //mdim*mdim;
       qe.map_dim=1;
 
 
       // ->> initialization <<- //
-      DistMatrix<double> dcov[n_bp], cov(npix,npix), icov(npix,npix);
+      DistMatrix<double> dcov[qe.nbp], cov(qe.npix,qe.npix), icov(qe.npix,qe.npix);
 
 
 

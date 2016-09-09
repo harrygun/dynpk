@@ -29,7 +29,7 @@
     if (mat_type.compare("DistMatrix") != 0)
       throw runtime_error("Error: Only DistMatrix type is Supported.");
 
-    //DistMatrix<double> qe.dcov_vec(qe.n_bp, qe.npix), qe.dcov_i(qe.npix, qe.npix), 
+    //DistMatrix<double> qe.dcov_vec(qe.nbp, qe.npix), qe.dcov_i(qe.npix, qe.npix), 
     //                   qe.cov(qe.npix, qe.npix),   qe.icov(qe.npix, qe.npix);
 
     Read(qe.dcov_vec, fname); 
@@ -42,7 +42,7 @@
   void dcov_recovery(DistMatrix<double> dcov[], DistMatrix<double> dcov_vec) {
     //->>
 
-    for(int i=0; i<n_bp; i++) {
+    for(int i=0; i<nbp; i++) {
       dov[i]=DistMatrix<double>(npix,npix);
       Toeplitz(dcov[i], npix, npix, colvectorsymm);
       }
