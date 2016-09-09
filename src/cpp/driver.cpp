@@ -34,7 +34,7 @@
 
       char *ini_name;
       Environment env( argc, argv );
-      //ProcessInput();
+      ProcessInput();
 
       ini_name=argv[1];
 
