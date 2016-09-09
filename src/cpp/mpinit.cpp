@@ -23,6 +23,7 @@
       ini_name=argv[1];
 
     #ifdef _MPI_
+    /*
       //int mpi_ntask, mpi_rank, mpi_rc;
       mpi.rc = MPI_Init(&argc, &argv);
 
@@ -30,6 +31,7 @@
            cout << "Error starting MPI program. Terminating." << endl; 
            MPI_Abort(MPI_COMM_WORLD, mpi.rc);
            }
+    */
 
       MPI_Comm_size(MPI_COMM_WORLD,&mpi.ntask);
       MPI_Comm_rank(MPI_COMM_WORLD,&mpi.rank);

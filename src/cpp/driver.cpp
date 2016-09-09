@@ -35,8 +35,8 @@
       char *ini_name;
       ini_name=argv[1];
 
-      //Environment env( argc, argv );
-      //ProcessInput();
+      Environment env( argc, argv );
+      ProcessInput();
 
     /*------------------------------------------------
              Global MPI initialization.
