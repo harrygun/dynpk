@@ -52,23 +52,21 @@
       boost::property_tree::ini_parser::read_ini(ini_name, pt);
 
 
-      // examples //
       std::string sec="Quadratic_Estimator";
-  
 
       QEpar qe;
-      //if(mpiwd.rank==0){
-        //char *output_prefix, *klam_fname, *plin_name;
-        //output_prefix=iniparser_getstring(dict,"General:output_prefix", NULL);
+        string output_prefix;
+        output_prefix=pt.get<string>(sec+".output_prefix");
 
-        qe.mdim=pt.get<size_t>(sec+".map_resolution_val");
 	qe.nbp=pt.get<size_t>(sec+".num_band_power");
 	qe.npix=qe.mdim;
-        qe.map_dim=1;
-        //}
+        qe.map_dim=pt.get<size_t>(sec+".map_dimension");
+
+        qe.mdim=pt.get<size_t>(sec+".map_resolution_val");
 
 
-      cout << "rank-" << mpi::Rank()  << ":  mdim=" << qe.mdim << "; nbp=" << qe.nbp << "; npix=" << qe.npix << endl;
+      cout << "rank-" << mpi::Rank()  << ":  mdim=" << qe.mdim 
+           << "; nbp=" << qe.nbp << "; npix=" << qe.npix << endl;
 
     /*-----------------------------------------------
                Here begin the calculation.
@@ -77,20 +75,12 @@
       /* Calculating Eulerian Biasing Model */
       cout << "==================================" << endl; 
 
-      const char *fn_dcov, *fn_cov, *fn_icov, *fn_out, *fn_map, *fn_plist;
+      //const char *fn_dcov, *fn_cov, *fn_icov, *fn_out, *fn_map, *fn_plist;
 
       fn_dcov="result/r1d/dcov.dat";
       fn_map ="result/r1d/dmap.dat";
       fn_plist="result/r1d/plist.dat";
       fn_out ="result/r1d/Qi.dat";
-
-
-      // ->>   <<- //
-      //size_t mdim, npix, nbp;
-      //qe.mdim=50; 
-      //qe.npix=qe.mdim; // 1D
-
-      //qe.nbp=24;   //mdim*mdim;
 
 
       // ->> initialization <<- //
@@ -105,13 +95,12 @@
 
    
       // ->> output <<- //
-      //printf("Output data.\n"); fflush(stdout);
-      //write_data(&mpi, fn_out, qe.Qi, sizeof(double), qe.n_bp);
+      cout << "Output data." << endl;  fflush(stdout);
 
 
-  /*-----------------------------------------------------
-                     free all
-  -----------------------------------------------------*/
+    /*-----------------------------------------------------
+                       free all
+    -----------------------------------------------------*/
     stop:
 
       //free(qe.dcov);   free(qe.icov); 
