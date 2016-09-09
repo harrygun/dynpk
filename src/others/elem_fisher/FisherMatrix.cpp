@@ -30,16 +30,19 @@ main( int argc, char* argv[] )
 
 
   // ->> testing <<- //
-  //new DistMatrix<double> Cov_arr(nrows,ncols)[ndcov_i];  
-  DistMatrix<double> dcov_arr[ndcov_i];
-  for(int i=0; i<ndcov_i; i++) {
-    dcov_arr[i]=DistMatrix<double>(nrows,ncols);
-    Zeros(dcov_arr[i], nrows, ncols);
-    }
+  int flag=false;
+
+  if(flag==true) {
+    DistMatrix<double> dcov_arr[ndcov_i];
+    for(int i=0; i<ndcov_i; i++) {
+      dcov_arr[i]=DistMatrix<double>(nrows,ncols);
+      Zeros(dcov_arr[i], nrows, ncols);
+      }
 
     Write(dcov_arr[0], "./ZERO_test_0", MATRIX_MARKET);
     Write(dcov_arr[10], "./ZERO_test_10", MATRIX_MARKET);
     Write(dcov_arr[23], "./ZERO_test_23", MATRIX_MARKET);
+  }
 
 
   
