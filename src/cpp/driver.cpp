@@ -100,8 +100,8 @@
 
 
 
-      QE_init(qe);
-      abort();
+      //QE_init(qe);
+      //abort();
 
       // ->> call Quadratic Estimator <<- //
       //quad_est_dismat(&mpi, &qe);

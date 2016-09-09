@@ -130,7 +130,7 @@
     }
 
 
-
+/*
   void get_dcov_klim_r1d(DistMatrix<double> &dcov_vec, vector<double> &klist_low, 
                          vector<double> &klist_up, double dt, size_t nbp, 
 			 double m_dim, bool do_mpi=true)  {
@@ -164,7 +164,7 @@
 
     return;
     }
-
+*/
 
 
 
