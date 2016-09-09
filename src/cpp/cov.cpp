@@ -13,7 +13,6 @@
   #include "glbvarb.hpp"
   #include "io.hpp"
   #include "mpinit.hpp"
-  #include "quadest.hpp"
 
   using namespace std;
   using namespace El;
