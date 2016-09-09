@@ -30,9 +30,8 @@ main( int argc, char* argv[] )
 
 
   // ->> testing <<- //
-  int flag=false;
-
-  if(flag==true) {
+  //if(true) 
+  {
     DistMatrix<double> dcov_arr[ndcov_i];
     for(int i=0; i<ndcov_i; i++) {
       dcov_arr[i]=DistMatrix<double>(nrows,ncols);
