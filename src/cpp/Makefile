@@ -124,13 +124,13 @@ LIB  = $(GSLIB)
 
 .SUFFIXES : .o .c .cpp
 .c.o :
-	$(CC) $(CFLAGS) -c $<
+	$(CC) $(CFLAGS) $(EL_LINK_FLAGS) -c $<
 
 .f.o :
 	$(FC) $(FFLAGS) -c $<
 
 .cpp.o :
-	$(CXX) $(CFLAGS) -c $<
+	$(CXX) $(CFLAGS) $(EL_LINK_FLAGS) -c $<
 
 
 
