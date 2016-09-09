@@ -42,10 +42,10 @@
   void dcov_recovery(DistMatrix<double> dcov[], DistMatrix<double> dcov_vec) {
     //->>
 
-    for(int i=0; i<n_bp; i++){
-      dcov[i]=;
+    //for(int i=0; i<n_bp; i++){
+    //  dcov[i]=;
 
-      }
+    //  }
 
     return;
     }

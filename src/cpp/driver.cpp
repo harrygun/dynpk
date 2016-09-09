@@ -83,8 +83,9 @@
 
       // ->> initialization <<- //
       DistMatrix<double> dcov_arr[n_bp], cov(npix,npix), icov(npix,npix);
+
       for(int i=0; i<n_bp; i++) {
-        dov[i]=DistMatrix<double>(npix,npix);
+        dov_arr[i]=DistMatrix<double>(npix,npix);
         }
 
 
