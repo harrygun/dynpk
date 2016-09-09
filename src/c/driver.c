@@ -157,8 +157,8 @@
     stop:
       iniparser_freedict(dict);
 
-      free(qe.dcov);   free(qe.icov); 
-      free(qe.cov);    
+      //free(qe.dcov);   free(qe.icov); 
+      //free(qe.cov);    
 
 
       #ifdef _MPI_
