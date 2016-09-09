@@ -32,19 +32,20 @@
     //DistMatrix<double> qe.dcov_vec(qe.nbp, qe.npix), qe.dcov_i(qe.npix, qe.npix), 
     //                   qe.cov(qe.npix, qe.npix),   qe.icov(qe.npix, qe.npix);
 
-    Read(qe.dcov_vec, fname); 
+    //Read(qe.dcov_vec, fname); 
 
     return;
     }
 
 
 
-  void dcov_recovery(DistMatrix<double> dcov[], DistMatrix<double> dcov_vec) {
+  void dcov_recovery(QEpar &qe, DistMatrix<double> dcov[], DistMatrix<double> dcov_vec) {
     //->>
+    vector <double> colvectorsymm;
 
     for(int i=0; i<nbp; i++) {
-      dov[i]=DistMatrix<double>(npix,npix);
-      Toeplitz(dcov[i], npix, npix, colvectorsymm);
+      dov[i]=DistMatrix<double>(qe.npix,qe.npix);
+      Toeplitz(dcov[i], qe.npix, qe.npix, colvectorsymm);
       }
 
     return;

@@ -22,7 +22,8 @@
       //double *Qip, *Qi, *Fij, *iFij;
 
       // ->> DistMatrix <<- //
-      El::DistMatrix<double> &dcov_vec, &dcov_i, &cov, &icov;
+      //El::DistMatrix<double> &dcov_vec, &dcov, &cov, &icov;
+      //El::DistMatrix<double> dcov[nbp], cov, icov;
 
       }QEpar;
 
