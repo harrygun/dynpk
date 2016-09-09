@@ -126,10 +126,8 @@
 
   void get_dcov_vector(vector<double> & ) {
 
-
+    return;
     }
-
-
 
 
 

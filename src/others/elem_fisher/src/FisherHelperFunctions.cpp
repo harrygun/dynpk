@@ -55,22 +55,19 @@ void GetSymmetricCirculantVector(vector<double>& v, vector<double>&v_out)
 
 void Combine_dcovi(std::string basename, int nmatrices, int nrows, int ncols, DistMatrix<double>& full_dcovi)
 {
-  //DistMatrix<double> dCk(nrows,nrows);
-  DistMatrix<double> dCk(2*nrows-1,2*nrows-1);
+  DistMatrix<double> dCk(nrows,nrows);
 
-  DistMatrix<double> dcovcols(nrows, nmatrices), colmatrix(nrows,1);
-  //DistMatrix<double> dcovcols(nmatrices, nrows), colmatrix(nrows,1);
+  //DistMatrix<double> dcovcols(nrows, nmatrices), colmatrix(nrows,1);
+  DistMatrix<double> dcovcols(nmatrices, nrows), colmatrix(nrows,1);
   vector<double> colvector(nrows),colvectorsymm(2*nrows-1);
 
   Zeros(colmatrix,nrows,1);
 
-  //Read(dcovcols,basename, bool sequential=true);
   Read(dcovcols,basename);
 
   // ->> column major <<- //
   //Transpose(dcovcols,dcovcols);
 
-  //ofstream fout;
 
   for (int k=0;k<nmatrices;k++)
     {
@@ -81,7 +78,7 @@ void Combine_dcovi(std::string basename, int nmatrices, int nrows, int ncols, Di
       GetSymmetricCirculantVector(colvector, colvectorsymm);
 
       Toeplitz(dCk,nrows,nrows,colvectorsymm);
-      full_dcovi(IR(0,nrows),IR(k*nmatrices,k*nmatrices+ncols))=dCk(IR(0,nrows),IR(0,ncols));
+      full_dcovi(IR(0,nrows),IR(k*nrows,k*nrows+nrows))=dCk(IR(0,nrows),IR(0,ncols));
 
       if(k==0){
         Write(dCk(IR(0,nrows),IR(0,ncols)),"./dC0", MATRIX_MARKET); 
@@ -117,11 +114,11 @@ void GetFisherMatrix(DistMatrix<double>& dcovfull, int nmatrices, DistMatrix<dou
 
   for (int i=0;i<nmatrices;i++)
     {
-      dCi=dcovfull(IR(0,nrows),IR(i*nmatrices,i*nmatrices+ncols));
+      dCi=dcovfull(IR(0,nrows),IR(i*nrows,i*nrows+nrows));
       Gemm(NORMAL,NORMAL,Real(1),Cinv,dCi,Real(0),CinvdCi);                                                                                           
       for (int j=0;j<nmatrices;j++)
         {
-	  dCj=dcovfull(IR(0,nrows),IR(j*nmatrices,j*nmatrices+ncols));
+	  dCj=dcovfull(IR(0,nrows),IR(j*nrows,j*nrows+nrows));
           Gemm(NORMAL,NORMAL,Real(1),Cinv,dCj,Real(0),CinvdCj);
           Gemm(NORMAL,NORMAL,Real(1),CinvdCi,CinvdCj,Real(0),Product);                                                                                    
           FisherElement=Trace(Product)*0.5;
