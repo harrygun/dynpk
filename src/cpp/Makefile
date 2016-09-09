@@ -14,7 +14,7 @@ endif
 #---------------------------#
 
 ifeq ($(With_Elemental),yes)
-  include ./include/ElVars
+  include ElVars_GPC
 endif
 
 
