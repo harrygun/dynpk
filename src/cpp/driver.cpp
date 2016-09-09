@@ -70,14 +70,14 @@
         qe.map_dim=1;
         }
 
-      cout << "mdim=" << qe.mdim << "; nbp=" << qe.nbp << "; npix=" << qe.npix +1 << endl;
+      cout << "rank-" << mpiwd.rank << "mdim=" << qe.mdim << "; nbp=" << qe.nbp << "; npix=" << qe.npix << endl;
 
     /*-----------------------------------------------
                Here begin the calculation.
     -----------------------------------------------*/
 
       /* Calculating Eulerian Biasing Model */
-      cout << "==================================" << endl; fflush(stdout);
+      cout << "==================================" << endl; 
 
       const char *fn_dcov, *fn_cov, *fn_icov, *fn_out, *fn_map, *fn_plist;
 
