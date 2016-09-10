@@ -58,7 +58,7 @@
 
     for(jloc=0; jloc<localWidth; ++jloc) {
       for(iloc=0; iloc<localHeight; ++iloc) {
-        dcov_vdist->SetLocal(iloc, jloc, 0);
+        dcov_vdist->SetLocal(iloc, jloc, 1);
         }
       }
 
@@ -67,6 +67,7 @@
     dcov_vec=*(dcov_vdist);
 
     Display(dcov_vec);
+    Display(dcov_vdist);
 
     //HOW does Destructor works ??? //
     delete dcov_vdist;
