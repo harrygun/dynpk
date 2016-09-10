@@ -65,11 +65,11 @@
     // redistribution //
     dcov_vec=DistMatrix<double, STAR, STAR>(nbp, npix); 
     dcov_vec=*(dcov_vdist);
+    delete dcov_vdist;
+
 
     Display(dcov_vec, "dcov_vec");
 
-    //HOW does Destructor works ??? //
-    delete dcov_vdist;
     return;
     }
 
