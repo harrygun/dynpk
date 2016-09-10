@@ -50,7 +50,7 @@
 
     //dcov_vec=DistMatrix<double>(nbp, npix); 
     //DistMatrix<double>dcov_vdist(nbp, npix); 
-    dcov_vdist = new DistMatrix<double>(nbp, npix); 
+    DistMatrix<double>dcov_vdist = new DistMatrix<double>(nbp, npix); 
 
     const int localHeight = dcov_vdist.LocalHeight();
     const int localWidth = dcov_vdist.LocalWidth();
@@ -69,7 +69,7 @@
     Display(dcov_vec);
 
     //HOW does Destructor works ??? //
-    delete dcov_vdist;
+    delete &dcov_vdist;
     return;
     }
 
