@@ -190,9 +190,12 @@
 			    
     return dcov;
     }
+
   */
 
-  
+
+
+  /*
   void dcov_recovery(QEpar &qe, DistMatrix<double> dcov[], DistMatrix<double> dcov_vec) {
     //->>
     vector <double> colvectorsymm;
@@ -206,4 +209,5 @@
     }
 
 
+  */
 
