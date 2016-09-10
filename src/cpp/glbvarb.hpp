@@ -2,63 +2,6 @@
   #ifndef _H_GLB_VARB_
     #define _H_GLB_VARB_
 
-    #include "El.hpp"
-
-
-
-    class QEpar {
-
-      public:
-        int  debug;
-        size_t mdim;
-        size_t map_dim, nbp, npix;
-
-        double m_dim[2], kt_list_para[3], kf_list_para[3], dmap_res[2];
-        double map_zoom_factor;
-
-        std::string get_bp_type, bp_list_fname;
-
-        //double *dcov, *cov, *icov, *covn_v, *plist, *map;
-        El::vector<double> Qip, Qi, covn_vec, plist, map;
-
-        // ->> DistMatrix <<- //
-	El::DistMatrix<double>  dcov_vec, Fij, iFij;
-        //El::DistMatrix<double> cov, icov, dcov[nbp];
-
-      };
-
-
-
-    class MPIpar {
-
-      public:
-        int ntask, rank, rc, root;
-        int max, start, totrun, ind_run;
-	bool rank0;
-
-        std::string fname, extfname[5];
-        El::mpi::Comm world;
-
-        MPIpar () {
-
-          ntask=El::mpi::Size(world);
-          rank=El::mpi::Rank(world);
-
-          std::cout << "Number of tasks= " << ntask << "; My rank= " << rank << std::endl;
-
-          if(rank==0)  {rank0=true;}
-	  else {rank0=false;}
-
-          return;
-          }
-
-
-      };
-
-
-
-
-
 
 
   // ->>

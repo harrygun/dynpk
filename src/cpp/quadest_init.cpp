@@ -11,26 +11,34 @@
   #include "glbvarb.hpp"
   #include "io.hpp"
   #include "mpinit.hpp"
-  //#include "quadest.hpp"
+  #include "quadest.hpp"
 
   using namespace std;
-  using namespace El;
+  //using namespace El;
 
 
 
 
 
-  void dcov_recovery(QEpar &qe, DistMatrix<double> dcov[], DistMatrix<double> dcov_vec) {
-    //->>
-    vector <double> colvectorsymm;
 
-    for(int i=0; i<qe.nbp; i++) {
-      dcov[i]=DistMatrix<double>(qe.npix,qe.npix);
-      Toeplitz(dcov[i], qe.npix, qe.npix, colvectorsymm);
-      }
 
-    return;
+  QEpar::QEpar() {
+    //->>  QEpar constructor <<- //
+
+
+    //  band_power initialization  //
+
+
+    // dcov initialzation //
+
+
+
     }
+
+
+
+
+
 
 
 

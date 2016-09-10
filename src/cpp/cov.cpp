@@ -132,12 +132,6 @@
     int i, a, b;
     double ktia, ktib;
 
-    //if do_mpi:
-    //    prange=mpi.mpirange(nbp)
-    //else:
-    //    prange=range(nbp)
-
-    //Zeros(dcov_vec, npix, nbp) 
     dcov_vec=DistMatrix<double>(npix, nbp) // ->> column major <<- //
 
     for(i in prange){
@@ -201,3 +195,17 @@
   */
 
   
+  void dcov_recovery(QEpar &qe, DistMatrix<double> dcov[], DistMatrix<double> dcov_vec) {
+    //->>
+    vector <double> colvectorsymm;
+
+    for(int i=0; i<qe.nbp; i++) {
+      dcov[i]=DistMatrix<double>(qe.npix,qe.npix);
+      Toeplitz(dcov[i], qe.npix, qe.npix, colvectorsymm);
+      }
+
+    return;
+    }
+
+
+

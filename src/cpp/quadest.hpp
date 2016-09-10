@@ -1,20 +1,35 @@
-#ifndef _H_QUADEST_
-#define _H_QUADEST_
 
-  #include "glbvarb.hpp"
+  #ifndef _H_QUADEST_
+  #define _H_QUADEST_
 
-  double access_dcov(double *dcov, size_t n_bp, size_t npix, int i, 
-                                      int a, int b, size_t map_dim);
+    #include "El.hpp"
 
-  void cov_noise(MPIpar *mpi, double *covn_v, size_t npix, char *type);
+    class QEpar {
 
-  double *Fisher(MPIpar *mpi, double *dcov, double *icov, size_t npix, 
-                 size_t n_bp, size_t map_dim);
+      public:
+        int  debug;
+        size_t mdim, map_dim, nbp, npix;
 
-  double *full_covmat_recov(MPIpar *mpi, double *dcov, double *covn_v, double *plist, 
-                            size_t n_bp, size_t npix, size_t map_dim);
+        double m_dim[2], kt_list_para[3], kf_list_para[3], dmap_res[2];
+        double map_zoom_factor;
+
+        std::string get_bp_type, bp_list_fname;
+
+        //double *dcov, *cov, *icov, *covn_v, *plist, *map;
+        El::vector<double> Qip, Qi, covn_vec, plist, map;
+
+        // ->> DistMatrix <<- //
+	El::DistMatrix<double>  dcov_vec, Fij, iFij;
+        //El::DistMatrix<double> cov, icov, dcov[nbp];
 
 
-  void quad_est(MPIpar *mpi, QEpar *qe);
+        QEpar();  // constructor //
 
-#endif
+
+      };
+
+
+
+
+
+  #endif
