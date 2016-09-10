@@ -80,11 +80,10 @@
       cout << "==================================" << endl; 
 
       //const char *fn_dcov, *fn_cov, *fn_icov, *fn_out, *fn_map, *fn_plist;
-
-      fn_dcov="result/r1d/dcov.dat";
-      fn_map ="result/r1d/dmap.dat";
-      fn_plist="result/r1d/plist.dat";
-      fn_out ="result/r1d/Qi.dat";
+      //fn_dcov="result/r1d/dcov.dat";
+      //fn_map ="result/r1d/dmap.dat";
+      //fn_plist="result/r1d/plist.dat";
+      //fn_out ="result/r1d/Qi.dat";
 
 
       // ->> initialization <<- //
