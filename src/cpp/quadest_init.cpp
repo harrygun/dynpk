@@ -52,7 +52,7 @@
   QEpar::QEpar(char *ini_name, string sec) {
     //->>  QEpar constructor <<- //
 
-    QEpar::QE_parameter(ini_name);
+    QEpar::QE_parameter(ini_name, sec);
 
     //  band_power initialization  //
 
