@@ -66,6 +66,7 @@
     dcov_vec=dcov_vdist;
 
     //HOW does Destructor works ??? //
+    Display(dcov_vec);
 
     return;
     }
