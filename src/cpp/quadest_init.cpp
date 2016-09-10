@@ -52,13 +52,13 @@
     //DistMatrix<double>dcov_vdist(nbp, npix); 
     DistMatrix<double> *dcov_vdist = new DistMatrix<double>(nbp, npix); 
 
-    const int localHeight = dcov_vdist.LocalHeight();
-    const int localWidth = dcov_vdist.LocalWidth();
+    const int localHeight = dcov_vdist->LocalHeight();
+    const int localWidth = dcov_vdist->LocalWidth();
 
 
     for(jloc=0; jloc<localWidth; ++jloc) {
       for(iloc=0; iloc<localHeight; ++iloc) {
-        dcov_vdist.SetLocal(iloc, jloc, 0);
+        dcov_vdist->SetLocal(iloc, jloc, 0);
         }
       }
 
