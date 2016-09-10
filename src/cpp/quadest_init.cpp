@@ -50,7 +50,7 @@
 
     //dcov_vec=DistMatrix<double>(nbp, npix); 
     //DistMatrix<double>dcov_vdist(nbp, npix); 
-    DistMatrix<double> &dcov_vdist = new DistMatrix<double>(nbp, npix); 
+    DistMatrix<double> *dcov_vdist = new DistMatrix<double>(nbp, npix); 
 
     const int localHeight = dcov_vdist.LocalHeight();
     const int localWidth = dcov_vdist.LocalWidth();
