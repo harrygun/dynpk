@@ -66,8 +66,7 @@
     dcov_vec=DistMatrix<double, STAR, STAR>(nbp, npix); 
     dcov_vec=*(dcov_vdist);
 
-    Display(dcov_vec);
-    Display(*(dcov_vdist));
+    Display(dcov_vec, "dcov_vec");
 
     //HOW does Destructor works ??? //
     delete dcov_vdist;
