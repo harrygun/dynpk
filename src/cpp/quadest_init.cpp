@@ -48,19 +48,24 @@
     // ->> initialize the vector dcov <<- //
     int iloc, jloc; 
 
-    dcov_vec=DistMatrix<double>(nbp, npix); 
+    //dcov_vec=DistMatrix<double>(nbp, npix); 
+    DistMatrix<double>dcov_vdist(nbp, npix); 
 
-    const int localHeight = dcov_vec.LocalHeight();
-    const int localWidth = dcov_vec.LocalWidth();
+    const int localHeight = dcov_vdist.LocalHeight();
+    const int localWidth = dcov_vdist.LocalWidth();
 
 
     for(jloc=0; jloc<localWidth; ++jloc) {
       for(iloc=0; iloc<localHeight; ++iloc) {
-        dcov_vec.SetLocal(iloc, jloc, 0);
+        dcov_vdist.SetLocal(iloc, jloc, 0);
         }
       }
 
     // redistribution //
+    dcov_vec=DistMatrix<double, STAR, STAR>(nbp, npix); 
+    dcov_vec=dcov_vdist;
+
+    //HOW does Destructor works ??? //
 
     return;
     }
