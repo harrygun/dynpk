@@ -19,12 +19,12 @@
         std::string get_bp_type, bp_list_fname;
 
         //double *dcov, *cov, *icov, *covn_v, *plist, *map;
-        vector<double> Qip, Qi; 
+        El::vector<double> Qip, Qi, covn_vec, plist, map;
 
         // ->> DistMatrix <<- //
         //El::DistMatrix<double> &dcov_vec, &dcov, &cov, &icov;
 
-        new El::DistMatrix<double> dcov[nbp];
+        El::DistMatrix<double> dcov[nbp];
 	El::DistMatrix<double>  dcov_vec, cov, icov, Fij, iFij;
 
       };
@@ -42,7 +42,7 @@
 
         std::string fname, extfname[5];
 
-        mpi::Comm world;
+        El::mpi::Comm world;
 
       };
 
