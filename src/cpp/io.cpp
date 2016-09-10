@@ -1,8 +1,6 @@
   #include <iostream>
   #include <cmath>
   #include <cstring>
-  //#include <stdio.h>
-  //#include <stdlib.h>
   #include <cstdlib>
   #include <cstdio>
   using namespace std;
@@ -12,17 +10,9 @@
   //#include "mpinit.h"
 
 
-#ifdef _MPI_
-  #include <mpi.h>
-#endif
-
-#ifdef _OMP_
-  #include <omp.h>
-#endif
 
 
-
-
+ /*
   void import_data_double(MPIpar *mpi, const char *fn, void *d, size_t size, size_t count) {
     FILE *fp;
 
@@ -76,3 +66,4 @@
 
     return;
     }
+    */

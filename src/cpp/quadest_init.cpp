@@ -14,6 +14,7 @@
   #include "io.hpp"
   #include "mpinit.hpp"
   #include "quadest.hpp"
+  #include "quadest_init.hpp"
 
   using namespace std;
   using namespace El;
@@ -31,7 +32,11 @@
     map_dim=pt.get<size_t>(sec+".map_dimension");
 
     mdim=pt.get<size_t>(sec+".map_resolution_val");
-    npix=mdim;
+
+    if(map_dim==1)
+      npix=mdim;
+    else if (map_dim==2)
+      npix=mdim;
 
     return;
     }
@@ -51,6 +56,8 @@
 
 
     // dcov initialzation //
+
+
 
     }
 
