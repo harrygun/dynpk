@@ -74,7 +74,7 @@
 
 
   QEpar::~QEpar() {
-    delete dcov_vec;
+    delete &dcov_vec;
     }
 
 
