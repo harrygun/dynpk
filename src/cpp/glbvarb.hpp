@@ -5,35 +5,51 @@
     #include "El.hpp"
 
 
-    //#include "myinterpolate.h"
 
-    typedef struct {
-      int  init, debug;
-      size_t mdim;
-      size_t map_dim, nbp, npix;
+    class QEpar {
 
-      double m_dim[2], kt_list_para[3], kf_list_para[3], dmap_res[2];
-      double map_zoom_factor;
+      public:
+        int  debug;
+        size_t mdim;
+        size_t map_dim, nbp, npix;
 
-      char *get_bp_type, *bp_list_fname;
+        double m_dim[2], kt_list_para[3], kf_list_para[3], dmap_res[2];
+        double map_zoom_factor;
 
-
-      //double *dcov, *cov, *icov, *covn_v, *plist, *map;
-      //double *Qip, *Qi, *Fij, *iFij;
-
-      // ->> DistMatrix <<- //
-      //El::DistMatrix<double> &dcov_vec, &dcov, &cov, &icov;
-      //El::DistMatrix<double> dcov[nbp], cov, icov;
-
-      }QEpar;
+        std::string get_bp_type, bp_list_fname;
 
 
+        //double *dcov, *cov, *icov, *covn_v, *plist, *map;
+        //double *Qip, *Qi, *Fij, *iFij;
 
-     typedef struct {
-      int ntask, rank, rc, root;
-      int max, start, totrun, ind_run;
-      char *fname, *extfname[5];
-      } MPIpar;
+        // ->> DistMatrix <<- //
+        //El::DistMatrix<double> &dcov_vec, &dcov, &cov, &icov;
+        El::DistMatrix<double> dcov[nbp], dcov_vec, cov, icov;
+
+      };
+
+
+
+
+
+
+
+
+    class MPIpar {
+
+      public:
+        int ntask, rank, rc, root;
+        int max, start, totrun, ind_run;
+
+        std::string fname, extfname[5];
+
+        mpi::Comm world;
+
+      };
+
+
+
+
 
 
 
@@ -61,3 +77,34 @@
 
 
   #endif
+
+
+
+  /*
+    typedef struct {
+      int  init, debug;
+      size_t mdim;
+      size_t map_dim, nbp, npix;
+
+      double m_dim[2], kt_list_para[3], kf_list_para[3], dmap_res[2];
+      double map_zoom_factor;
+
+      char *get_bp_type, *bp_list_fname;
+
+
+      //double *dcov, *cov, *icov, *covn_v, *plist, *map;
+      //double *Qip, *Qi, *Fij, *iFij;
+
+      // ->> DistMatrix <<- //
+      //El::DistMatrix<double> &dcov_vec, &dcov, &cov, &icov;
+      //El::DistMatrix<double> dcov[nbp], cov, icov;
+
+      }QEpar;
+
+
+     typedef struct {
+      int ntask, rank, rc, root;
+      int max, start, totrun, ind_run;
+      char *fname, *extfname[5];
+      } MPIpar;
+  */

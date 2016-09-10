@@ -25,80 +25,75 @@
 
 
 
+  int main(int argc, char *argv[])  {
 
+    char *ini_name;
+    ini_name=argv[1];
 
-
-
-
-  int main( int argc, char *argv[])  {
-
-      char *ini_name;
-      ini_name=argv[1];
-
-      Environment env( argc, argv );
-      ProcessInput();
+    Environment env( argc, argv );
+    ProcessInput();
 
     /*------------------------------------------------
-             Global MPI initialization.
-    ------------------------------------------------*/
-      //MPIpar mpiwd;
-      //mpi_init(mpiwd, argc, argv);
+               Global MPI initialization
+      ------------------------------------------------*/
+    MPIpar mpi_wd;
+    mpi_init(mpiwd);
 
-      mpi::Comm world;
-      cout << mpi::Rank(world) << endl;
+    mpi::Comm world;
+    cout << "world rank:" << mpi::Rank(world) << "of total " << mpi:: << endl;
 
 
     /*-----------------------------------------------
-             Parameters Initialization 
-    -----------------------------------------------*/
-      cout << "Opening File:  " << ini_name << endl;
-      boost::property_tree::ptree pt;
-      boost::property_tree::ini_parser::read_ini(ini_name, pt);
+         ->>   Parameters Initialization   <<- 
+      -----------------------------------------------*/
+    cout << "Opening File:  " << ini_name << endl;
+    boost::property_tree::ptree pt;
+    boost::property_tree::ini_parser::read_ini(ini_name, pt);
+
+    std::string sec="Quadratic_Estimator";
+
+    QEpar qe;
+      string output_prefix;
+      output_prefix=pt.get<string>(sec+".output_prefix");
+
+      qe.nbp=pt.get<size_t>(sec+".num_band_power");
+      qe.npix=qe.mdim;
+      qe.map_dim=pt.get<size_t>(sec+".map_dimension");
+
+      qe.mdim=pt.get<size_t>(sec+".map_resolution_val");
 
 
-      std::string sec="Quadratic_Estimator";
-
-      QEpar qe;
-        string output_prefix;
-        output_prefix=pt.get<string>(sec+".output_prefix");
-
-	qe.nbp=pt.get<size_t>(sec+".num_band_power");
-	qe.npix=qe.mdim;
-        qe.map_dim=pt.get<size_t>(sec+".map_dimension");
-
-        qe.mdim=pt.get<size_t>(sec+".map_resolution_val");
+    cout << "mdim=" << qe.mdim << "; nbp=" << qe.nbp << "; npix=" << qe.npix << endl;
 
 
-      cout << "rank-" << mpi::Rank()  << ":  mdim=" << qe.mdim 
-           << "; nbp=" << qe.nbp << "; npix=" << qe.npix << endl;
 
     /*-----------------------------------------------
                Here begin the calculation.
-    -----------------------------------------------*/
+      ---------------------------------------------*/
 
-      /* Calculating Eulerian Biasing Model */
-      cout << "==================================" << endl; 
+    //cout << "==================================" << endl; 
 
-      //const char *fn_dcov, *fn_cov, *fn_icov, *fn_out, *fn_map, *fn_plist;
-      //fn_dcov="result/r1d/dcov.dat";
-      //fn_map ="result/r1d/dmap.dat";
-      //fn_plist="result/r1d/plist.dat";
-      //fn_out ="result/r1d/Qi.dat";
-
-
-      // ->> initialization <<- //
-      DistMatrix<double> dcov[qe.nbp], cov(qe.npix,qe.npix), icov(qe.npix,qe.npix);
+    //const char *fn_dcov, *fn_cov, *fn_icov, *fn_out, *fn_map, *fn_plist;
+    //fn_dcov="result/r1d/dcov.dat";
+    //fn_map ="result/r1d/dmap.dat";
+    //fn_plist="result/r1d/plist.dat";
+    //fn_out ="result/r1d/Qi.dat";
 
 
+    // ->> initialization <<- //
+    //DistMatrix<double> dcov[qe.nbp], cov(qe.npix,qe.npix), icov(qe.npix,qe.npix);
+    //DistMatrix<double> dcov[qe.nbp], cov, icov;
 
-      QE_init(qe);
 
-      // ->> call Quadratic Estimator <<- //
-      //quad_est_dismat(&mpi, &qe);
+
+    QE_init(qe);
+
+    // ->> call Quadratic Estimator <<- //
+    //quad_est_dismat(&mpi, &qe);
 
    
-      // ->> output <<- //
-      cout << "Output data." << endl;  fflush(stdout);
+    // ->> output <<- //
+    cout << "Output data." << endl;  fflush(stdout);
 
 
     /*-----------------------------------------------------

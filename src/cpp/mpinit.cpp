@@ -11,9 +11,9 @@
 
   using namespace std;
 
-  #ifdef _MPI_
-  #include "mpi.h"
-  #endif
+  //#ifdef _MPI_
+  //#include "mpi.h"
+  //#endif
 
 
 
@@ -24,15 +24,6 @@
       ini_name=argv[1];
 
     #ifdef _MPI_
-    /*
-      //int mpi_ntask, mpi_rank, mpi_rc;
-      mpi.rc = MPI_Init(&argc, &argv);
-
-      if (mpi.rc != MPI_SUCCESS) {
-           cout << "Error starting MPI program. Terminating." << endl; 
-           MPI_Abort(MPI_COMM_WORLD, mpi.rc);
-           }
-    */
 
       //mpi::Comm world;
 
