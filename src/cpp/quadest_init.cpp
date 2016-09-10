@@ -46,7 +46,7 @@
 
   void QEpar::dcov_init() {
     // ->> initialize the vector dcov <<- //
-    int iloc, jloc
+    int iloc, jloc;
     const int localHeight, localWidth;
 
     dcov_vec=DistMatrix<double>(nbp, npix); 
