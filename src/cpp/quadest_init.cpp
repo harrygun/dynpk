@@ -44,6 +44,13 @@
 
 
 
+  void QEpar::dcov_init() {
+    // ->> initialize the vector dcov <<- //
+
+
+
+    return;
+    }
 
 
 

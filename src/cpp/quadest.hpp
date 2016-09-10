@@ -34,6 +34,11 @@
 
         void QE_parameter(char *ini_name, std::string sec);
 
+        void dcov_init();
+
+
+
+
       };
 
 

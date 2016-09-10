@@ -43,7 +43,8 @@
     QEpar qe(ini_name, sec);
 
     if(glmpi.rank0)
-      cout << "mdim=" << qe.mdim << "; nbp=" << qe.nbp << "; npix=" << qe.npix << endl;
+      cout << "rank-" << glmpi.rank << "  mdim=" << qe.mdim 
+           << "; nbp=" << qe.nbp << "; npix=" << qe.npix << endl;
 
 
 
