@@ -47,8 +47,7 @@
   void QEpar::dcov_init() {
     // ->> initialize the vector dcov <<- //
 
-
-    DistMatrix<double> dcov_vec(nbp, npix); 
+    dcov_vec=DistMatrix<double>(nbp, npix); 
 
 
     return;
