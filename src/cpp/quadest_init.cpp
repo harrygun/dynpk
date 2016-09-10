@@ -16,8 +16,8 @@
   #include "quadest.hpp"
   #include "quadest_init.hpp"
 
-  using namespace std;
   using namespace El;
+  using namespace std;
 
 
 
