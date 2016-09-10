@@ -48,10 +48,6 @@
 
 
 
-    /*-----------------------------------------------
-               Here begin the calculation.
-      ---------------------------------------------*/
-
     //cout << "==================================" << endl; 
 
     //const char *fn_dcov, *fn_cov, *fn_icov, *fn_out, *fn_map, *fn_plist;
@@ -61,30 +57,13 @@
     //fn_out ="result/r1d/Qi.dat";
 
 
-    // ->> initialization <<- //
-    //DistMatrix<double> dcov[qe.nbp], cov(qe.npix,qe.npix), icov(qe.npix,qe.npix);
-    //DistMatrix<double> dcov[qe.nbp], cov, icov;
 
-
-
-    //QE_init(qe);
 
     // ->> call Quadratic Estimator <<- //
     //Quad_Estimator(&mpi, &qe);
 
    
-    // ->> output <<- //
-    cout << "Output data." << endl; 
 
-
-    /*-----------------------------------------------------
-                       free all
-    -----------------------------------------------------*/
-    stop:
-
-      //free(qe.dcov);   free(qe.icov); 
-      //free(qe.cov);    free(qe.map);
-      //free(qe.plist);  free(qe.covn_v);
 
 
     return 0;

@@ -37,6 +37,8 @@
         void dcov_init();
 
 
+        // destructor //
+        ~QEpar();
 
 
       };

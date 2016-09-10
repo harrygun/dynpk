@@ -59,6 +59,8 @@
 
     QEpar::QE_parameter(ini_name, sec);
 
+    // ->> data import <<- //
+
     //  band_power initialization  //
 
 

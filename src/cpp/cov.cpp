@@ -205,6 +205,12 @@
       Toeplitz(dcov[i], qe.npix, qe.npix, colvectorsymm);
       }
 
+
+
+    // ->> initialization <<- //
+    //DistMatrix<double> dcov[qe.nbp], cov(qe.npix,qe.npix), icov(qe.npix,qe.npix);
+    //DistMatrix<double> dcov[qe.nbp], cov, icov;
+
     return;
     }
 
