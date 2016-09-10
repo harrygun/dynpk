@@ -46,12 +46,12 @@
 
   void QEpar::dcov_init() {
     // ->> initialize the vector dcov <<- //
-    int iloc, jloc, localHeight, localWidth;
+    int iloc, jloc; 
 
     dcov_vec=DistMatrix<double>(nbp, npix); 
 
-    localHeight = dcov_vec.LocalHeight();
-    localWidth = dcov_vec.LocalWidth();
+    const int localHeight = dcov_vec.LocalHeight();
+    const int localWidth = dcov_vec.LocalWidth();
 
 
     for(jloc=0; jloc<localWidth; ++jloc) {
@@ -59,7 +59,6 @@
         dcov_vec.SetLocal(iloc, jloc, 0);
         }
       }
-
 
     // redistribution //
 
@@ -86,7 +85,7 @@
 
 
   QEpar::~QEpar() {
-    delete &dcov_vec;
+    //delete &dcov_vec;
     }
 
 
