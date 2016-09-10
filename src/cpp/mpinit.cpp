@@ -19,7 +19,7 @@
     glmpi.ntask=El::mpi::Size(glmpi.world);
     glmpi.rank=El::mpi::Rank(glmpi.world);
 
-    cout << "Number of tasks= " << glmpi.ntask << "My rank= " << glmpi.rank << endl;
+    cout << "Number of tasks= " << glmpi.ntask << "; My rank= " << glmpi.rank << endl;
     return;
     }
 
