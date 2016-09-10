@@ -148,7 +148,7 @@ default: quadestxx
 
 #--------------------------------------------------#
 #quadestxx: io.o mpinit.o quadest.o driver.o
-quadestxx: io.o mpinit.o cov.o driver.o
+quadestxx: io.o mpinit.o cov.o quadest_init.o driver.o
 	$(CXX) $(EL_LINK_FLAGS)  $^ -o $(WORKSPACE)/$@  $(EL_LIBS) $(GSLIB)
 
 

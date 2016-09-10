@@ -17,15 +17,16 @@
         char *ini_name;
         std::string get_bp_type, bp_list_fname;
 
+	// ->> IO 
+        std::string output_prefix;
+      
+
         //double *dcov, *cov, *icov, *covn_v, *plist, *map;
         El::vector<double> Qip, Qi, covn_vec, plist, map;
 
         // ->> DistMatrix <<- //
 	El::DistMatrix<double>  dcov_vec, Fij, iFij;
         //El::DistMatrix<double> cov, icov, dcov[nbp];
-
-
-        MPIpar &glmpi;
 
 
         QEpar();  // constructor //

@@ -14,12 +14,22 @@
   #include "quadest.hpp"
 
   using namespace std;
-  //using namespace El;
+  using namespace El;
 
 
 
 
-  void QE_parameter(char *ini_name){
+  void QEpar::QE_parameter(char *ini_name, string sec="Quadratic_Estimator"){
+
+    boost::property_tree::ptree pt;
+    boost::property_tree::ini_parser::read_ini(ini_name, pt);
+
+    output_prefix=pt.get<string>(sec+".output_prefix");
+    nbp=pt.get<size_t>(sec+".num_band_power");
+    map_dim=pt.get<size_t>(sec+".map_dimension");
+
+    mdim=pt.get<size_t>(sec+".map_resolution_val");
+    npix=mdim;
 
     return;
     }
@@ -30,19 +40,15 @@
 
 
 
-
-
-  QEpar::QEpar(char *ini_name) {
+  QEpar::QEpar(char *ini_name, const string ) {
     //->>  QEpar constructor <<- //
 
-    QE_parameter(ini_name);
+    QEpar::QE_parameter(ini_name);
 
     //  band_power initialization  //
 
 
     // dcov initialzation //
-
-
 
     }
 
