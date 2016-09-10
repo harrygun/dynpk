@@ -48,6 +48,8 @@
     // ->> initialize the vector dcov <<- //
 
 
+    DistMatrix<double> dcov_vec(qe.nbp, qe.npix); 
+
 
     return;
     }
