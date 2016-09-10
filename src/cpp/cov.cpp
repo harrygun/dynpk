@@ -133,10 +133,10 @@
     int i, a, b;
     double ktia, ktib;
 
-    if do_mpi:
-        prange=mpi.mpirange(nbp)
-    else:
-        prange=range(nbp)
+    //if do_mpi:
+    //    prange=mpi.mpirange(nbp)
+    //else:
+    //    prange=range(nbp)
 
     //Zeros(dcov_vec, npix, nbp) 
     dcov_vec=DistMatrix<double>(npix, nbp) // ->> column major <<- //

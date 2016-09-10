@@ -3,6 +3,7 @@
   #include <cstring>
   #include <cstdlib>
   #include <cstdio>
+  #include <El.hpp>
 
   #include "glbvarb.hpp"
   #include "io.hpp"
@@ -33,8 +34,10 @@
            }
     */
 
-      MPI_Comm_size(MPI_COMM_WORLD,&mpi.ntask);
-      MPI_Comm_rank(MPI_COMM_WORLD,&mpi.rank);
+      mpi::Comm world;
+
+      //MPI_Comm_size(MPI_COMM_WORLD,&mpi.ntask);
+      //MPI_Comm_rank(MPI_COMM_WORLD,&mpi.rank);
 
       printf ("Number of tasks= %d My rank= %d\n", mpi.ntask, mpi.rank);
 

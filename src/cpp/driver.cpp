@@ -19,9 +19,9 @@
   using namespace std;
   using namespace El;
 
-  #ifdef _MPI_
-  #include <mpi.h>
-  #endif
+  //#ifdef _MPI_
+  //#include <mpi.h>
+  //#endif
 
 
 
@@ -43,6 +43,10 @@
     ------------------------------------------------*/
       //MPIpar mpiwd;
       //mpi_init(mpiwd, argc, argv);
+
+      mpi::Comm world;
+      cout << mpi::Rank(world) << endl;
+
 
     /*-----------------------------------------------
              Parameters Initialization 
