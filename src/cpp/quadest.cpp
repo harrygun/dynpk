@@ -14,12 +14,7 @@
 
   using namespace std;
   using namespace El;
-  typedef double Real;
 
-
-  #ifdef _MPI_
-  #include <mpi.h>
-  #endif
 
 
 
@@ -191,7 +186,7 @@
 
 
 
-  void quad_est_distmat(MPIpar *mpi, QEpar *qe) {
+  void Quad_Estimator(QEpar *qe) {
     // ->> calculate quadratic estimator <<- //
     int a, b, i, j, idx, id;
     char *fn;

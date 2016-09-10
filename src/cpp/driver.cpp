@@ -36,11 +36,12 @@
     /*------------------------------------------------
                Global MPI initialization
       ------------------------------------------------*/
-    //MPIpar mpi_world;
+    MPIpar mpi_world;
     //mpi_init(mpi_world);
 
-    mpi::Comm world;
-    cout << "world rank:" << mpi::Rank(world) << "of total " << mpi:: << endl;
+    //mpi::Comm world;
+    cout << "World rank:" << mpi::Rank(mpi_world) 
+         << "of total "   << mpi::Size(mpi_world) << endl;
 
 
     /*-----------------------------------------------
@@ -89,7 +90,7 @@
     QE_init(qe);
 
     // ->> call Quadratic Estimator <<- //
-    //quad_est_dismat(&mpi, &qe);
+    //Quad_Estimator(&mpi, &qe);
 
    
     // ->> output <<- //
