@@ -23,7 +23,7 @@
 
         // ->> DistMatrix <<- //
 	El::DistMatrix<double>  dcov_vec, Fij, iFij;
-	//El::DistMatrix<double> cov, icov, dcov[nbp];
+        //El::DistMatrix<double> cov, icov, dcov[nbp];
 
       };
 

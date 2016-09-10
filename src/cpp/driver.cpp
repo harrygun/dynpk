@@ -36,8 +36,8 @@
     /*------------------------------------------------
                Global MPI initialization
       ------------------------------------------------*/
-    MPIpar mpi_wd;
-    mpi_init(mpiwd);
+    //MPIpar mpi_world;
+    //mpi_init(mpi_world);
 
     mpi::Comm world;
     cout << "world rank:" << mpi::Rank(world) << "of total " << mpi:: << endl;

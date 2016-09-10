@@ -18,10 +18,7 @@
 
 
 
-  void mpi_init(MPIpar &mpi, int argc, char *argv[]){
-
-      char *ini_name;
-      ini_name=argv[1];
+  void mpi_init(MPIpar &mpi, ){
 
     #ifdef _MPI_
 
