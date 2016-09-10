@@ -22,7 +22,7 @@
 
 
 
-  void QEpar::QE_parameter(char *ini_name, string sec="Quadratic_Estimator"){
+  void QEpar::QE_parameter(char *ini_name, const string sec="Quadratic_Estimator"){
 
     boost::property_tree::ptree pt;
     boost::property_tree::ini_parser::read_ini(ini_name, pt);
@@ -47,7 +47,7 @@
 
 
 
-  QEpar::QEpar(char *ini_name, const string ) {
+  QEpar::QEpar(char *ini_name, , const string sec="Quadratic_Estimator") {
     //->>  QEpar constructor <<- //
 
     QEpar::QE_parameter(ini_name);

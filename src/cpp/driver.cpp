@@ -33,16 +33,12 @@
       ------------------------------------------------*/
     MPIpar glmpi;
 
-    /*-----------------------------------------------
-         ->>   Parameters Initialization   <<- 
-      -----------------------------------------------*/
-    //boost::property_tree::ptree pt;
-    //boost::property_tree::ini_parser::read_ini(ini_name, pt);
-    //string sec="Quadratic_Estimator";
-
     if(glmpi.rank==0)
       cout << "Opening File:  " << ini_name << endl;
 
+    /*-----------------------------------------------
+         ->>   Parameters Initialization   <<- 
+      -----------------------------------------------*/
     QEpar qe(ini_name);
 
     if(glmpi.rank0)
