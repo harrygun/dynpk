@@ -34,7 +34,7 @@
            }
     */
 
-      mpi::Comm world;
+      //mpi::Comm world;
 
       //MPI_Comm_size(MPI_COMM_WORLD,&mpi.ntask);
       //MPI_Comm_rank(MPI_COMM_WORLD,&mpi.rank);
