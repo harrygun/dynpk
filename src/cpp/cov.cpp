@@ -10,8 +10,9 @@
   #include "El.hpp"
 
   #include "glbvarb.hpp"
-  #include "io.hpp"
   #include "mpinit.hpp"
+  #include "io.hpp"
+
 
   using namespace std;
   using namespace El;
