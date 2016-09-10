@@ -17,7 +17,7 @@
 
 
 
-
+  /*
   void mpi_init(MPIpar &mpi, ){
 
     #ifdef _MPI_
@@ -29,7 +29,7 @@
 
       printf ("Number of tasks= %d My rank= %d\n", mpi.ntask, mpi.rank);
 
-  /* MPI initialization ends. */
+    // MPI initialization ends.
       if(mpi.rank==0) 
         printf("%d Sending parameter filename %s to other processes.\n", mpi.rank, ini_name);
 
@@ -44,7 +44,7 @@
 
     return;
     }
-
+  */
 
   double *mpi_gather_dist_double(MPIpar *mpi, double *in, size_t count_pp, 
                                  size_t count_tot ) {
