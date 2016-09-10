@@ -22,15 +22,10 @@
         El::vector<double> Qip, Qi, covn_vec, plist, map;
 
         // ->> DistMatrix <<- //
-        //El::DistMatrix<double> &dcov_vec, &dcov, &cov, &icov;
-
-        El::DistMatrix<double> dcov[nbp];
-	El::DistMatrix<double>  dcov_vec, cov, icov, Fij, iFij;
+	El::DistMatrix<double>  dcov_vec, Fij, iFij;
+	//El::DistMatrix<double> cov, icov, dcov[nbp];
 
       };
-
-
-
 
 
 
