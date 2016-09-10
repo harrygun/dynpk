@@ -19,10 +19,6 @@
   using namespace std;
   using namespace El;
 
-  //#ifdef _MPI_
-  //#include <mpi.h>
-  //#endif
-
 
 
   int main(int argc, char *argv[])  {
@@ -37,8 +33,6 @@
                Global MPI initialization
       ------------------------------------------------*/
     MPIpar glmpi;
-    //mpi_init(glmpi);
-
 
     /*-----------------------------------------------
          ->>   Parameters Initialization   <<- 

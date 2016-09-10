@@ -9,11 +9,6 @@
 
 
 
-  //void mpi_init(MPIpar &glmpi);
-
-
-
-
   double *mpi_gather_dist_double(MPIpar *mpi, double *in, size_t count_pp, 
                                  size_t count_tot );
 

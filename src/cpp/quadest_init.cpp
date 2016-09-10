@@ -16,11 +16,6 @@
   using namespace std;
   using namespace El;
 
-  typedef double Real;
-
-  #ifdef _MPI_
-  #include <mpi.h>
-  #endif
 
 
 
