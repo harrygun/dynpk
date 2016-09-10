@@ -64,7 +64,7 @@
 
     // redistribution //
     dcov_vec=DistMatrix<double, STAR, STAR>(nbp, npix); 
-    dcov_vec=&dcov_vdist;
+    dcov_vec&=dcov_vdist;
 
     Display(dcov_vec);
 
