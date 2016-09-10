@@ -36,12 +36,8 @@
     /*------------------------------------------------
                Global MPI initialization
       ------------------------------------------------*/
-    MPIpar mpi_world;
-    //mpi_init(mpi_world);
-
-    //mpi::Comm world;
-    cout << "World rank:" << mpi::Rank(mpi_world.world) 
-         << "of total "   << mpi::Size(mpi_world.world) << endl;
+    MPIpar glmpi;
+    mpi_init(glmpi);
 
 
     /*-----------------------------------------------

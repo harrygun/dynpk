@@ -11,40 +11,21 @@
 
   using namespace std;
 
-  //#ifdef _MPI_
-  //#include "mpi.h"
-  //#endif
 
 
 
-  /*
-  void mpi_init(MPIpar &mpi, ){
+  void mpi_init(MPIpar &glmpi){
 
-    #ifdef _MPI_
+    glmpi.ntask=El::mpi::Size(mpi_world.world);
+    glmpi.rank=El::mpi::Rank(mpi_world.world);
 
-      //mpi::Comm world;
-
-      //MPI_Comm_size(MPI_COMM_WORLD,&mpi.ntask);
-      //MPI_Comm_rank(MPI_COMM_WORLD,&mpi.rank);
-
-      printf ("Number of tasks= %d My rank= %d\n", mpi.ntask, mpi.rank);
-
-    // MPI initialization ends.
-      if(mpi.rank==0) 
-        printf("%d Sending parameter filename %s to other processes.\n", mpi.rank, ini_name);
-
-      MPI_Bcast( ini_name, 100, MPI_CHAR, 0, MPI_COMM_WORLD);
-
-      if(mpi.rank!=0) 
-        printf("%d Received parameter filename %s.\n", mpi.rank, ini_name);
-    #else
-      mpi.ntask = 1;
-      mpi.rank = 0;
-    #endif
-
+    cout << "Number of tasks= " << mpi.ntask << "My rank= " << mpi.rank << endl;
     return;
     }
-  */
+
+
+
+
 
   double *mpi_gather_dist_double(MPIpar *mpi, double *in, size_t count_pp, 
                                  size_t count_tot ) {
