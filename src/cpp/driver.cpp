@@ -40,8 +40,8 @@
     //mpi_init(mpi_world);
 
     //mpi::Comm world;
-    cout << "World rank:" << mpi::Rank(mpi_world) 
-         << "of total "   << mpi::Size(mpi_world) << endl;
+    cout << "World rank:" << mpi::Rank(mpi_world.world) 
+         << "of total "   << mpi::Size(mpi_world.world) << endl;
 
 
     /*-----------------------------------------------
