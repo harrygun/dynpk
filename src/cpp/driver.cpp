@@ -66,7 +66,7 @@
 
 
 
-    QE_init(qe);
+    //QE_init(qe);
 
     // ->> call Quadratic Estimator <<- //
     //Quad_Estimator(&mpi, &qe);
