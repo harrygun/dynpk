@@ -13,16 +13,19 @@
 
 
 
-
+  /*
   void mpi_init(MPIpar &glmpi){
 
     glmpi.ntask=El::mpi::Size(glmpi.world);
     glmpi.rank=El::mpi::Rank(glmpi.world);
 
     cout << "Number of tasks= " << glmpi.ntask << "; My rank= " << glmpi.rank << endl;
+
+    if(glmpi.rank==0)  glmpi.rank0=;
+
     return;
     }
-
+  */
 
 
 

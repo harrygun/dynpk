@@ -34,10 +34,25 @@
       public:
         int ntask, rank, rc, root;
         int max, start, totrun, ind_run;
+	bool rank0;
 
         std::string fname, extfname[5];
-
         El::mpi::Comm world;
+
+
+        MPIpar () {
+
+          ntask=El::mpi::Size(world);
+          rank=El::mpi::Rank(world);
+
+          cout << "Number of tasks= " << ntask << "; My rank= " << rank << endl;
+
+          if(rank==0)  {rank0=true;}
+	  else {rank0=false;}
+
+          return;
+          }
+
 
       };
 

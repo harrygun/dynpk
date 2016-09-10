@@ -37,30 +37,31 @@
                Global MPI initialization
       ------------------------------------------------*/
     MPIpar glmpi;
-    mpi_init(glmpi);
+    //mpi_init(glmpi);
 
 
     /*-----------------------------------------------
          ->>   Parameters Initialization   <<- 
       -----------------------------------------------*/
-    cout << "Opening File:  " << ini_name << endl;
+    if(glmpi.rank==0)
+      cout << "Opening File:  " << ini_name << endl;
+
     boost::property_tree::ptree pt;
     boost::property_tree::ini_parser::read_ini(ini_name, pt);
-
-    std::string sec="Quadratic_Estimator";
+    string sec="Quadratic_Estimator";
 
     QEpar qe;
       string output_prefix;
       output_prefix=pt.get<string>(sec+".output_prefix");
 
       qe.nbp=pt.get<size_t>(sec+".num_band_power");
-      qe.npix=qe.mdim;
       qe.map_dim=pt.get<size_t>(sec+".map_dimension");
 
       qe.mdim=pt.get<size_t>(sec+".map_resolution_val");
+      qe.npix=qe.mdim;
 
-
-    cout << "mdim=" << qe.mdim << "; nbp=" << qe.nbp << "; npix=" << qe.npix << endl;
+    if(glmpi.rank0)
+      cout << "mdim=" << qe.mdim << "; nbp=" << qe.nbp << "; npix=" << qe.npix << endl;
 
 
 

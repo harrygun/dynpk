@@ -9,7 +9,7 @@
 
 
 
-  void mpi_init(MPIpar &glmpi);
+  //void mpi_init(MPIpar &glmpi);
 
 
 
