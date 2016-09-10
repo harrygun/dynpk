@@ -51,8 +51,8 @@
 
     dcov_vec=DistMatrix<double>(nbp, npix); 
 
-    const int localHeight = dcov_vec.LocalHeight();
-    const int localWidth = dcov_vec.LocalWidth();
+    localHeight = dcov_vec.LocalHeight();
+    localWidth = dcov_vec.LocalWidth();
 
 
     for(jloc=0; jloc<localWidth; ++jloc) {
