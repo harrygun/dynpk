@@ -47,7 +47,7 @@
 
 
 
-  QEpar::QEpar(char *ini_name, , const string sec="Quadratic_Estimator") {
+  QEpar::QEpar(char *ini_name, const string sec="Quadratic_Estimator") {
     //->>  QEpar constructor <<- //
 
     QEpar::QE_parameter(ini_name);

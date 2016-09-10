@@ -29,7 +29,8 @@
         //El::DistMatrix<double> cov, icov, dcov[nbp];
 
 
-        QEpar();  // constructor //
+        //QEpar();  // constructor //
+        QEpar(char *ini_name, const string sec="Quadratic_Estimator");
 
         void QE_parameter(char *ini_name, const std::string sec="Quadratic_Estimator");
 
