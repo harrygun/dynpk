@@ -49,7 +49,8 @@
     int iloc, jloc; 
 
     //dcov_vec=DistMatrix<double>(nbp, npix); 
-    DistMatrix<double>dcov_vdist(nbp, npix); 
+    //DistMatrix<double>dcov_vdist(nbp, npix); 
+    dcov_vdist = new DistMatrix<double>(nbp, npix); 
 
     const int localHeight = dcov_vdist.LocalHeight();
     const int localWidth = dcov_vdist.LocalWidth();
@@ -65,9 +66,10 @@
     dcov_vec=DistMatrix<double, STAR, STAR>(nbp, npix); 
     dcov_vec=dcov_vdist;
 
-    //HOW does Destructor works ??? //
     Display(dcov_vec);
 
+    //HOW does Destructor works ??? //
+    delete dcov_vdist;
     return;
     }
 
@@ -76,7 +78,7 @@
   QEpar::QEpar(char *ini_name, string sec) {
     //->>  QEpar constructor <<- //
 
-    QEpar::QE_parameter(ini_name, sec);
+    QE_parameter(ini_name, sec);
 
     // ->> data import <<- //
 
@@ -84,7 +86,7 @@
 
 
     // dcov initialzation //
-
+    dcov_init();
 
 
     }
