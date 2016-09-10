@@ -38,7 +38,7 @@
 
 
         // destructor //
-        ~QEpar();
+        //~QEpar();
 
 
       };
