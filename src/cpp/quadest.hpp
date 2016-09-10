@@ -30,9 +30,11 @@
 
 
         //QEpar();  // constructor //
-        QEpar(char *ini_name, const std::string sec="Quadratic_Estimator");
+        //QEpar(char *ini_name, std::string sec="Quadratic_Estimator");
+        QEpar(char *ini_name, std::string sec);
 
-        void QE_parameter(char *ini_name, const std::string sec="Quadratic_Estimator");
+        //void QE_parameter(char *ini_name, std::string sec="Quadratic_Estimator");
+        void QE_parameter(char *ini_name, std::string sec);
 
       };
 
