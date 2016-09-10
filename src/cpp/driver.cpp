@@ -43,7 +43,7 @@
     boost::property_tree::ini_parser::read_ini(ini_name, pt);
     string sec="Quadratic_Estimator";
 
-    QEpar qe;
+    QEpar qe(ini_name);
       string output_prefix;
       output_prefix=pt.get<string>(sec+".output_prefix");
 

@@ -3,6 +3,7 @@
   #define _H_QUADEST_
 
     #include "El.hpp"
+    #include "mpinit.hpp"
 
     class QEpar {
 
@@ -13,6 +14,7 @@
         double m_dim[2], kt_list_para[3], kf_list_para[3], dmap_res[2];
         double map_zoom_factor;
 
+        char *ini_name;
         std::string get_bp_type, bp_list_fname;
 
         //double *dcov, *cov, *icov, *covn_v, *plist, *map;
@@ -21,6 +23,9 @@
         // ->> DistMatrix <<- //
 	El::DistMatrix<double>  dcov_vec, Fij, iFij;
         //El::DistMatrix<double> cov, icov, dcov[nbp];
+
+
+        MPIpar &glmpi;
 
 
         QEpar();  // constructor //

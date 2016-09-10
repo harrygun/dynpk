@@ -19,12 +19,23 @@
 
 
 
+  void QE_parameter(char *ini_name){
+
+    return;
+    }
 
 
 
-  QEpar::QEpar() {
+
+
+
+
+
+
+  QEpar::QEpar(char *ini_name) {
     //->>  QEpar constructor <<- //
 
+    QE_parameter(ini_name);
 
     //  band_power initialization  //
 
