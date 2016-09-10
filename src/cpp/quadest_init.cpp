@@ -93,7 +93,6 @@
 
 
   QEpar::~QEpar() {
-    //delete &dcov_vec;
     }
 
 
