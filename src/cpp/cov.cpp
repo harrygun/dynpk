@@ -117,37 +117,12 @@
     return dc1d_imag/2.;
     }
 
-/*
-  void get_dcov_klim_r1d(DistMatrix<double> &dcov_vec, vector<double> &klist_low, 
-                         vector<double> &klist_up, double dt, size_t nbp, 
-			 double m_dim, bool do_mpi=true)  {
 
-    //         ->> get the derivative of covariance matrix <<-             //
-    // ->> I'd like to have a copy of dcov_vec for every process, or what 
-    // ->> I could do is to define DistMatrix with particular distribution 
-    // ->> and then re-distribute 
 
-    int i, a, b;
-    double ktia, ktib;
-
-    dcov_vec=DistMatrix<double>(npix, nbp) // ->> column major <<- //
-
-    for(i in prange){
-
-        ktia = klist_low[i]
-        ktib = klist_up[i]
-
-        print i, ktia, ktib, dt
-    
-        for a in range(m_dim[0]):
-                dtab = a*dt
-                dcov_vec[i,a]=2.*dcov1d_klim_real(ktia, ktib, dt, dtab);
-      }
-
-    return;
+  double get_dcov_klim_r1d(double kt_low, double kt_up, double dt, double dtab)  {
+    return 2.*dcov1d_klim_real(kt_low, kt_up, dt, dtab);
     }
 
-*/
 
 
 

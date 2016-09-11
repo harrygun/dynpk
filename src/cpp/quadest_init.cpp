@@ -15,6 +15,7 @@
   #include "mpinit.hpp"
   #include "quadest.hpp"
   #include "quadest_init.hpp"
+  #include "cov.hpp"
 
   using namespace El;
   using namespace std;
@@ -45,11 +46,14 @@
 
 
   void QEpar::dcov_init() {
-    // ->> initialize the vector dcov <<- //
-    int iloc, jloc; 
+    //         ->> get the derivative of covariance matrix <<-             //
+    // ->> I'd like to have a copy of dcov_vec for every process, or what 
+    // ->> I could do is to define DistMatrix with particular distribution 
+    // ->> and then re-distribute 
 
-    //dcov_vec=DistMatrix<double>(nbp, npix); 
-    //DistMatrix<double>dcov_vdist(nbp, npix); 
+    int iloc, jloc, iglo, jglo; 
+    double dc;
+
     DistMatrix<double> *dcov_vdist = new DistMatrix<double>(nbp, npix); 
 
     const int localHeight = dcov_vdist->LocalHeight();
@@ -58,7 +62,17 @@
 
     for(jloc=0; jloc<localWidth; ++jloc) {
       for(iloc=0; iloc<localHeight; ++iloc) {
-        dcov_vdist->SetLocal(iloc, jloc, 1);
+
+        jglo=dcov_vdist->GlobalRow(jloc);
+        iglo=dcov_vdist->GlobalRow(iloc);
+
+        // ->> band power k-list <<- //
+        kt_low = ;
+        kt_up = ;
+
+        dc=get_dcov_klim_r1d(kt_low, kt_up, dt, dtab);
+
+        dcov_vdist->SetLocal(iloc, jloc, );
         }
       }
 
@@ -83,7 +97,7 @@
     // ->> data import <<- //
 
     //  band_power initialization  //
-
+    
 
     // dcov initialzation //
     dcov_init();
