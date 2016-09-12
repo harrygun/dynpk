@@ -34,6 +34,8 @@
 
         void QE_parameter(char *ini_name, std::string sec);
 
+        void band_power_init(string bp_init_type, char *bp_fname);
+
         void dcov_init();
 
 

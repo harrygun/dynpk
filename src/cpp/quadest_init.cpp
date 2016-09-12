@@ -43,13 +43,26 @@
     }
 
 
+  void QEpar::band_power_init(string bp_init_type, char *bp_fname){
+    // ->> import band_power data <<- // 
+
+    if(bp_init_type=="import") {
+      // ->> import klist & plist from file <<- //
+
+      }
+    else 
+      exit();
+
+
+    return;
+    }
+
+
 
 
   void QEpar::dcov_init() {
-    //         ->> get the derivative of covariance matrix <<-             //
-    // ->> I'd like to have a copy of dcov_vec for every process, or what 
-    // ->> I could do is to define DistMatrix with particular distribution 
-    // ->> and then re-distribute 
+    //     ->> get the derivative of covariance matrix <<-   //
+    // ->> I'd like to have a copy of dcov_vec for every process //
 
     int iloc, jloc, iglo, jglo; 
     double dc;
@@ -63,7 +76,7 @@
     for(jloc=0; jloc<localWidth; ++jloc) {
       for(iloc=0; iloc<localHeight; ++iloc) {
 
-        jglo=dcov_vdist->GlobalRow(jloc);
+        jglo=dcov_vdist->GlobalCol(jloc);
         iglo=dcov_vdist->GlobalRow(iloc);
 
         // ->> band power k-list <<- //
