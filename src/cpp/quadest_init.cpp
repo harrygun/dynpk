@@ -59,7 +59,10 @@
 
       for(int i=0; i<nbp; i++) {
 
-        plist[i]=bpk()
+        klist[i] = bpk.Get(0, i);
+        klow[i]  = bpk.Get(1, i);
+        kup[i]   = bpk.Get(2, i);
+        plist[i] = bpk.Get(3, i);
         }
 
       }
