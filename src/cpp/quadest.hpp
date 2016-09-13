@@ -22,11 +22,13 @@
       
 
         //double *dcov, *cov, *icov, *covn_v, *plist, *map;
-        El::vector<double> Qip, Qi, covn_vec, plist, map;
+        El::vector<double> Qip, Qi, covn_vec, map, plist, klow, kup, klist;
 
         // ->> DistMatrix <<- //
 	El::DistMatrix<double>  dcov_vec, Fij, iFij;
         //El::DistMatrix<double> cov, icov, dcov[nbp];
+	//
+	El::Matrix<double> bpk;
 
 
         // constructor //

@@ -49,6 +49,19 @@
     if(bp_init_type=="import") {
       // ->> import klist & plist from file <<- //
 
+      bpk=Matrix<double>(4, nbp);  // import k, k_low, k_up, and band power P(k)
+      Read(bpk, bp_fname);
+
+      plist=vector<double>(nbp);
+      klist=vector<double>(nbp);
+      klow=vector<double>(nbp);
+      kup=vector<double>(nbp);
+
+      for(int i=0; i<nbp; i++) {
+
+        plist[i]=bpk()
+        }
+
       }
     else 
       exit();
