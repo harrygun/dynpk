@@ -67,7 +67,7 @@
 
       }
     else 
-      exit();
+        throw runtime_error("Error: band_power_init()");
 
 
     return;
