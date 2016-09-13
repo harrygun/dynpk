@@ -96,12 +96,12 @@
         iglo=dcov_vdist->GlobalRow(iloc);
 
         // ->> band power k-list <<- //
-        kt_low = ;
-        kt_up = ;
+        //kt_low = ;
+        //kt_up = ;
 
-        dc=get_dcov_klim_r1d(kt_low, kt_up, dt, dtab);
+        dc=get_dcov_klim_r1d(klow[iglo], kup[iglo], dt, dtab);
 
-        dcov_vdist->SetLocal(iloc, jloc, );
+        dcov_vdist->SetLocal(iloc, jloc, dc);
         }
       }
 

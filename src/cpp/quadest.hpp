@@ -12,6 +12,7 @@
         size_t mdim, map_dim, nbp, npix;
 
         double m_dim[2], kt_list_para[3], kf_list_para[3], dmap_res[2];
+	double dt, dtab;
         double map_zoom_factor;
 
         char *ini_name;
@@ -36,7 +37,7 @@
 
         void QE_parameter(char *ini_name, std::string sec);
 
-        void band_power_init(string bp_init_type, char *bp_fname);
+        void band_power_init(std::string bp_init_type, char *bp_fname);
 
         void dcov_init();
 
