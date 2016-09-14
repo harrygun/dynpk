@@ -9,33 +9,38 @@
 
       public:
         int  debug;
-        size_t mdim, map_dim, nbp, npix;
+        size_t mdim, ndim, nbp, npix, m_dim[2];
+	size_t 1dmap_f;  // 1d map freq index
 
-        double m_dim[2], kt_list_para[3], kf_list_para[3], dmap_res[2];
+        double kt_list_para[3], kf_list_para[3], dmap_res[2];
 	double dt, dtab;
         double map_zoom_factor;
 
-        char *ini_name;
-        std::string get_bp_type, bp_list_fname;
+        char *ini_name, bp_list_fname, data_fname;
+        std::string get_bp_type;
 
 	// ->> IO 
         std::string output_prefix;
+
+	// ->> global MPI 
+        MPIpar *glmpi;
       
 
-        //double *dcov, *cov, *icov, *covn_v, *plist, *map;
-        El::vector<double> Qip, Qi, covn_vec, map, plist, klow, kup, klist;
+        El::vector<double> Qip, Qi, covn_vec, map, pfid, klow, kup, klist;
 
         // ->> DistMatrix <<- //
 	El::DistMatrix<double>  dcov_vec, Fij, iFij;
         //El::DistMatrix<double> cov, icov, dcov[nbp];
 	//
-	El::Matrix<double> bpk;
+	El::Matrix<double> bpk, dmap;
 
 
         // constructor //
-        QEpar(char *ini_name, std::string sec);
+        QEpar(char *ini_name, std::string sec, MPIpar *glmpi);
 
         void QE_parameter(char *ini_name, std::string sec);
+
+        void rawdata_init(char *data_fname);
 
         void band_power_init(std::string bp_init_type, char *bp_fname);
 

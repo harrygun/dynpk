@@ -7,17 +7,17 @@
 
 
   #include "glbvarb.hpp"
-  //#include "mpinit.h"
+  #include "mpinit.h"
 
 
 
 
- /*
   void import_data_double(MPIpar *mpi, const char *fn, void *d, size_t size, size_t count) {
     FILE *fp;
 
     #ifdef _MPI_
-    MPI_Barrier(MPI_COMM_WORLD);
+    //MPI_Barrier(MPI_COMM_WORLD);
+    MPI_Barrier(mpi->world);
     #endif
 
     if(mpi->rank==0){
@@ -36,14 +36,18 @@
       }
     
     #ifdef _MPI_
-    MPI_Barrier(MPI_COMM_WORLD);
-    MPI_Bcast(d, count, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+    //MPI_Barrier(MPI_COMM_WORLD);
+    //MPI_Bcast(d, count, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+
+    MPI_Barrier(mpi->world);
+    MPI_Bcast(d, count, MPI_DOUBLE, 0, mpi->world);
     #endif
 
     return;
     }
 
 
+ /*
   void write_data(MPIpar *mpi, const char *fn, const void *d, size_t size, size_t count){
     FILE *fp;
 

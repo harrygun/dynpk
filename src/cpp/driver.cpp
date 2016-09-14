@@ -40,7 +40,7 @@
          ->>   Parameters Initialization   <<- 
       -----------------------------------------------*/
     string sec="Quadratic_Estimator";
-    QEpar qe(ini_name, sec);
+    QEpar qe(ini_name, sec, &glmpi);
 
     if(glmpi.rank0)
       cout << "rank-" << glmpi.rank << "  mdim=" << qe.mdim 

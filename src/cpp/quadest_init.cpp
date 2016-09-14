@@ -30,15 +30,40 @@
 
     output_prefix=pt.get<string>(sec+".output_prefix");
     nbp=pt.get<size_t>(sec+".num_band_power");
-    map_dim=pt.get<size_t>(sec+".map_dimension");
+    ndim=pt.get<size_t>(sec+".map_number_of_dimension");
 
-    mdim=pt.get<size_t>(sec+".map_resolution_val");
+    //mdim=pt.get<size_t>(sec+".map_resolution_val");
 
-    if(map_dim==1)
-      npix=mdim;
+    if(ndim==1)
+      npix=m_dim[0];
     else if (map_dim==2)
-      npix=mdim;
+      npix=m_dim[0]*m_dim[1];
 
+    return;
+    }
+
+
+  void QEpar::rawdata_init(char *data_fname){
+
+    if(ndim>=3) 
+      throw runtime_error("Error: Doesn't support higher-dim map yet.");
+
+    Matrix<double> *dmap_=new Matrix<double>(m_dim[0], m_dim[1]);
+    Read(*dmap_, data_fname);
+    
+    // ->> if necessary, select a submatrix <<- //
+    if(ndim==2) {
+      // ->> should be column? or row ??
+      dmap=Matrix<double>(npix, 1);
+      dmap=dmap_->Resize(npix, 1);
+      }
+
+    else if(ndim==1){
+      dmap=(*dmap_)(IR(0,m_dim[0]), IR(1dmap_f,1dmap_f+1) )
+      }
+     
+
+    delete dmap_;
     return;
     }
 
@@ -47,12 +72,12 @@
     // ->> import band_power data <<- // 
 
     if(bp_init_type=="import") {
-      // ->> import klist & plist from file <<- //
+      // ->> import klist & pfid from file <<- //
 
       bpk=Matrix<double>(4, nbp);  // import k, k_low, k_up, and band power P(k)
       Read(bpk, bp_fname);
 
-      plist=vector<double>(nbp);
+      pfid=vector<double>(nbp);
       klist=vector<double>(nbp);
       klow=vector<double>(nbp);
       kup=vector<double>(nbp);
@@ -62,7 +87,7 @@
         klist[i] = bpk.Get(0, i);
         klow[i]  = bpk.Get(1, i);
         kup[i]   = bpk.Get(2, i);
-        plist[i] = bpk.Get(3, i);
+        pfid[i] = bpk.Get(3, i);
         }
 
       }
@@ -118,14 +143,20 @@
 
 
 
-  QEpar::QEpar(char *ini_name, string sec) {
+  QEpar::QEpar(char *ini_name, string sec, MPIpar *mpi_add) {
     //->>  QEpar constructor <<- //
 
+    //
+    glmpi=mpi_add;
+
+    //if (glmpi->rank0) // ->> add this later
     QE_parameter(ini_name, sec);
 
     // ->> data import <<- //
-
+    rawdata_init(data_fname);
+    
     //  band_power initialization  //
+    band_power_init(bp_init_type, bp_list_fname);
     
 
     // dcov initialzation //
