@@ -16,8 +16,8 @@
     FILE *fp;
 
     #ifdef _MPI_
-    //MPI_Barrier(MPI_COMM_WORLD);
-    MPI_Barrier(mpi->world);
+    MPI_Barrier(MPI_COMM_WORLD);
+    //MPI_Barrier(mpi->world);
     #endif
 
     if(mpi->rank==0){
@@ -36,11 +36,11 @@
       }
     
     #ifdef _MPI_
-    //MPI_Barrier(MPI_COMM_WORLD);
-    //MPI_Bcast(d, count, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+    MPI_Barrier(MPI_COMM_WORLD);
+    MPI_Bcast(d, count, MPI_DOUBLE, 0, MPI_COMM_WORLD);
 
-    MPI_Barrier(mpi->world);
-    MPI_Bcast(d, count, MPI_DOUBLE, 0, mpi->world);
+    //MPI_Barrier(mpi->world);
+    //MPI_Bcast(d, count, MPI_DOUBLE, 0, mpi->world);
     #endif
 
     return;
