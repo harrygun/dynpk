@@ -10,7 +10,7 @@
       public:
         int  debug;
         size_t mdim, ndim, nbp, npix, m_dim[2];
-	size_t 1dmap_f;  // 1d map freq index
+	size_t map1d_f, map_dim;  // 1d map freq index
 
         double kt_list_para[3], kf_list_para[3], dmap_res[2];
 	double dt, dtab;

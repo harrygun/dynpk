@@ -59,7 +59,7 @@
       }
 
     else if(ndim==1){
-      dmap=(*dmap_)(IR(0,m_dim[0]), IR(1dmap_f,1dmap_f+1) )
+      dmap=(*dmap_)(IR(0,m_dim[0]), IR(map1d_f,map1d_f+1) )
       }
      
 
