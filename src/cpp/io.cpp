@@ -7,7 +7,7 @@
 
 
   #include "glbvarb.hpp"
-  #include "mpinit.h"
+  #include "mpinit.hpp"
 
 
 
