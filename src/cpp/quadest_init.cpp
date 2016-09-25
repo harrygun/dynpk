@@ -55,7 +55,8 @@
     if(ndim==2) {
       // ->> should be column? or row ??
       dmap=Matrix<double>(npix, 1);
-      dmap=dmap_->Resize(npix, 1);
+      dmap_->Resize(npix, 1);
+      dmap=(*dmap_);
       }
 
     else if(ndim==1){
@@ -63,7 +64,7 @@
       }
      
 
-    delete dmap_;
+    //delete dmap_;
     return;
     }
 
