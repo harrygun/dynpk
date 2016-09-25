@@ -17,7 +17,7 @@
         double map_zoom_factor;
 
         char *ini_name, *bp_list_fname, *data_fname;
-        std::string get_bp_type;
+        std::string get_bp_type, bp_init_type;
 
 	// ->> IO 
         std::string output_prefix;
