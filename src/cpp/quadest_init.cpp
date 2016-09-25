@@ -64,7 +64,7 @@
       }
      
 
-    //delete dmap_;
+    delete dmap_;
     return;
     }
 
