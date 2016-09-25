@@ -16,7 +16,7 @@
 	double dt, dtab;
         double map_zoom_factor;
 
-        char *ini_name, bp_list_fname, data_fname;
+        char *ini_name, *bp_list_fname, *data_fname;
         std::string get_bp_type;
 
 	// ->> IO 
