@@ -28,16 +28,39 @@
     boost::property_tree::ptree pt;
     boost::property_tree::ini_parser::read_ini(ini_name, pt);
 
-    output_prefix=pt.get<string>(sec+".output_prefix");
+
+    // map parameters //
+    data_fname=pt.get<char>(sec+".input_data_fname");
+    ndim=pt.get<size_t>(sec+".number_of_dimension_map");
+    map_size=;
+    dt=;
+    map_zoom_factor=;
+
+    
+    // band power parameters //
     nbp=pt.get<size_t>(sec+".num_band_power");
-    ndim=pt.get<size_t>(sec+".map_number_of_dimension");
+    bp_list_fname=pt.get<char>(sec+".band_power_list_fname");
+    bp_init_type =pt.get<string>(sec+".band_power_init_type");
+
+    kt_list_para=
+
+
+    // output //
+    output_prefix=pt.get<string>(sec+".output_prefix");
+
+
 
     //mdim=pt.get<size_t>(sec+".map_resolution_val");
 
-    if(ndim==1)
-      npix=m_dim[0];
-    else if (map_dim==2)
-      npix=m_dim[0]*m_dim[1];
+
+    if(ndim==1){
+      npix=map_size[0];
+
+
+      }
+    else if (map_dim==2){
+      npix=map_size[0]*map_size[1];
+      }
 
     return;
     }
@@ -48,7 +71,7 @@
     if(ndim>=3) 
       throw runtime_error("Error: Doesn't support higher-dim map yet.");
 
-    Matrix<double> *dmap_=new Matrix<double>(m_dim[0], m_dim[1]);
+    Matrix<double> *dmap_=new Matrix<double>(map_size[0], map_size[1]);
     Read(*dmap_, data_fname);
     
     // ->> if necessary, select a submatrix <<- //
@@ -60,7 +83,7 @@
       }
 
     else if(ndim==1){
-      dmap=(*dmap_)(IR(0,m_dim[0]), IR(map1d_f,map1d_f+1) );
+      dmap=(*dmap_)(IR(0,map_size[0]), IR(map1d_f,map1d_f+1) );
       }
      
 
@@ -92,7 +115,7 @@
         }
 
       }
-    else 
+    else
         throw runtime_error("Error: band_power_init()");
 
 
@@ -145,9 +168,8 @@
 
 
   QEpar::QEpar(char *ini_name, string sec, MPIpar *mpi_add) {
-    //->>  QEpar constructor <<- //
 
-    //
+    //->>  QEpar constructor <<- //
     glmpi=mpi_add;
 
     //if (glmpi->rank0) // ->> add this later

@@ -36,52 +36,51 @@ _H_QUADEST_INIT_	quadest_init.hpp	/^  #define _H_QUADEST_INIT_$/;"	d
 _epsilon_	cov.cpp	/^  #define _epsilon_ /;"	d	file:
 access_dcov	quadest.cpp	/^  double access_dcov(double *dcov, size_t nbp, size_t npix, int i, $/;"	f
 band_power_init	quadest_init.cpp	/^  void QEpar::band_power_init(string bp_init_type, char *bp_fname){$/;"	f	class:QEpar
-bp_list_fname	quadest.hpp	/^        char *ini_name, bp_list_fname, data_fname;$/;"	m	class:QEpar
+bp_init_type	quadest.hpp	/^        std::string bp_init_type, output_prefix;$/;"	m	class:QEpar
+bp_list_fname	quadest.hpp	/^        char *bp_list_fname, *data_fname;$/;"	m	class:QEpar
 bpk	quadest.hpp	/^	El::Matrix<double> bpk, dmap;$/;"	m	class:QEpar
 cov_noise	quadest.cpp	/^  void cov_noise(MPIpar *mpi, double *covn_v, size_t npix, char *type){$/;"	f
 covn_vec	quadest.hpp	/^        El::vector<double> Qip, Qi, covn_vec, map, pfid, klow, kup, klist;$/;"	m	class:QEpar
-data_fname	quadest.hpp	/^        char *ini_name, bp_list_fname, data_fname;$/;"	m	class:QEpar
+data_fname	quadest.hpp	/^        char *bp_list_fname, *data_fname;$/;"	m	class:QEpar
 dcov1d_klim_imag	cov.cpp	/^  double dcov1d_klim_imag(double ktia, double ktib, double dt, double dtab){$/;"	f
 dcov1d_klim_real	cov.cpp	/^  double dcov1d_klim_real(double ktia, double ktib, double dt, double dtab) {$/;"	f
 dcov_init	quadest_init.cpp	/^  void QEpar::dcov_init() {$/;"	f	class:QEpar
 dcov_vec	quadest.hpp	/^	El::DistMatrix<double>  dcov_vec, Fij, iFij;$/;"	m	class:QEpar
 debug	quadest.hpp	/^        int  debug;$/;"	m	class:QEpar
 dmap	quadest.hpp	/^	El::Matrix<double> bpk, dmap;$/;"	m	class:QEpar
-dmap_f	quadest.hpp	/^	size_t 1dmap_f;  \/\/ 1d map freq index$/;"	m	class:QEpar
 dmap_res	quadest.hpp	/^        double kt_list_para[3], kf_list_para[3], dmap_res[2];$/;"	m	class:QEpar
 dt	quadest.hpp	/^	double dt, dtab;$/;"	m	class:QEpar
 dtab	quadest.hpp	/^	double dt, dtab;$/;"	m	class:QEpar
 extfname	mpinit.hpp	/^        std::string fname, extfname[5];$/;"	m	class:MPIpar
 fname	mpinit.hpp	/^        std::string fname, extfname[5];$/;"	m	class:MPIpar
 full_covmat_recov	quadest.cpp	/^  double *full_covmat_recov(MPIpar *mpi, double *dcov, double *covn_v, double *plist, $/;"	f
-get_bp_type	quadest.hpp	/^        std::string get_bp_type;$/;"	m	class:QEpar
 get_dcov_klim_r1d	cov.cpp	/^  double get_dcov_klim_r1d(double kt_low, double kt_up, double dt, double dtab)  {$/;"	f
 glmpi	quadest.hpp	/^        MPIpar *glmpi;$/;"	m	class:QEpar
 iFij	quadest.hpp	/^	El::DistMatrix<double>  dcov_vec, Fij, iFij;$/;"	m	class:QEpar
 import_data_double	io.cpp	/^  void import_data_double(MPIpar *mpi, const char *fn, void *d, size_t size, size_t count) {$/;"	f
 ind_run	mpinit.hpp	/^        int max, start, totrun, ind_run;$/;"	m	class:MPIpar
-ini_name	quadest.hpp	/^        char *ini_name, bp_list_fname, data_fname;$/;"	m	class:QEpar
 kf_list_para	quadest.hpp	/^        double kt_list_para[3], kf_list_para[3], dmap_res[2];$/;"	m	class:QEpar
 klist	quadest.hpp	/^        El::vector<double> Qip, Qi, covn_vec, map, pfid, klow, kup, klist;$/;"	m	class:QEpar
 klow	quadest.hpp	/^        El::vector<double> Qip, Qi, covn_vec, map, pfid, klow, kup, klist;$/;"	m	class:QEpar
 kt_list_para	quadest.hpp	/^        double kt_list_para[3], kf_list_para[3], dmap_res[2];$/;"	m	class:QEpar
 kup	quadest.hpp	/^        El::vector<double> Qip, Qi, covn_vec, map, pfid, klow, kup, klist;$/;"	m	class:QEpar
-m_dim	quadest.hpp	/^        size_t mdim, ndim, nbp, npix, m_dim[2];$/;"	m	class:QEpar
 main	driver.cpp	/^  int main(int argc, char *argv[])  {$/;"	f
 map	quadest.hpp	/^        El::vector<double> Qip, Qi, covn_vec, map, pfid, klow, kup, klist;$/;"	m	class:QEpar
+map1d_f	quadest.hpp	/^	size_t map1d_f, map_dim;  \/\/ 1d map freq index$/;"	m	class:QEpar
+map_dim	quadest.hpp	/^	size_t map1d_f, map_dim;  \/\/ 1d map freq index$/;"	m	class:QEpar
+map_size	quadest.hpp	/^        size_t ndim, nbp, npix, map_size[2];$/;"	m	class:QEpar
 map_zoom_factor	quadest.hpp	/^        double map_zoom_factor;$/;"	m	class:QEpar
 max	mpinit.hpp	/^        int max, start, totrun, ind_run;$/;"	m	class:MPIpar
-mdim	quadest.hpp	/^        size_t mdim, ndim, nbp, npix, m_dim[2];$/;"	m	class:QEpar
 mpi_gather_dist_double	mpinit.cpp	/^  double *mpi_gather_dist_double(MPIpar *mpi, double *in, size_t count_pp, $/;"	f
 mpi_get_id	mpinit.cpp	/^  int mpi_get_id(int rank, int ntask, int i) {$/;"	f
 mpi_id	mpinit.cpp	/^  int mpi_id(MPIpar *mpi, int i) {$/;"	f
 mpi_loop_init	mpinit.cpp	/^  void mpi_loop_init(MPIpar *mpi, char *prefix) {$/;"	f
 mpi_nrun	mpinit.cpp	/^  int mpi_nrun(int totrun, int rank, int ntask){$/;"	f
-nbp	quadest.hpp	/^        size_t mdim, ndim, nbp, npix, m_dim[2];$/;"	m	class:QEpar
-ndim	quadest.hpp	/^        size_t mdim, ndim, nbp, npix, m_dim[2];$/;"	m	class:QEpar
-npix	quadest.hpp	/^        size_t mdim, ndim, nbp, npix, m_dim[2];$/;"	m	class:QEpar
+nbp	quadest.hpp	/^        size_t ndim, nbp, npix, map_size[2];$/;"	m	class:QEpar
+ndim	quadest.hpp	/^        size_t ndim, nbp, npix, map_size[2];$/;"	m	class:QEpar
+npix	quadest.hpp	/^        size_t ndim, nbp, npix, map_size[2];$/;"	m	class:QEpar
 ntask	mpinit.hpp	/^        int ntask, rank, rc, root;$/;"	m	class:MPIpar
-output_prefix	quadest.hpp	/^        std::string output_prefix;$/;"	m	class:QEpar
+output_prefix	quadest.hpp	/^        std::string bp_init_type, output_prefix;$/;"	m	class:QEpar
 para_importer	parameter.cpp	/^  void para_importer(char *ini_name){$/;"	f
 pfid	quadest.hpp	/^        El::vector<double> Qip, Qi, covn_vec, map, pfid, klow, kup, klist;$/;"	m	class:QEpar
 rank	mpinit.hpp	/^        int ntask, rank, rc, root;$/;"	m	class:MPIpar

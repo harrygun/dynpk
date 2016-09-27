@@ -128,7 +128,7 @@
 
 
   /* <<<< TO BE modified << -
-  void get_dcov_klim_2D(vector<double> dcov, klist_low, klist_up, dt_df, npt, m_dim, bool do_mpi=true) {
+  void get_dcov_klim_2D(vector<double> dcov, klist_low, klist_up, dt_df, npt, map_size, bool do_mpi=true) {
     // ->> get the derivative of covariance matrix <<- //
     // ->> to parallize 
 
@@ -137,7 +137,7 @@
 
     dt, df = dt_df
 
-    print 'get_dcov:', npt, m_dim, klist_up.shape, klist_low.shape, dt_df.shape
+    print 'get_dcov:', npt, map_size, klist_up.shape, klist_low.shape, dt_df.shape
 
     if do_mpi==True:
         prange=mpi.mpirange(npt)
@@ -153,8 +153,8 @@
 
         print i, ktia, ktib, kfia, kfib, dt, df
     
-        for a in range(-m_dim[0], m_dim[0]):
-            for b in range(-m_dim[1], m_dim[1]):
+        for a in range(-map_size[0], map_size[0]):
+            for b in range(-map_size[1], map_size[1]):
                 dtab = a*dt
                 dfab = b*df
 

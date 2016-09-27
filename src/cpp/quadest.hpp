@@ -9,18 +9,16 @@
 
       public:
         int  debug;
-        size_t mdim, ndim, nbp, npix, m_dim[2];
+        size_t ndim, nbp, npix, map_size[2];
 	size_t map1d_f, map_dim;  // 1d map freq index
 
         double kt_list_para[3], kf_list_para[3], dmap_res[2];
-	double dt, dtab;
-        double map_zoom_factor;
+	double dt, map_zoom_factor;
 
-        char *ini_name, *bp_list_fname, *data_fname;
-        std::string get_bp_type, bp_init_type;
+        //char *ini_name, *bp_list_fname, *data_fname;
+        char *bp_list_fname, *data_fname;
+        std::string bp_init_type, output_prefix;
 
-	// ->> IO 
-        std::string output_prefix;
 
 	// ->> global MPI 
         MPIpar *glmpi;
