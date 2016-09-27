@@ -24,42 +24,61 @@
 
 
   void QEpar::QE_parameter(char *ini_name, string sec) {
-
     boost::property_tree::ptree pt;
     boost::property_tree::ini_parser::read_ini(ini_name, pt);
 
+    // debug //
+    try{
+      debug.get<int>(sec+".debug"); }
+    catch{
+      debug=1; }
 
     // map parameters //
     data_fname=pt.get<char>(sec+".input_data_fname");
     ndim=pt.get<size_t>(sec+".number_of_dimension_map");
-    map_size=;
-    dt=;
-    map_zoom_factor=;
+    map_zoom_factor=pt.get<double>(sec+".map_zoom_factor");
 
-    
+    map_size[0]=pt.get<size_t>(sec+".map_size_0");
+    dmap_res[0]=pt.get<size_t>(sec+".map_resolution_0");
+
+    if(ndim==1){
+      npix=map_size[0];
+      }
+    else if (map_dim==2){
+      map_size[1]=pt.get<size_t>(sec+".map_size_1");
+      dmap_res[1]=pt.get<size_t>(sec+".map_resolution_1");
+      npix=map_size[0]*map_size[1];
+      }
+
     // band power parameters //
     nbp=pt.get<size_t>(sec+".num_band_power");
     bp_list_fname=pt.get<char>(sec+".band_power_list_fname");
     bp_init_type =pt.get<string>(sec+".band_power_init_type");
 
-    kt_list_para=;
 
+    // band power klist //
+    kt_list_para[0]=pt.get<double>(sec+".kt_list_min");
+    kt_list_para[1]=pt.get<double>(sec+".kt_list_max");
+    kt_list_para[2]=pt.get<double>(sec+".kt_list_num");
+
+    if (map_dim==2){
+      kf_list_para[0]=pt.get<double>(sec+".kf_list_min");
+      kf_list_para[1]=pt.get<double>(sec+".kf_list_max");
+      kf_list_para[2]=pt.get<double>(sec+".kf_list_num");
+      }
+    else{
+      kf_list_para[0]=0; kf_list_para[1]=0; kf_list_para[2]=0;
+      }
 
     // output //
     output_prefix=pt.get<string>(sec+".output_prefix");
 
 
-
-    //mdim=pt.get<size_t>(sec+".map_resolution_val");
-
-
-    if(ndim==1){
-      npix=map_size[0];
-
-
-      }
-    else if (map_dim==2){
-      npix=map_size[0]*map_size[1];
+    if(debug>=50){
+      cout << "QuaDest Parameters: (debug=" << debug << ")" << endl;
+      cout << "  map size: " << map_size_0 << ", " << map_size_1 << endl;
+      cout << "  n of dim: " << ndim << endl;
+      cout << "  map_resolution: " << dmap_res[0] << ", " << dmap_res[1] << endl;
       }
 
     return;

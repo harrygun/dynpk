@@ -39,7 +39,7 @@
     /*-----------------------------------------------
          ->>   Parameters Initialization   <<- 
       -----------------------------------------------*/
-    string sec="Quadratic_Estimator";
+    string sec="Quadratic_Estimator_Boost";
     QEpar qe(ini_name, sec, &glmpi);
 
     if(glmpi.rank0)

@@ -13,7 +13,7 @@
 	size_t map1d_f, map_dim;  // 1d map freq index
 
         double kt_list_para[3], kf_list_para[3], dmap_res[2];
-	double dt, map_zoom_factor;
+	double map_zoom_factor;
 
         //char *ini_name, *bp_list_fname, *data_fname;
         char *bp_list_fname, *data_fname;
