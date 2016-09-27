@@ -42,7 +42,7 @@
     bp_list_fname=pt.get<char>(sec+".band_power_list_fname");
     bp_init_type =pt.get<string>(sec+".band_power_init_type");
 
-    kt_list_para=
+    kt_list_para=;
 
 
     // output //
