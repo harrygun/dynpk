@@ -30,7 +30,7 @@
     // debug //
     try{
       debug=pt.get<int>(sec+".debug"); 
-      throw 1}
+      throw 1;}
     catch(int e){
       debug=e; }
 
