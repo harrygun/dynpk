@@ -29,9 +29,10 @@
 
     // debug //
     try{
-      debug.get<int>(sec+".debug"); }
-    catch{
-      debug=1; }
+      debug=pt.get<int>(sec+".debug"); 
+      throw 1}
+    catch(int e){
+      debug=e; }
 
     // map parameters //
     data_fname=pt.get<char>(sec+".input_data_fname");
