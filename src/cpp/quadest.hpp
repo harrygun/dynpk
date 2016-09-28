@@ -16,8 +16,7 @@
 	double map_zoom_factor;
 
         //char *ini_name, *bp_list_fname, *data_fname;
-        char *bp_list_fname, ;
-        std::string bp_init_type, output_prefix, data_fname;
+        std::string bp_init_type, output_prefix, data_fname, bp_list_fname;
 
 
 	// ->> global MPI 

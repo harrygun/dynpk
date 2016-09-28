@@ -53,7 +53,7 @@
 
     // band power parameters //
     nbp=pt.get<size_t>(sec+".num_band_power");
-    bp_list_fname=pt.get<char>(sec+".band_power_list_fname");
+    bp_list_fname=pt.get<string>(sec+".band_power_list_fname");
     bp_init_type =pt.get<string>(sec+".band_power_init_type");
 
 
@@ -112,7 +112,7 @@
     }
 
 
-  void QEpar::band_power_init(string bp_init_type, char *bp_fname){
+  void QEpar::band_power_init(string bp_init_type, string bp_fname){
     // ->> import band_power data <<- // 
 
     if(bp_init_type=="import") {
