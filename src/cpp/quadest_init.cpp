@@ -35,7 +35,7 @@
       debug=e; }
 
     // map parameters //
-    data_fname=pt.get<char>(sec+".input_data_fname");
+    data_fname=pt.get<string>(sec+".input_data_fname");
     ndim=pt.get<size_t>(sec+".number_of_dimension_map");
     map_zoom_factor=pt.get<double>(sec+".map_zoom_factor");
 
@@ -86,7 +86,7 @@
     }
 
 
-  void QEpar::rawdata_init(char *data_fname){
+  void QEpar::rawdata_init(string data_fname){
 
     if(ndim>=3) 
       throw runtime_error("Error: Doesn't support higher-dim map yet.");

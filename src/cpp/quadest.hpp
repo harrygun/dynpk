@@ -16,8 +16,8 @@
 	double map_zoom_factor;
 
         //char *ini_name, *bp_list_fname, *data_fname;
-        char *bp_list_fname, *data_fname;
-        std::string bp_init_type, output_prefix;
+        char *bp_list_fname, ;
+        std::string bp_init_type, output_prefix, data_fname;
 
 
 	// ->> global MPI 
@@ -38,7 +38,7 @@
 
         void QE_parameter(char *ini_name, std::string sec);
 
-        void rawdata_init(char *data_fname);
+        void rawdata_init(std::string data_fname);
 
         void band_power_init(std::string bp_init_type, char *bp_fname);
 
