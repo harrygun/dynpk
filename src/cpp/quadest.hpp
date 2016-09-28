@@ -39,7 +39,7 @@
 
         void rawdata_init(std::string data_fname);
 
-        void band_power_init(std::string bp_init_type, char *bp_fname);
+        void band_power_init(std::string bp_init_type, std::string bp_fname);
 
         void dcov_init();
 

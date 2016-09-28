@@ -77,7 +77,7 @@
 
     if(debug>=50){
       cout << "QuaDest Parameters: (debug=" << debug << ")" << endl;
-      cout << "  map size: " << map_size_0 << ", " << map_size_1 << endl;
+      cout << "  map size: " << map_size[0] << ", " << map_size[1] << endl;
       cout << "  n of dim: " << ndim << endl;
       cout << "  map_resolution: " << dmap_res[0] << ", " << dmap_res[1] << endl;
       }
