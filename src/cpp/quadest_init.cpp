@@ -150,7 +150,7 @@
     // ->> I'd like to have a copy of dcov_vec for every process //
 
     int iloc, jloc, iglo, jglo; 
-    double dc;
+    double dc, dt, df;
 
     DistMatrix<double> *dcov_vdist = new DistMatrix<double>(nbp, npix); 
 
@@ -158,6 +158,7 @@
     const int localWidth = dcov_vdist->LocalWidth();
 
 
+    /*
     for(jloc=0; jloc<localWidth; ++jloc) {
       for(iloc=0; iloc<localHeight; ++iloc) {
 
@@ -167,7 +168,7 @@
         // ->> band power k-list <<- //
         //kt_low = ;
         //kt_up = ;
-
+        dt = ;
         dc=get_dcov_klim_r1d(klow[iglo], kup[iglo], dt, dtab);
 
         dcov_vdist->SetLocal(iloc, jloc, dc);
@@ -181,6 +182,7 @@
 
 
     Display(dcov_vec, "dcov_vec");
+    */
 
     return;
     }
