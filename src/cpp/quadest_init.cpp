@@ -27,12 +27,16 @@
     boost::property_tree::ptree pt;
     boost::property_tree::ini_parser::read_ini(ini_name, pt);
 
+    cout << "Param init" << endl;
+
     // debug //
     try{
       debug=pt.get<int>(sec+".debug"); 
       throw 1;}
     catch(int e){
       debug=e; }
+
+    cout << "Map init" << endl;
 
     // map parameters //
     data_fname=pt.get<string>(sec+".input_data_fname");
@@ -50,6 +54,8 @@
       dmap_res[1]=pt.get<size_t>(sec+".map_resolution_1");
       npix=map_size[0]*map_size[1];
       }
+
+    cout << "Bandpower init" << endl;
 
     // band power parameters //
     nbp=pt.get<size_t>(sec+".num_band_power");
@@ -70,6 +76,8 @@
     else{
       kf_list_para[0]=0; kf_list_para[1]=0; kf_list_para[2]=0;
       }
+
+    cout << "others" << endl;
 
     // output //
     output_prefix=pt.get<string>(sec+".output_prefix");
