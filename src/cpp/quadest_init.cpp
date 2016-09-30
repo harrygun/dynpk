@@ -36,7 +36,7 @@
     catch(int e){
       debug=e; }
 
-    cout << "Map init" << endl;
+    cout << "Map init, debug=" << debug << endl;
 
     // map parameters //
     data_fname=pt.get<string>(sec+".input_data_fname");
@@ -90,6 +90,8 @@
       cout << "  n of dim: " << ndim << endl;
       cout << "  map_resolution: " << dmap_res[0] << ", " << dmap_res[1] << endl;
       }
+
+    cout << "here" << endl;
 
     return;
     }
