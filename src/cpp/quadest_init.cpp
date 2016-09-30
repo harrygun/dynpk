@@ -27,8 +27,6 @@
     boost::property_tree::ptree pt;
     boost::property_tree::ini_parser::read_ini(ini_name, pt);
 
-    cout << "Param init" << endl;
-
     // debug //
     /*
     try{
@@ -37,11 +35,11 @@
     catch(int e){
       debug=e; }
     */
-
     debug=pt.get<int>(sec+".debug"); 
-    cout << "Map init, debug=" << debug << endl;
+    cout << "Param init, debug=" << debug << endl;
 
     // map parameters //
+    //cout << "Map init" << endl;
     data_fname=pt.get<string>(sec+".input_data_fname");
     ndim=pt.get<size_t>(sec+".number_of_dimension_map");
     map_zoom_factor=pt.get<double>(sec+".map_zoom_factor");
@@ -61,7 +59,7 @@
       npix=map_size[0]*map_size[1];
       }
 
-    cout << "Bandpower init" << endl;
+    //cout << "Bandpower init" << endl;
 
     // band power parameters //
     nbp=pt.get<size_t>(sec+".num_band_power");
@@ -83,21 +81,19 @@
       kf_list_para[0]=0; kf_list_para[1]=0; kf_list_para[2]=0;
       }
 
-    cout << "others" << endl;
+    //cout << "others" << endl;
 
     // output //
     output_prefix=pt.get<string>(sec+".output_prefix");
     
-    cout << "end" << endl;
 
     if(debug>=50){
       cout << "QuaDest Parameters: (debug=" << debug << ")" << endl;
       cout << "  map size: " << map_size[0] << ", " << map_size[1] << endl;
       cout << "  n of dim: " << ndim << endl;
       cout << "  map_resolution: " << dmap_res[0] << ", " << dmap_res[1] << endl;
+      cout << "data_fname: " << data_fname << endl;
       }
-
-    cout << "here" << endl;
 
     return;
     }
@@ -218,11 +214,11 @@
     rawdata_init(data_fname);
     
     //  band_power initialization  //
-    band_power_init(bp_init_type, bp_list_fname);
+    //band_power_init(bp_init_type, bp_list_fname);
     
 
     // dcov initialzation //
-    dcov_init();
+    //dcov_init();
 
 
     }
