@@ -81,7 +81,8 @@
 
     // output //
     output_prefix=pt.get<string>(sec+".output_prefix");
-
+    
+    cout << "end" << endl;
 
     if(debug>=50){
       cout << "QuaDest Parameters: (debug=" << debug << ")" << endl;
