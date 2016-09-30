@@ -39,7 +39,6 @@
     */
 
     debug=pt.get<int>(sec+".debug"); 
-
     cout << "Map init, debug=" << debug << endl;
 
     // map parameters //
@@ -47,13 +46,16 @@
     ndim=pt.get<size_t>(sec+".number_of_dimension_map");
     map_zoom_factor=pt.get<double>(sec+".map_zoom_factor");
 
+    //TODO >> delete map_dim <<- //
+    map_dim=ndim;
+
     map_size[0]=pt.get<size_t>(sec+".map_size_0");
     dmap_res[0]=pt.get<size_t>(sec+".map_resolution_0");
 
     if(ndim==1){
       npix=map_size[0];
       }
-    else if (map_dim==2){
+    else if (ndim==2){
       map_size[1]=pt.get<size_t>(sec+".map_size_1");
       dmap_res[1]=pt.get<size_t>(sec+".map_resolution_1");
       npix=map_size[0]*map_size[1];
@@ -72,7 +74,7 @@
     kt_list_para[1]=pt.get<double>(sec+".kt_list_max");
     kt_list_para[2]=pt.get<double>(sec+".kt_list_num");
 
-    if (map_dim==2){
+    if (ndim==2){
       kf_list_para[0]=pt.get<double>(sec+".kf_list_min");
       kf_list_para[1]=pt.get<double>(sec+".kf_list_max");
       kf_list_para[2]=pt.get<double>(sec+".kf_list_num");
