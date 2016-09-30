@@ -50,14 +50,14 @@
     map_dim=ndim;
 
     map_size[0]=pt.get<size_t>(sec+".map_size_0");
-    dmap_res[0]=pt.get<size_t>(sec+".map_resolution_0");
+    dmap_res[0]=pt.get<double>(sec+".map_resolution_0");
 
     if(ndim==1){
       npix=map_size[0];
       }
     else if (ndim==2){
       map_size[1]=pt.get<size_t>(sec+".map_size_1");
-      dmap_res[1]=pt.get<size_t>(sec+".map_resolution_1");
+      dmap_res[1]=pt.get<double>(sec+".map_resolution_1");
       npix=map_size[0]*map_size[1];
       }
 
