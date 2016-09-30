@@ -30,11 +30,15 @@
     cout << "Param init" << endl;
 
     // debug //
+    /*
     try{
       debug=pt.get<int>(sec+".debug"); 
       throw 1;}
     catch(int e){
       debug=e; }
+    */
+
+    debug=pt.get<int>(sec+".debug"); 
 
     cout << "Map init, debug=" << debug << endl;
 
