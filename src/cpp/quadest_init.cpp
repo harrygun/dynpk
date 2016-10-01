@@ -52,6 +52,7 @@
 
     if(ndim==1){
       npix=map_size[0];
+      map_size[1]=0; dmap_res[1]=0; 
       }
     else if (ndim==2){
       map_size[1]=pt.get<size_t>(sec+".map_size_1");
@@ -214,7 +215,7 @@
     rawdata_init(data_fname);
     
     //  band_power initialization  //
-    //band_power_init(bp_init_type, bp_list_fname);
+    band_power_init(bp_init_type, bp_list_fname);
     
 
     // dcov initialzation //

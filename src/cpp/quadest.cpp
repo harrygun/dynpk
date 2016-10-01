@@ -20,14 +20,14 @@
 
 
   double access_dcov(double *dcov, size_t nbp, size_t npix, int i, 
-                                      int a, int b, size_t map_dim) {
+                                      int a, int b, size_t ndim) {
     // ->> i:    index of bandpower
     // ->> a/b:  indices of map pixels 
 
-    if(map_dim==1)
+    if(ndim==1)
       {return ArrayAccess2D_n2(dcov, nbp, npix, i, (int)fabs((double)(a-b)));}
 
-    else if(map_dim==2) {abort();}
+    else if(ndim==2) {abort();}
 
     else {abort();}
 
@@ -39,10 +39,10 @@
 
 
   //void Fisher(MPIpar *mpi, double *dcov, double *icov, double *F,
-  //                              size_t npix, size_t nbp, size_t map_dim)  {
+  //                              size_t npix, size_t nbp, size_t ndim)  {
 
   double *Fisher(MPIpar *mpi, double *dcov, double *icov, size_t npix, 
-                 size_t nbp, size_t map_dim)  {
+                 size_t nbp, size_t ndim)  {
 
     int i, j, a, b, c, d, idx, id, irk, nrun;
     double *Fs, *Frev, *F;
@@ -73,9 +73,9 @@
             for(c=0; c<npix; c++)
               for(d=0; d<npix; d++) {
 
-                Fs[idx]+=access_dcov(dcov, nbp, npix, i, a, b, map_dim)*
+                Fs[idx]+=access_dcov(dcov, nbp, npix, i, a, b, ndim)*
                          ArrayAccess2D(icov, npix, b, c)*access_dcov(dcov, nbp, npix, 
-			 j, c, d, map_dim)*ArrayAccess2D(icov, npix, d, a)/2.;
+			 j, c, d, ndim)*ArrayAccess2D(icov, npix, d, a)/2.;
                 }
 
         //printf("Fij[%d, %d]=%lg\n", i, j, Fs[idx]);
@@ -117,7 +117,7 @@
 
 
   double *full_covmat_recov(MPIpar *mpi, double *dcov, double *covn_v, double *plist, 
-                            size_t nbp, size_t npix, size_t map_dim) {
+                            size_t nbp, size_t npix, size_t ndim) {
 
     // ->> obtain full covariance matrix from dvoc and pk_list <<- //
 
@@ -140,7 +140,7 @@
       id=mpi_id(mpi, idx);
 
       // ->> 1D map <<- //
-      if(map_dim==1)  {
+      if(ndim==1)  {
 
         // ->> convert to pixel index <<- //
         a=(int)(id/(double)npix);
@@ -149,20 +149,20 @@
         cov_s[idx]=0.;
         for(ip=0; ip<nbp; ip++){
           // ->> summing over all bandpowr <<- //
-          cov_s[idx]+=access_dcov(dcov, nbp, npix, ip, a, b, map_dim)*plist[ip];
+          cov_s[idx]+=access_dcov(dcov, nbp, npix, ip, a, b, ndim)*plist[ip];
           }
 
         //if(a==b){ cov_s[idx]+=covn_v[idx]; }
         }
 
       // ->> 2D map <<- //
-      if(map_dim==2)  {
+      if(ndim==2)  {
         abort();   // ->> DEFINITELY some error here. <<- //
 
         cov_s[idx]=0.;
         for(ip=0; ip<nbp; ip++){
           // ->> summing over all bandpowr <<- //
-          cov_s[idx]+=access_dcov(dcov, nbp, npix, ip, a, b, map_dim)*plist[ip];
+          cov_s[idx]+=access_dcov(dcov, nbp, npix, ip, a, b, ndim)*plist[ip];
           }
 
         //if(a==b){ cov_s[idx]+=covn_v[idx]; }
@@ -193,7 +193,7 @@
 
     // ->> first recover the full covariance matrix <<- //
     qe->cov=full_covmat_recov(mpi, qe->dcov, qe->covn_v, qe->plist, 
-                              qe->nbp, qe->npix, qe->map_dim);
+                              qe->nbp, qe->npix, qe->ndim);
 
     printf("qe->cov pointer: %p\n", qe->cov);
     printf("Full covariance matrix done.(%d)\n", mpi->rank); fflush(stdout);
@@ -212,7 +212,7 @@
     printf("inverse of covariance matrix done.\n"); fflush(stdout);
 
     // ->> calculate Fisher matrix and its inverse <<- //
-    qe->Fij=Fisher(mpi, qe->dcov, qe->icov, qe->npix, qe->nbp, qe->map_dim);
+    qe->Fij=Fisher(mpi, qe->dcov, qe->icov, qe->npix, qe->nbp, qe->ndim);
     fn="result/r1d/Fij.dat";
     write_data(mpi, fn, qe->Fij, sizeof(double), qe->nbp*qe->nbp);
 
@@ -256,7 +256,7 @@
       Qip_s[idx]=0.;
       for(a=0; a<qe->npix; a++)
         for(b=0; b<qe->npix; b++) {
-          Qip_s[idx]+=d_ic[a]*access_dcov(qe->dcov, qe->nbp, qe->npix, id, a, b, qe->map_dim)*d_ic[b]/2.;
+          Qip_s[idx]+=d_ic[a]*access_dcov(qe->dcov, qe->nbp, qe->npix, id, a, b, qe->ndim)*d_ic[b]/2.;
           }
 
       Qi_s[idx]=0;
