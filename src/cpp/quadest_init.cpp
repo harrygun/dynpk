@@ -107,6 +107,8 @@
 
     Matrix<double> *dmap_=new Matrix<double>(map_size[0], map_size[1]);
     Read(*dmap_, data_fname);
+
+    cout << "Importing raw map." << endl;
     
     // ->> if necessary, select a submatrix <<- //
     if(ndim==2) {
