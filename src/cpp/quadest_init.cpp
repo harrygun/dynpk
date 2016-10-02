@@ -122,6 +122,7 @@
       dmap=(*dmap_)(IR(0,map_size[0]), IR(map1d_f,map1d_f+1) );
       }
      
+    cout << "got here." << endl;
 
     delete dmap_;
     return;
