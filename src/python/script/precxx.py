@@ -19,17 +19,6 @@ import cyth.covm as cyth_cov
 
 
 
-def auto_corr_test(p, d):
-
-    #if p.do_testing=='False':
-    #    return
-
-    cor=cms.autocorr(d, auto_type='FFT')
-    cb=pl.imshow(cor) #, norm=colors.LogNorm())
-    pl.show()
-
-    quit()
-
 
 
 
@@ -118,8 +107,11 @@ if __name__=='__main__':
     print 'n_bp:', len(pk_fid), qe.dcov.shape, pk_fid.shape, dmap.shape
     #print qe.klist, qe.klist_low, qe.klist_up
 
-    bpk=np.concatenate((qe.klist[kdim/2+1:], qe.klist_low[kdim/2+1:], 
-        qe.klist_up[kdim/2+1:], pk_fid), axis=0)
+    bpk=np.concatenate((qe.klist, qe.klist_low, qe.klist_up, pk_fid), axis=0)
+
+    print 'output bpk.shape:', bpk.shape, pk_fid.shape, 
+    print kdim, qe.klist[kdim/2+1:].shape, qe.klist.shape, qe.klist_low.shape, \
+          qe.klist_up.shape
 
     #->> write files <<- #
     bpk.tofile(pk_name)
