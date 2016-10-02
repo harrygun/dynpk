@@ -52,7 +52,7 @@
 
     if(ndim==1){
       npix=map_size[0];
-      map_size[1]=0; dmap_res[1]=0; 
+      map_size[1]=1; dmap_res[1]=1; 
       }
     else if (ndim==2){
       map_size[1]=pt.get<size_t>(sec+".map_size_1");
