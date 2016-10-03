@@ -125,8 +125,7 @@
      
     delete dmap_;
 
-    Display(dmap);
-
+    //Display(dmap);
     return;
     }
 
