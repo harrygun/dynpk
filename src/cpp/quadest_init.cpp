@@ -168,7 +168,7 @@
     // ->> I'd like to have a copy of dcov_vec for every process //
 
     int iloc, jloc, iglo, jglo; 
-    double dc, dt, df;
+    double dc, dt, df, dtab;
 
     DistMatrix<double> *dcov_vdist = new DistMatrix<double>(nbp, npix); 
 
