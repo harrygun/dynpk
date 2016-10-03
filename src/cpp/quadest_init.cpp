@@ -123,9 +123,9 @@
       dmap=*dmap_;
       }
      
-    cout << "got here." << endl;
-
     delete dmap_;
+
+    Display(dmap);
 
     return;
     }
