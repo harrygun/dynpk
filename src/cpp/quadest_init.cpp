@@ -176,18 +176,22 @@
     const int localWidth = dcov_vdist->LocalWidth();
 
 
-    /*
-    for(jloc=0; jloc<localWidth; ++jloc) {
-      for(iloc=0; iloc<localHeight; ++iloc) {
+    for(jloc=0; jloc<localWidth; jloc++) {
+      for(iloc=0; iloc<localHeight; iloc++) {
 
         jglo=dcov_vdist->GlobalCol(jloc);
         iglo=dcov_vdist->GlobalRow(iloc);
 
-        // ->> band power k-list <<- //
-        //kt_low = ;
-        //kt_up = ;
-        dt = ;
-        dc=get_dcov_klim_r1d(klow[iglo], kup[iglo], dt, dtab);
+        if(ndim==1){
+          // ->> band power k-list <<- //
+          dt = dmap_res[0];
+          dtab = jglo*dt;
+
+          dc=get_dcov_klim_r1d(klow[iglo], kup[iglo], dt, dtab);
+	  }
+	else if(ndim==2){
+          dc=0;//get_dcov_klim_r1d(klow[iglo], kup[iglo], dt, dtab);
+	  }
 
         dcov_vdist->SetLocal(iloc, jloc, dc);
         }
@@ -200,7 +204,6 @@
 
 
     Display(dcov_vec, "dcov_vec");
-    */
 
     return;
     }
@@ -223,7 +226,7 @@
     
 
     // dcov initialzation //
-    //dcov_init();
+    dcov_init();
 
 
     }
