@@ -119,12 +119,14 @@
       }
 
     else if(ndim==1){
-      dmap=(*dmap_)(IR(0,map_size[0]), IR(map1d_f,map1d_f+1) );
+      //dmap=(*dmap_)(IR(0,map_size[0]), IR(map1d_f,map1d_f+1) );
+      dmap=*dmap_;
       }
      
     cout << "got here." << endl;
 
     delete dmap_;
+
     return;
     }
 
