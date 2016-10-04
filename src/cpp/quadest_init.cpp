@@ -179,7 +179,7 @@
 
     // import from file //
     if (from_file) {
-      cout << "importing dcov from file " << fname << endl;
+      cout << "importing dcov from file '" << fname << "'"<< endl;
 
       Read(dcov_vec, fname);
       Display(dcov_vec, "dcov_vec");
