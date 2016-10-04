@@ -243,7 +243,7 @@
     
 
     // dcov initialzation //
-    dcov_init(import_dcov);
+    dcov_init(import_dcov, dcov_fname);
 
     }
 
