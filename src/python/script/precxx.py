@@ -59,6 +59,7 @@ if __name__=='__main__':
     #->> 
     dout_name=root+'result/cr1d/dmap.dat'
     pk_name=root+'result/cr1d/bpk.dat'
+    dcov_name=root+'result/cr1d/dcov_py.dat'
 
 
     '''----------------------------------------------
@@ -118,6 +119,8 @@ if __name__=='__main__':
     dmap.tofile(dout_name)
 
 
+    #print 'dcov:\n', qe.dcov[124]
+    qe.dcov.tofile(dcov_name)
 
     
     # ->> The End <<- #

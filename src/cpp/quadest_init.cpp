@@ -82,6 +82,11 @@
       kf_list_para[0]=0; kf_list_para[1]=0; kf_list_para[2]=0;
       }
 
+    // dcov //
+    import_dcov=pt.get<bool>(sec+".import_dcov_from_file");
+    dcov_fname=pt.get<string>(sec+".dcov_fname");
+
+
     //cout << "others" << endl;
 
     // output //
@@ -163,18 +168,30 @@
 
 
 
-  void QEpar::dcov_init() {
+  void QEpar::dcov_init(bool from_file, string fname) {
     //     ->> get the derivative of covariance matrix <<-   //
     // ->> I'd like to have a copy of dcov_vec for every process //
 
     int iloc, jloc, iglo, jglo; 
     double dc, dt, df, dtab;
 
+    dcov_vec=DistMatrix<double, STAR, STAR>(nbp, npix); 
+
+    // import from file //
+    if (from_file) {
+      Read(dcov_vec, fname);
+      Display(dcov_vec, "dcov_vec");
+
+      return;
+      }
+
+
+    // otherwise, calculate internally //
+
     DistMatrix<double> *dcov_vdist = new DistMatrix<double>(nbp, npix); 
 
     const int localHeight = dcov_vdist->LocalHeight();
     const int localWidth = dcov_vdist->LocalWidth();
-
 
     for(jloc=0; jloc<localWidth; jloc++) {
       for(iloc=0; iloc<localHeight; iloc++) {
@@ -189,6 +206,7 @@
 
           dc=get_dcov_klim_r1d(klow[iglo], kup[iglo], dt, dtab);
 	  }
+
 	else if(ndim==2){
           dc=0;//get_dcov_klim_r1d(klow[iglo], kup[iglo], dt, dtab);
 	  }
@@ -198,7 +216,6 @@
       }
 
     // redistribution //
-    dcov_vec=DistMatrix<double, STAR, STAR>(nbp, npix); 
     dcov_vec=*(dcov_vdist);
     delete dcov_vdist;
 
@@ -226,8 +243,7 @@
     
 
     // dcov initialzation //
-    dcov_init();
-
+    dcov_init(import_dcov);
 
     }
 
