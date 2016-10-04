@@ -43,7 +43,7 @@
 
         void band_power_init(std::string bp_init_type, std::string bp_fname);
 
-        void dcov_init(bool from_file, string fname);
+        void dcov_init(bool from_file, std::string fname);
 
 
         // destructor //
