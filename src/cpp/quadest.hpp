@@ -20,23 +20,30 @@
         std::string bp_init_type, output_prefix, data_fname, 
                     bp_list_fname, dcov_fname;
 
-
 	// ->> global MPI 
         MPIpar *glmpi;
       
-
-        El::vector<double> Qip, Qi, covn_vec, map, pfid, klow, kup, klist;
+        El::vector<double> covn_vec, pfid, klow, kup, klist;
 
         // ->> DistMatrix <<- //
 	El::DistMatrix<double>  dcov_vec, Fij, iFij;
+	El::DistMatrix<double> Qip, Qi;
+
+        // ->> The following will be defined internally <<- //
         //El::DistMatrix<double> cov, icov, dcov[nbp];
-	//
+
+	// Matrix //
 	El::Matrix<double> bpk, dmap;
 
-
+    
+        // ->> Methods <<- //
         // constructor //
         QEpar(char *ini_name, std::string sec, MPIpar *glmpi);
 
+        // destructor //
+        ~QEpar();
+
+        // ->> initialization <<- //
         void QE_parameter(char *ini_name, std::string sec);
 
         void rawdata_init(std::string data_fname);
@@ -45,12 +52,15 @@
 
         void dcov_init(bool from_file, std::string fname);
 
-
-        // destructor //
-        ~QEpar();
+        void noise_init();
 
 
       };
+
+
+
+    void Quad_Estimator(QEpar *qe, vector<double> pk_fid, int n_it);
+
 
 
 

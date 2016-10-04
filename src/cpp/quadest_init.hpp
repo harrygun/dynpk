@@ -4,6 +4,6 @@
 
   #include <cstring>
 
-  void QE_init(QEpar &qe, const std::string &mat_type="DistMatrix");
+  //void QE_init(QEpar &qe, const std::string &mat_type="DistMatrix");
 
 #endif

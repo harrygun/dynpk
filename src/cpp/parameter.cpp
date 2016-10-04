@@ -16,12 +16,10 @@
 
 
 
-  void para_importer(char *ini_name){
+  void para_importer(char *ini_name, string sec){
 
     boost::property_tree::ptree pt;
     boost::property_tree::ini_parser::read_ini(ini_name, pt);
-    string sec="Quadratic_Estimator";
-
 
 
 

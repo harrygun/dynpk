@@ -182,8 +182,8 @@
       cout << "importing dcov from file '" << fname << "'"<< endl;
 
       Read(dcov_vec, fname);
-      Display(dcov_vec, "dcov_vec");
 
+      //Display(dcov_vec, "dcov_vec");
       return;
       }
 
@@ -229,6 +229,13 @@
 
 
 
+
+  QEpar::noise_init(){
+
+    return;
+    }
+
+
   QEpar::QEpar(char *ini_name, string sec, MPIpar *mpi_add) {
 
     //->>  QEpar constructor <<- //
@@ -247,11 +254,23 @@
     // dcov initialzation //
     dcov_init(import_dcov, dcov_fname);
 
+    // noise initialization //
+    noise_init();
+
     }
 
 
   QEpar::~QEpar() {
     }
+
+
+
+
+
+
+
+
+
 
 
 

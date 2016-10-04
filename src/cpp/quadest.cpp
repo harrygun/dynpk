@@ -11,6 +11,7 @@
   #include "io.hpp"
   #include "mpinit.hpp"
   #include "quadest.hpp"
+  #include "quadest_init.hpp"
 
   using namespace std;
   using namespace El;
@@ -186,10 +187,14 @@
 
 
 
-  void Quad_Estimator(QEpar *qe) {
+  void Quad_Estimator(QEpar *qe, vector<double> pk_fid, int n_it) {
     // ->> calculate quadratic estimator <<- //
+
+    if (n_it>1)
+      throw runtime_error("Error: Iterations NOT supported yet.");
+
     int a, b, i, j, idx, id;
-    char *fn;
+    string fn;
 
     // ->> first recover the full covariance matrix <<- //
     qe->cov=full_covmat_recov(mpi, qe->dcov, qe->covn_v, qe->plist, 
