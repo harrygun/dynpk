@@ -234,8 +234,7 @@
 
   void QEpar::fdcov_recovery(){
 
-    int a, iglo, jglo, iloc, jloc;
-    const int localHeight, localWidth; 
+    int a, iglo, jglo, iloc, jloc, localHeight, localWidth; 
     double dcc;
 
     // allocate an array of DistMatrix //
@@ -294,14 +293,11 @@
     //  band_power initialization  //
     band_power_init(bp_init_type, bp_list_fname);
     
-
     // dcov initialzation //
     dcov_init(import_dcov, dcov_fname);
 
-    // recovery of the full 
-    fdcov_recovery();
     // ->> recovery of the full dcov <<- //
-
+    fdcov_recovery();
 
 
     return;
