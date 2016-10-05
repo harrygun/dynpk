@@ -38,14 +38,14 @@ main( int argc, char* argv[] )
     DistMatrix<double> *dcov_arr=new DistMatrix<double> [ndcov_i];
 
     for(int i=0; i<ndcov_i; i++) {
-      (*dcov_arr)[i]=DistMatrix<double>(nrows,ncols);
-      Zeros((*dcov_arr)[i], nrows, ncols);
+      dcov_arr[i]=DistMatrix<double>(nrows,ncols);
+      Zeros(dcov_arr[i], nrows, ncols);
       }
 
 
-    Write((*dcov_arr)[0], "./ZERO_test_0", MATRIX_MARKET);
-    Write((*dcov_arr)[10], "./ZERO_test_10", MATRIX_MARKET);
-    Write((*dcov_arr)[23], "./ZERO_test_23", MATRIX_MARKET);
+    Write(dcov_arr[0], "./ZERO_test_0", MATRIX_MARKET);
+    Write(dcov_arr[10], "./ZERO_test_10", MATRIX_MARKET);
+    Write(dcov_arr[23], "./ZERO_test_23", MATRIX_MARKET);
   }
 
 
