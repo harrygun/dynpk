@@ -233,16 +233,40 @@
 
 
   void QEpar::fdcov_recovery(){
+
+    int a, iglo, jglo, iloc, jloc;
+    const int localHeight, localWidth; 
+    double dcc;
+
     // allocate an array of DistMatrix //
     dcov = new DistMatrix<double>[nbp]; 
 
 
-    for(int i=0; i<nbp; i++) {
-      dcov[i]=DistMatrix<double>(npix, npix);
+    for(a=0; a<nbp; a++) {
+      dcov[a]=DistMatrix<double>(npix, npix);
 
+      localHeight=dcov[a].LocalHeight();
+      localWidth =dcov[a].LocalWidth();
 
+      // full recovery //
+      for(jloc=0; jloc<localWidth; jloc++){
+        // ->> get global index <<- //
+        jglo=dcov[a].GlobalCol(jloc);
+
+        for(iloc=0; iloc<localHeight; iloc++) {
+          // ->> get global index <<- //
+          iglo=dcov[a].GlobalRow(iloc);
+
+          if (ndim==1){
+            dcc=dcov_vec[a][(int)fabs(iglo-jglo)]; }
+          else {
+            throw runtime_error("Error: fdcov n>1 NOT supported yet."); }
+
+          dcov[a].SetLocal(iloc, jloc, dcc);
+	  }
+        }
+     
       }
-
 
     return;
     }
@@ -286,12 +310,12 @@
 
 
     // noise initialization //
-    noise_init();
-
-    }
+   void QEpar::noise_init(){
+      }
 
 
   QEpar::~QEpar() {
+    delete[] dcov;
     }
 
 
