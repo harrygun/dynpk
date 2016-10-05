@@ -233,17 +233,20 @@
 
 
   void QEpar::fdcov_recovery(){
-    // //
-    DistMatrix<double> dcov_arr[ndcov_i];
-    DistMatrix<double> *dcov_vdist = new DistMatrix<double>(nbp, npix); 
+    // allocate an array of DistMatrix //
+    dcov = new DistMatrix<double>[nbp]; 
 
-    for(int i=0; i<ndcov_i; i++) {
-      dcov_arr[i]=DistMatrix<double>(nrows,ncols);
-      Zeros(dcov_arr[i], nrows, ncols);
+
+    for(int i=0; i<nbp; i++) {
+      dcov[i]=DistMatrix<double>(npix, npix);
+
+
+      }
 
 
     return;
     }
+
 
 
 
