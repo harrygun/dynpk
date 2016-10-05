@@ -257,7 +257,7 @@
           iglo=dcov[a].GlobalRow(iloc);
 
           if (ndim==1){
-            dcc=dcov_vec[a][(int)fabs(iglo-jglo)]; }
+            dcc=dcov_vec(a,(int)fabs(iglo-jglo)); }
           else {
             throw runtime_error("Error: fdcov n>1 NOT supported yet."); }
 
