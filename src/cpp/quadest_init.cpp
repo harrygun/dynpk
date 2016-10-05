@@ -306,7 +306,7 @@
 
 
     // noise initialization //
-   void QEpar::noise_init(){
+   void noise_init(){
       }
 
 
