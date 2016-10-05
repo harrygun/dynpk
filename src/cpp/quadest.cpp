@@ -119,57 +119,26 @@
 
 
   void fcov_recovery(vector<double> &pk, DistMatrix<double> &covf) {
-
     // ->> obtain full covariance matrix from dvoc and pk_list <<- //
-    int ip, i, j, a, b, c, d, idx, id, irk, nrun;
 
-    cov_s=(double *)malloc(mpi->ind_run*sizeof(double));
+    int a, iglo, jglo, iloc, jloc, localHeight, localWidth; 
+    double val;
 
-    for(idx=0; idx<mpi->ind_run; idx++) {
+    const int localHeight=covf.LocalHeight();
+    const int localWidth =covf.LocalWidth();
 
-      // ->> pixel location <<- //
-      id=mpi_id(mpi, idx);
 
-      // ->> 1D map <<- //
-      if(ndim==1)  {
+    for(jloc=0; jloc<localWidth; jloc++){
+      for(iloc=0; iloc<localHeight; iloc++) {
 
-        // ->> convert to pixel index <<- //
-        a=(int)(id/(double)npix);
-        b=(int)(id-a*npix);
-
-        cov_s[idx]=0.;
-        for(ip=0; ip<nbp; ip++){
-          // ->> summing over all bandpowr <<- //
-          cov_s[idx]+=access_dcov(dcov, nbp, npix, ip, a, b, ndim)*plist[ip];
+        val=0;
+        for(a=0; a<nbp; a++) {
+          val+=dcov[a].GetLocal(iloc,jloc)*pk[a]; 
           }
 
-        //if(a==b){ cov_s[idx]+=covn_v[idx]; }
-        }
-
-      // ->> 2D map <<- //
-      if(ndim==2)  {
-        abort();   // ->> DEFINITELY some error here. <<- //
-
-        cov_s[idx]=0.;
-        for(ip=0; ip<nbp; ip++){
-          // ->> summing over all bandpowr <<- //
-          cov_s[idx]+=access_dcov(dcov, nbp, npix, ip, a, b, ndim)*plist[ip];
-          }
-
-        //if(a==b){ cov_s[idx]+=covn_v[idx]; }
-        }
-
+        covf.SetLocal(iloc, jloc, val);
+	}
       }
-
-
-    cov=mpi_gather_dist_double(mpi, cov_s, mpi->ind_run, mpi->max);
-    printf("pointer: %p  %p  (%d  %d)\n", cov, cov_s, mpi->ind_run, mpi->max);
-
-
-    fn="result/r1d/cov_out_ss.dat";
-    write_data(mpi, fn, cov_s, sizeof(double), npix*npix);
-
-    free(cov_s);
 
     return;
     }
@@ -185,9 +154,10 @@
   void QEpar::Quad_Estimator(vector<double> pk_fid, int n_it) {
     // ->> method for calculating the quadratic estimator <<- //
 
-    int a, b, i, j, idx, id;
+    //int a, b, i, j, idx, id;
     string fn;
-    vector<double> &pk;
+    vector<double> pk;
+    DistMatrix<double> covf(npix, npix), covf_inv(npix, npix);
 
     if (n_it>1)
       throw runtime_error("Error: Iterations NOT supported yet.");
@@ -195,22 +165,24 @@
       pk=pk_fid;
 
     // ->> first recover the full covariance matrix <<- //
-    fcov_recovery(pk);
+    fcov_recovery(pk, covf);
     cout << "Full covariance matrix done." << endl;
 
+    // inversion //
+    // ??
+    covf_inv=covf;
+    HPDInverse(LOWER, covf_inv);
+    //MakeHermitian(LOWER, covf_inv);
+    cout << "inverse of covariance matrix done." << endl; 
 
-    //MPI_Barrier(MPI_COMM_WORLD);
-    //abort();
-
-    // ->> inverse matrix <<- //
-    mat_inv(mpi, qe->cov, qe->icov, qe->npix);
-    fn="result/r1d/icov_out.dat";
-    write_data(mpi, fn, qe->icov, sizeof(double), qe->npix*qe->npix);
-
-    printf("inverse of covariance matrix done.\n"); fflush(stdout);
 
     // ->> calculate Fisher matrix and its inverse <<- //
+    throw runtime_error("Now need to calculate Fisher.");
     qe->Fij=Fisher(mpi, qe->dcov, qe->icov, qe->npix, qe->nbp, qe->ndim);
+
+
+
+
     fn="result/r1d/Fij.dat";
     write_data(mpi, fn, qe->Fij, sizeof(double), qe->nbp*qe->nbp);
 
