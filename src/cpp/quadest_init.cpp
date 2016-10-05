@@ -228,9 +228,26 @@
     }
 
 
+ 
 
 
-  QEpar::noise_init(){
+
+  void QEpar::fdcov_recovery(){
+    // //
+    DistMatrix<double> dcov_arr[ndcov_i];
+    DistMatrix<double> *dcov_vdist = new DistMatrix<double>(nbp, npix); 
+
+    for(int i=0; i<ndcov_i; i++) {
+      dcov_arr[i]=DistMatrix<double>(nrows,ncols);
+      Zeros(dcov_arr[i], nrows, ncols);
+
+
+    return;
+    }
+
+
+
+  void QEpar::noise_init(){
 
     return;
     }
@@ -253,6 +270,17 @@
 
     // dcov initialzation //
     dcov_init(import_dcov, dcov_fname);
+
+    // recovery of the full 
+    fdcov_recovery();
+    // ->> recovery of the full dcov <<- //
+
+
+
+    return;
+    }
+
+
 
     // noise initialization //
     noise_init();

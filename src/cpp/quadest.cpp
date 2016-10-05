@@ -117,21 +117,11 @@
 
 
 
-  double *full_covmat_recov(MPIpar *mpi, double *dcov, double *covn_v, double *plist, 
-                            size_t nbp, size_t npix, size_t ndim) {
+
+  void fcov_recovery(vector<double> &pk, DistMatrix<double> &covf) {
 
     // ->> obtain full covariance matrix from dvoc and pk_list <<- //
-
     int ip, i, j, a, b, c, d, idx, id, irk, nrun;
-    double *cov_s, *crev, *cov;
-    char *fn;
-
-    #ifdef _MPI_
-    MPI_Barrier(MPI_COMM_WORLD);
-    #endif
-
-    mpi->max=npix*npix;    mpi->start=0;
-    mpi_loop_init(mpi, "cov");
 
     cov_s=(double *)malloc(mpi->ind_run*sizeof(double));
 
@@ -180,31 +170,34 @@
     write_data(mpi, fn, cov_s, sizeof(double), npix*npix);
 
     free(cov_s);
-    return cov;
+
+    return;
     }
 
 
 
 
 
-  void Quad_Estimator(QEpar *qe, vector<double> pk_fid, int n_it) {
-    // ->> calculate quadratic estimator <<- //
 
-    if (n_it>1)
-      throw runtime_error("Error: Iterations NOT supported yet.");
+
+
+
+  void QEpar::Quad_Estimator(vector<double> pk_fid, int n_it) {
+    // ->> method for calculating the quadratic estimator <<- //
 
     int a, b, i, j, idx, id;
     string fn;
+    vector<double> &pk;
+
+    if (n_it>1)
+      throw runtime_error("Error: Iterations NOT supported yet.");
+    else if (n_it==1)
+      pk=pk_fid;
 
     // ->> first recover the full covariance matrix <<- //
-    qe->cov=full_covmat_recov(mpi, qe->dcov, qe->covn_v, qe->plist, 
-                              qe->nbp, qe->npix, qe->ndim);
+    fcov_recovery(pk);
+    cout << "Full covariance matrix done." << endl;
 
-    printf("qe->cov pointer: %p\n", qe->cov);
-    printf("Full covariance matrix done.(%d)\n", mpi->rank); fflush(stdout);
-
-    fn="result/r1d/cov_out.dat";
-    write_data(mpi, fn, qe->cov, sizeof(double), qe->npix*qe->npix);
 
     //MPI_Barrier(MPI_COMM_WORLD);
     //abort();

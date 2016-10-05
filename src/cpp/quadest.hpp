@@ -54,12 +54,17 @@
 
         void noise_init();
 
+        void fdcov_recovery();
+
+	// ->> calculation <<- //
+        void Quad_Estimator(El::vector<double> pk_fid, int n_it);
+
+
 
       };
 
 
 
-    void Quad_Estimator(QEpar *qe, vector<double> pk_fid, int n_it);
 
 
 

@@ -59,7 +59,7 @@
 
     // ->> call Quadratic Estimator <<- //
     int n_it=1;
-    Quad_Estimator(&qe, qe.pfid, n_it);
+    qe.Quad_Estimator(qe.pfid, n_it);
 
 
     // output //
