@@ -26,7 +26,7 @@
         El::vector<double> covn_vec, pfid, klow, kup, klist;
 
         // ->> DistMatrix <<- //
-	El::DistMatrix<double>  dcov_vec, Fij, iFij;
+	El::DistMatrix<double>  dcov_vec, *Fij, *iFij;
 	El::DistMatrix<double> Qip, Qi, *dcov;
 
         // ->> The following will be defined internally <<- //

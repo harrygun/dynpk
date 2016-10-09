@@ -19,7 +19,6 @@
 
 
 
-
   double access_dcov(double *dcov, size_t nbp, size_t npix, int i, 
                                       int a, int b, size_t ndim) {
     // ->> i:    index of bandpower
@@ -39,68 +38,6 @@
 
 
 
-  //void Fisher(MPIpar *mpi, double *dcov, double *icov, double *F,
-  //                              size_t npix, size_t nbp, size_t ndim)  {
-
-  double *Fisher(MPIpar *mpi, double *dcov, double *icov, size_t npix, 
-                 size_t nbp, size_t ndim)  {
-
-    int i, j, a, b, c, d, idx, id, irk, nrun;
-    double *Fs, *Frev, *F;
-
-    #ifdef _MPI_
-    MPI_Barrier(MPI_COMM_WORLD);
-    #endif
-
-    mpi->max=nbp*nbp;    mpi->start=0;
-    mpi_loop_init(mpi, "Fisher");
-    //mpi_loop_init(mpi, NULL);
-
-    Fs=(double *)malloc(mpi->ind_run*sizeof(double));
-
-    for(idx=0; idx<mpi->ind_run; idx++) {
-
-      id=mpi_id(mpi, idx);
-      i=(int)(id/(double)nbp);
-      j=id-i*nbp;
-
-      //#ifdef _OMP_
-      //#pragma omp parallel for private(a,b,c,d)
-      //#endif
-
-      Fs[idx]=0.;
-      for(a=0; a<npix; a++)
-          for(b=0; b<npix; b++)
-            for(c=0; c<npix; c++)
-              for(d=0; d<npix; d++) {
-
-                Fs[idx]+=access_dcov(dcov, nbp, npix, i, a, b, ndim)*
-                         ArrayAccess2D(icov, npix, b, c)*access_dcov(dcov, nbp, npix, 
-			 j, c, d, ndim)*ArrayAccess2D(icov, npix, d, a)/2.;
-                }
-
-        //printf("Fij[%d, %d]=%lg\n", i, j, Fs[idx]);
-        //fflush(stdout);
-      }
-    printf("Fisher is done. (rank %d)\n", mpi->rank); fflush(stdout);
-
-
-    F=mpi_gather_dist_double(mpi, Fs, mpi->ind_run, mpi->max);
-
-    printf("Existing Fisher. (rank-%d)\n", mpi->rank); fflush(stdout);
-
-    char *fn="result/r1d/Fij_ins.dat";
-    write_data(mpi, fn, Fs, sizeof(double), nbp*nbp);
-
-
-    #ifndef _MPI_
-    free(Fs);
-    #endif
-
-    return F;
-    }
-
-
 
   void cov_noise(MPIpar *mpi, double *covn_v, size_t npix, char *type){
     int i;
@@ -114,6 +51,13 @@
 
     return;
     }
+
+
+
+
+
+  //----------------------------------------------//
+
 
 
 
@@ -145,6 +89,41 @@
 
 
 
+  void iFisher(DistMatrix<double> *dcov, DistMatrix<double> &icov, 
+       DistMatrix<double> *iFij, size_t npix, size_t nbp, size_t ndim)  {
+
+    int a, b, iglo, jglo, iloc, jloc, localHeight, localWidth; 
+    double Fval;
+    DistMatrix<double> *ic_dcov;
+
+    ic_dcov=new DistMatrix<double>[nbp];
+    DistMatrix<double> *Fij=new DistMatrix<double>(nbp, nbp);
+
+    for(a=0; a<nbp; a++) {
+      ic_dcov[a]=DistMatrix<double>(npix, npix);
+      Gemm(NORMAL, NORMAL, double(1.), icov, dcov[a], double(0.), ic_dcov[a]);
+      }
+
+
+    for(a=0; a<nbp; a++) {
+      for(b=0; b<nbp; b++) {
+        Fval=HilbertSchmidt(ic_dcov[a], ic_dcov[b])*0.5;
+
+	// ?? local set ?? //
+        Fij.Set(a, b, Fval);
+        }
+      }
+
+    // inverse //
+    iFij=Fij;
+    HPDInverse(LOWER, iFij);
+
+    delete[] Fij;
+    delete[] ic_dcov;
+
+    return;
+    }
+
 
 
 
@@ -173,44 +152,24 @@
     covf_inv=covf;
     HPDInverse(LOWER, covf_inv);
     //MakeHermitian(LOWER, covf_inv);
+
     cout << "inverse of covariance matrix done." << endl; 
 
 
-    // ->> calculate Fisher matrix and its inverse <<- //
-    throw runtime_error("Now need to calculate Fisher.");
-    qe->Fij=Fisher(mpi, qe->dcov, qe->icov, qe->npix, qe->nbp, qe->ndim);
+    // ->> calculate and its inverse <<- //
+    iFij = new DistMatrix<double>(nbp, nbp);
+    iFisher(dcov, covf_inv, iFij, npix, nbp, ndim);
 
 
-
-
-    fn="result/r1d/Fij.dat";
-    write_data(mpi, fn, qe->Fij, sizeof(double), qe->nbp*qe->nbp);
-
-
-    
-    mat_inv(mpi, qe->Fij, qe->iFij, qe->npix);
-    fn="result/r1d/inv_Fij.dat";
-    write_data(mpi, fn, qe->iFij, sizeof(double), qe->nbp*qe->nbp);
-
-    /*
-    printf("import inv_fisher\n"); fflush(stdout);
-    fn="result/r1d/inv_Fij.dat";
-    qe->iFij=(double *)malloc(sizeof(double)*qe->nbp*qe->nbp);
-    import_data_double(mpi, fn, qe->iFij, sizeof(double), qe->nbp*qe->nbp);
-    */
-
-
-    printf("(inv)-Fisher Matrix done.\n"); fflush(stdout);
-  
     // ->> some pre-calculation of Qi <<- //
     // ->> (C^{-1}.d) <<- //
-    double *d_ic=(double *)malloc(sizeof(double)*qe->npix);
-    mat_vec_mult(qe->icov, qe->map, d_ic, qe->npix, qe->npix);
+    Matrix<double>* d_ic=new Matrix<double>();
+    Gemv(NORMAL, double(1.), covf_inv, dmap, double(0.), d_ic);
 
 
-    #ifdef _MPI_
-    MPI_Barrier(MPI_COMM_WORLD);
-    #endif
+    // 
+    Qi= ;
+
 
     // ->> calculate Qi' <<- //
     double *Qip_s, *Qi_s;
