@@ -111,7 +111,8 @@
     fcov_recovery(pk, covf, dcov, nbp);
     cout << "Full covariance matrix done." << endl;
 
-    string fn_out="covf.dat";
+    string fn_out;
+    fn_out="covf.dat";
     Write(covf, fn_out);
 
     // inversion //
