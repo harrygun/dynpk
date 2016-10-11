@@ -148,7 +148,7 @@
     Ones(*Uni, nbp, 1);
     Gemv(NORMAL, double(1.), *iFij, *Uni, double(0.), *Ml);
 
-    delete Uni, Ml;
+    delete Uni;
 
 
     // ->> some pre-calculation of Qi <<- //
@@ -167,7 +167,7 @@
       }
 
 
-    delete iFij, d_ic, Qpar;
+    delete iFij, d_ic, Qpar, Ml;
     return;
     }
 
