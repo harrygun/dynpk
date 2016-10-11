@@ -53,7 +53,7 @@
     //fn_map ="result/r1d/dmap.dat";
     //fn_plist="result/r1d/plist.dat";
 
-    fn_out ="result/r1d/Qi.dat";
+    fn_Qi="result/r1d/Qi.dat";
 
 
 
