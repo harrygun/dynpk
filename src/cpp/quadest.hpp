@@ -68,7 +68,7 @@
                      El::DistMatrix<double> *dcov, size_t nbp, int debug);
 
   void iFisher(El::DistMatrix<double> *dcov, El::DistMatrix<double> *icov, 
-       El::DistMatrix<double> *iFij, size_t npix, size_t nbp, size_t ndim);
+       El::DistMatrix<double> *iFij, size_t npix, size_t nbp, size_t ndim, int debug);
 
 
 

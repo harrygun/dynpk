@@ -49,7 +49,7 @@
 
 
   void iFisher(DistMatrix<double> *dcov, DistMatrix<double> *icov, 
-       DistMatrix<double> *iFij, size_t npix, size_t nbp, size_t ndim)  {
+       DistMatrix<double> *iFij, size_t npix, size_t nbp, size_t ndim, int debug)  {
 
     int a, b, iglo, jglo, iloc, jloc, localHeight, localWidth; 
     double Fval;
@@ -78,8 +78,8 @@
 
     if(debug>=50) {
       string fn_Fij, fn_iFij;
-      fn_Fij="Fij.out"
-      fn_iFij="iFij.out"
+      fn_Fij="Fij.out";
+      fn_iFij="iFij.out";
 
       Write(*Fij, fn_Fij);
       Write(*iFij, fn_iFij);
@@ -143,7 +143,7 @@
     Uni = new DistMatrix<double>(nbp, 1);
     Ml= new DistMatrix<double>(nbp, 1);
 
-    iFisher(dcov, covf_inv, iFij, npix, nbp, ndim);
+    iFisher(dcov, covf_inv, iFij, npix, nbp, ndim, debug);
 
     Ones(*Uni, nbp, 1);
     Gemv(NORMAL, double(1.), *iFij, *Uni, double(0.), *Ml);
