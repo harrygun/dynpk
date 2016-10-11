@@ -88,9 +88,10 @@
 
     cout << "Fisher Matrix is done." << endl; 
 
-    delete[] Fij;
+    delete Fij;
     delete[] ic_dcov;
 
+    cout << "Existing Fisher Matrix.." << endl; 
     return;
     }
 
@@ -151,7 +152,7 @@
     Gemv(NORMAL, double(1.), *iFij, *Uni, double(0.), *Ml);
     cout << "here 1" << endl;
 
-    delete [] Uni;
+    delete Uni;
 
 
     // ->> some pre-calculation of Qi <<- //
@@ -170,7 +171,7 @@
       }
 
 
-    delete [] iFij, d_ic, Qpar, Ml;
+    delete iFij, d_ic, Qpar, Ml;
     return;
     }
 
