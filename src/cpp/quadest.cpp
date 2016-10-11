@@ -74,7 +74,7 @@
 
     // inverse //
     *iFij=*Fij;
-    HPDInverse(LOWER, *iFij);
+    SymmetricInverse(LOWER, *iFij);
 
     delete[] Fij;
     delete[] ic_dcov;
@@ -111,10 +111,12 @@
     fcov_recovery(pk, covf, dcov, nbp);
     cout << "Full covariance matrix done." << endl;
 
+    string fn_out="covf.dat";
+    Write(covf, fn_out);
+
     // inversion //
     *covf_inv=*covf;
-    HPDInverse(LOWER, *covf_inv);
-    //MakeHermitian(LOWER, *covf_inv);
+    SymmetricInverse(LOWER, *covf_inv);
 
     cout << "inverse of covariance matrix done." << endl; 
 

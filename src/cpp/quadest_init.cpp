@@ -286,7 +286,7 @@
     // ->> recovery of the full dcov <<- //
     fdcov_recovery();
 
-
+    cout << "QEpar initialization is complete." << endl;
     return;
     }
 
