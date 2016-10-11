@@ -157,21 +157,14 @@
     d_ic=new DistMatrix<double>(npix, 1);
     Gemv(NORMAL, double(1.), *covf_inv, dmap, double(0.), *d_ic);
 
-    cout << "Here 0" << endl;
-
     Qpar= new DistMatrix<double>(npix, 1);
     Qi=DistMatrix<double>(nbp, 1);
-
-    cout << "Here 1" << endl;
 
     for(a=0; a<nbp; a++) {
       //Zeros(*Qpar);
       Gemv(NORMAL, double(1.), dcov[a], *d_ic, double(0.), *Qpar);
-      //cout << "inside loop: 0" << endl;
       Qi.Set(a, 0, Dot(*d_ic, *Qpar)*Ml->Get(a, 0)*0.5);
       }
-
-    cout << "Here 2" << endl;
 
     delete iFij, d_ic, Qpar, Ml;
     return;
