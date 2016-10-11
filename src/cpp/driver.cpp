@@ -48,11 +48,12 @@
 
 
 
-    string fn_out;
+    string fn_Qi;
     //fn_dcov="result/r1d/dcov.dat";
     //fn_map ="result/r1d/dmap.dat";
     //fn_plist="result/r1d/plist.dat";
-    //fn_out ="result/r1d/Qi.dat";
+
+    fn_out ="result/r1d/Qi.dat";
 
 
 
@@ -63,7 +64,7 @@
 
 
     // output //
-    Write(qe.Qi);
+    Write(qe.Qi, fn_Qi);
 
 
     return 0;

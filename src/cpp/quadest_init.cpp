@@ -117,23 +117,6 @@
 
     cout << "Importing raw map." << endl;
     
-    // ->> if necessary, select a submatrix <<- //
-    /*
-    if(ndim==2) {
-      // ->> should be column? or row ??
-      dmap=DistMatrix<double>(npix, 1);
-      dmap_->Resize(npix, 1);
-      dmap=(*dmap_);
-      }
-
-    else if(ndim==1){
-      //dmap=(*dmap_)(IR(0,map_size[0]), IR(map1d_f,map1d_f+1) );
-      dmap=*dmap_;
-      }
-     
-    delete dmap_;
-    */
-
     //Display(dmap);
     return;
     }
