@@ -21,7 +21,7 @@
 
 
   void fcov_recovery(vector<double> &pk, DistMatrix<double> *covf, 
-                     DistMatrix<double> *dcov, size_t nbp) {
+                     DistMatrix<double> *dcov, size_t nbp, int debug) {
     // ->> obtain full covariance matrix from dvoc and pk_list <<- //
 
     int a, iglo, jglo, iloc, jloc; //localHeight, localWidth; 
@@ -120,7 +120,7 @@
     covf_inv = new DistMatrix<double>(npix, npix);
 
     // ->> first recover the full covariance matrix <<- //
-    fcov_recovery(pk, covf, dcov, nbp);
+    fcov_recovery(pk, covf, dcov, nbp, debug);
     cout << "Full covariance matrix done." << endl;
 
     if(debug>=50) {
