@@ -19,57 +19,15 @@
 
 
 
-  double access_dcov(double *dcov, size_t nbp, size_t npix, int i, 
-                                      int a, int b, size_t ndim) {
-    // ->> i:    index of bandpower
-    // ->> a/b:  indices of map pixels 
 
-    if(ndim==1)
-      {return ArrayAccess2D_n2(dcov, nbp, npix, i, (int)fabs((double)(a-b)));}
-
-    else if(ndim==2) {abort();}
-
-    else {abort();}
-
-    return -99.;
-    }
-
-
-
-
-
-
-  void cov_noise(MPIpar *mpi, double *covn_v, size_t npix, char *type){
-    int i;
-
-    if(type==NULL) {
-      for(i=0; i<npix; i++)
-        covn_v[i]=0;
-      }
-    else abort();
-
-
-    return;
-    }
-
-
-
-
-
-  //----------------------------------------------//
-
-
-
-
-
-  void fcov_recovery(vector<double> &pk, DistMatrix<double> &covf) {
+  void fcov_recovery(vector<double> &pk, DistMatrix<double> *covf) {
     // ->> obtain full covariance matrix from dvoc and pk_list <<- //
 
     int a, iglo, jglo, iloc, jloc, localHeight, localWidth; 
     double val;
 
-    const int localHeight=covf.LocalHeight();
-    const int localWidth =covf.LocalWidth();
+    const int localHeight=covf->LocalHeight();
+    const int localWidth =covf->LocalWidth();
 
 
     for(jloc=0; jloc<localWidth; jloc++){
@@ -80,7 +38,7 @@
           val+=dcov[a].GetLocal(iloc,jloc)*pk[a]; 
           }
 
-        covf.SetLocal(iloc, jloc, val);
+        covf->SetLocal(iloc, jloc, val);
 	}
       }
 
@@ -89,19 +47,18 @@
 
 
 
-  void iFisher(DistMatrix<double> *dcov, DistMatrix<double> &icov, 
+  void iFisher(DistMatrix<double> *dcov, DistMatrix<double> *icov, 
        DistMatrix<double> *iFij, size_t npix, size_t nbp, size_t ndim)  {
 
     int a, b, iglo, jglo, iloc, jloc, localHeight, localWidth; 
     double Fval;
-    DistMatrix<double> *ic_dcov;
 
-    ic_dcov=new DistMatrix<double>[nbp];
-    DistMatrix<double> *Fij=new DistMatrix<double>(nbp, nbp);
+    DistMatrix<double> *ic_dcov = new DistMatrix<double>[nbp];
+    DistMatrix<double> *Fij = new DistMatrix<double>(nbp, nbp);
 
     for(a=0; a<nbp; a++) {
       ic_dcov[a]=DistMatrix<double>(npix, npix);
-      Gemm(NORMAL, NORMAL, double(1.), icov, dcov[a], double(0.), ic_dcov[a]);
+      Gemm(NORMAL, NORMAL, double(1.), *icov, dcov[a], double(0.), ic_dcov[a]);
       }
 
 
@@ -110,13 +67,13 @@
         Fval=HilbertSchmidt(ic_dcov[a], ic_dcov[b])*0.5;
 
 	// ?? local set ?? //
-        Fij.Set(a, b, Fval);
+        Fij->Set(a, b, Fval);
         }
       }
 
     // inverse //
-    iFij=Fij;
-    HPDInverse(LOWER, iFij);
+    *iFij=*Fij;
+    HPDInverse(LOWER, *iFij);
 
     delete[] Fij;
     delete[] ic_dcov;
@@ -136,20 +93,26 @@
     //int a, b, i, j, idx, id;
     string fn;
     vector<double> pk;
-    DistMatrix<double> covf(npix, npix), covf_inv(npix, npix);
+    //DistMatrix<double> covf(npix, npix), covf_inv(npix, npix);
+    DistMatrix<double> *covf, *covf_inv;
+
 
     if (n_it>1)
       throw runtime_error("Error: Iterations NOT supported yet.");
     else if (n_it==1)
       pk=pk_fid;
 
+
+
+    covf     = new DistMatrix<double>(npix, npix);
+    covf_inv = new DistMatrix<double>(npix, npix);
+
     // ->> first recover the full covariance matrix <<- //
     fcov_recovery(pk, covf);
     cout << "Full covariance matrix done." << endl;
 
     // inversion //
-    // ??
-    covf_inv=covf;
+    *covf_inv=*covf;
     HPDInverse(LOWER, covf_inv);
     //MakeHermitian(LOWER, covf_inv);
 
@@ -157,54 +120,37 @@
 
 
     // ->> calculate and its inverse <<- //
+    DistMatrix<double> *iFij, *Uni, *Ml, *Qpar;
+    Matrix <double> *d_ic;
+    double Qval;
+    
     iFij = new DistMatrix<double>(nbp, nbp);
+    Uni = new DistMatrix<double>(nbp, 1);
+    Ml= new DistMatrix<double>(nbp, 1);
+
     iFisher(dcov, covf_inv, iFij, npix, nbp, ndim);
+    Ones(*Uni, nbp, 1);
+    Gemv(NORMAL, double(1.), *iFij, *Uni, double(0.), *Ml);
+
+    delete Uni, Ml;
 
 
     // ->> some pre-calculation of Qi <<- //
     // ->> (C^{-1}.d) <<- //
-    Matrix<double>* d_ic=new Matrix<double>();
+    d_ic=new Matrix<double>(npix, 1);
     Gemv(NORMAL, double(1.), covf_inv, dmap, double(0.), d_ic);
 
+    Qpar= new DistMatrix<double>(npix, 1);
+    Qi=DistMatrix<double>(nbp, 1);
 
-    // 
-    Qi= ;
-
-
-    // ->> calculate Qi' <<- //
-    double *Qip_s, *Qi_s;
-    Qip_s=(double *)malloc(mpi->ind_run*sizeof(double));
-    Qi_s=(double *)malloc(mpi->ind_run*sizeof(double));
-
-    mpi->max=qe->nbp;    mpi->start=0;
-    mpi_loop_init(mpi, "Qi");
-
-    for(idx=0; idx<mpi->ind_run; idx++) {
-      id=mpi_id(mpi, idx);
-
-      Qip_s[idx]=0.;
-      for(a=0; a<qe->npix; a++)
-        for(b=0; b<qe->npix; b++) {
-          Qip_s[idx]+=d_ic[a]*access_dcov(qe->dcov, qe->nbp, qe->npix, id, a, b, qe->ndim)*d_ic[b]/2.;
-          }
-
-      Qi_s[idx]=0;
-      for(j=0; j<qe->nbp; j++) {
-        Qi_s[idx]+=Qip_s[idx]*ArrayAccess2D(qe->iFij, qe->nbp, id, j);
-        }
+    for(a=0; a<nbp; a++) {
+      //Zeros(*Qpar);
+      Gemv(NORMAL, double(1.), dcov[a], *d_ic, double(0.), *Qpar);
+      Qi.Set(a, 1, Dot(d_ic, Qpar)*Ml->Get(a, 1)*0.5);
       }
 
 
-    // ->> gather all data by root <<- //
-    
-    qe->Qip=(double *)malloc(qe->nbp*sizeof(double));
-    qe->Qi =(double *)malloc(qe->nbp*sizeof(double));
-
-
-    qe->Qip=mpi_gather_dist_double(mpi, Qip_s, mpi->ind_run, mpi->max);
-    qe->Qi=mpi_gather_dist_double(mpi, Qi_s, mpi->ind_run, mpi->max);
-
-    free(Qip_s); free(Qi_s); free(d_ic);
+    delete iFij, d_ic, Qpar;
     return;
     }
 

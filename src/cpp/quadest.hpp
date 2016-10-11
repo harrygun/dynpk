@@ -27,7 +27,7 @@
 
         // ->> DistMatrix <<- //
 	El::DistMatrix<double>  dcov_vec, *Fij, *iFij;
-	El::DistMatrix<double> Qip, Qi, *dcov;
+	El::DistMatrix<double> *Qi, *dcov;
 
         // ->> The following will be defined internally <<- //
         //El::DistMatrix<double> cov, icov, dcov[nbp];

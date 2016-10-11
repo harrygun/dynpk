@@ -587,7 +587,7 @@ cdef void quad_est_fish_qi(cnp.ndarray[cnp.double_t, ndim=2] i_Fij, \
     for i in prange:
         Qi[i]=0.
         for j in range(npt):
-            Qi[i]+=i_Fij[i,j]*Qi_p[j]
+            Qi[i]+=i_Fij[i,j]*Qi_p[i]
 
     return
 
