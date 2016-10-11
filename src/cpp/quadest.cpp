@@ -76,6 +76,9 @@
     *iFij=*Fij;
     SymmetricInverse(LOWER, *iFij);
 
+
+    cout << "Fisher Matrix is done." << endl; 
+
     delete[] Fij;
     delete[] ic_dcov;
 
@@ -130,6 +133,7 @@
     Ml= new DistMatrix<double>(nbp, 1);
 
     iFisher(dcov, covf_inv, iFij, npix, nbp, ndim);
+
     Ones(*Uni, nbp, 1);
     Gemv(NORMAL, double(1.), *iFij, *Uni, double(0.), *Ml);
 
@@ -138,6 +142,7 @@
 
     // ->> some pre-calculation of Qi <<- //
     // ->> (C^{-1}.d) <<- //
+    cout << "now calculate quadratic estimator" << endl;
     d_ic=new DistMatrix<double>(npix, 1);
     Gemv(NORMAL, double(1.), *covf_inv, dmap, double(0.), *d_ic);
 
