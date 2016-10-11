@@ -110,15 +110,18 @@
     if(ndim>=3) 
       throw runtime_error("Error: Doesn't support higher-dim map yet.");
 
-    Matrix<double> *dmap_=new Matrix<double>(map_size[0], map_size[1]);
-    Read(*dmap_, data_fname);
+    //Matrix<double> *dmap_=new Matrix<double>(map_size[0], map_size[1]);
+
+    dmap=DistMatrix<double, STAR, STAR>(npix, 1);
+    Read(dmap, data_fname);
 
     cout << "Importing raw map." << endl;
     
     // ->> if necessary, select a submatrix <<- //
+    /*
     if(ndim==2) {
       // ->> should be column? or row ??
-      dmap=Matrix<double>(npix, 1);
+      dmap=DistMatrix<double>(npix, 1);
       dmap_->Resize(npix, 1);
       dmap=(*dmap_);
       }
@@ -129,6 +132,7 @@
       }
      
     delete dmap_;
+    */
 
     //Display(dmap);
     return;

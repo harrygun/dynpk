@@ -26,14 +26,13 @@
         El::vector<double> covn_vec, pfid, klow, kup, klist;
 
         // ->> DistMatrix <<- //
-	El::DistMatrix<double>  dcov_vec, *Fij, *iFij;
-	El::DistMatrix<double> Qi, *dcov;
+	El::DistMatrix<double> dmap, dcov_vec, *dcov, *Fij, *iFij, Qi;
 
         // ->> The following will be defined internally <<- //
         //El::DistMatrix<double> cov, icov, dcov[nbp];
 
 	// Matrix //
-	El::Matrix<double> bpk, dmap;
+	El::Matrix<double> bpk;
 
     
         // ->> Methods <<- //
