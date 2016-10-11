@@ -86,12 +86,11 @@
       }
 
 
-    cout << "Fisher Matrix is done." << endl; 
 
     delete Fij;
     delete[] ic_dcov;
 
-    cout << "Existing Fisher Matrix.." << endl; 
+    cout << "Fisher Matrix is done." << endl; 
     return;
     }
 
@@ -147,10 +146,7 @@
     iFisher(dcov, covf_inv, iFij, npix, nbp, ndim, debug);
 
     Ones(*Uni, nbp, 1);
-    cout << "here 0" << endl;
-
     Gemv(NORMAL, double(1.), *iFij, *Uni, double(0.), *Ml);
-    cout << "here 1" << endl;
 
     delete Uni;
 
@@ -161,8 +157,12 @@
     d_ic=new DistMatrix<double>(npix, 1);
     Gemv(NORMAL, double(1.), *covf_inv, dmap, double(0.), *d_ic);
 
+    cout << "Here 0" << endl;
+
     Qpar= new DistMatrix<double>(npix, 1);
     Qi=DistMatrix<double>(nbp, 1);
+
+    cout << "Here 1" << endl;
 
     for(a=0; a<nbp; a++) {
       //Zeros(*Qpar);
@@ -170,6 +170,7 @@
       Qi.Set(a, 1, Dot(*d_ic, *Qpar)*Ml->Get(a, 1)*0.5);
       }
 
+    cout << "Here 2" << endl;
 
     delete iFij, d_ic, Qpar, Ml;
     return;
