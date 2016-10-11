@@ -167,7 +167,8 @@
     for(a=0; a<nbp; a++) {
       //Zeros(*Qpar);
       Gemv(NORMAL, double(1.), dcov[a], *d_ic, double(0.), *Qpar);
-      Qi.Set(a, 1, Dot(*d_ic, *Qpar)*Ml->Get(a, 1)*0.5);
+      //cout << "inside loop: 0" << endl;
+      Qi.Set(a, 0, Dot(*d_ic, *Qpar)*Ml->Get(a, 0)*0.5);
       }
 
     cout << "Here 2" << endl;
