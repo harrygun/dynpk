@@ -27,7 +27,7 @@
 
         // ->> DistMatrix <<- //
 	El::DistMatrix<double>  dcov_vec, *Fij, *iFij;
-	El::DistMatrix<double> *Qi, *dcov;
+	El::DistMatrix<double> Qi, *dcov;
 
         // ->> The following will be defined internally <<- //
         //El::DistMatrix<double> cov, icov, dcov[nbp];
@@ -65,8 +65,11 @@
 
 
 
-  void fcov_recovery(vector<double> &pk, DistMatrix<double> &covf);
+  void fcov_recovery(El::vector<double> &pk, El::DistMatrix<double> &covf, 
+                     El::DistMatrix<double> *dcov, size_t nbp);
 
+  void iFisher(El::DistMatrix<double> *dcov, El::DistMatrix<double> *icov, 
+       El::DistMatrix<double> *iFij, size_t npix, size_t nbp, size_t ndim);
 
 
 

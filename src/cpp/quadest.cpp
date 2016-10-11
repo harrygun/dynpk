@@ -20,10 +20,11 @@
 
 
 
-  void fcov_recovery(vector<double> &pk, DistMatrix<double> *covf) {
+  void fcov_recovery(vector<double> &pk, DistMatrix<double> *covf, 
+                     DistMatrix<double> *dcov, size_t nbp) {
     // ->> obtain full covariance matrix from dvoc and pk_list <<- //
 
-    int a, iglo, jglo, iloc, jloc, localHeight, localWidth; 
+    int a, iglo, jglo, iloc, jloc; //localHeight, localWidth; 
     double val;
 
     const int localHeight=covf->LocalHeight();
@@ -90,8 +91,7 @@
   void QEpar::Quad_Estimator(vector<double> pk_fid, int n_it) {
     // ->> method for calculating the quadratic estimator <<- //
 
-    //int a, b, i, j, idx, id;
-    string fn;
+    int a, b; 
     vector<double> pk;
     //DistMatrix<double> covf(npix, npix), covf_inv(npix, npix);
     DistMatrix<double> *covf, *covf_inv;
@@ -108,20 +108,19 @@
     covf_inv = new DistMatrix<double>(npix, npix);
 
     // ->> first recover the full covariance matrix <<- //
-    fcov_recovery(pk, covf);
+    fcov_recovery(pk, covf, dcov, nbp);
     cout << "Full covariance matrix done." << endl;
 
     // inversion //
     *covf_inv=*covf;
-    HPDInverse(LOWER, covf_inv);
-    //MakeHermitian(LOWER, covf_inv);
+    HPDInverse(LOWER, *covf_inv);
+    //MakeHermitian(LOWER, *covf_inv);
 
     cout << "inverse of covariance matrix done." << endl; 
 
 
     // ->> calculate and its inverse <<- //
-    DistMatrix<double> *iFij, *Uni, *Ml, *Qpar;
-    Matrix <double> *d_ic;
+    DistMatrix<double> *iFij, *Uni, *Ml, *Qpar, *d_ic;
     double Qval;
     
     iFij = new DistMatrix<double>(nbp, nbp);
@@ -137,8 +136,8 @@
 
     // ->> some pre-calculation of Qi <<- //
     // ->> (C^{-1}.d) <<- //
-    d_ic=new Matrix<double>(npix, 1);
-    Gemv(NORMAL, double(1.), covf_inv, dmap, double(0.), d_ic);
+    d_ic=new DistMatrix<double>(npix, 1);
+    Gemv(NORMAL, double(1.), *covf_inv, dmap, double(0.), *d_ic);
 
     Qpar= new DistMatrix<double>(npix, 1);
     Qi=DistMatrix<double>(nbp, 1);
@@ -146,7 +145,7 @@
     for(a=0; a<nbp; a++) {
       //Zeros(*Qpar);
       Gemv(NORMAL, double(1.), dcov[a], *d_ic, double(0.), *Qpar);
-      Qi.Set(a, 1, Dot(d_ic, Qpar)*Ml->Get(a, 1)*0.5);
+      Qi.Set(a, 1, Dot(*d_ic, *Qpar)*Ml->Get(a, 1)*0.5);
       }
 
 
