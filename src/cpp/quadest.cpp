@@ -76,6 +76,15 @@
     *iFij=*Fij;
     SymmetricInverse(LOWER, *iFij);
 
+    if(debug>=50) {
+      string fn_Fij, fn_iFij;
+      fn_Fij="Fij.out"
+      fn_iFij="iFij.out"
+
+      Write(*Fij, fn_Fij);
+      Write(*iFij, fn_iFij);
+      }
+
 
     cout << "Fisher Matrix is done." << endl; 
 
@@ -114,8 +123,10 @@
     fcov_recovery(pk, covf, dcov, nbp);
     cout << "Full covariance matrix done." << endl;
 
-    string fn_out="covf.dat";
-    Write(*covf, fn_out);
+    if(debug>=50) {
+      string fn_out="covf.dat";
+      Write(*covf, fn_out);
+      }
 
     // inversion //
     *covf_inv=*covf;
