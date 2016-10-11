@@ -146,9 +146,12 @@
     iFisher(dcov, covf_inv, iFij, npix, nbp, ndim, debug);
 
     Ones(*Uni, nbp, 1);
-    Gemv(NORMAL, double(1.), *iFij, *Uni, double(0.), *Ml);
+    cout << "here 0" << endl;
 
-    delete Uni;
+    Gemv(NORMAL, double(1.), *iFij, *Uni, double(0.), *Ml);
+    cout << "here 1" << endl;
+
+    delete [] Uni;
 
 
     // ->> some pre-calculation of Qi <<- //
@@ -167,7 +170,7 @@
       }
 
 
-    delete iFij, d_ic, Qpar, Ml;
+    delete [] iFij, d_ic, Qpar, Ml;
     return;
     }
 
