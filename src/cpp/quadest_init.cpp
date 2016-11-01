@@ -259,7 +259,7 @@
       //ostringstream convert;
 
       for(a=0; a<nbp; a++) {
-        fn_dcov="result/r1d/dcovf_" + to_string(a);
+        fn_dcov="result/r1d/dcov/dcovf_" + to_string(a);
         Write(*dcov, fn_dcov);
 	}
       }
