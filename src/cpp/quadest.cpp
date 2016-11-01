@@ -78,8 +78,8 @@
 
     if(debug>=50) {
       string fn_Fij, fn_iFij;
-      fn_Fij="Fij.out";
-      fn_iFij="iFij.out";
+      fn_Fij="result/r1d/Fij.out";
+      fn_iFij="result/r1d/iFij.out";
 
       Write(*Fij, fn_Fij);
       Write(*iFij, fn_iFij);
@@ -124,7 +124,7 @@
     cout << "Full covariance matrix done." << endl;
 
     if(debug>=50) {
-      string fn_out="covf.dat";
+      string fn_out="result/r1d/covf.dat";
       Write(*covf, fn_out);
       }
 
