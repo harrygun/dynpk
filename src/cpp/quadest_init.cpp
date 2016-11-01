@@ -256,9 +256,10 @@
 
     if(debug>=50) {
       string fn_dcov;
+      //ostringstream convert;
 
       for(a=0; a<nbp; a++) {
-        fn_dcov="result/r1d/dcovf_" << a;
+        fn_dcov="result/r1d/dcovf_" + to_string(a);
         Write(*dcov, fn_dcov);
 	}
       }
