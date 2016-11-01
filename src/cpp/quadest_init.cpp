@@ -254,6 +254,16 @@
      
       }
 
+    if(debug>=50) {
+      string fn_fcov;
+      fn_fcov="result/r1d/fcov.out";
+
+      Write(*dcov, fn_fcov);
+      }
+
+
+
+
     return;
     }
 
