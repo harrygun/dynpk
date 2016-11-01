@@ -255,10 +255,12 @@
       }
 
     if(debug>=50) {
-      string fn_fcov;
-      fn_fcov="result/r1d/fcov.out";
+      string fn_dcov;
 
-      Write(*dcov, fn_fcov);
+      for(a=0; a<nbp; a++) {
+        fn_dcov="result/r1d/dcovf_" << a;
+        Write(*dcov, fn_dcov);
+	}
       }
 
 
