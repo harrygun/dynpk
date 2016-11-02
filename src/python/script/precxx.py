@@ -56,11 +56,6 @@ if __name__=='__main__':
     d=np.load(fn)
 
 
-    #->> 
-    dout_name=root+'result/cr1d/dmap.dat'
-    pk_name=root+'result/cr1d/bpk.dat'
-    dcov_name=root+'result/cr1d/dcov_py.dat'
-
 
     '''----------------------------------------------
                 ->>    now we start    <<- 
@@ -68,10 +63,27 @@ if __name__=='__main__':
     # ->> lower data resolution <<- #
     #zoom_factor=0.5
     zoom_factor=1  #0.5
-    n_pts=500
+    #n_pts=500
+    n_pts=50
     ncol=10
     _dmap_=d[:n_pts,ncol]-np.mean(d[:n_pts,ncol])
     dmap=sp.ndimage.interpolation.zoom(_dmap_, zoom_factor)
+
+
+
+    #->> 
+    folder=root+'result/cr1d/npt_'+str(n_pts)
+    print 'folder existence:', os.path.isdir(folder)
+
+    if not os.path.isdir(folder):
+        cmd="mkdir "+folder
+	os.system(cmd)
+
+    dout_name=folder+'/dmap.dat'
+    pk_name=folder+'/bpk.dat'
+    dcov_name=folder+'/dcov_py.dat'
+
+
 
 
 
