@@ -115,7 +115,7 @@
     dmap=DistMatrix<double, STAR, STAR>(npix, 1);
     Read(dmap, data_fname);
 
-    cout << "Importing raw map." << endl;
+    cout << "Imported raw map." << endl;
     
     //Display(dmap);
     return;
@@ -130,6 +130,8 @@
 
       bpk=Matrix<double>(4, nbp);  // import k, k_low, k_up, and band power P(k)
       Read(bpk, bp_fname);
+
+      cout << "Imported bandpower." << endl;
 
       pfid=vector<double>(nbp);
       klist=vector<double>(nbp);
