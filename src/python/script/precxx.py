@@ -89,8 +89,8 @@ if __name__=='__main__':
 
 
     #->> data initialization <<- #
-    qe_dict={'calculate_dcov':   False,
-             'fname_dcov':       root+'result/r1d/dcov_r1d_fft_24.npz',
+    qe_dict={'calculate_dcov':   True,
+             'fname_dcov':       root+'result/cr1d/npt_50/dcov_r1d_fft_24.npz',
 	     'map_zoom_factor':  zoom_factor,
 	     'get_bp_type':      'FFT',
 	    }
