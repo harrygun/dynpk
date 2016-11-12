@@ -133,6 +133,8 @@
 
       cout << "Imported bandpower." << endl;
 
+      Display();
+
       pfid=vector<double>(nbp);
       klist=vector<double>(nbp);
       klow=vector<double>(nbp);
