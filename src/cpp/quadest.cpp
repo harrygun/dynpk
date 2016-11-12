@@ -114,6 +114,7 @@
     else if (n_it==1)
       pk=pk_fid;
 
+    Display(pk);
 
 
     covf     = new DistMatrix<double>(npix, npix);

@@ -242,7 +242,7 @@
 
 
     cov=mpi_gather_dist_double(mpi, cov_s, mpi->ind_run, mpi->max);
-    printf("pointer: %p  %p  (%d  %d)\n", cov, cov_s, mpi->ind_run, mpi->max);
+    //printf("pointer: %p  %p  (%d  %d)\n", cov, cov_s, mpi->ind_run, mpi->max);
 
 
     fn="result/r1d/cov_out_ss.dat";
@@ -286,8 +286,8 @@
     //import_data_double(mpi, fn, qe->icov, sizeof(double), qe->npix*qe->npix);
     //printf("inverse of covariance matrix done.\n"); fflush(stdout);
 
-    /*
 
+    /*
     // ->> calculate Fisher matrix and its inverse <<- //
     qe->Fij=Fisher(mpi, qe->dcov, qe->icov, qe->npix, qe->n_bp, qe->map_dim);
     fn="result/r1d/Fij.dat";
